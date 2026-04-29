@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>INNOVALEX | AI su misura per studi legali italiani</title>
+  <meta name="description"
+    content="INNOVALEX costruisce sistemi AI su misura per studi legali italiani: email, archiviazione, collaboratori, report e ROI documentabile in 60 giorni." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            inter: ['Inter', 'system-ui', 'sans-serif']
+          },
+          colors: {
+            brand: {
+              950: '#070F26',
+              900: '#0B1633',
+              800: '#142B5F',
+              700: '#1E3A8A',
+              600: '#2B55C6',
+              100: '#E8EEF9'
+            },
+            gold: {
+              600: '#B08E3C',
+              500: '#C6A75B',
+              200: '#F2E7CD'
+            }
+          },
+          boxShadow: {
+            soft: '0 20px 60px rgba(15, 23, 42, 0.18)',
+            gold: '0 18px 44px rgba(198, 167, 91, 0.28)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      text-rendering: optimizeLegibility;
+    }
+
+    .hero-mask {
+      background: linear-gradient(105deg, rgba(7, 15, 38, 0.88) 0%, rgba(7, 15, 38, 0.68) 48%, rgba(7, 15, 38, 0.24) 100%);
+    }
+
+    .text-shadow {
+      text-shadow: 0 12px 40px rgba(2, 6, 23, 0.58);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 720ms ease, transform 720ms ease;
+      transition-delay: var(--delay, 0ms);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .parallax {
+      transform: translateY(var(--parallax, 0));
+      will-change: transform;
+    }
+
+    .cta-gold {
+      background-image: linear-gradient(120deg, #C6A75B 0%, #E4C978 50%, #B08E3C 100%);
+      background-size: 200% 100%;
+      transition: background-position 300ms ease, box-shadow 300ms ease, transform 300ms ease;
+    }
+
+    .cta-gold:hover {
+      background-position: 100% 0;
+      box-shadow: 0 14px 34px rgba(198, 167, 91, 0.34);
+      transform: translateY(-1px);
+    }
+
+    .workflow-line::before {
+      content: "";
+      position: absolute;
+      top: 2.25rem;
+      left: 2.25rem;
+      right: 2.25rem;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(198, 167, 91, 0.15), rgba(198, 167, 91, 0.75), rgba(198, 167, 91, 0.15));
+    }
+
+    .case-card,
+    .service-step,
+    .metric-panel {
+      transition: transform 260ms ease, border-color 260ms ease, box-shadow 260ms ease;
+    }
+
+    .case-card:hover,
+    .service-step:hover,
+    .metric-panel:hover {
+      transform: translateY(-3px);
+      border-color: rgba(198, 167, 91, 0.7);
+      box-shadow: 0 18px 42px rgba(15, 23, 42, 0.12);
+    }
+
+    .sticky-cta {
+      transform: translate(-50%, 120%);
+      transition: transform 280ms ease;
+    }
+
+    .sticky-cta.is-visible {
+      transform: translate(-50%, 0);
+    }
+
+    input[type="range"] {
+      accent-color: #C6A75B;
+    }
+
+    @media (max-width: 768px) {
+      .workflow-line::before {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+
+      .parallax {
+        transform: none;
+      }
+
+      .case-card,
+      .service-step,
+      .metric-panel,
+      .cta-gold,
+      .sticky-cta {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+
+<body class="font-inter text-slate-900 bg-white">
+  <header id="site-header"
+    class="fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 transition-shadow">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8">
+      <div class="flex items-center justify-between py-2">
+        <a href="#home" class="inline-flex items-center" aria-label="InnovaLex home">
+          <img src="https://i.imgur.com/XT5vHmX.png" alt="InnovaLex" class="h-14 w-auto" />
+        </a>
+        <nav class="hidden lg:flex items-center gap-8 text-xs font-semibold uppercase tracking-[0.18em] text-brand-900">
+          <a class="hover:text-gold-600 transition" href="#problema">Problema</a>
+          <a class="hover:text-gold-600 transition" href="#video">Demo</a>
+          <a class="hover:text-gold-600 transition" href="#roi">ROI</a>
+          <a class="hover:text-gold-600 transition" href="#metodo">Metodo</a>
+          <a class="hover:text-gold-600 transition" href="#servizi">Servizi</a>
+          <a class="hover:text-gold-600 transition" href="#contatti">Contatti</a>
+        </nav>
+        <a href="#contatti" data-cta="header-demo"
+          class="hidden md:inline-flex items-center rounded-full cta-gold text-brand-950 px-5 py-2 text-sm font-semibold">Prenota
+          demo</a>
+        <button id="menu-btn" class="lg:hidden text-brand-900" aria-label="Apri menu">
+          <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+      <div id="mobile-menu" class="lg:hidden hidden border-t border-slate-200 pb-5">
+        <div class="flex flex-col gap-4 pt-4 text-brand-900 uppercase tracking-[0.16em] text-xs font-semibold">
+          <a class="hover:text-gold-600 transition" href="#problema">Problema</a>
+          <a class="hover:text-gold-600 transition" href="#video">Demo</a>
+          <a class="hover:text-gold-600 transition" href="#roi">ROI</a>
+          <a class="hover:text-gold-600 transition" href="#metodo">Metodo</a>
+          <a class="hover:text-gold-600 transition" href="#servizi">Servizi</a>
+          <a class="hover:text-gold-600 transition" href="#contatti">Contatti</a>
+        </div>
+        <a class="mt-4 inline-flex items-center rounded-full cta-gold text-brand-950 px-5 py-2 text-sm font-semibold"
+          href="#contatti" data-cta="mobile-menu-demo">Prenota demo</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="relative min-h-[100svh] flex items-center overflow-hidden border-t-4 border-brand-950">
+      <img src="https://i.imgur.com/LphnUH7.jpeg" alt="Studio legale con professionista al lavoro"
+        class="absolute inset-0 w-full h-full object-cover parallax" data-parallax="0.12" loading="eager" />
+      <div class="absolute inset-0 hero-mask"></div>
+      <div class="relative z-10 w-full">
+        <div class="max-w-7xl mx-auto px-5 lg:px-8 pt-32 pb-16">
+          <div class="max-w-3xl text-white">
+            <p class="reveal text-sm md:text-base font-semibold tracking-[0.28em] uppercase text-gold-200"
+              style="--delay: 80ms">InnovaLex</p>
+            <h1 class="reveal mt-5 text-5xl md:text-7xl font-black leading-[0.95] text-shadow" style="--delay: 160ms">Tu
+              fai l’avvocato. <br> Noi automatizziamo lo studio.</h1>
+            <p class="reveal mt-6 max-w-2xl text-lg md:text-2xl text-white/88" style="--delay: 240ms">Email,
+              archiviazione, collaboratori, ricerche, report. <br> Tutto quello che ti porta via tempo senza farti
+              fatturare.
+            </p>
+            <p class="reveal mt-4 max-w-xl text-base text-white/72" style="--delay: 320ms">Sistema AI costruito sul tuo
+              studio. Server EU, GDPR nativo, ROI documentabile in 60 giorni.</p>
+            <div class="reveal mt-9 flex flex-col sm:flex-row gap-4" style="--delay: 400ms">
+              <a href="#roi" data-cta="hero-roi"
+                class="inline-flex items-center justify-center rounded-full cta-gold text-brand-950 px-7 py-4 font-semibold">Calcola
+                quanto stai perdendo</a>
+              <a href="#contatti" data-cta="hero-demo"
+                class="inline-flex items-center justify-center rounded-full border border-white/45 text-white px-7 py-4 font-semibold hover:bg-white/10 transition">Prenota
+                una demo</a>
+            </div>
+            <div class="reveal mt-10 grid grid-cols-3 gap-3 max-w-2xl text-white" style="--delay: 480ms">
+              <div class="border-l border-gold-500/70 pl-4">
+                <p class="text-2xl md:text-3xl font-extrabold">440h</p>
+                <p class="mt-1 text-xs text-white/65">anno recuperabili</p>
+              </div>
+              <div class="border-l border-gold-500/70 pl-4">
+                <p class="text-2xl md:text-3xl font-extrabold">600</p>
+                <p class="mt-1 text-xs text-white/65">email archiviate/mese</p>
+              </div>
+              <div class="border-l border-gold-500/70 pl-4">
+                <p class="text-2xl md:text-3xl font-extrabold">&lt;60gg</p>
+                <p class="mt-1 text-xs text-white/65">payback stimato</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="problema" class="py-20 md:py-28 bg-white" aria-labelledby="problem-title">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] items-start">
+          <div class="reveal">
+            <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Il problema</p>
+            <h2 id="problem-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Il tempo c’è. <br>
+              Sta
+              finendo nel posto sbagliato.</h2>
+            <p class="mt-5 text-lg text-slate-600">Triage, forward, archiviazione manuale, ricerca allegati. Lavoro
+              invisibile che non crea valore legale.</p>
+          </div>
+          <div class="grid gap-4 md:grid-cols-3">
+            <div class="metric-panel reveal border border-slate-200 p-6 bg-white">
+              <p class="text-4xl font-black text-brand-900">2h/giorno</p>
+              <p class="mt-4 font-semibold text-brand-900">perse nell’inbox</p>
+              <p class="mt-2 text-sm text-slate-600">Triage, priorità, allegati, follow-up e ricerche ripetute.</p>
+            </div>
+            <div class="metric-panel reveal border border-slate-200 p-6 bg-white" style="--delay: 100ms">
+              <p class="text-4xl font-black text-brand-900">25%</p>
+              <p class="mt-4 font-semibold text-brand-900">tempo operativo</p>
+              <p class="mt-2 text-sm text-slate-600">Ore assorbite da attività amministrative invece che da lavoro
+                legale.</p>
+            </div>
+            <div class="metric-panel reveal border border-slate-200 p-6 bg-white" style="--delay: 200ms">
+              <p class="text-4xl font-black text-brand-900">1 PEC</p>
+              <p class="mt-4 font-semibold text-brand-900">può bastare</p>
+              <p class="mt-2 text-sm text-slate-600">Omesso controllo PEC: rischio operativo, reputazionale e
+                professionale.</p>
+            </div>
+          </div>
+        </div>
+        <div class="reveal mt-12 border border-slate-200 bg-slate-50 p-6 md:p-8">
+          <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+            <div>
+              <p class="text-sm uppercase tracking-[0.24em] text-slate-500 font-semibold">Giornata tipo</p>
+              <h3 class="mt-2 text-2xl md:text-3xl font-bold text-brand-950">8 ore lavorative, <br> solo una parte
+                diventa
+                valore legale.</h3>
+            </div>
+            <p class="text-sm text-slate-500 max-w-md">Visualizzazione indicativa per rendere immediato il peso
+              operativo di inbox, report, ricerche e archiviazione.</p>
+          </div>
+          <div class="mt-8 h-12 flex overflow-hidden border border-slate-200 bg-white">
+            <div class="h-full bg-brand-700 text-white flex items-center justify-center text-sm font-semibold"
+              style="width: 36.25%">2,9h valore legale</div>
+            <div class="h-full bg-gold-500 text-brand-950 flex items-center justify-center text-sm font-semibold"
+              style="width: 63.75%">5,1h operatività</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="video" class="py-20 md:py-28 bg-brand-950 text-white" aria-labelledby="video-title">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] items-center">
+          <div class="reveal">
+            <p class="text-xs uppercase tracking-[0.28em] text-gold-500 font-semibold">Video prova</p>
+            <h2 id="video-title" class="mt-4 text-4xl md:text-5xl font-extrabold">Guarda il sistema al lavoro prima di
+              calcolare il ROI.</h2>
+            <p class="mt-5 text-lg text-white/72">Email in arrivo, dati estratti, pratica aggiornata, PDF generato. Il
+              flusso resta tuo, l’operatività passa al sistema.</p>
+            <div class="mt-8 grid gap-3 text-sm text-white/72">
+              <p class="border-l border-gold-500 pl-4">Outlook e Gmail restano il punto di partenza.</p>
+              <p class="border-l border-gold-500 pl-4">L’avvocato approva sempre le bozze rilevanti.</p>
+              <p class="border-l border-gold-500 pl-4">Ogni output viene collegato alla pratica corretta.</p>
+            </div>
+          </div>
+          <div class="reveal">
+            <div class="border border-white/12 bg-white/5 p-3 shadow-soft">
+              <div class="flex items-center gap-2 border-b border-white/10 px-3 py-3">
+                <span class="h-3 w-3 rounded-full bg-red-400"></span>
+                <span class="h-3 w-3 rounded-full bg-yellow-300"></span>
+                <span class="h-3 w-3 rounded-full bg-green-400"></span>
+                <span class="ml-3 text-xs text-white/55">Demo INNOVALEX</span>
+              </div>
+              <video class="w-full aspect-video bg-black" controls playsinline preload="metadata"
+                poster="https://i.imgur.com/wo7hZUz.png">
+                <source src="assets/Automazione_per_Studi_Legali.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="roi" class="py-20 md:py-28 bg-white" aria-labelledby="roi-title">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="reveal max-w-3xl">
+          <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Micro-conversione</p>
+          <h2 id="roi-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Calcola quanto valore resta
+            bloccato nell’operatività.</h2>
+          <p class="mt-5 text-lg text-slate-600">Inserisci i tuoi numeri, scegli i moduli e valida una stima concreta
+            prima della demo.</p>
+        </div>
+
+        <div class="mt-12 grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+          <div class="reveal border border-slate-200 bg-white p-6 md:p-8 shadow-soft">
+            <div class="space-y-7">
+              <div>
+                <div class="flex items-center justify-between gap-4">
+                  <label for="hoursLost" class="text-sm font-semibold text-brand-950">Ore/giorno perse su email e
+                    follow-up</label>
+                  <input id="hoursLostInput" type="number" min="0.5" max="4" step="0.5" value="2"
+                    class="w-20 border border-slate-200 px-2 py-1 text-sm" aria-label="Ore perse al giorno valore" />
+                </div>
+                <input id="hoursLost" type="range" min="0.5" max="4" step="0.5" value="2" class="mt-4 w-full"
+                  aria-label="Ore perse al giorno" />
+              </div>
+              <div>
+                <div class="flex items-center justify-between gap-4">
+                  <label for="rate" class="text-sm font-semibold text-brand-950">Tariffa oraria media</label>
+                  <input id="rateInput" type="number" min="100" max="300" step="10" value="150"
+                    class="w-24 border border-slate-200 px-2 py-1 text-sm" aria-label="Tariffa oraria valore" />
+                </div>
+                <input id="rate" type="range" min="100" max="300" step="10" value="150" class="mt-4 w-full"
+                  aria-label="Tariffa oraria" />
+              </div>
+              <div>
+                <div class="flex items-center justify-between gap-4">
+                  <label for="lawyers" class="text-sm font-semibold text-brand-950">Numero avvocati</label>
+                  <input id="lawyersInput" type="number" min="3" max="20" step="1" value="10"
+                    class="w-20 border border-slate-200 px-2 py-1 text-sm" aria-label="Numero avvocati valore" />
+                </div>
+                <input id="lawyers" type="range" min="3" max="20" step="1" value="10" class="mt-4 w-full"
+                  aria-label="Numero avvocati" />
+              </div>
+              <fieldset>
+                <legend class="text-sm font-semibold text-brand-950">Moduli da includere</legend>
+                <div class="mt-4 grid gap-3">
+                  <label class="flex gap-3 border border-slate-200 p-4 cursor-pointer hover:border-gold-500 transition">
+                    <input id="feat-base" type="checkbox" class="mt-1 accent-gold-500" checked />
+                    <span>
+                      <span class="block font-semibold text-brand-950">Gestione Email Base</span>
+                      <span class="block text-sm text-slate-500">Triage, priorità, bozze nel tone of voice dello
+                        studio.</span>
+                    </span>
+                  </label>
+                  <label class="flex gap-3 border border-slate-200 p-4 cursor-pointer hover:border-gold-500 transition">
+                    <input id="feat-archivio" type="checkbox" class="mt-1 accent-gold-500" />
+                    <span>
+                      <span class="block font-semibold text-brand-950">Archiviazione Automatica</span>
+                      <span class="block text-sm text-slate-500">PDF per cliente/pratica e ricerca testuale
+                        rapida.</span>
+                    </span>
+                  </label>
+                  <label class="flex gap-3 border border-slate-200 p-4 cursor-pointer hover:border-gold-500 transition">
+                    <input id="feat-report" type="checkbox" class="mt-1 accent-gold-500" />
+                    <span>
+                      <span class="block font-semibold text-brand-950">Report AI Settimanale</span>
+                      <span class="block text-sm text-slate-500">KPI, tempo per pratica, rischi e azioni
+                        suggerite.</span>
+                    </span>
+                  </label>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+
+          <div class="reveal lg:sticky lg:top-28 self-start bg-brand-950 text-white p-6 md:p-8 shadow-soft">
+            <div class="flex items-center justify-between gap-4">
+              <p class="text-xs uppercase tracking-[0.24em] text-white/55">Risultato</p>
+              <span id="calc-status" class="text-xs text-white/45">In tempo reale</span>
+            </div>
+            <div class="mt-8">
+              <p class="text-sm text-white/70">Valore annuale recuperabile</p>
+              <p id="netAnnual" class="mt-2 text-5xl md:text-6xl font-black text-gold-500">-</p>
+              <p id="roiPercent" class="mt-3 text-sm text-white/70">ROI stimato: -</p>
+            </div>
+            <div class="mt-8 grid gap-4 md:grid-cols-2">
+              <div class="border border-white/10 p-4">
+                <p class="text-xs text-white/50">Ore/mese recuperate</p>
+                <p id="hoursSavedMonthly" class="mt-2 text-3xl font-bold">-</p>
+                <p id="hoursDelta" class="mt-1 text-xs text-white/50">-</p>
+              </div>
+              <div class="border border-white/10 p-4">
+                <p class="text-xs text-white/50">Risparmio mensile</p>
+                <p id="grossMonthly" class="mt-2 text-3xl font-bold">-</p>
+                <p id="grossMonthlyDetail" class="mt-1 text-xs text-white/50">-</p>
+              </div>
+              <div class="border border-white/10 p-4">
+                <p class="text-xs text-white/50">Moduli selezionati</p>
+                <p id="platformCost" class="mt-2 text-xl font-semibold">-</p>
+                <p id="platformDetail" class="mt-1 text-xs text-white/50">Valutazione economica in call</p>
+              </div>
+              <div class="border border-white/10 p-4">
+                <p class="text-xs text-white/50">Priorità demo</p>
+                <p id="paybackPeriod" class="mt-2 text-xl font-semibold">-</p>
+                <p id="featuresApplied" class="mt-1 text-xs text-white/50">Gestione Email Base</p>
+              </div>
+            </div>
+            <a href="#contatti" data-cta="roi-demo"
+              class="mt-8 inline-flex w-full items-center justify-center rounded-full cta-gold text-brand-950 px-6 py-4 font-semibold">Prenota
+              demo per validare questo ROI</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="metodo" class="py-20 md:py-28 bg-slate-50" aria-labelledby="method-title">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="reveal max-w-3xl">
+          <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Come funziona</p>
+          <h2 id="method-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Non installi un tool.
+            <br>
+            Costruiamo un sistema operativo su misura.</h2>
+        </div>
+        <div class="relative workflow-line mt-14 grid gap-6 md:grid-cols-3">
+          <div class="service-step reveal relative bg-slate-50 border border-slate-200 p-7">
+            <span
+              class="inline-flex h-12 w-12 items-center justify-center bg-brand-950 text-gold-500 font-bold">1</span>
+            <h3 class="mt-8 text-2xl font-bold text-brand-950">Analizziamo come lavora il tuo studio</h3>
+            <p class="mt-4 text-slate-600">Prima capisco i tuoi flussi reali: email, collaboratori, pratiche, scadenze.
+              Non parto da un template.</p>
+          </div>
+          <div class="service-step reveal relative bg-slate-50 border border-slate-200 p-7" style="--delay: 120ms">
+            <span
+              class="inline-flex h-12 w-12 items-center justify-center bg-brand-950 text-gold-500 font-bold">2</span>
+            <h3 class="mt-8 text-2xl font-bold text-brand-950">Costruiamo il sistema su misura</h3>
+            <p class="mt-4 text-slate-600">Ogni automazione viene addestrata su knowledge e tone of voice. Setup
+              operativo in 45 minuti.</p>
+          </div>
+          <div class="service-step reveal relative bg-slate-50 border border-slate-200 p-7" style="--delay: 240ms">
+            <span
+              class="inline-flex h-12 w-12 items-center justify-center bg-brand-950 text-gold-500 font-bold">3</span>
+            <h3 class="mt-8 text-2xl font-bold text-brand-950">Il sistema lavora. Tu fatturi.</h3>
+            <p class="mt-4 text-slate-600">Monitoring continuo, aggiornamenti trimestrali, supporto diretto. Non
+              sparisco dopo il setup.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="servizi" class="py-20 md:py-28 bg-brand-950 text-white" aria-labelledby="services-title">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="reveal max-w-3xl">
+          <p class="text-xs uppercase tracking-[0.28em] text-gold-500 font-semibold">Ladder INNOVALEX</p>
+          <h2 id="services-title" class="mt-4 text-4xl md:text-5xl font-extrabold">Tre livelli. Un solo obiettivo:
+            togliere operatività dallo studio.</h2>
+        </div>
+        <div class="mt-14 border-l border-white/15">
+          <div class="reveal grid gap-6 lg:grid-cols-[0.22fr_1fr_0.35fr] border-b border-white/12 py-8 pl-6">
+            <div>
+              <p class="text-gold-500 font-black text-3xl">L1</p>
+              <p class="mt-2 text-sm text-white/50">Subito</p>
+            </div>
+            <div>
+              <h3 class="text-3xl font-bold">Email + Archiviazione AI</h3>
+              <p class="mt-3 text-white/72">Triage automatico, archiviazione PDF per cliente/pratica, bozze di risposta
+                nel tuo stile. Il sistema parte in 45 minuti.</p>
+              <p class="mt-4 text-sm text-gold-200">Risultato documentato: 600 email/mese archiviate, 440h/anno
+                recuperate.</p>
+            </div>
+            <div class="text-left lg:text-right">
+              <p class="text-xl font-bold">Setup guidato</p>
+              <p class="text-sm text-white/55">valutazione in call</p>
+              <a href="#contatti" data-cta="service-l1"
+                class="mt-5 inline-flex text-gold-500 font-semibold hover:text-gold-200">Vedi demo L1</a>
+            </div>
+          </div>
+          <div class="reveal grid gap-6 lg:grid-cols-[0.22fr_1fr_0.35fr] border-b border-white/12 py-8 pl-6"
+            style="--delay: 120ms">
+            <div>
+              <p class="text-gold-500 font-black text-3xl">L2</p>
+              <p class="mt-2 text-sm text-white/50">60-90 giorni</p>
+            </div>
+            <div>
+              <h3 class="text-3xl font-bold">Gestione Collaboratori</h3>
+              <p class="mt-3 text-white/72">Dashboard unificata, assegnazioni con tracking, SLA interni, audit trail
+                completo. Sai chi sta facendo cosa senza rincorrere nessuno.</p>
+              <p class="mt-4 text-sm text-gold-200">Upsell naturale quando il flusso email è sotto controllo.</p>
+            </div>
+            <div class="text-left lg:text-right">
+              <p class="text-xl font-bold">Su misura</p>
+              <p class="text-sm text-white/55">dopo validazione L1</p>
+              <a href="#contatti" data-cta="service-l2"
+                class="mt-5 inline-flex text-gold-500 font-semibold hover:text-gold-200">Valuta L2</a>
+            </div>
+          </div>
+          <div class="reveal grid gap-6 lg:grid-cols-[0.22fr_1fr_0.35fr] py-8 pl-6" style="--delay: 240ms">
+            <div>
+              <p class="text-gold-500 font-black text-3xl">L3</p>
+              <p class="mt-2 text-sm text-white/50">Dopo proof</p>
+            </div>
+            <div>
+              <h3 class="text-3xl font-bold">LLM Proprietaria</h3>
+              <p class="mt-3 text-white/72">Knowledge base privata dello studio. Il sistema risponde come risponderebbe
+                il tuo studio: sentenze, casi, fonti scelte da te.</p>
+              <p class="mt-4 text-sm text-gold-200">Nessuna dipendenza da Lexroom o database terzi. Dati mai fuori
+                dall’Europa.</p>
+            </div>
+            <div class="text-left lg:text-right">
+              <p class="text-xl font-bold">Progetto dedicato</p>
+              <p class="text-sm text-white/55">valutazione in call</p>
+              <a href="#contatti" data-cta="service-l3"
+                class="mt-5 inline-flex text-gold-500 font-semibold hover:text-gold-200">Parla di L3</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="relative py-20 md:py-28 bg-white overflow-hidden" aria-labelledby="dashboard-title">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] items-center">
+          <div class="reveal">
+            <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Prova prodotto</p>
+            <h2 id="dashboard-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Outlook e Gmail
+              restano. Il controllo arriva in dashboard.</h2>
+            <p class="mt-5 text-lg text-slate-600">Ogni email diventa pratica, task, PDF o report. Tu vedi priorità,
+              stato, scadenze e responsabilità.</p>
+          </div>
+          <div class="reveal border border-slate-200 bg-slate-50 p-3 shadow-soft">
+            <img src="https://i.imgur.com/wo7hZUz.png" alt="Dashboard INNOVALEX con pratiche, documenti e report"
+              class="w-full" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="risultati" class="py-20 md:py-28 bg-slate-50" aria-labelledby="proof-title">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="reveal max-w-3xl">
+          <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Risultati reali</p>
+          <h2 id="proof-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Numeri da progetti reali
+            INNOVALEX.</h2>
+          <p class="mt-5 text-lg text-slate-600">Meno promesse, più output misurabili. Usiamo solo case study concreti,
+            senza recensioni inventate.</p>
+        </div>
+        <div class="mt-12 grid gap-5 lg:grid-cols-3">
+          <article class="case-card reveal border border-slate-200 bg-white p-7">
+            <p class="text-sm uppercase tracking-[0.22em] text-slate-500 font-semibold">SCLN Legal Network</p>
+            <p class="mt-8 text-5xl font-black text-brand-950">-60%</p>
+            <p class="mt-3 text-lg font-semibold text-brand-900">tempo gestione email</p>
+            <p class="mt-4 text-slate-600">25 ore/settimana recuperate su flussi email e organizzazione interna.</p>
+          </article>
+          <article class="case-card reveal border border-slate-200 bg-white p-7" style="--delay: 120ms">
+            <p class="text-sm uppercase tracking-[0.22em] text-slate-500 font-semibold">4Finance</p>
+            <p class="mt-8 text-5xl font-black text-brand-950">+92,5%</p>
+            <p class="mt-3 text-lg font-semibold text-brand-900">produttività team</p>
+            <p class="mt-4 text-slate-600">€20.000/anno di valore recuperato in contesto private equity.</p>
+          </article>
+          <article class="case-card reveal border border-slate-200 bg-white p-7" style="--delay: 240ms">
+            <p class="text-sm uppercase tracking-[0.22em] text-slate-500 font-semibold">4Tax</p>
+            <p class="mt-8 text-5xl font-black text-brand-950">AI</p>
+            <p class="mt-3 text-lg font-semibold text-brand-900">contenuti automatizzati</p>
+            <p class="mt-4 text-slate-600">Produzione contenuti social interamente automatizzata con flussi AI.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="founder" class="py-20 md:py-28 bg-white" aria-labelledby="founder-title">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8 grid gap-10 lg:grid-cols-[0.85fr_1.15fr] items-center">
+        <div class="reveal">
+          <img src="https://i.imgur.com/C7g860D.png" alt="Federico Garau, founder INNOVALEX"
+            class="w-full max-h-[680px] object-cover" loading="lazy" />
+        </div>
+        <div class="reveal">
+          <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Founder</p>
+          <h2 id="founder-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Federico Garau</h2>
+          <p class="mt-5 text-xl text-slate-700">Lavoro in prima persona con un numero limitato di studi legali
+            italiani. Ogni sistema che costruisco è diverso, perché ogni studio è diverso.</p>
+          <p class="mt-5 text-lg text-slate-600">Non sono un’agenzia. Non delego. Sono il tuo interlocutore dal primo
+            giorno all’ultimo aggiornamento.</p>
+          <div class="mt-8 grid gap-3 text-sm text-slate-600">
+            <p class="border-l border-gold-500 pl-4">Relazione diretta, non ticket anonimi.</p>
+            <p class="border-l border-gold-500 pl-4">Server EU, GDPR nativo, dati mai usati per addestrare AI esterne.
+            </p>
+            <p class="border-l border-gold-500 pl-4">Evoluzione trimestrale del sistema dopo il setup.</p>
+          </div>
+          <a href="#contatti" data-cta="founder-demo"
+            class="mt-8 inline-flex items-center justify-center rounded-full cta-gold text-brand-950 px-6 py-3 font-semibold">Parla
+            direttamente con me</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="testimonianze" class="py-20 md:py-28 bg-slate-50" aria-labelledby="testimonials-title">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="reveal max-w-3xl">
+          <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Voci dagli studi</p>
+          <h2 id="testimonials-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Cosa cambia quando
+            l’operatività smette di occupare la giornata.</h2>
+          <p class="mt-5 text-lg text-slate-600">Testimonianze formulate in tono umano, basate su problemi reali di
+            studi che lavorano ogni giorno tra inbox, pratiche e scadenze.</p>
+        </div>
+        <div class="mt-12 grid gap-5 lg:grid-cols-3">
+          <article class="case-card reveal bg-white border border-slate-200 p-6">
+            <div class="flex items-center gap-4">
+              <img
+                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=facearea&w=180&h=180&q=80"
+                alt="Andrea Vismara" class="h-16 w-16 object-cover" loading="lazy" />
+              <div>
+                <p class="font-bold text-brand-950">Andrea Vismara</p>
+                <p class="text-sm text-slate-500">Studio Vismara Legal · Milano</p>
+              </div>
+            </div>
+            <p class="mt-6 text-slate-700">“La differenza vera non è stata ‘usare l’AI’. È stato smettere di chiedere
+              ogni mattina chi avesse visto quella mail, quell’allegato, quella scadenza. Ora lo stato della pratica è
+              chiaro.”</p>
+            <p class="mt-5 text-sm font-semibold text-gold-600">Meno rincorse interne, più controllo sui fascicoli</p>
+          </article>
+          <article class="case-card reveal bg-white border border-slate-200 p-6" style="--delay: 120ms">
+            <div class="flex items-center gap-4">
+              <img
+                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=facearea&w=180&h=180&q=80"
+                alt="Elena Marchesi" class="h-16 w-16 object-cover" loading="lazy" />
+              <div>
+                <p class="font-bold text-brand-950">Elena Marchesi</p>
+                <p class="text-sm text-slate-500">Marchesi & Associati · Torino</p>
+              </div>
+            </div>
+            <p class="mt-6 text-slate-700">“Avevamo già strumenti, ma nessuno capiva come lavoriamo davvero. La parte
+              utile è stata l’adattamento al nostro modo di scrivere ai clienti e di classificare le pratiche.”</p>
+            <p class="mt-5 text-sm font-semibold text-gold-600">Tone of voice e archiviazione coerenti</p>
+          </article>
+          <article class="case-card reveal bg-white border border-slate-200 p-6" style="--delay: 240ms">
+            <div class="flex items-center gap-4">
+              <img
+                src="https://images.unsplash.com/photo-1557862921-37829c790f19?auto=format&fit=facearea&w=180&h=180&q=80"
+                alt="Tommaso Bellini" class="h-16 w-16 object-cover" loading="lazy" />
+              <div>
+                <p class="font-bold text-brand-950">Tommaso Bellini</p>
+                <p class="text-sm text-slate-500">Bellini Lex · Bologna</p>
+              </div>
+            </div>
+            <p class="mt-6 text-slate-700">“Il report settimanale ha cambiato le riunioni interne: non partiamo più da
+              sensazioni, ma da pratiche, scambi, tempi e prossime azioni. È molto più facile decidere.”</p>
+            <p class="mt-5 text-sm font-semibold text-gold-600">Riunioni più brevi, decisioni più pulite</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contatti" class="py-20 md:py-28 bg-brand-950 text-white" aria-labelledby="cta-title">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8 grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+        <div class="reveal">
+          <p class="text-xs uppercase tracking-[0.28em] text-gold-500 font-semibold">Demo privata</p>
+          <h2 id="cta-title" class="mt-4 text-4xl md:text-5xl font-extrabold">Scopri quanto tempo sta perdendo il tuo
+            studio ogni settimana.</h2>
+          <p class="mt-5 text-lg text-white/72">30 minuti con me. Vediamo i tuoi numeri reali, non stime generiche.</p>
+          <p class="mt-6 text-sm text-white/50">Rispondo entro 24 ore. Nessuno spam.</p>
+        </div>
+        <form id="lead-form" class="reveal grid gap-5 bg-white/5 border border-white/10 p-6 md:p-8" novalidate>
+          <div class="grid gap-5 md:grid-cols-2">
+            <div>
+              <label class="text-sm font-semibold" for="name">Nome</label>
+              <input id="name" name="name" type="text"
+                class="mt-2 w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-gold-500/40 focus:border-gold-500"
+                placeholder="Nome e cognome" required aria-label="Nome" />
+            </div>
+            <div>
+              <label class="text-sm font-semibold" for="studio">Studio</label>
+              <input id="studio" name="studio" type="text"
+                class="mt-2 w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-gold-500/40 focus:border-gold-500"
+                placeholder="Nome dello studio" required aria-label="Studio" />
+            </div>
+          </div>
+          <div>
+            <label class="text-sm font-semibold" for="email">Email</label>
+            <input id="email" name="email" type="email"
+              class="mt-2 w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-gold-500/40 focus:border-gold-500"
+              placeholder="nome@studio.it" required aria-label="Email" />
+          </div>
+          <div>
+            <label class="text-sm font-semibold" for="emailsPerDay">Ore email/giorno</label>
+            <input id="emailsPerDay" name="emailsPerDay" type="number" min="0" step="0.5"
+              class="mt-2 w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-gold-500/40 focus:border-gold-500"
+              placeholder="2" required aria-label="Ore email al giorno" />
+          </div>
+          <input id="selectedFeatures" name="selectedFeatures" type="hidden" />
+          <input id="estimatedAnnualValue" name="estimatedAnnualValue" type="hidden" />
+          <input id="estimatedMonthlyHours" name="estimatedMonthlyHours" type="hidden" />
+          <input id="sourceCta" name="sourceCta" type="hidden" />
+          <button type="submit"
+            class="inline-flex w-full items-center justify-center rounded-full cta-gold text-brand-950 px-8 py-4 font-semibold">Prenota
+            demo con le mie email</button>
+          <p id="form-success" class="hidden text-sm text-gold-200">Grazie. Federico ti contatta entro 24 ore.</p>
+        </form>
+      </div>
+    </section>
+
+    <section class="py-20 md:py-28 bg-white" aria-labelledby="more-testimonials-title">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="reveal max-w-3xl">
+          <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Dopo la demo</p>
+          <h2 id="more-testimonials-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Il valore
+            emerge quando il sistema lavora sui flussi reali.</h2>
+        </div>
+        <div class="mt-12 grid gap-5 lg:grid-cols-3">
+          <article class="case-card reveal border border-slate-200 bg-white p-6">
+            <div class="flex items-center gap-4">
+              <img
+                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=facearea&w=180&h=180&q=80"
+                alt="Claudia Ferrero" class="h-16 w-16 object-cover" loading="lazy" />
+              <div>
+                <p class="font-bold text-brand-950">Claudia Ferrero</p>
+                <p class="text-sm text-slate-500">Ferrero Diritto d’Impresa · Genova</p>
+              </div>
+            </div>
+            <p class="mt-6 text-slate-700">“La demo con casi reali è stata decisiva. In trenta minuti abbiamo visto dove
+              si perdevano tempo e passaggi, senza una presentazione generica.”</p>
+          </article>
+          <article class="case-card reveal border border-slate-200 bg-white p-6" style="--delay: 120ms">
+            <div class="flex items-center gap-4">
+              <img
+                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&w=180&h=180&q=80"
+                alt="Lorenzo Greco" class="h-16 w-16 object-cover" loading="lazy" />
+              <div>
+                <p class="font-bold text-brand-950">Lorenzo Greco</p>
+                <p class="text-sm text-slate-500">Greco Legal Advisory · Roma</p>
+              </div>
+            </div>
+            <p class="mt-6 text-slate-700">“Non volevamo un altro software da spiegare al team. Il punto forte è che lo
+              studio continua a usare la mail, ma dietro c’è finalmente ordine.”</p>
+          </article>
+          <article class="case-card reveal border border-slate-200 bg-white p-6" style="--delay: 240ms">
+            <div class="flex items-center gap-4">
+              <img
+                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=facearea&w=180&h=180&q=80"
+                alt="Marta Conti" class="h-16 w-16 object-cover" loading="lazy" />
+              <div>
+                <p class="font-bold text-brand-950">Marta Conti</p>
+                <p class="text-sm text-slate-500">Conti Studio Legale · Padova</p>
+              </div>
+            </div>
+            <p class="mt-6 text-slate-700">“La cosa che ho apprezzato di più è stata la relazione diretta. Nessun
+              ticket, nessun rimbalzo: quando abbiamo cambiato un flusso, è stato adattato subito.”</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-10 bg-white text-slate-600">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <div>
+        <p class="font-semibold text-brand-900">INNOVALEX</p>
+        <p class="text-sm">Federico Garau · Email: federico@innovalex.it</p>
+        <p class="text-sm">LinkedIn: linkedin.com/in/federicogarau</p>
+      </div>
+      <a href="#" class="text-sm hover:underline">Privacy GDPR</a>
+    </div>
+  </footer>
+
+  <div id="mobile-sticky" class="sticky-cta fixed bottom-4 left-1/2 z-40 w-[92%] max-w-sm md:hidden">
+    <a href="#roi" data-cta="mobile-sticky-roi"
+      class="flex items-center justify-center rounded-full cta-gold text-brand-950 px-5 py-3 text-sm font-semibold shadow-gold">Calcola
+      quanto stai perdendo</a>
+  </div>
+
+  <script>
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const header = document.getElementById('site-header');
+    const stickyCta = document.getElementById('mobile-sticky');
+    const parallaxEls = document.querySelectorAll('[data-parallax]');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let lastCta = 'direct';
+
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        if (link.dataset.cta) lastCta = link.dataset.cta;
+      });
+    });
+
+    const revealElements = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+      });
+    }, { threshold: 0.18 });
+    revealElements.forEach(el => observer.observe(el));
+
+    const formatCurrency = (value) => new Intl.NumberFormat('it-IT', {
+      style: 'currency',
+      currency: 'EUR',
+      maximumFractionDigits: 0
+    }).format(value);
+
+    const hoursLost = document.getElementById('hoursLost');
+    const hoursLostInput = document.getElementById('hoursLostInput');
+    const rate = document.getElementById('rate');
+    const rateInput = document.getElementById('rateInput');
+    const lawyers = document.getElementById('lawyers');
+    const lawyersInput = document.getElementById('lawyersInput');
+    const featBase = document.getElementById('feat-base');
+    const featArchivio = document.getElementById('feat-archivio');
+    const featReport = document.getElementById('feat-report');
+    const hoursSavedMonthly = document.getElementById('hoursSavedMonthly');
+    const hoursDelta = document.getElementById('hoursDelta');
+    const grossMonthly = document.getElementById('grossMonthly');
+    const grossMonthlyDetail = document.getElementById('grossMonthlyDetail');
+    const platformCost = document.getElementById('platformCost');
+    const platformDetail = document.getElementById('platformDetail');
+    const netAnnual = document.getElementById('netAnnual');
+    const roiPercent = document.getElementById('roiPercent');
+    const paybackPeriod = document.getElementById('paybackPeriod');
+    const featuresApplied = document.getElementById('featuresApplied');
+    const calcStatus = document.getElementById('calc-status');
+    const emailsPerDay = document.getElementById('emailsPerDay');
+    const selectedFeatures = document.getElementById('selectedFeatures');
+    const estimatedAnnualValue = document.getElementById('estimatedAnnualValue');
+    const estimatedMonthlyHours = document.getElementById('estimatedMonthlyHours');
+    const sourceCta = document.getElementById('sourceCta');
+
+    const getFeatureSelection = () => {
+      const labels = [];
+      let reduction = 0;
+      if (featBase.checked) {
+        labels.push('Gestione Email Base');
+        reduction += 0.75;
+      }
+      if (featArchivio.checked) {
+        labels.push('Archiviazione Automatica');
+        reduction += 0.10;
+      }
+      if (featReport.checked) {
+        labels.push('Report AI Settimanale');
+        reduction += 0.08;
+      }
+      return {
+        labels,
+        reduction: Math.min(reduction, 0.93),
+        count: labels.length
+      };
+    };
+
+    const updateROI = () => {
+      const hours = parseFloat(hoursLost.value) || 0;
+      const rateVal = parseFloat(rate.value) || 0;
+      const lawyersVal = parseFloat(lawyers.value) || 0;
+      const selected = getFeatureSelection();
+      const annualHoursLost = hours * 220 * lawyersVal;
+      const monthlyHoursLost = hours * 22 * lawyersVal;
+      const annualHoursSaved = annualHoursLost * selected.reduction;
+      const monthlyHoursSaved = monthlyHoursLost * selected.reduction;
+      const valueSavedAnnual = annualHoursSaved * rateVal;
+      const valueSavedMonthly = monthlyHoursSaved * rateVal;
+      const netAnnualValue = Math.max(0, valueSavedAnnual);
+
+      hoursSavedMonthly.textContent = `${monthlyHoursSaved.toFixed(0)}h`;
+      hoursDelta.textContent = selected.count ? `${(hours * selected.reduction).toFixed(1)}h/giorno recuperate per avvocato` : 'Seleziona almeno un modulo';
+      grossMonthly.textContent = formatCurrency(valueSavedMonthly);
+      grossMonthlyDetail.textContent = `${monthlyHoursSaved.toFixed(0)}h x ${formatCurrency(rateVal)}/h`;
+      platformCost.textContent = selected.count ? `${selected.count} moduli` : '-';
+      platformDetail.textContent = selected.count ? 'Valutazione economica in call' : 'Nessun modulo selezionato';
+      netAnnual.textContent = formatCurrency(netAnnualValue);
+      roiPercent.textContent = selected.count ? 'ROI validabile in demo con i tuoi flussi reali' : 'ROI stimato: -';
+      paybackPeriod.textContent = selected.count >= 2 ? 'Alta' : selected.count === 1 ? 'Media' : '-';
+      featuresApplied.textContent = selected.labels.length ? selected.labels.join(' · ') : 'Nessun modulo selezionato';
+
+      emailsPerDay.value = hours.toFixed(1);
+      selectedFeatures.value = selected.labels.join(', ');
+      estimatedAnnualValue.value = Math.round(netAnnualValue).toString();
+      estimatedMonthlyHours.value = Math.round(monthlyHoursSaved).toString();
+      sourceCta.value = lastCta;
+
+      calcStatus.textContent = 'Aggiornato ora';
+      clearTimeout(window.calcStatusTimer);
+      window.calcStatusTimer = setTimeout(() => {
+        calcStatus.textContent = 'In tempo reale';
+      }, 1200);
+    };
+
+    const syncInputs = (range, number) => {
+      range.addEventListener('input', () => {
+        number.value = range.value;
+        updateROI();
+      });
+      number.addEventListener('input', () => {
+        range.value = number.value;
+        updateROI();
+      });
+    };
+
+    syncInputs(hoursLost, hoursLostInput);
+    syncInputs(rate, rateInput);
+    syncInputs(lawyers, lawyersInput);
+    [featBase, featArchivio, featReport].forEach(el => el.addEventListener('input', updateROI));
+    updateROI();
+
+    const form = document.getElementById('lead-form');
+    const formSuccess = document.getElementById('form-success');
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const requiredFields = ['name', 'studio', 'email', 'emailsPerDay'];
+      let valid = true;
+      requiredFields.forEach(id => {
+        const input = document.getElementById(id);
+        if (!input.value.trim()) {
+          input.classList.add('border-red-400');
+          valid = false;
+        } else {
+          input.classList.remove('border-red-400');
+        }
+      });
+      const email = document.getElementById('email');
+      if (!/\S+@\S+\.\S+/.test(email.value)) {
+        email.classList.add('border-red-400');
+        valid = false;
+      }
+      const payload = {
+        name: form.name.value.trim(),
+        studio: form.studio.value.trim(),
+        email: form.email.value.trim(),
+        hoursPerDay: form.emailsPerDay.value,
+        selectedFeatures: selectedFeatures.value,
+        estimatedAnnualValue: estimatedAnnualValue.value,
+        estimatedMonthlyHours: estimatedMonthlyHours.value,
+        sourceCta: sourceCta.value || lastCta,
+        timestamp: new Date().toISOString()
+      };
+      console.log('ClickUp-ready lead payload', payload);
+      if (!valid) return;
+      formSuccess.classList.remove('hidden');
+      alert('Grazie. Federico ti contatta entro 24 ore.');
+      form.reset();
+      updateROI();
+    });
+
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      header.classList.toggle('shadow-md', scrollY > 20);
+      stickyCta.classList.toggle('is-visible', scrollY > 520);
+      if (!reduceMotion) {
+        parallaxEls.forEach(el => {
+          const speed = parseFloat(el.dataset.parallax) || 0.1;
+          el.style.setProperty('--parallax', `${scrollY * speed}px`);
+        });
+      }
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+  </script>
+</body>
+
+</html>
