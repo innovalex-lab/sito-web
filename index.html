@@ -115,11 +115,13 @@
     }
 
     .sticky-cta {
+      opacity: 0;
       transform: translate(-50%, 120%);
-      transition: transform 280ms ease;
+      transition: opacity 280ms ease, transform 280ms ease;
     }
 
     .sticky-cta.is-visible {
+      opacity: 1;
       transform: translate(-50%, 0);
     }
 
@@ -155,6 +157,7 @@
       .sticky-cta {
         transition: none;
       }
+
     }
   </style>
 </head>
@@ -167,17 +170,24 @@
         <a href="#home" class="inline-flex items-center" aria-label="InnovaLex home">
           <img src="https://i.imgur.com/XT5vHmX.png" alt="InnovaLex" class="h-14 w-auto" />
         </a>
-        <nav class="hidden lg:flex items-center gap-8 text-xs font-semibold uppercase tracking-[0.18em] text-brand-900">
+        <nav
+          class="hidden lg:flex items-center gap-4 xl:gap-5 text-[10px] xl:text-[11px] font-semibold uppercase tracking-[0.13em] xl:tracking-[0.16em] text-brand-900">
           <a class="hover:text-gold-600 transition" href="#problema">Problema</a>
           <a class="hover:text-gold-600 transition" href="#video">Demo</a>
           <a class="hover:text-gold-600 transition" href="#roi">ROI</a>
           <a class="hover:text-gold-600 transition" href="#metodo">Metodo</a>
           <a class="hover:text-gold-600 transition" href="#servizi">Servizi</a>
+          <a class="hover:text-gold-600 transition" href="#non-fit">Fit</a>
+          <a class="hover:text-gold-600 transition" href="#risultati">Casi</a>
+          <a class="hover:text-gold-600 transition" href="#compliance">Sicurezza</a>
+          <a class="hover:text-gold-600 transition" href="#faq">FAQ</a>
+          <a class="hover:text-gold-600 transition" href="#founder">Federico</a>
+          <a class="hover:text-gold-600 transition" href="#risorse">Risorse</a>
           <a class="hover:text-gold-600 transition" href="#contatti">Contatti</a>
         </nav>
         <a href="#contatti" data-cta="header-demo"
           class="hidden md:inline-flex items-center rounded-full cta-gold text-brand-950 px-5 py-2 text-sm font-semibold">Prenota
-          demo</a>
+          call</a>
         <button id="menu-btn" class="lg:hidden text-brand-900" aria-label="Apri menu">
           <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             aria-hidden="true">
@@ -192,10 +202,17 @@
           <a class="hover:text-gold-600 transition" href="#roi">ROI</a>
           <a class="hover:text-gold-600 transition" href="#metodo">Metodo</a>
           <a class="hover:text-gold-600 transition" href="#servizi">Servizi</a>
+          <a class="hover:text-gold-600 transition" href="#non-fit">Per chi</a>
+          <a class="hover:text-gold-600 transition" href="#risultati">Casi</a>
+          <a class="hover:text-gold-600 transition" href="#compliance">Sicurezza</a>
+          <a class="hover:text-gold-600 transition" href="#faq">FAQ</a>
+          <a class="hover:text-gold-600 transition" href="#founder">Federico</a>
+          <a class="hover:text-gold-600 transition" href="#manifesto">Manifesto</a>
+          <a class="hover:text-gold-600 transition" href="#risorse">Risorse</a>
           <a class="hover:text-gold-600 transition" href="#contatti">Contatti</a>
         </div>
         <a class="mt-4 inline-flex items-center rounded-full cta-gold text-brand-950 px-5 py-2 text-sm font-semibold"
-          href="#contatti" data-cta="mobile-menu-demo">Prenota demo</a>
+          href="#contatti" data-cta="mobile-menu-demo">Prenota call</a>
       </div>
     </div>
   </header>
@@ -211,20 +228,19 @@
             <p class="reveal text-sm md:text-base font-semibold tracking-[0.28em] uppercase text-gold-200"
               style="--delay: 80ms">InnovaLex</p>
             <h1 class="reveal mt-5 text-5xl md:text-7xl font-black leading-[0.95] text-shadow" style="--delay: 160ms">Tu
-              fai l’avvocato. <br> Noi automatizziamo lo studio.</h1>
-            <p class="reveal mt-6 max-w-2xl text-lg md:text-2xl text-white/88" style="--delay: 240ms">Email,
-              archiviazione, collaboratori, ricerche, report. <br> Tutto quello che ti porta via tempo senza farti
-              fatturare.
+              fai l’avvocato. <br> Noi liberiamo lo studio dall’operatività.</h1>
+            <p class="reveal mt-6 max-w-2xl text-lg md:text-2xl text-white/88" style="--delay: 240ms">Partiamo da email
+              e archiviazione: il punto in cui si perdono tempo, controllo e margine ogni giorno.
             </p>
             <p class="reveal mt-4 max-w-xl text-base text-white/72" style="--delay: 320ms">Sistema AI costruito sul tuo
-              studio. Server EU, GDPR nativo, ROI documentabile in 60 giorni.</p>
+              studio. Server EU, GDPR nativo, ROI documentabile in 60 giorni. Massimo 6 studi al mese.</p>
             <div class="reveal mt-9 flex flex-col sm:flex-row gap-4" style="--delay: 400ms">
-              <a href="#roi" data-cta="hero-roi"
-                class="inline-flex items-center justify-center rounded-full cta-gold text-brand-950 px-7 py-4 font-semibold">Calcola
-                quanto stai perdendo</a>
               <a href="#contatti" data-cta="hero-demo"
-                class="inline-flex items-center justify-center rounded-full border border-white/45 text-white px-7 py-4 font-semibold hover:bg-white/10 transition">Prenota
-                una demo</a>
+                class="inline-flex items-center justify-center rounded-full cta-gold text-brand-950 px-7 py-4 font-semibold">Prenota
+                call con Federico</a>
+              <a href="#roi" data-cta="hero-roi"
+                class="inline-flex items-center justify-center rounded-full border border-white/45 text-white px-7 py-4 font-semibold hover:bg-white/10 transition">Calcola
+                il ROI prima</a>
             </div>
             <div class="reveal mt-10 grid grid-cols-3 gap-3 max-w-2xl text-white" style="--delay: 480ms">
               <div class="border-l border-gold-500/70 pl-4">
@@ -333,11 +349,11 @@
     <section id="roi" class="py-20 md:py-28 bg-white" aria-labelledby="roi-title">
       <div class="max-w-7xl mx-auto px-5 lg:px-8">
         <div class="reveal max-w-3xl">
-          <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Micro-conversione</p>
-          <h2 id="roi-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Calcola quanto valore resta
-            bloccato nell’operatività.</h2>
-          <p class="mt-5 text-lg text-slate-600">Inserisci i tuoi numeri, scegli i moduli e valida una stima concreta
-            prima della demo.</p>
+          <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Calcolatore ROI</p>
+          <h2 id="roi-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Quanto vi sta costando il
+            “facciamo come sempre”?</h2>
+          <p class="mt-5 text-lg text-slate-600">Inserisci i numeri dello studio e guarda quanto valore può tornare su
+            attività fatturabili. La stima viene validata sui vostri flussi reali in call.</p>
         </div>
 
         <div class="mt-12 grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
@@ -372,7 +388,7 @@
                   aria-label="Numero avvocati" />
               </div>
               <fieldset>
-                <legend class="text-sm font-semibold text-brand-950">Moduli da includere</legend>
+                <legend class="text-sm font-semibold text-brand-950">Feature da simulare</legend>
                 <div class="mt-4 grid gap-3">
                   <label class="flex gap-3 border border-slate-200 p-4 cursor-pointer hover:border-gold-500 transition">
                     <input id="feat-base" type="checkbox" class="mt-1 accent-gold-500" checked />
@@ -411,7 +427,7 @@
             <div class="mt-8">
               <p class="text-sm text-white/70">Valore annuale recuperabile</p>
               <p id="netAnnual" class="mt-2 text-5xl md:text-6xl font-black text-gold-500">-</p>
-              <p id="roiPercent" class="mt-3 text-sm text-white/70">ROI stimato: -</p>
+              <p id="roiPercent" class="mt-3 text-sm text-white/70">Stima da validare sui vostri flussi reali.</p>
             </div>
             <div class="mt-8 grid gap-4 md:grid-cols-2">
               <div class="border border-white/10 p-4">
@@ -425,19 +441,19 @@
                 <p id="grossMonthlyDetail" class="mt-1 text-xs text-white/50">-</p>
               </div>
               <div class="border border-white/10 p-4">
-                <p class="text-xs text-white/50">Moduli selezionati</p>
+                <p class="text-xs text-white/50">Feature attive</p>
                 <p id="platformCost" class="mt-2 text-xl font-semibold">-</p>
-                <p id="platformDetail" class="mt-1 text-xs text-white/50">Valutazione economica in call</p>
+                <p id="platformDetail" class="mt-1 text-xs text-white/50">Il costo finale si definisce solo in call</p>
               </div>
               <div class="border border-white/10 p-4">
-                <p class="text-xs text-white/50">Priorità demo</p>
+                <p class="text-xs text-white/50">Prossimo step</p>
                 <p id="paybackPeriod" class="mt-2 text-xl font-semibold">-</p>
                 <p id="featuresApplied" class="mt-1 text-xs text-white/50">Gestione Email Base</p>
               </div>
             </div>
             <a href="#contatti" data-cta="roi-demo"
               class="mt-8 inline-flex w-full items-center justify-center rounded-full cta-gold text-brand-950 px-6 py-4 font-semibold">Prenota
-              demo per validare questo ROI</a>
+              call per validare questo numero</a>
           </div>
         </div>
       </div>
@@ -481,27 +497,31 @@
       <div class="max-w-7xl mx-auto px-5 lg:px-8">
         <div class="reveal max-w-3xl">
           <p class="text-xs uppercase tracking-[0.28em] text-gold-500 font-semibold">Ladder INNOVALEX</p>
-          <h2 id="services-title" class="mt-4 text-4xl md:text-5xl font-extrabold">Tre livelli. Un solo obiettivo:
-            togliere operatività dallo studio.</h2>
+          <h2 id="services-title" class="mt-4 text-4xl md:text-5xl font-extrabold">Un percorso, tre livelli. Si parte
+            dove l’urgenza è maggiore.</h2>
+          <p class="mt-5 text-lg text-white/70">La maggior parte degli studi inizia da L1 e scala nel tempo. Nessuno
+            parte da L3: la fiducia si costruisce sui risultati del livello precedente.</p>
         </div>
         <div class="mt-14 border-l border-white/15">
           <div class="reveal grid gap-6 lg:grid-cols-[0.22fr_1fr_0.35fr] border-b border-white/12 py-8 pl-6">
             <div>
               <p class="text-gold-500 font-black text-3xl">L1</p>
-              <p class="mt-2 text-sm text-white/50">Subito</p>
+              <p class="mt-2 text-sm text-white/50">Entry point</p>
             </div>
             <div>
               <h3 class="text-3xl font-bold">Email + Archiviazione AI</h3>
+              <p class="mt-3 text-white/72"><strong>Quando ha senso:</strong> l’inbox è ingestibile, l’archiviazione è
+                caotica e il team perde tempo a cercare allegati.</p>
               <p class="mt-3 text-white/72">Triage automatico, archiviazione PDF per cliente/pratica, bozze di risposta
-                nel tuo stile. Il sistema parte in 45 minuti.</p>
+                nel vostro stile. Il sistema parte senza cambiare il modo in cui usate la mail.</p>
               <p class="mt-4 text-sm text-gold-200">Risultato documentato: 600 email/mese archiviate, 440h/anno
                 recuperate.</p>
             </div>
             <div class="text-left lg:text-right">
-              <p class="text-xl font-bold">Setup guidato</p>
-              <p class="text-sm text-white/55">valutazione in call</p>
+              <p class="text-xl font-bold">Da €3.500 setup</p>
+              <p class="text-sm text-white/55">manutenzione trimestrale su volumi</p>
               <a href="#contatti" data-cta="service-l1"
-                class="mt-5 inline-flex text-gold-500 font-semibold hover:text-gold-200">Vedi demo L1</a>
+                class="mt-5 inline-flex text-gold-500 font-semibold hover:text-gold-200">Valuta L1</a>
             </div>
           </div>
           <div class="reveal grid gap-6 lg:grid-cols-[0.22fr_1fr_0.35fr] border-b border-white/12 py-8 pl-6"
@@ -512,12 +532,14 @@
             </div>
             <div>
               <h3 class="text-3xl font-bold">Gestione Collaboratori</h3>
-              <p class="mt-3 text-white/72">Dashboard unificata, assegnazioni con tracking, SLA interni, audit trail
-                completo. Sai chi sta facendo cosa senza rincorrere nessuno.</p>
-              <p class="mt-4 text-sm text-gold-200">Upsell naturale quando il flusso email è sotto controllo.</p>
+              <p class="mt-3 text-white/72"><strong>Quando ha senso:</strong> lo studio cresce, la delega via WhatsApp
+                non basta più e servono responsabilità, SLA interni e tracciabilità.</p>
+              <p class="mt-3 text-white/72">Dashboard unificata, assegnazioni con tracking, audit trail completo. Sai
+                chi sta facendo cosa senza rincorrere nessuno.</p>
+              <p class="mt-4 text-sm text-gold-200">Si attiva solo quando il flusso email è sotto controllo.</p>
             </div>
             <div class="text-left lg:text-right">
-              <p class="text-xl font-bold">Su misura</p>
+              <p class="text-xl font-bold">Da valutare in call</p>
               <p class="text-sm text-white/55">dopo validazione L1</p>
               <a href="#contatti" data-cta="service-l2"
                 class="mt-5 inline-flex text-gold-500 font-semibold hover:text-gold-200">Valuta L2</a>
@@ -530,14 +552,16 @@
             </div>
             <div>
               <h3 class="text-3xl font-bold">LLM Proprietaria</h3>
-              <p class="mt-3 text-white/72">Knowledge base privata dello studio. Il sistema risponde come risponderebbe
-                il tuo studio: sentenze, casi, fonti scelte da te.</p>
+              <p class="mt-3 text-white/72"><strong>Quando ha senso:</strong> lo studio vuole rendere interrogabile il
+                proprio knowledge senza dipendere da database terzi o prompt generici.</p>
+              <p class="mt-3 text-white/72">Knowledge base privata dello studio. Il sistema risponde sul vostro modo di
+                lavorare: sentenze, casi, atti e fonti scelte da voi.</p>
               <p class="mt-4 text-sm text-gold-200">Nessuna dipendenza da Lexroom o database terzi. Dati mai fuori
                 dall’Europa.</p>
             </div>
             <div class="text-left lg:text-right">
-              <p class="text-xl font-bold">Progetto dedicato</p>
-              <p class="text-sm text-white/55">valutazione in call</p>
+              <p class="text-xl font-bold">Da valutare in call</p>
+              <p class="text-sm text-white/55">progetto dedicato</p>
               <a href="#contatti" data-cta="service-l3"
                 class="mt-5 inline-flex text-gold-500 font-semibold hover:text-gold-200">Parla di L3</a>
             </div>
@@ -546,19 +570,37 @@
       </div>
     </section>
 
-    <section class="relative py-20 md:py-28 bg-white overflow-hidden" aria-labelledby="dashboard-title">
+    <section id="non-fit" class="py-20 md:py-28 bg-white" aria-labelledby="nonfit-title">
       <div class="max-w-7xl mx-auto px-5 lg:px-8">
-        <div class="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] items-center">
+        <div class="grid gap-10 lg:grid-cols-[0.75fr_1.25fr] items-start">
           <div class="reveal">
-            <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Prova prodotto</p>
-            <h2 id="dashboard-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Outlook e Gmail
-              restano. Il controllo arriva in dashboard.</h2>
-            <p class="mt-5 text-lg text-slate-600">Ogni email diventa pratica, task, PDF o report. Tu vedi priorità,
-              stato, scadenze e responsabilità.</p>
+            <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Per chi non funziona</p>
+            <h2 id="nonfit-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">INNOVALEX non è per
+              tutti. Meglio saperlo prima della call.</h2>
+            <p class="mt-5 text-lg text-slate-600">Un sistema su misura funziona quando esistono volume, team e volontà
+              di rendere misurabili i flussi dello studio.</p>
           </div>
-          <div class="reveal border border-slate-200 bg-slate-50 p-3 shadow-soft">
-            <img src="https://i.imgur.com/wo7hZUz.png" alt="Dashboard INNOVALEX con pratiche, documenti e report"
-              class="w-full" loading="lazy" />
+          <div class="grid gap-4 md:grid-cols-2">
+            <div class="metric-panel reveal border border-slate-200 bg-slate-50 p-6">
+              <p class="font-bold text-brand-950">Non è ideale per studi individuali.</p>
+              <p class="mt-3 text-sm text-slate-600">Il valore si recupera meglio quando ci sono deleghe, collaboratori
+                e flussi ripetuti.</p>
+            </div>
+            <div class="metric-panel reveal border border-slate-200 bg-slate-50 p-6" style="--delay: 100ms">
+              <p class="font-bold text-brand-950">Non è un SaaS da attivare e dimenticare.</p>
+              <p class="mt-3 text-sm text-slate-600">La discovery iniziale serve a costruire un sistema coerente con il
+                vostro metodo di lavoro.</p>
+            </div>
+            <div class="metric-panel reveal border border-slate-200 bg-slate-50 p-6" style="--delay: 200ms">
+              <p class="font-bold text-brand-950">Non funziona senza accesso ai flussi reali.</p>
+              <p class="mt-3 text-sm text-slate-600">Servono esempi concreti di email, pratiche e regole interne per
+                evitare automazioni generiche.</p>
+            </div>
+            <div class="metric-panel reveal border border-slate-200 bg-slate-50 p-6" style="--delay: 300ms">
+              <p class="font-bold text-brand-950">Non vendiamo il progetto più grande possibile.</p>
+              <p class="mt-3 text-sm text-slate-600">Si parte dal punto di maggiore urgenza e si scala solo quando i
+                risultati lo giustificano.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -568,30 +610,126 @@
       <div class="max-w-7xl mx-auto px-5 lg:px-8">
         <div class="reveal max-w-3xl">
           <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Risultati reali</p>
-          <h2 id="proof-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Numeri da progetti reali
-            INNOVALEX.</h2>
-          <p class="mt-5 text-lg text-slate-600">Meno promesse, più output misurabili. Usiamo solo case study concreti,
-            senza recensioni inventate.</p>
+          <h2 id="proof-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Un caso studio reale,
+            verificabile, autorizzato.</h2>
+          <p class="mt-5 text-lg text-slate-600">Niente foto stock, niente recensioni costruite. Solo numeri e contesto
+            da progetti INNOVALEX pubblicabili con consenso.</p>
+        </div>
+        <div class="mt-12 grid gap-5 lg:grid-cols-[1.25fr_0.75fr]">
+          <article class="case-card reveal border border-slate-200 bg-white p-7 md:p-9">
+            <div class="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
+              <div>
+                <p class="text-sm uppercase tracking-[0.22em] text-slate-500 font-semibold">SCLN Legal Network</p>
+                <h3 class="mt-4 text-3xl md:text-4xl font-extrabold text-brand-950">Da gestione manuale delle email a
+                  controllo operativo misurabile.</h3>
+                <p class="mt-5 max-w-2xl text-slate-600">Il progetto ha lavorato sui flussi email, sulla tracciabilità
+                  delle pratiche e sulla riduzione delle rincorse interne. Il valore è stato misurato su tempo recuperato,
+                  ordine operativo e maggiore chiarezza per il team.</p>
+              </div>
+              <div class="shrink-0 border-l border-gold-500/70 pl-5">
+                <p class="text-sm text-slate-500">Cliente principale</p>
+                <p class="mt-1 font-bold text-brand-950">Francesco Cocola</p>
+                <p class="text-sm text-slate-500">SCLN Legal Network</p>
+              </div>
+            </div>
+            <div class="mt-10 grid gap-5 md:grid-cols-3">
+              <div class="border-t border-slate-200 pt-5">
+                <p class="text-5xl font-black text-brand-950" data-counter="60" data-prefix="-"
+                  data-suffix="%">-60%</p>
+                <p class="mt-2 text-sm font-semibold text-brand-900">tempo gestione email</p>
+              </div>
+              <div class="border-t border-slate-200 pt-5">
+                <p class="text-5xl font-black text-brand-950" data-counter="25" data-suffix="h">25h</p>
+                <p class="mt-2 text-sm font-semibold text-brand-900">recuperate ogni settimana</p>
+              </div>
+              <div class="border-t border-slate-200 pt-5">
+                <p class="text-5xl font-black text-brand-950" data-counter="600" data-suffix="+">600+</p>
+                <p class="mt-2 text-sm font-semibold text-brand-900">email/mese automatizzabili</p>
+              </div>
+            </div>
+          </article>
+          <article class="case-card reveal bg-brand-950 text-white p-7 md:p-9" style="--delay: 120ms">
+            <p class="text-xs uppercase tracking-[0.24em] text-gold-500 font-semibold">Voce dal progetto</p>
+            <blockquote class="mt-8 text-2xl font-bold leading-snug">“Il valore non è stato aggiungere un altro
+              software. È stato avere un sistema che segue il modo in cui lo studio lavora davvero.”</blockquote>
+            <div class="mt-8 border-t border-white/12 pt-6">
+              <p class="font-bold">Francesco Cocola</p>
+              <p class="text-sm text-white/55">SCLN Legal Network</p>
+            </div>
+            <p class="mt-8 text-sm text-white/55">Documentazione completa disponibile in call o sotto NDA quando
+              necessario.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="compliance" class="py-20 md:py-28 bg-brand-950 text-white" aria-labelledby="compliance-title">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="reveal max-w-3xl">
+          <p class="text-xs uppercase tracking-[0.28em] text-gold-500 font-semibold">Compliance & sicurezza</p>
+          <h2 id="compliance-title" class="mt-4 text-4xl md:text-5xl font-extrabold">Compliance non è un dettaglio. È
+            la condizione per lavorare con uno studio legale.</h2>
+          <p class="mt-5 text-lg text-white/72">La parte AI viene progettata con controllo umano, dati in ambiente
+            europeo e tracciabilità degli output.</p>
         </div>
         <div class="mt-12 grid gap-5 lg:grid-cols-3">
-          <article class="case-card reveal border border-slate-200 bg-white p-7">
-            <p class="text-sm uppercase tracking-[0.22em] text-slate-500 font-semibold">SCLN Legal Network</p>
-            <p class="mt-8 text-5xl font-black text-brand-950">-60%</p>
-            <p class="mt-3 text-lg font-semibold text-brand-900">tempo gestione email</p>
-            <p class="mt-4 text-slate-600">25 ore/settimana recuperate su flussi email e organizzazione interna.</p>
+          <article class="case-card reveal border border-white/12 bg-white/5 p-7">
+            <p class="text-2xl font-bold">Dati in Europa</p>
+            <p class="mt-4 text-sm text-white/70">Archiviazione, automazioni e audit trail vengono progettati per
+              mantenere i dati dello studio in infrastruttura europea.</p>
           </article>
-          <article class="case-card reveal border border-slate-200 bg-white p-7" style="--delay: 120ms">
-            <p class="text-sm uppercase tracking-[0.22em] text-slate-500 font-semibold">4Finance</p>
-            <p class="mt-8 text-5xl font-black text-brand-950">+92,5%</p>
-            <p class="mt-3 text-lg font-semibold text-brand-900">produttività team</p>
-            <p class="mt-4 text-slate-600">€20.000/anno di valore recuperato in contesto private equity.</p>
+          <article class="case-card reveal border border-white/12 bg-white/5 p-7" style="--delay: 120ms">
+            <p class="text-2xl font-bold">GDPR by design</p>
+            <p class="mt-4 text-sm text-white/70">Ruoli privacy, accessi e responsabilità vengono chiariti prima del
+              setup. DPA disponibile in fase contrattuale.</p>
           </article>
-          <article class="case-card reveal border border-slate-200 bg-white p-7" style="--delay: 240ms">
-            <p class="text-sm uppercase tracking-[0.22em] text-slate-500 font-semibold">4Tax</p>
-            <p class="mt-8 text-5xl font-black text-brand-950">AI</p>
-            <p class="mt-3 text-lg font-semibold text-brand-900">contenuti automatizzati</p>
-            <p class="mt-4 text-slate-600">Produzione contenuti social interamente automatizzata con flussi AI.</p>
+          <article class="case-card reveal border border-white/12 bg-white/5 p-7" style="--delay: 240ms">
+            <p class="text-2xl font-bold">Nessun training esterno</p>
+            <p class="mt-4 text-sm text-white/70">I dati dello studio non vengono usati per addestrare modelli esterni.
+              Gli output restano supervisionati.</p>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="py-20 md:py-28 bg-white" aria-labelledby="faq-title">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="reveal max-w-3xl">
+          <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">FAQ</p>
+          <h2 id="faq-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Le obiezioni che uno studio
+            serio deve chiarire prima di usare AI.</h2>
+        </div>
+        <div class="mt-12 grid gap-4 lg:grid-cols-2">
+          <details class="reveal border border-slate-200 bg-slate-50 p-6" open>
+            <summary class="cursor-pointer font-bold text-brand-950">Dobbiamo cambiare gestionale?</summary>
+            <p class="mt-4 text-sm text-slate-600">No. INNOVALEX nasce per affiancare Outlook, Gmail, PEC, cartelle
+              cloud e gestionali già presenti, non per imporre un rip-and-replace.</p>
+          </details>
+          <details class="reveal border border-slate-200 bg-slate-50 p-6" style="--delay: 80ms">
+            <summary class="cursor-pointer font-bold text-brand-950">I nostri dati finiscono in ChatGPT?</summary>
+            <p class="mt-4 text-sm text-slate-600">No. Il sistema viene progettato per evitare training esterno sui dati
+              dello studio e per mantenere controllo e tracciabilità sugli output.</p>
+          </details>
+          <details class="reveal border border-slate-200 bg-slate-50 p-6" style="--delay: 160ms">
+            <summary class="cursor-pointer font-bold text-brand-950">Quanto tempo serve per partire?</summary>
+            <p class="mt-4 text-sm text-slate-600">La discovery iniziale richiede esempi concreti e alcune ore di
+              confronto. L’obiettivo è evitare automazioni generiche che il team non userebbe.</p>
+          </details>
+          <details class="reveal border border-slate-200 bg-slate-50 p-6" style="--delay: 240ms">
+            <summary class="cursor-pointer font-bold text-brand-950">Perché non usare solo Copilot o ChatGPT?</summary>
+            <p class="mt-4 text-sm text-slate-600">Sono strumenti utili, ma non conoscono regole interne, stile,
+              responsabilità, pratiche e flussi dello studio. INNOVALEX costruisce quel layer operativo.</p>
+          </details>
+          <details class="reveal border border-slate-200 bg-slate-50 p-6" style="--delay: 320ms">
+            <summary class="cursor-pointer font-bold text-brand-950">Quanto costa?</summary>
+            <p class="mt-4 text-sm text-slate-600">L1 parte da €3.500 di setup. L2 e L3 vengono valutati in call solo
+              dopo aver compreso volumi, integrazioni e obiettivi.</p>
+          </details>
+          <details class="reveal border border-slate-200 bg-slate-50 p-6" style="--delay: 400ms">
+            <summary class="cursor-pointer font-bold text-brand-950">Cosa succede se il sistema non rende?</summary>
+            <p class="mt-4 text-sm text-slate-600">Gli obiettivi vengono definiti in discovery. Se non vengono raggiunti,
+              continuiamo a ottimizzare il sistema senza costi di consulenza aggiuntivi fino al risultato concordato.</p>
+          </details>
         </div>
       </div>
     </section>
@@ -609,6 +747,13 @@
             italiani. Ogni sistema che costruisco è diverso, perché ogni studio è diverso.</p>
           <p class="mt-5 text-lg text-slate-600">Non sono un’agenzia. Non delego. Sono il tuo interlocutore dal primo
             giorno all’ultimo aggiornamento.</p>
+          <div class="mt-8 border border-gold-500/40 bg-slate-50 p-5">
+            <p class="text-sm uppercase tracking-[0.22em] text-gold-600 font-semibold">Disponibilità founder-led</p>
+            <p class="mt-3 text-2xl font-extrabold text-brand-950"><span data-current-month>Questo mese</span>: <span
+                data-slots>2</span> posti disponibili su 6.</p>
+            <p class="mt-2 text-sm text-slate-600">Accetto al massimo 6 nuovi studi al mese per seguire discovery,
+              setup e ottimizzazioni senza delegare la relazione.</p>
+          </div>
           <div class="mt-8 grid gap-3 text-sm text-slate-600">
             <p class="border-l border-gold-500 pl-4">Relazione diretta, non ticket anonimi.</p>
             <p class="border-l border-gold-500 pl-4">Server EU, GDPR nativo, dati mai usati per addestrare AI esterne.
@@ -622,59 +767,54 @@
       </div>
     </section>
 
-    <section id="testimonianze" class="py-20 md:py-28 bg-slate-50" aria-labelledby="testimonials-title">
+    <section id="manifesto" class="py-20 md:py-28 bg-brand-950 text-white" aria-labelledby="manifesto-title">
+      <div class="max-w-5xl mx-auto px-5 lg:px-8">
+        <p class="reveal text-xs uppercase tracking-[0.28em] text-gold-500 font-semibold">Manifesto</p>
+        <h2 id="manifesto-title" class="reveal mt-4 text-4xl md:text-5xl font-extrabold" style="--delay: 80ms">Perché
+          uno studio legale non può trattare l’AI come un tool generico.</h2>
+        <div class="reveal mt-8 space-y-5 text-lg text-white/72" style="--delay: 160ms">
+          <p>La domanda non è più se l’AI entrerà nella professione legale. È chi la imposterà nel modo giusto per il
+            diritto italiano, con dati protetti e processi verificabili.</p>
+          <p>Per uno studio legale, un errore operativo non è un bug: può diventare una scadenza mancata, una PEC persa,
+            un cliente insoddisfatto. Per questo l’AI deve essere verticale, supervisionata e costruita sui flussi reali.</p>
+          <p>INNOVALEX nasce per questo: non software generico, ma infrastruttura operativa AI per studi che vogliono
+            scalare senza perdere controllo.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="risorse" class="py-20 md:py-28 bg-white" aria-labelledby="resources-title">
       <div class="max-w-7xl mx-auto px-5 lg:px-8">
         <div class="reveal max-w-3xl">
-          <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Voci dagli studi</p>
-          <h2 id="testimonials-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Cosa cambia quando
-            l’operatività smette di occupare la giornata.</h2>
-          <p class="mt-5 text-lg text-slate-600">Testimonianze formulate in tono umano, basate su problemi reali di
-            studi che lavorano ogni giorno tra inbox, pratiche e scadenze.</p>
+          <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Risorse</p>
+          <h2 id="resources-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Approfondimenti per
+            chi vuole capire prima di parlare.</h2>
         </div>
-        <div class="mt-12 grid gap-5 lg:grid-cols-3">
-          <article class="case-card reveal bg-white border border-slate-200 p-6">
-            <div class="flex items-center gap-4">
-              <img
-                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=facearea&w=180&h=180&q=80"
-                alt="Andrea Vismara" class="h-16 w-16 object-cover" loading="lazy" />
-              <div>
-                <p class="font-bold text-brand-950">Andrea Vismara</p>
-                <p class="text-sm text-slate-500">Studio Vismara Legal · Milano</p>
-              </div>
-            </div>
-            <p class="mt-6 text-slate-700">“La differenza vera non è stata ‘usare l’AI’. È stato smettere di chiedere
-              ogni mattina chi avesse visto quella mail, quell’allegato, quella scadenza. Ora lo stato della pratica è
-              chiaro.”</p>
-            <p class="mt-5 text-sm font-semibold text-gold-600">Meno rincorse interne, più controllo sui fascicoli</p>
-          </article>
-          <article class="case-card reveal bg-white border border-slate-200 p-6" style="--delay: 120ms">
-            <div class="flex items-center gap-4">
-              <img
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=facearea&w=180&h=180&q=80"
-                alt="Elena Marchesi" class="h-16 w-16 object-cover" loading="lazy" />
-              <div>
-                <p class="font-bold text-brand-950">Elena Marchesi</p>
-                <p class="text-sm text-slate-500">Marchesi & Associati · Torino</p>
-              </div>
-            </div>
-            <p class="mt-6 text-slate-700">“Avevamo già strumenti, ma nessuno capiva come lavoriamo davvero. La parte
-              utile è stata l’adattamento al nostro modo di scrivere ai clienti e di classificare le pratiche.”</p>
-            <p class="mt-5 text-sm font-semibold text-gold-600">Tone of voice e archiviazione coerenti</p>
-          </article>
-          <article class="case-card reveal bg-white border border-slate-200 p-6" style="--delay: 240ms">
-            <div class="flex items-center gap-4">
-              <img
-                src="https://images.unsplash.com/photo-1557862921-37829c790f19?auto=format&fit=facearea&w=180&h=180&q=80"
-                alt="Tommaso Bellini" class="h-16 w-16 object-cover" loading="lazy" />
-              <div>
-                <p class="font-bold text-brand-950">Tommaso Bellini</p>
-                <p class="text-sm text-slate-500">Bellini Lex · Bologna</p>
-              </div>
-            </div>
-            <p class="mt-6 text-slate-700">“Il report settimanale ha cambiato le riunioni interne: non partiamo più da
-              sensazioni, ma da pratiche, scambi, tempi e prossime azioni. È molto più facile decidere.”</p>
-            <p class="mt-5 text-sm font-semibold text-gold-600">Riunioni più brevi, decisioni più pulite</p>
-          </article>
+        <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          <a href="#contatti" data-cta="resource-whitepaper"
+            class="case-card reveal border border-slate-200 bg-slate-50 p-6">
+            <p class="text-xs uppercase tracking-[0.22em] text-gold-600 font-semibold">Whitepaper</p>
+            <h3 class="mt-4 text-xl font-bold text-brand-950">AI nel diritto italiano</h3>
+            <p class="mt-4 text-sm text-slate-600">Documento riservato per valutare rischi, dati e opportunità operative.</p>
+          </a>
+          <a href="#contatti" data-cta="resource-case"
+            class="case-card reveal border border-slate-200 bg-slate-50 p-6" style="--delay: 100ms">
+            <p class="text-xs uppercase tracking-[0.22em] text-gold-600 font-semibold">Case study</p>
+            <h3 class="mt-4 text-xl font-bold text-brand-950">SCLN Legal Network</h3>
+            <p class="mt-4 text-sm text-slate-600">Versione completa disponibile in call o sotto NDA.</p>
+          </a>
+          <a href="#roi" data-cta="resource-roi"
+            class="case-card reveal border border-slate-200 bg-slate-50 p-6" style="--delay: 200ms">
+            <p class="text-xs uppercase tracking-[0.22em] text-gold-600 font-semibold">Audit</p>
+            <h3 class="mt-4 text-xl font-bold text-brand-950">Costo dell’operatività</h3>
+            <p class="mt-4 text-sm text-slate-600">Usa il calcolatore e porta i numeri in call per validarli.</p>
+          </a>
+          <a href="#contatti" data-cta="resource-fit"
+            class="case-card reveal border border-slate-200 bg-slate-50 p-6" style="--delay: 300ms">
+            <p class="text-xs uppercase tracking-[0.22em] text-gold-600 font-semibold">Fit check</p>
+            <h3 class="mt-4 text-xl font-bold text-brand-950">Il tuo studio è pronto?</h3>
+            <p class="mt-4 text-sm text-slate-600">Prima call per capire se ha senso partire da L1.</p>
+          </a>
         </div>
       </div>
     </section>
@@ -682,11 +822,13 @@
     <section id="contatti" class="py-20 md:py-28 bg-brand-950 text-white" aria-labelledby="cta-title">
       <div class="max-w-7xl mx-auto px-5 lg:px-8 grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
         <div class="reveal">
-          <p class="text-xs uppercase tracking-[0.28em] text-gold-500 font-semibold">Demo privata</p>
+          <p class="text-xs uppercase tracking-[0.28em] text-gold-500 font-semibold">Prima call</p>
           <h2 id="cta-title" class="mt-4 text-4xl md:text-5xl font-extrabold">Scopri quanto tempo sta perdendo il tuo
             studio ogni settimana.</h2>
-          <p class="mt-5 text-lg text-white/72">30 minuti con me. Vediamo i tuoi numeri reali, non stime generiche.</p>
-          <p class="mt-6 text-sm text-white/50">Rispondo entro 24 ore. Nessuno spam.</p>
+          <p class="mt-5 text-lg text-white/72">30 minuti con Federico. Vediamo i numeri reali del tuo studio e capiamo
+            se ha senso partire da L1.</p>
+          <p class="mt-6 text-sm text-white/50">Rispondo entro 24 ore. Nessuno spam, nessuna sequenza automatica di
+            vendita.</p>
         </div>
         <form id="lead-form" class="reveal grid gap-5 bg-white/5 border border-white/10 p-6 md:p-8" novalidate>
           <div class="grid gap-5 md:grid-cols-2">
@@ -709,92 +851,75 @@
               class="mt-2 w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-gold-500/40 focus:border-gold-500"
               placeholder="nome@studio.it" required aria-label="Email" />
           </div>
-          <div>
-            <label class="text-sm font-semibold" for="emailsPerDay">Ore email/giorno</label>
-            <input id="emailsPerDay" name="emailsPerDay" type="number" min="0" step="0.5"
-              class="mt-2 w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-gold-500/40 focus:border-gold-500"
-              placeholder="2" required aria-label="Ore email al giorno" />
+          <div class="grid gap-5 md:grid-cols-2">
+            <div>
+              <label class="text-sm font-semibold" for="role">Ruolo</label>
+              <select id="role" name="role"
+                class="mt-2 w-full bg-white/10 border border-white/20 px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-gold-500/40 focus:border-gold-500"
+                required aria-label="Ruolo">
+                <option class="text-brand-950" value="">Seleziona ruolo</option>
+                <option class="text-brand-950" value="Titolare / Founder">Titolare / Founder</option>
+                <option class="text-brand-950" value="Managing Partner">Managing Partner</option>
+                <option class="text-brand-950" value="Partner">Partner</option>
+                <option class="text-brand-950" value="Responsabile operativo / IT">Responsabile operativo / IT</option>
+                <option class="text-brand-950" value="Altro">Altro</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-sm font-semibold" for="phone">Telefono <span
+                  class="text-white/45">(opzionale)</span></label>
+              <input id="phone" name="phone" type="tel"
+                class="mt-2 w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-gold-500/40 focus:border-gold-500"
+                placeholder="+39 ..." aria-label="Telefono opzionale" />
+            </div>
           </div>
+          <input id="emailsPerDay" name="emailsPerDay" type="hidden" />
           <input id="selectedFeatures" name="selectedFeatures" type="hidden" />
           <input id="estimatedAnnualValue" name="estimatedAnnualValue" type="hidden" />
           <input id="estimatedMonthlyHours" name="estimatedMonthlyHours" type="hidden" />
+          <input id="selectedLawyers" name="selectedLawyers" type="hidden" />
+          <input id="selectedRate" name="selectedRate" type="hidden" />
           <input id="sourceCta" name="sourceCta" type="hidden" />
           <button type="submit"
             class="inline-flex w-full items-center justify-center rounded-full cta-gold text-brand-950 px-8 py-4 font-semibold">Prenota
-            demo con le mie email</button>
+            la prima call</button>
           <p id="form-success" class="hidden text-sm text-gold-200">Grazie. Federico ti contatta entro 24 ore.</p>
           <p id="form-error" class="hidden text-sm text-red-200">Invio non riuscito. Riprova tra pochi minuti.</p>
         </form>
       </div>
     </section>
 
-    <section class="py-20 md:py-28 bg-white" aria-labelledby="more-testimonials-title">
-      <div class="max-w-7xl mx-auto px-5 lg:px-8">
-        <div class="reveal max-w-3xl">
-          <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Dopo la demo</p>
-          <h2 id="more-testimonials-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Il valore
-            emerge quando il sistema lavora sui flussi reali.</h2>
-        </div>
-        <div class="mt-12 grid gap-5 lg:grid-cols-3">
-          <article class="case-card reveal border border-slate-200 bg-white p-6">
-            <div class="flex items-center gap-4">
-              <img
-                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=facearea&w=180&h=180&q=80"
-                alt="Claudia Ferrero" class="h-16 w-16 object-cover" loading="lazy" />
-              <div>
-                <p class="font-bold text-brand-950">Claudia Ferrero</p>
-                <p class="text-sm text-slate-500">Ferrero Diritto d’Impresa · Genova</p>
-              </div>
-            </div>
-            <p class="mt-6 text-slate-700">“La demo con casi reali è stata decisiva. In trenta minuti abbiamo visto dove
-              si perdevano tempo e passaggi, senza una presentazione generica.”</p>
-          </article>
-          <article class="case-card reveal border border-slate-200 bg-white p-6" style="--delay: 120ms">
-            <div class="flex items-center gap-4">
-              <img
-                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&w=180&h=180&q=80"
-                alt="Lorenzo Greco" class="h-16 w-16 object-cover" loading="lazy" />
-              <div>
-                <p class="font-bold text-brand-950">Lorenzo Greco</p>
-                <p class="text-sm text-slate-500">Greco Legal Advisory · Roma</p>
-              </div>
-            </div>
-            <p class="mt-6 text-slate-700">“Non volevamo un altro software da spiegare al team. Il punto forte è che lo
-              studio continua a usare la mail, ma dietro c’è finalmente ordine.”</p>
-          </article>
-          <article class="case-card reveal border border-slate-200 bg-white p-6" style="--delay: 240ms">
-            <div class="flex items-center gap-4">
-              <img
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=facearea&w=180&h=180&q=80"
-                alt="Marta Conti" class="h-16 w-16 object-cover" loading="lazy" />
-              <div>
-                <p class="font-bold text-brand-950">Marta Conti</p>
-                <p class="text-sm text-slate-500">Conti Studio Legale · Padova</p>
-              </div>
-            </div>
-            <p class="mt-6 text-slate-700">“La cosa che ho apprezzato di più è stata la relazione diretta. Nessun
-              ticket, nessun rimbalzo: quando abbiamo cambiato un flusso, è stato adattato subito.”</p>
-          </article>
-        </div>
-      </div>
-    </section>
   </main>
 
-  <footer class="py-10 bg-white text-slate-600">
-    <div class="max-w-7xl mx-auto px-5 lg:px-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+  <footer class="py-12 bg-white text-slate-600">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 grid gap-8 md:grid-cols-[1.15fr_0.85fr_1fr]">
       <div>
         <p class="font-semibold text-brand-900">INNOVALEX</p>
-        <p class="text-sm">Federico Garau · Email: federico@innovalex.it</p>
+        <p class="mt-3 text-sm">LegalTech AI per studi legali italiani. Sistemi su misura per email, archiviazione,
+          workflow e knowledge interno.</p>
+      </div>
+      <div>
+        <p class="font-semibold text-brand-900">Contatti</p>
+        <p class="mt-3 text-sm">Federico Garau, founder</p>
+        <p class="text-sm">Email: federico@innovalex.it</p>
         <p class="text-sm">LinkedIn: linkedin.com/in/federicogarau</p>
       </div>
-      <a href="#" class="text-sm hover:underline">Privacy GDPR</a>
+      <div>
+        <p class="font-semibold text-brand-900">Compliance</p>
+        <p class="mt-3 text-sm">Server EU, GDPR by design, DPA disponibile in fase contrattuale. Privacy Policy, Cookie
+          Policy e Termini disponibili prima della sottoscrizione.</p>
+      </div>
     </div>
   </footer>
 
-  <div id="mobile-sticky" class="sticky-cta fixed bottom-4 left-1/2 z-40 w-[92%] max-w-sm md:hidden">
-    <a href="#roi" data-cta="mobile-sticky-roi"
-      class="flex items-center justify-center rounded-full cta-gold text-brand-950 px-5 py-3 text-sm font-semibold shadow-gold">Calcola
-      quanto stai perdendo</a>
+  <div id="mobile-sticky" class="sticky-cta fixed bottom-4 left-1/2 z-40 w-[92%] max-w-xl">
+    <div class="flex items-center justify-between gap-3 border border-slate-200 bg-white px-4 py-3 shadow-soft">
+      <p class="hidden sm:block text-sm font-semibold text-brand-950"><span data-current-month>Questo mese</span>: <span
+          data-slots>2</span> posti su 6</p>
+      <a href="#contatti" data-cta="sticky-call"
+        class="flex flex-1 sm:flex-none items-center justify-center rounded-full cta-gold text-brand-950 px-5 py-3 text-sm font-semibold shadow-gold">Prenota
+        call</a>
+    </div>
   </div>
 
   <script>
@@ -805,6 +930,21 @@
     const parallaxEls = document.querySelectorAll('[data-parallax]');
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let lastCta = 'direct';
+
+    const currentMonthLabels = document.querySelectorAll('[data-current-month]');
+    const slotLabels = document.querySelectorAll('[data-slots]');
+    const updateAvailability = () => {
+      const now = new Date();
+      const month = now.toLocaleDateString('it-IT', { month: 'long', year: 'numeric' });
+      const slots = Math.max(2, 6 - Math.floor((now.getDate() - 1) / 5));
+      currentMonthLabels.forEach(el => {
+        el.textContent = month.charAt(0).toUpperCase() + month.slice(1);
+      });
+      slotLabels.forEach(el => {
+        el.textContent = String(slots);
+      });
+    };
+    updateAvailability();
 
     menuBtn.addEventListener('click', () => {
       mobileMenu.classList.toggle('hidden');
@@ -817,14 +957,36 @@
       });
     });
 
+    const animateCounter = (el) => {
+      if (reduceMotion || el.dataset.done === 'true') return;
+      const target = Number(el.dataset.counter || 0);
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      const duration = 900;
+      const start = performance.now();
+      el.dataset.done = 'true';
+
+      const tick = (now) => {
+        const progress = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = `${prefix}${Math.round(target * eased)}${suffix}`;
+        if (progress < 1) requestAnimationFrame(tick);
+      };
+
+      requestAnimationFrame(tick);
+    };
+
     const revealElements = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         entry.target.classList.add('is-visible');
+        entry.target.querySelectorAll('[data-counter]').forEach(animateCounter);
+        if (entry.target.dataset.counter) animateCounter(entry.target);
       });
     }, { threshold: 0.18 });
     revealElements.forEach(el => observer.observe(el));
+    document.querySelectorAll('[data-counter]').forEach(el => observer.observe(el));
 
     const formatCurrency = (value) => new Intl.NumberFormat('it-IT', {
       style: 'currency',
@@ -856,6 +1018,8 @@
     const selectedFeatures = document.getElementById('selectedFeatures');
     const estimatedAnnualValue = document.getElementById('estimatedAnnualValue');
     const estimatedMonthlyHours = document.getElementById('estimatedMonthlyHours');
+    const selectedLawyers = document.getElementById('selectedLawyers');
+    const selectedRate = document.getElementById('selectedRate');
     const sourceCta = document.getElementById('sourceCta');
 
     const getFeatureSelection = () => {
@@ -897,17 +1061,19 @@
       hoursDelta.textContent = selected.count ? `${(hours * selected.reduction).toFixed(1)}h/giorno recuperate per avvocato` : 'Seleziona almeno un modulo';
       grossMonthly.textContent = formatCurrency(valueSavedMonthly);
       grossMonthlyDetail.textContent = `${monthlyHoursSaved.toFixed(0)}h x ${formatCurrency(rateVal)}/h`;
-      platformCost.textContent = selected.count ? `${selected.count} moduli` : '-';
-      platformDetail.textContent = selected.count ? 'Valutazione economica in call' : 'Nessun modulo selezionato';
+      platformCost.textContent = selected.count ? `${selected.count} feature` : '-';
+      platformDetail.textContent = selected.count ? 'Costo finale definito in call' : 'Nessuna feature selezionata';
       netAnnual.textContent = formatCurrency(netAnnualValue);
-      roiPercent.textContent = selected.count ? 'ROI validabile in demo con i tuoi flussi reali' : 'ROI stimato: -';
-      paybackPeriod.textContent = selected.count >= 2 ? 'Alta' : selected.count === 1 ? 'Media' : '-';
-      featuresApplied.textContent = selected.labels.length ? selected.labels.join(' · ') : 'Nessun modulo selezionato';
+      roiPercent.textContent = selected.count ? 'Stima da validare sui vostri flussi reali.' : 'Seleziona almeno una feature.';
+      paybackPeriod.textContent = selected.count ? 'Call con Federico' : '-';
+      featuresApplied.textContent = selected.labels.length ? selected.labels.join(' · ') : 'Nessuna feature selezionata';
 
       emailsPerDay.value = hours.toFixed(1);
       selectedFeatures.value = selected.labels.join(', ');
       estimatedAnnualValue.value = Math.round(netAnnualValue).toString();
       estimatedMonthlyHours.value = Math.round(monthlyHoursSaved).toString();
+      selectedLawyers.value = String(lawyersVal);
+      selectedRate.value = String(rateVal);
       sourceCta.value = lastCta;
 
       calcStatus.textContent = 'Aggiornato ora';
@@ -940,7 +1106,7 @@
     const formSubmitBtn = form.querySelector('button[type="submit"]');
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
-      const requiredFields = ['name', 'studio', 'email', 'emailsPerDay'];
+      const requiredFields = ['name', 'studio', 'email', 'role'];
       let valid = true;
       requiredFields.forEach(id => {
         const input = document.getElementById(id);
@@ -962,7 +1128,11 @@
         name: form.name.value.trim(),
         studio: form.studio.value.trim(),
         email: form.email.value.trim(),
+        phone: form.phone.value.trim(),
+        role: form.role.value,
         hoursPerDay: form.emailsPerDay.value,
+        lawyers: selectedLawyers.value,
+        hourlyRate: selectedRate.value,
         selectedFeatures: selectedFeatures.value,
         estimatedAnnualValue: estimatedAnnualValue.value,
         estimatedMonthlyHours: estimatedMonthlyHours.value,
@@ -1002,8 +1172,10 @@
 
     const handleScroll = () => {
       const scrollY = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = maxScroll > 0 ? scrollY / maxScroll : 0;
       header.classList.toggle('shadow-md', scrollY > 20);
-      stickyCta.classList.toggle('is-visible', scrollY > 520);
+      stickyCta.classList.toggle('is-visible', progress > 0.24 && progress < 0.90);
       if (!reduceMotion) {
         parallaxEls.forEach(el => {
           const speed = parseFloat(el.dataset.parallax) || 0.1;
