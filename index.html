@@ -106,6 +106,25 @@
       transition: transform 260ms ease, border-color 260ms ease, box-shadow 260ms ease;
     }
 
+    .dayline {
+      position: relative;
+    }
+
+    .dayline::before {
+      content: "";
+      position: absolute;
+      left: 1rem;
+      top: 0.75rem;
+      bottom: 0.75rem;
+      width: 1px;
+      background: linear-gradient(180deg, rgba(198, 167, 91, 0.18), rgba(198, 167, 91, 0.85), rgba(198, 167, 91, 0.18));
+    }
+
+    .day-step {
+      position: relative;
+      padding-left: 3.5rem;
+    }
+
     .case-card:hover,
     .service-step:hover,
     .metric-panel:hover {
@@ -132,6 +151,14 @@
     @media (max-width: 768px) {
       .workflow-line::before {
         display: none;
+      }
+
+      .dayline::before {
+        left: 0.75rem;
+      }
+
+      .day-step {
+        padding-left: 3rem;
       }
     }
 
@@ -224,7 +251,7 @@
             <div class="reveal mt-9 flex flex-col sm:flex-row gap-4" style="--delay: 400ms">
               <a href="#contatti" data-cta="hero-demo"
                 class="inline-flex items-center justify-center rounded-full cta-gold text-brand-950 px-7 py-4 font-semibold">Prenota
-                call con Federico</a>
+                la Diagnosi Operativa</a>
               <a href="#roi" data-cta="hero-roi"
                 class="inline-flex items-center justify-center rounded-full border border-white/45 text-white px-7 py-4 font-semibold hover:bg-white/10 transition">Quanto
                 vi sta costando l'inerzia? Calcola -></a>
@@ -248,6 +275,71 @@
       </div>
     </section>
 
+    <section id="risultati" class="py-20 md:py-28 bg-slate-50" aria-labelledby="proof-title">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="reveal max-w-3xl">
+          <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Risultati reali</p>
+          <h2 id="proof-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Un caso studio reale,
+            verificabile, autorizzato.</h2>
+          <p class="mt-5 text-lg text-slate-600">Niente foto stock, niente recensioni costruite. Solo numeri e contesto
+            da progetti INNOVALEX pubblicabili con consenso.</p>
+        </div>
+        <div class="mt-12 grid gap-5 lg:grid-cols-[1.25fr_0.75fr]">
+          <article class="case-card reveal border border-slate-200 bg-white p-7 md:p-9">
+            <div class="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
+              <div>
+                <img src="https://www.scln.it/images/the-firm/office/legal-network-logo.webp"
+                  alt="Logo SCLN Legal Network" loading="lazy" decoding="async" class="h-20 w-auto object-contain" />
+                <p class="text-sm uppercase tracking-[0.22em] text-slate-500 font-semibold">SCLN Legal Network</p>
+                <h3 class="mt-4 text-3xl md:text-4xl font-extrabold text-brand-950">Da gestione manuale delle email a
+                  controllo operativo misurabile.</h3>
+                <p class="mt-5 max-w-2xl text-slate-600">Il progetto ha lavorato sui flussi email, sulla tracciabilità
+                  delle pratiche e sulla riduzione delle rincorse interne. Il valore è stato misurato su tempo
+                  recuperato,
+                  ordine operativo e maggiore chiarezza per il team.</p>
+              </div>
+              <div class="shrink-0 border-l border-gold-500/70 pl-5">
+                <p class="text-sm text-slate-500">Cliente principale</p>
+                <p class="mt-1 font-bold text-brand-950">Francesco Cocola</p>
+                <p class="text-sm text-slate-500">SCLN Legal Network</p>
+              </div>
+            </div>
+            <div class="mt-10 grid gap-5 md:grid-cols-3">
+              <div class="border-t border-slate-200 pt-5">
+                <p class="text-5xl font-black text-brand-950" data-counter="60" data-prefix="-" data-suffix="%">-60%</p>
+                <p class="mt-2 text-sm font-semibold text-brand-900">tempo gestione email</p>
+              </div>
+              <div class="border-t border-slate-200 pt-5">
+                <p class="text-5xl font-black text-brand-950" data-counter="25" data-suffix="h">25h</p>
+                <p class="mt-2 text-sm font-semibold text-brand-900">recuperate ogni settimana</p>
+              </div>
+              <div class="border-t border-slate-200 pt-5">
+                <p class="text-5xl font-black text-brand-950" data-counter="600" data-suffix="+">600+</p>
+                <p class="mt-2 text-sm font-semibold text-brand-900">email/mese automatizzabili</p>
+              </div>
+            </div>
+          </article>
+          <article class="case-card reveal bg-brand-950 text-white p-7 md:p-9" style="--delay: 120ms">
+            <p class="text-xs uppercase tracking-[0.24em] text-gold-500 font-semibold">Voce dal progetto</p>
+            <blockquote class="mt-8 text-2xl font-bold leading-snug">“Il valore non è stato aggiungere un altro
+              software. È stato avere un sistema che segue il modo in cui lo studio lavora davvero.”</blockquote>
+            <div class="mt-8 border-t border-white/12 pt-6">
+              <p class="font-bold">Francesco Cocola</p>
+              <p class="text-sm text-white/55">SCLN Legal Network</p>
+            </div>
+            <p class="mt-8 text-sm text-white/55">Documentazione completa disponibile in call o sotto NDA quando
+              necessario.</p>
+          </article>
+        </div>
+        <div class="reveal mt-6 border border-slate-200 bg-white px-5 py-4 text-sm text-slate-700"
+          style="--delay: 180ms">
+          <p><span class="font-semibold text-brand-950">Pipeline corrente:</span> 8 nuovi studi legali in valutazione
+            · <span class="font-semibold text-brand-950">Capacity 2026:</span> 36 studi · <span
+              class="font-semibold text-brand-950">Lista d'attesa:</span> aperta da Maggio</p>
+        </div>
+      </div>
+    </section>
+
     <section id="problema" class="py-20 md:py-28 bg-white" aria-labelledby="problem-title">
       <div class="max-w-7xl mx-auto px-5 lg:px-8">
         <div class="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] items-start">
@@ -255,10 +347,7 @@
             <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Il problema</p>
             <h2 id="problem-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Il tempo c’è. <br>
               Sta finendo nel posto sbagliato.</h2>
-            <p class="mt-5 text-lg text-slate-600">PEC arretrata, email e allegati che non trovi, follow-up dimenticati,
-              gestione collaboratori caotica.
-              Ogni
-              giorno si perdono ore su attività che non si fatturano.</p>
+            <p class="mt-5 text-lg text-slate-600">Ogni giorno si perdono ore su attività che non si fatturano.</p>
           </div>
           <div class="grid gap-4 md:grid-cols-3">
             <div class="metric-panel reveal border border-slate-200 p-6 bg-white">
@@ -273,31 +362,80 @@
                 legale.</p>
             </div>
             <div class="metric-panel reveal border border-slate-200 p-6 bg-white" style="--delay: 200ms">
-              <p class="text-4xl font-black text-brand-900">1 PEC</p>
-              <p class="mt-4 font-semibold text-brand-900">può bastare</p>
-              <p class="mt-2 text-sm text-slate-600">Cassazione 15070/2014: l'omesso controllo della PEC costituisce
-                negligenza professionale. Non è un'ipotesi remota, è giurisprudenza consolidata. È un rischio concreto:
-                operativo, reputazionale e professionale.</p>
+              <p class="text-4xl font-black text-brand-900">PEC</p>
+              <p class="mt-4 font-semibold text-brand-900">Perse e arretrate</p>
+              <p class="mt-2 text-sm text-slate-600">È un rischio concreto operativo, reputazionale e professionale.</p>
             </div>
           </div>
         </div>
-        <div class="reveal mt-12 border border-slate-200 bg-slate-50 p-6 md:p-8">
-          <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-            <div>
-              <p class="text-sm uppercase tracking-[0.24em] text-slate-500 font-semibold">Giornata tipo</p>
-              <h3 class="mt-2 text-2xl md:text-3xl font-bold text-brand-950">8 ore lavorative, <br> solo una parte
-                diventa
-                lavoro legale fatturabile.</h3>
+        <div class="reveal mt-12 grid gap-6 lg:grid-cols-[0.42fr_0.58fr]">
+          <article class="border border-brand-950 bg-brand-950 text-white p-6 md:p-8 shadow-soft">
+            <p class="text-sm uppercase tracking-[0.24em] text-gold-500 font-semibold">Giornata tipo</p>
+            <h3 class="mt-3 text-3xl md:text-4xl font-extrabold leading-tight">Alle 13 hai lavorato quattro ore.
+              <br>Ne fatturerai forse una e mezza.
+            </h3>
+            <p class="mt-5 text-base text-white/72">Il problema non è lavorare poco. È che la mattina si consuma tra
+              inbox, PEC, allegati da recuperare e collaboratori da rincorrere.</p>
+            <div class="mt-8 grid gap-4 sm:grid-cols-2">
+              <div class="border border-white/10 bg-white/5 p-4">
+                <p class="text-xs uppercase tracking-[0.2em] text-white/45">Tempo bruciato</p>
+                <p class="mt-2 text-4xl font-black text-gold-500">4h</p>
+                <p class="mt-2 text-sm text-white/65">prima di pranzo senza creare vero valore fatturabile.</p>
+              </div>
+              <div class="border border-white/10 bg-white/5 p-4">
+                <p class="text-xs uppercase tracking-[0.2em] text-white/45">Valore reale</p>
+                <p class="mt-2 text-4xl font-black">1,5h</p>
+                <p class="mt-2 text-sm text-white/65">forse fatturabili, dopo interruzioni e rincorse interne.</p>
+              </div>
             </div>
-            <p class="text-sm text-slate-500 max-w-md">Visualizzazione indicativa per rendere immediato il peso di PEC
-              arretrata, inbox, ricerche allegati e archiviazione manuale.</p>
-          </div>
-          <div class="mt-8 h-12 flex overflow-hidden border border-slate-200 bg-white">
-            <div class="h-full bg-brand-700 text-white flex items-center justify-center text-sm font-semibold"
-              style="width: 36.25%">2,9h valore legale</div>
-            <div class="h-full bg-gold-500 text-brand-950 flex items-center justify-center text-sm font-semibold"
-              style="width: 63.75%">5,1h burocrazia digitale</div>
-          </div>
+          </article>
+          <article class="border border-slate-200 bg-slate-50 p-6 md:p-8">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+              <div>
+                <p class="text-sm uppercase tracking-[0.24em] text-slate-500 font-semibold">Timeline dello spreco</p>
+                <h3 class="mt-2 text-2xl md:text-3xl font-bold text-brand-950">La mattina scorre. Il lavoro vero
+                  aspetta.</h3>
+              </div>
+              <p class="text-sm text-slate-500 max-w-md">Una sequenza tipica di micro-interruzioni che erode focus,
+                margine e capacità di risposta dello studio.</p>
+            </div>
+            <div class="dayline mt-8 space-y-4">
+              <div class="day-step metric-panel border border-slate-200 bg-white p-4">
+                <p class="text-xs uppercase tracking-[0.18em] text-slate-500 font-semibold">Ore 8:42</p>
+                <p class="mt-2 text-lg font-bold text-brand-950">Outlook è già rosso.</p>
+                <p class="mt-2 text-sm text-slate-600">La giornata inizia in difesa, non sul lavoro che avevi deciso di
+                  fare.</p>
+              </div>
+              <div class="day-step metric-panel border border-slate-200 bg-white p-4" style="--delay: 60ms">
+                <p class="text-xs uppercase tracking-[0.18em] text-slate-500 font-semibold">Ore 8:57</p>
+                <p class="mt-2 text-lg font-bold text-brand-950">Una PEC è da controllare.</p>
+                <p class="mt-2 text-sm text-slate-600">Non puoi rimandarla: il rischio non è teorico, è immediato.</p>
+              </div>
+              <div class="day-step metric-panel border border-slate-200 bg-white p-4" style="--delay: 120ms">
+                <p class="text-xs uppercase tracking-[0.18em] text-slate-500 font-semibold">Ore 9:18</p>
+                <p class="mt-2 text-lg font-bold text-brand-950">Un cliente chiede un allegato di marzo.</p>
+                <p class="mt-2 text-sm text-slate-600">Apri cartelle, thread, inoltri vecchi. L'allegato non si trova.
+                </p>
+              </div>
+              <div class="day-step metric-panel border border-slate-200 bg-white p-4" style="--delay: 180ms">
+                <p class="text-xs uppercase tracking-[0.18em] text-slate-500 font-semibold">Ore 10:04</p>
+                <p class="mt-2 text-lg font-bold text-brand-950">Il collaboratore dice: “sì, ci guardo”.</p>
+                <p class="mt-2 text-sm text-slate-600">Ma intanto il follow-up resta sospeso e il cliente aspetta.</p>
+              </div>
+              <div class="day-step metric-panel border border-slate-200 bg-white p-4" style="--delay: 240ms">
+                <p class="text-xs uppercase tracking-[0.18em] text-slate-500 font-semibold">Ore 11:11</p>
+                <p class="mt-2 text-lg font-bold text-brand-950">Devi rincorrere altri 5 collaboratori su WhatsApp.</p>
+                <p class="mt-2 text-sm text-slate-600">Il tempo passa in solleciti, non in strategia legale.</p>
+              </div>
+              <div class="day-step metric-panel border border-slate-200 bg-white p-4" style="--delay: 300ms">
+                <p class="text-xs uppercase tracking-[0.18em] text-slate-500 font-semibold">Ore 13:00</p>
+                <p class="mt-2 text-lg font-bold text-brand-950">Hai lavorato quattro ore. Ne fatturerai forse una e
+                  mezza.</p>
+                <p class="mt-2 text-sm text-slate-600">Il resto si è perso tra inbox, rincorse, ricerca allegati e
+                  coordinamento manuale.</p>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -366,8 +504,8 @@
                     <input id="feat-report" type="checkbox" class="mt-1 accent-gold-500" />
                     <span>
                       <span class="block font-semibold text-brand-950">Report AI Settimanale</span>
-                      <span class="block text-sm text-slate-500">KPI, tempo per pratica, rischi e azioni
-                        suggerite.</span>
+                      <span class="block text-sm text-slate-500">KPI, tempo per pratica, valore economico, riassunto
+                      </span>
                     </span>
                   </label>
                 </div>
@@ -409,7 +547,7 @@
             </div>
             <a href="#contatti" data-cta="roi-demo"
               class="mt-8 inline-flex w-full items-center justify-center rounded-full cta-gold text-brand-950 px-6 py-4 font-semibold">Prenota
-              call per validare questo numero</a>
+              la Diagnosi Operativa</a>
           </div>
         </div>
       </div>
@@ -430,21 +568,136 @@
               class="inline-flex h-12 w-12 items-center justify-center bg-brand-950 text-gold-500 font-bold">1</span>
             <h3 class="mt-8 text-2xl font-bold text-brand-950">Analizziamo come lavora il tuo studio</h3>
             <p class="mt-4 text-slate-600">Prima capisco i tuoi flussi reali: email, collaboratori, pratiche, scadenze.
-              Non parto da un template.</p>
+            </p>
           </div>
           <div class="service-step reveal relative bg-slate-50 border border-slate-200 p-7" style="--delay: 120ms">
             <span
               class="inline-flex h-12 w-12 items-center justify-center bg-brand-950 text-gold-500 font-bold">2</span>
             <h3 class="mt-8 text-2xl font-bold text-brand-950">Costruiamo il sistema su misura</h3>
-            <p class="mt-4 text-slate-600">Ogni automazione viene addestrata su knowledge e tone of voice. Setup
-              operativo in 45 minuti.</p>
+            <p class="mt-4 text-slate-600">Ogni automazione viene addestrata su knowledge e tone of voice.</p>
           </div>
           <div class="service-step reveal relative bg-slate-50 border border-slate-200 p-7" style="--delay: 240ms">
             <span
               class="inline-flex h-12 w-12 items-center justify-center bg-brand-950 text-gold-500 font-bold">3</span>
-            <h3 class="mt-8 text-2xl font-bold text-brand-950">Il sistema lavora. Tu fatturi.</h3>
+            <h3 class="mt-8 text-2xl font-bold text-brand-950">Il sistema lavora da solo. Tu fatturi.</h3>
             <p class="mt-4 text-slate-600">Monitoring continuo, aggiornamenti trimestrali, supporto diretto. Non
               sparisco dopo il setup.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="video" class="py-20 md:py-28 bg-brand-950 text-white" aria-labelledby="video-title">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] items-center">
+          <div class="reveal">
+            <p class="text-xs uppercase tracking-[0.28em] text-gold-500 font-semibold">Video prova</p>
+            <h2 id="video-title" class="mt-4 text-4xl md:text-5xl font-extrabold">Guarda come funziona il sistema
+              INNOVALEX</h2>
+            <p class="mt-5 text-lg text-white/72">Email in arrivo, dati estratti, pratica aggiornata, PDF generato. Il
+              flusso resta tuo, il lavoro ripetitivo passa al sistema.</p>
+            <div class="mt-8 grid gap-3 text-sm text-white/72">
+              <p class="border-l border-gold-500 pl-4">Outlook e Gmail restano il punto di partenza.</p>
+              <p class="border-l border-gold-500 pl-4">L’avvocato approva sempre le bozze rilevanti.</p>
+              <p class="border-l border-gold-500 pl-4">Ogni output viene collegato alla pratica corretta.</p>
+            </div>
+          </div>
+          <div class="reveal">
+            <div class="border border-white/12 bg-white/5 p-3 shadow-soft">
+              <div class="flex items-center gap-2 border-b border-white/10 px-3 py-3">
+                <span class="h-3 w-3 rounded-full bg-red-400"></span>
+                <span class="h-3 w-3 rounded-full bg-yellow-300"></span>
+                <span class="h-3 w-3 rounded-full bg-green-400"></span>
+                <span class="ml-3 text-xs text-white/55">Demo INNOVALEX</span>
+              </div>
+              <video class="w-full aspect-video bg-black" controls playsinline preload="metadata"
+                poster="https://i.imgur.com/wo7hZUz.png">
+                <source src="assets/Automazione_per_Studi_Legali.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="servizi" class="py-20 md:py-28 bg-brand-950 text-white" aria-labelledby="services-title">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="reveal max-w-3xl">
+          <p class="text-xs uppercase tracking-[0.28em] text-gold-500 font-semibold">Pacchetti INNOVALEX</p>
+          <h2 id="services-title" class="mt-4 text-4xl md:text-5xl font-extrabold">Un percorso, tre livelli. <br> Si
+            parte
+            dove l’urgenza è maggiore.</h2>
+          <p class="mt-5 text-lg text-white/70">La maggior parte degli studi inizia da L1 e scala nel tempo. <br> La
+            fiducia si costruisce sui risultati del livello precedente.</p>
+        </div>
+        <div class="mt-14 border-l border-white/15">
+          <div class="reveal grid gap-6 lg:grid-cols-[0.22fr_1fr_0.35fr] border-b border-white/12 py-8 pl-6">
+            <div>
+              <p class="text-gold-500 font-black text-3xl">L1</p>
+              <p class="mt-2 text-sm text-white/50">Entry point</p>
+            </div>
+            <div>
+              <h3 class="text-3xl font-bold">Email sotto controllo</h3>
+              <p class="mt-3 text-white/72"><strong>Quando ha senso:</strong> la casella email è ingestibile,
+                l’archiviazione è
+                caotica e il team perde tempo a cercare allegati.</p>
+              <p class="mt-3 text-white/72">Assegnazione urgenze, archiviazione PDF per cliente/pratica, bozze di
+                risposta
+                nel vostro stile. Il sistema parte senza cambiare il modo in cui usate la mail.</p>
+              <p class="mt-4 text-sm text-gold-200">Risultato documentato: 600 email/mese archiviate, 440h/anno
+                recuperate.</p>
+            </div>
+            <div class="text-left lg:text-right">
+              <p class="text-xl font-bold">Da €3.500 setup</p>
+              <p class="text-sm text-white/55">manutenzione trimestrale su volumi</p>
+              <a href="#contatti" data-cta="service-l1"
+                class="mt-5 inline-flex text-gold-500 font-semibold hover:text-gold-200">Valuta L1</a>
+            </div>
+          </div>
+          <div class="reveal grid gap-6 lg:grid-cols-[0.22fr_1fr_0.35fr] border-b border-white/12 py-8 pl-6"
+            style="--delay: 120ms">
+            <div>
+              <p class="text-gold-500 font-black text-3xl">L2</p>
+              <p class="mt-2 text-sm text-white/50">60-90 giorni</p>
+            </div>
+            <div>
+              <h3 class="text-3xl font-bold">Studio sotto controllo</h3>
+              <p class="mt-3 text-white/72"><strong>Quando ha senso:</strong> gestire il lavoro dei collaboratori è
+                complesso,
+                non sai chi fa cosa, i tempi non vengono rispettati e servono responsabilità, SLA interni e
+                tracciabilità.</p>
+              <p class="mt-3 text-white/72">Dashboard unificata, assegnazioni con tracking, visibilità completa su
+                assegnazione dei lavori. <br> Sai
+                chi sta facendo cosa senza rincorrere nessuno.</p>
+              <p class="mt-4 text-sm text-gold-200">Si attiva solo quando il flusso email è sotto controllo.</p>
+            </div>
+            <div class="text-left lg:text-right">
+              <p class="text-xl font-bold">Da €5.000 setup</p>
+              <p class="text-sm text-white/55">dopo validazione L1</p>
+              <a href="#contatti" data-cta="service-l2"
+                class="mt-5 inline-flex text-gold-500 font-semibold hover:text-gold-200">Valuta L2</a>
+            </div>
+          </div>
+          <div class="reveal grid gap-6 lg:grid-cols-[0.22fr_1fr_0.35fr] py-8 pl-6" style="--delay: 240ms">
+            <div>
+              <p class="text-gold-500 font-black text-3xl">L3</p>
+              <p class="mt-2 text-sm text-white/50">Dopo proof</p>
+            </div>
+            <div>
+              <h3 class="text-3xl font-bold">Knowledge sotto controllo</h3>
+              <p class="mt-3 text-white/72"><strong>Quando ha senso:</strong> lo studio vuole rendere interrogabile il
+                proprio knowledge senza dipendere da database terzi o prompt generici.</p>
+              <p class="mt-3 text-white/72">Knowledge base privata dello studio. Il sistema risponde sul vostro modo di
+                lavorare: sentenze, casi, atti e fonti scelte da voi.</p>
+              <p class="mt-4 text-sm text-gold-200">Nessuna dipendenza da Lexroom o database terzi. Dati mai fuori
+                dall’Europa.</p>
+            </div>
+            <div class="text-left lg:text-right">
+              <p class="text-xl font-bold">Da €13.000 setup</p>
+              <p class="text-sm text-white/55">progetto dedicato</p>
+              <a href="#contatti" data-cta="service-l3"
+                class="mt-5 inline-flex text-gold-500 font-semibold hover:text-gold-200">Parla di L3</a>
+            </div>
           </div>
         </div>
       </div>
@@ -484,39 +737,6 @@
             professionale. Nessun dato sensibile viene esposto a sistemi terzi. Disponibile su richiesta: documento di
             analisi del rischio per uso AI in studio legale.</p>
         </article>
-      </div>
-    </section>
-
-    <section id="video" class="py-20 md:py-28 bg-brand-950 text-white" aria-labelledby="video-title">
-      <div class="max-w-7xl mx-auto px-5 lg:px-8">
-        <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] items-center">
-          <div class="reveal">
-            <p class="text-xs uppercase tracking-[0.28em] text-gold-500 font-semibold">Video prova</p>
-            <h2 id="video-title" class="mt-4 text-4xl md:text-5xl font-extrabold">Guarda il sistema al lavoro prima di
-              calcolare il ROI.</h2>
-            <p class="mt-5 text-lg text-white/72">Email in arrivo, dati estratti, pratica aggiornata, PDF generato. Il
-              flusso resta tuo, il lavoro ripetitivo passa al sistema.</p>
-            <div class="mt-8 grid gap-3 text-sm text-white/72">
-              <p class="border-l border-gold-500 pl-4">Outlook e Gmail restano il punto di partenza.</p>
-              <p class="border-l border-gold-500 pl-4">L’avvocato approva sempre le bozze rilevanti.</p>
-              <p class="border-l border-gold-500 pl-4">Ogni output viene collegato alla pratica corretta.</p>
-            </div>
-          </div>
-          <div class="reveal">
-            <div class="border border-white/12 bg-white/5 p-3 shadow-soft">
-              <div class="flex items-center gap-2 border-b border-white/10 px-3 py-3">
-                <span class="h-3 w-3 rounded-full bg-red-400"></span>
-                <span class="h-3 w-3 rounded-full bg-yellow-300"></span>
-                <span class="h-3 w-3 rounded-full bg-green-400"></span>
-                <span class="ml-3 text-xs text-white/55">Demo INNOVALEX</span>
-              </div>
-              <video class="w-full aspect-video bg-black" controls playsinline preload="metadata"
-                poster="https://i.imgur.com/wo7hZUz.png">
-                <source src="assets/Automazione_per_Studi_Legali.mp4" type="video/mp4" />
-              </video>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -601,154 +821,6 @@
       </div>
     </section>
 
-    <section id="servizi" class="py-20 md:py-28 bg-brand-950 text-white" aria-labelledby="services-title">
-      <div class="max-w-7xl mx-auto px-5 lg:px-8">
-        <div class="reveal max-w-3xl">
-          <p class="text-xs uppercase tracking-[0.28em] text-gold-500 font-semibold">Pacchetti INNOVALEX</p>
-          <h2 id="services-title" class="mt-4 text-4xl md:text-5xl font-extrabold">Un percorso, tre livelli. <br> Si
-            parte
-            dove l’urgenza è maggiore.</h2>
-          <p class="mt-5 text-lg text-white/70">La maggior parte degli studi inizia da L1 e scala nel tempo. <br> La
-            fiducia si costruisce sui risultati del livello precedente.</p>
-        </div>
-        <div class="mt-14 border-l border-white/15">
-          <div class="reveal grid gap-6 lg:grid-cols-[0.22fr_1fr_0.35fr] border-b border-white/12 py-8 pl-6">
-            <div>
-              <p class="text-gold-500 font-black text-3xl">L1</p>
-              <p class="mt-2 text-sm text-white/50">Entry point</p>
-            </div>
-            <div>
-              <h3 class="text-3xl font-bold">Email + Archiviazione AI</h3>
-              <p class="mt-3 text-white/72"><strong>Quando ha senso:</strong> la casella email è ingestibile,
-                l’archiviazione è
-                caotica e il team perde tempo a cercare allegati.</p>
-              <p class="mt-3 text-white/72">Assegnazione urgenze, archiviazione PDF per cliente/pratica, bozze di
-                risposta
-                nel vostro stile. Il sistema parte senza cambiare il modo in cui usate la mail.</p>
-              <p class="mt-4 text-sm text-gold-200">Risultato documentato: 600 email/mese archiviate, 440h/anno
-                recuperate.</p>
-            </div>
-            <div class="text-left lg:text-right">
-              <p class="text-xl font-bold">Da €3.500 setup</p>
-              <p class="text-sm text-white/55">manutenzione trimestrale su volumi</p>
-              <a href="#contatti" data-cta="service-l1"
-                class="mt-5 inline-flex text-gold-500 font-semibold hover:text-gold-200">Valuta L1</a>
-            </div>
-          </div>
-          <div class="reveal grid gap-6 lg:grid-cols-[0.22fr_1fr_0.35fr] border-b border-white/12 py-8 pl-6"
-            style="--delay: 120ms">
-            <div>
-              <p class="text-gold-500 font-black text-3xl">L2</p>
-              <p class="mt-2 text-sm text-white/50">60-90 giorni</p>
-            </div>
-            <div>
-              <h3 class="text-3xl font-bold">Gestione Collaboratori</h3>
-              <p class="mt-3 text-white/72"><strong>Quando ha senso:</strong> gestire il lavoro dei collaboratori è
-                complesso,
-                non sai chi fa cosa, i tempi non vengono rispettati e servono responsabilità, SLA interni e
-                tracciabilità.</p>
-              <p class="mt-3 text-white/72">Dashboard unificata, assegnazioni con tracking, visibilità completa su
-                assegnazione dei lavori. <br> Sai
-                chi sta facendo cosa senza rincorrere nessuno.</p>
-              <p class="mt-4 text-sm text-gold-200">Si attiva solo quando il flusso email è sotto controllo.</p>
-            </div>
-            <div class="text-left lg:text-right">
-              <p class="text-xl font-bold">Da €5.000 setup</p>
-              <p class="text-sm text-white/55">dopo validazione L1</p>
-              <a href="#contatti" data-cta="service-l2"
-                class="mt-5 inline-flex text-gold-500 font-semibold hover:text-gold-200">Valuta L2</a>
-            </div>
-          </div>
-          <div class="reveal grid gap-6 lg:grid-cols-[0.22fr_1fr_0.35fr] py-8 pl-6" style="--delay: 240ms">
-            <div>
-              <p class="text-gold-500 font-black text-3xl">L3</p>
-              <p class="mt-2 text-sm text-white/50">Dopo proof</p>
-            </div>
-            <div>
-              <h3 class="text-3xl font-bold">LLM Proprietaria</h3>
-              <p class="mt-3 text-white/72"><strong>Quando ha senso:</strong> lo studio vuole rendere interrogabile il
-                proprio knowledge senza dipendere da database terzi o prompt generici.</p>
-              <p class="mt-3 text-white/72">Knowledge base privata dello studio. Il sistema risponde sul vostro modo di
-                lavorare: sentenze, casi, atti e fonti scelte da voi.</p>
-              <p class="mt-4 text-sm text-gold-200">Nessuna dipendenza da Lexroom o database terzi. Dati mai fuori
-                dall’Europa.</p>
-            </div>
-            <div class="text-left lg:text-right">
-              <p class="text-xl font-bold">Da €13.000 setup</p>
-              <p class="text-sm text-white/55">progetto dedicato</p>
-              <a href="#contatti" data-cta="service-l3"
-                class="mt-5 inline-flex text-gold-500 font-semibold hover:text-gold-200">Parla di L3</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="risultati" class="py-20 md:py-28 bg-slate-50" aria-labelledby="proof-title">
-      <div class="max-w-7xl mx-auto px-5 lg:px-8">
-        <div class="reveal max-w-3xl">
-          <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Risultati reali</p>
-          <h2 id="proof-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Un caso studio reale,
-            verificabile, autorizzato.</h2>
-          <p class="mt-5 text-lg text-slate-600">Niente foto stock, niente recensioni costruite. Solo numeri e contesto
-            da progetti INNOVALEX pubblicabili con consenso.</p>
-        </div>
-        <div class="mt-12 grid gap-5 lg:grid-cols-[1.25fr_0.75fr]">
-          <article class="case-card reveal border border-slate-200 bg-white p-7 md:p-9">
-            <div class="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
-              <div>
-                <img src="https://www.scln.it/images/the-firm/office/legal-network-logo.webp"
-                  alt="Logo SCLN Legal Network" loading="lazy" decoding="async" class="h-20 w-auto object-contain" />
-                <p class="text-sm uppercase tracking-[0.22em] text-slate-500 font-semibold">SCLN Legal Network</p>
-                <h3 class="mt-4 text-3xl md:text-4xl font-extrabold text-brand-950">Da gestione manuale delle email a
-                  controllo operativo misurabile.</h3>
-                <p class="mt-5 max-w-2xl text-slate-600">Il progetto ha lavorato sui flussi email, sulla tracciabilità
-                  delle pratiche e sulla riduzione delle rincorse interne. Il valore è stato misurato su tempo
-                  recuperato,
-                  ordine operativo e maggiore chiarezza per il team.</p>
-              </div>
-              <div class="shrink-0 border-l border-gold-500/70 pl-5">
-                <p class="text-sm text-slate-500">Cliente principale</p>
-                <p class="mt-1 font-bold text-brand-950">Francesco Cocola</p>
-                <p class="text-sm text-slate-500">SCLN Legal Network</p>
-              </div>
-            </div>
-            <div class="mt-10 grid gap-5 md:grid-cols-3">
-              <div class="border-t border-slate-200 pt-5">
-                <p class="text-5xl font-black text-brand-950" data-counter="60" data-prefix="-" data-suffix="%">-60%</p>
-                <p class="mt-2 text-sm font-semibold text-brand-900">tempo gestione email</p>
-              </div>
-              <div class="border-t border-slate-200 pt-5">
-                <p class="text-5xl font-black text-brand-950" data-counter="25" data-suffix="h">25h</p>
-                <p class="mt-2 text-sm font-semibold text-brand-900">recuperate ogni settimana</p>
-              </div>
-              <div class="border-t border-slate-200 pt-5">
-                <p class="text-5xl font-black text-brand-950" data-counter="600" data-suffix="+">600+</p>
-                <p class="mt-2 text-sm font-semibold text-brand-900">email/mese automatizzabili</p>
-              </div>
-            </div>
-          </article>
-          <article class="case-card reveal bg-brand-950 text-white p-7 md:p-9" style="--delay: 120ms">
-            <p class="text-xs uppercase tracking-[0.24em] text-gold-500 font-semibold">Voce dal progetto</p>
-            <blockquote class="mt-8 text-2xl font-bold leading-snug">“Il valore non è stato aggiungere un altro
-              software. È stato avere un sistema che segue il modo in cui lo studio lavora davvero.”</blockquote>
-            <div class="mt-8 border-t border-white/12 pt-6">
-              <p class="font-bold">Francesco Cocola</p>
-              <p class="text-sm text-white/55">SCLN Legal Network</p>
-            </div>
-            <p class="mt-8 text-sm text-white/55">Documentazione completa disponibile in call o sotto NDA quando
-              necessario.</p>
-          </article>
-        </div>
-        <div class="reveal mt-6 border border-slate-200 bg-white px-5 py-4 text-sm text-slate-700"
-          style="--delay: 180ms">
-          <p><span class="font-semibold text-brand-950">Pipeline corrente:</span> 8 nuovi studi legali in valutazione
-            · <span class="font-semibold text-brand-950">Capacity 2026:</span> 36 studi · <span
-              class="font-semibold text-brand-950">Lista d'attesa:</span> aperta da Maggio</p>
-        </div>
-      </div>
-    </section>
-
     <section id="contatti" class="py-20 md:py-28 bg-brand-950 text-white" aria-labelledby="cta-title">
       <div class="max-w-7xl mx-auto px-5 lg:px-8 grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
         <div class="reveal">
@@ -803,6 +875,41 @@
                 placeholder="+39 ..." aria-label="Telefono opzionale" />
             </div>
           </div>
+          <div class="grid gap-5 md:grid-cols-2">
+            <div>
+              <label class="text-sm font-semibold" for="teamSize">Quante persone lavorano nello studio?</label>
+              <select id="teamSize" name="teamSize"
+                class="mt-2 w-full bg-white/10 border border-white/20 px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-gold-500/40 focus:border-gold-500"
+                required aria-label="Quante persone lavorano nello studio">
+                <option class="text-brand-950" value="">Seleziona dimensione studio</option>
+                <option class="text-brand-950" value="1-3 persone">1-3 persone</option>
+                <option class="text-brand-950" value="4-10 persone">4-10 persone</option>
+                <option class="text-brand-950" value="11-20 persone">11-20 persone</option>
+                <option class="text-brand-950" value="21-50 persone">21-50 persone</option>
+                <option class="text-brand-950" value="50+ persone">50+ persone</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-sm font-semibold" for="urgentProblem">Qual è il problema più urgente?</label>
+              <select id="urgentProblem" name="urgentProblem"
+                class="mt-2 w-full bg-white/10 border border-white/20 px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-gold-500/40 focus:border-gold-500"
+                required aria-label="Problema più urgente">
+                <option class="text-brand-950" value="">Seleziona priorità</option>
+                <option class="text-brand-950" value="Email">Email</option>
+                <option class="text-brand-950" value="PEC">PEC</option>
+                <option class="text-brand-950" value="Collaboratori">Collaboratori</option>
+                <option class="text-brand-950" value="Archiviazione">Archiviazione</option>
+                <option class="text-brand-950" value="Knowledge">Knowledge</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="text-sm font-semibold" for="currentTools">Che strumenti usate oggi?</label>
+            <textarea id="currentTools" name="currentTools" rows="4"
+              class="mt-2 w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-gold-500/40 focus:border-gold-500"
+              placeholder="Es. Outlook, Gmail, PEC, Kleos, Cliens, OneDrive, SharePoint..." required
+              aria-label="Strumenti usati oggi"></textarea>
+          </div>
           <input id="emailsPerDay" name="emailsPerDay" type="hidden" />
           <input id="selectedFeatures" name="selectedFeatures" type="hidden" />
           <input id="estimatedAnnualValue" name="estimatedAnnualValue" type="hidden" />
@@ -812,8 +919,8 @@
           <input id="sourceCta" name="sourceCta" type="hidden" />
           <button type="submit"
             class="inline-flex w-full items-center justify-center rounded-full cta-gold text-brand-950 px-8 py-4 font-semibold">Prenota
-            la prima call</button>
-          <p id="form-success" class="hidden text-sm text-gold-200">Grazie. Federico ti contatta entro 24 ore.</p>
+            la Diagnosi Operativa dello studio</button>
+          <p id="form-success" class="hidden text-sm text-gold-200">Grazie. Ti contatteremo entro 10 minuti.</p>
           <p id="form-error" class="hidden text-sm text-red-200">Invio non riuscito. Riprova tra pochi minuti.</p>
         </form>
       </div>
@@ -844,12 +951,10 @@
           </details>
           <details class="reveal border border-slate-200 bg-slate-50 p-6" style="--delay: 240ms">
             <summary class="cursor-pointer font-bold text-brand-950">Perché non usare solo Copilot o ChatGPT?</summary>
-            <p class="mt-4 text-sm text-slate-600">Stanford HAI ha documentato che gli LLM generalisti (Copilot,
-              ChatGPT, Claude generici) allucinano nel 69-88% delle query legali. Per uno studio italiano, una risposta
-              sbagliata può costare una causa o una sanzione disciplinare. Sono ottimi strumenti per produttività
-              generica. Non sono progettati per il diritto italiano, non conoscono il vostro stile, non rispettano la
-              deontologia di studio. InnovaLex costruisce esattamente quel layer mancante: verticale, supervisionato,
-              addestrato sui vostri flussi reali, con server EU e dati che non lasciano mai l'Europa.</p>
+            <p class="mt-4 text-sm text-slate-600">Perché sono strumenti generici. <br>
+              InnovaLex lavora sui flussi reali dello studio: email, PEC, archiviazione, collaboratori e knowledge
+              interno.
+              L’avvocato resta sempre nel controllo degli output rilevanti.</p>
           </details>
           <details class="reveal border border-slate-200 bg-slate-50 p-6" style="--delay: 320ms">
             <summary class="cursor-pointer font-bold text-brand-950">Quanto costa?</summary>
@@ -884,8 +989,9 @@
             <p class="text-sm uppercase tracking-[0.22em] text-gold-600 font-semibold">Disponibilità founder-led</p>
             <p class="mt-3 text-2xl font-extrabold text-brand-950"><span data-current-month>Questo mese</span>: <span
                 data-slots>2</span> posti disponibili su 6.</p>
-            <p class="mt-2 text-sm text-slate-600">Accetto al massimo 6 nuovi studi al mese per seguire discovery,
-              setup e ottimizzazioni senza delegare la relazione.</p>
+            <p class="mt-2 text-sm text-slate-600">Possiamo accettare al massimo 6 nuovi studi al mese per seguire con
+              attenzione ogni passaggio
+              e costruire una relazione di fiducia con ogni cliente.</p>
           </div>
           <div class="mt-8 grid gap-3 text-sm text-slate-600">
             <p class="border-l border-gold-500 pl-4">Relazione diretta, non ticket anonimi.</p>
@@ -966,7 +1072,7 @@
       <div>
         <p class="font-semibold text-brand-900">Contatti</p>
         <p class="mt-3 text-sm">Federico Garau, founder</p>
-        <p class="text-sm">Email: federico@innovalex.it</p>
+        <p class="text-sm">Email: federico.garau@innovalex.it</p>
         <p class="text-sm">LinkedIn: linkedin.com/in/federicogarau</p>
       </div>
       <div>
@@ -1171,7 +1277,7 @@
     const formSubmitBtn = form.querySelector('button[type="submit"]');
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
-      const requiredFields = ['name', 'studio', 'email', 'role'];
+      const requiredFields = ['name', 'studio', 'email', 'role', 'teamSize', 'urgentProblem', 'currentTools'];
       let valid = true;
       requiredFields.forEach(id => {
         const input = document.getElementById(id);
@@ -1195,6 +1301,9 @@
         email: form.email.value.trim(),
         phone: form.phone.value.trim(),
         role: form.role.value,
+        teamSize: form.teamSize.value,
+        currentTools: form.currentTools.value.trim(),
+        urgentProblem: form.urgentProblem.value,
         hoursPerDay: form.emailsPerDay.value,
         lawyers: selectedLawyers.value,
         hourlyRate: selectedRate.value,
