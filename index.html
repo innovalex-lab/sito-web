@@ -125,6 +125,257 @@
       padding-left: 3.5rem;
     }
 
+    .system-board {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(20, 43, 95, 0.12);
+      background:
+        linear-gradient(180deg, rgba(30, 58, 138, 0.02), rgba(30, 58, 138, 0.01)),
+        linear-gradient(90deg, rgba(226, 232, 240, 0.55) 1px, transparent 1px),
+        linear-gradient(rgba(226, 232, 240, 0.55) 1px, transparent 1px);
+      background-size: auto, 64px 64px, 64px 64px;
+      background-position: 0 0, 0 0, 0 0;
+    }
+
+    .system-board-desktop {
+      position: relative;
+    }
+
+    .system-node {
+      position: relative;
+      z-index: 2;
+      border: 1px solid rgba(20, 43, 95, 0.12);
+      background: rgba(248, 250, 252, 0.96);
+      padding: 1.25rem;
+      border-radius: 8px;
+      box-shadow: 0 14px 36px rgba(15, 23, 42, 0.07);
+      animation: systemNodePulse 9s ease-in-out infinite;
+      animation-delay: var(--step-delay, 0s);
+    }
+
+    .system-rail,
+    .system-split {
+      position: relative;
+      z-index: 1;
+      min-height: 2.75rem;
+    }
+
+    .system-rail::before,
+    .system-rail::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      transform: translateX(-50%);
+    }
+
+    .system-rail::before {
+      background: rgba(30, 58, 138, 0.12);
+    }
+
+    .system-rail::after {
+      background: linear-gradient(180deg, transparent, rgba(198, 167, 91, 0.98), rgba(242, 231, 205, 0.98), transparent);
+      animation: systemLineY 9s ease-in-out infinite;
+      animation-delay: var(--step-delay, 0s);
+      transform-origin: center top;
+    }
+
+    .system-split::before,
+    .system-split::after {
+      content: "";
+      position: absolute;
+      background: rgba(30, 58, 138, 0.12);
+    }
+
+    .system-split::before {
+      left: var(--split-left, 0);
+      right: var(--split-right, 0);
+      top: 50%;
+      height: 2px;
+      transform: translateY(-50%);
+    }
+
+    .system-split::after {
+      left: var(--split-branch, 50%);
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      transform: translateX(-50%);
+    }
+
+    .system-split span {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .system-split span::before {
+      content: "";
+      position: absolute;
+      left: var(--split-left, 0);
+      right: var(--split-right, 0);
+      top: 50%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(198, 167, 91, 0.98), rgba(242, 231, 205, 0.98), transparent);
+      animation: systemLineX 9s ease-in-out infinite;
+      animation-delay: var(--step-delay, 0s);
+      transform-origin: left center;
+    }
+
+    .system-split span::after {
+      content: "";
+      position: absolute;
+      left: var(--split-branch, 50%);
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, transparent, rgba(198, 167, 91, 0.98), rgba(242, 231, 205, 0.98), transparent);
+      animation: systemLineY 9s ease-in-out infinite;
+      animation-delay: var(--step-delay, 0s);
+      transform-origin: center top;
+    }
+
+    .system-node::after {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border: 1px solid rgba(198, 167, 91, 0);
+      opacity: 0;
+      animation: systemNodeBorder 9s ease-in-out infinite;
+      animation-delay: var(--step-delay, 0s);
+      pointer-events: none;
+    }
+
+    .system-connector-in,
+    .system-connector-out {
+      position: absolute;
+      left: 50%;
+      width: 2px;
+      height: 2.75rem;
+      transform: translateX(-50%);
+      background: rgba(30, 58, 138, 0.18);
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .system-connector-in {
+      top: -2.75rem;
+    }
+
+    .system-connector-out {
+      bottom: -2.75rem;
+    }
+
+    .system-connector-in::after,
+    .system-connector-out::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent, rgba(198, 167, 91, 0.98), rgba(242, 231, 205, 0.98), transparent);
+      animation: systemLineY 9s ease-in-out infinite;
+      animation-delay: var(--step-delay, 0s);
+      transform-origin: center top;
+    }
+
+    .system-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.75rem;
+      height: 2.75rem;
+      border: 1px solid rgba(20, 43, 95, 0.12);
+      background: rgba(255, 255, 255, 0.92);
+      color: #1E3A8A;
+      font-size: 1.25rem;
+      font-weight: 700;
+      border-radius: 8px;
+      animation: systemIconPulse 9s ease-in-out infinite;
+      animation-delay: var(--step-delay, 0s);
+    }
+
+    .system-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.55rem;
+      border: 1px solid rgba(30, 58, 138, 0.12);
+      background: rgba(255, 255, 255, 0.92);
+      font-size: 0.72rem;
+      line-height: 1;
+      color: #334155;
+      border-radius: 999px;
+    }
+
+    @keyframes systemNodePulse {
+      0%,
+      15%,
+      100% {
+        background: rgba(248, 250, 252, 0.96);
+        transform: translateY(0);
+      }
+
+      5%,
+      10% {
+        background: rgba(242, 231, 205, 0.28);
+        transform: translateY(-2px);
+      }
+    }
+
+    @keyframes systemNodeBorder {
+      0%,
+      15%,
+      100% {
+        opacity: 0;
+        border-color: rgba(198, 167, 91, 0);
+      }
+
+      5%,
+      10% {
+        opacity: 1;
+        border-color: rgba(198, 167, 91, 0.7);
+      }
+    }
+
+    @keyframes systemIconPulse {
+      0%,
+      15%,
+      100% {
+        color: #1E3A8A;
+        background: rgba(255, 255, 255, 0.92);
+      }
+
+      5%,
+      10% {
+        color: #070F26;
+        background: rgba(242, 231, 205, 0.92);
+      }
+    }
+
+    @keyframes systemLineX {
+      0%,
+      100% {
+        transform: scaleX(0);
+      }
+
+      5%,
+      15% {
+        transform: scaleX(1);
+      }
+    }
+
+    @keyframes systemLineY {
+      0%,
+      100% {
+        transform: scaleY(0);
+      }
+
+      5%,
+      15% {
+        transform: scaleY(1);
+      }
+    }
+
     .case-card:hover,
     .service-step:hover,
     .metric-panel:hover {
@@ -151,6 +402,10 @@
     @media (max-width: 768px) {
       .workflow-line::before {
         display: none;
+      }
+
+      .system-board {
+        background-size: auto, 40px 40px, 40px 40px;
       }
 
       .dayline::before {
@@ -181,8 +436,17 @@
       .service-step,
       .metric-panel,
       .cta-gold,
-      .sticky-cta {
+      .sticky-cta,
+      .system-node,
+      .system-node::after,
+      .system-icon,
+      .system-connector-in::after,
+      .system-connector-out::after,
+      .system-rail::after,
+      .system-split span::before,
+      .system-split span::after {
         transition: none;
+        animation: none;
       }
 
     }
@@ -200,7 +464,7 @@
         <nav
           class="hidden lg:flex items-center gap-4 xl:gap-5 text-[10px] xl:text-[11px] font-semibold uppercase tracking-[0.13em] xl:tracking-[0.16em] text-brand-900">
           <a class="hover:text-gold-600 transition" href="#problema">Problema</a>
-          <a class="hover:text-gold-600 transition" href="#video">Demo</a>
+          <a class="hover:text-gold-600 transition" href="#video">Sistema</a>
           <a class="hover:text-gold-600 transition" href="#servizi">Servizi</a>
           <a class="hover:text-gold-600 transition" href="#risultati">Casi</a>
           <a class="hover:text-gold-600 transition" href="#faq">FAQ</a>
@@ -219,7 +483,7 @@
       <div id="mobile-menu" class="lg:hidden hidden border-t border-slate-200 pb-5">
         <div class="flex flex-col gap-4 pt-4 text-brand-900 uppercase tracking-[0.16em] text-xs font-semibold">
           <a class="hover:text-gold-600 transition" href="#problema">Problema</a>
-          <a class="hover:text-gold-600 transition" href="#video">Demo</a>
+          <a class="hover:text-gold-600 transition" href="#video">Sistema</a>
           <a class="hover:text-gold-600 transition" href="#servizi">Servizi</a>
           <a class="hover:text-gold-600 transition" href="#risultati">Casi</a>
           <a class="hover:text-gold-600 transition" href="#faq">FAQ</a>
@@ -592,34 +856,178 @@
       </div>
     </section>
 
-    <section id="video" class="py-20 md:py-28 bg-brand-950 text-white" aria-labelledby="video-title">
+    <section id="video" class="py-20 md:py-28 bg-white" aria-labelledby="video-title">
       <div class="max-w-7xl mx-auto px-5 lg:px-8">
-        <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] items-center">
-          <div class="reveal">
-            <p class="text-xs uppercase tracking-[0.28em] text-gold-500 font-semibold">Video prova</p>
-            <h2 id="video-title" class="mt-4 text-4xl md:text-5xl font-extrabold">Guarda come funziona il sistema
-              INNOVALEX</h2>
-            <p class="mt-5 text-lg text-white/72">Email in arrivo, dati estratti, pratica aggiornata, PDF generato. Il
-              flusso resta tuo, il lavoro ripetitivo passa al sistema.</p>
-            <div class="mt-8 grid gap-3 text-sm text-white/72">
-              <p class="border-l border-gold-500 pl-4">Outlook e Gmail restano il punto di partenza.</p>
-              <p class="border-l border-gold-500 pl-4">L’avvocato approva sempre le bozze rilevanti.</p>
-              <p class="border-l border-gold-500 pl-4">Ogni output viene collegato alla pratica corretta.</p>
-            </div>
-          </div>
-          <div class="reveal">
-            <div class="border border-white/12 bg-white/5 p-3 shadow-soft">
-              <div class="flex items-center gap-2 border-b border-white/10 px-3 py-3">
-                <span class="h-3 w-3 rounded-full bg-red-400"></span>
-                <span class="h-3 w-3 rounded-full bg-yellow-300"></span>
-                <span class="h-3 w-3 rounded-full bg-green-400"></span>
-                <span class="ml-3 text-xs text-white/55">Demo INNOVALEX</span>
+        <div class="reveal max-w-5xl">
+          <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Sistema orchestrato L1</p>
+          <h2 id="video-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Come funziona davvero,
+            passo per passo.</h2>
+          <p class="mt-5 max-w-4xl text-lg text-slate-600">L'AI legge la conversazione, propone tag automatici di
+            urgenza e priorita, l'avvocato governa i tag decisionali, e il sistema crea in automatico workspace
+            collaboratore, PDF cliente, cartelle Drive, documento Word riassuntivo e report strategico aggregato. Qui
+            il punto non e archiviare: e orchestrare il lavoro operativo.</p>
+        </div>
+        <div class="system-board reveal mt-14 p-5 md:p-8 shadow-soft" style="--delay: 120ms">
+          <div class="system-board-desktop hidden lg:grid grid-cols-12 gap-x-8 gap-y-0 items-start">
+            <article class="system-node col-start-5 col-span-4" style="--step-delay: 0s;">
+              <span class="system-connector-out" aria-hidden="true"></span>
+              <div class="system-icon" aria-hidden="true">✉</div>
+              <h3 class="mt-5 text-xl font-extrabold text-brand-950">Email arriva</h3>
+              <p class="mt-3 text-sm text-slate-600">Outlook, Gmail o PEC entrano nel flusso e vengono prese in carico
+                subito.</p>
+            </article>
+
+            <div class="system-rail col-start-6 col-span-2" style="--step-delay: 0s;"></div>
+
+            <article class="system-node col-start-5 col-span-4" style="--step-delay: 1.5s;">
+              <span class="system-connector-in" aria-hidden="true"></span>
+              <span class="system-connector-out" aria-hidden="true"></span>
+              <div class="system-icon" aria-hidden="true">AI</div>
+              <h3 class="mt-5 text-xl font-extrabold text-brand-950">AI Agent</h3>
+              <p class="mt-3 text-sm text-slate-600">Analizza contenuto, header e allegati. Applica tag automatici e
+                stima il livello di intervento richiesto.</p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                <span class="system-pill">Urgenza</span>
+                <span class="system-pill">Priorita</span>
+                <span class="system-pill">Pattern email</span>
               </div>
-              <video class="w-full aspect-video bg-black" controls playsinline preload="metadata"
-                poster="https://i.imgur.com/wo7hZUz.png">
-                <source src="assets/Automazione_per_Studi_Legali.mp4" type="video/mp4" />
-              </video>
+            </article>
+
+            <div class="system-rail col-start-6 col-span-2" style="--step-delay: 1.5s;"></div>
+
+            <article class="system-node col-start-5 col-span-4" style="--step-delay: 3s;">
+              <span class="system-connector-in" aria-hidden="true"></span>
+              <span class="system-connector-out" aria-hidden="true"></span>
+              <div class="system-icon" aria-hidden="true">AVV</div>
+              <h3 class="mt-5 text-xl font-extrabold text-brand-950">Avvocato</h3>
+              <p class="mt-3 text-sm text-slate-600">Completa il triage con tag decisionali che definiscono contesto,
+                owner e destinazione del flusso operativo.</p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                <span class="system-pill">Cliente</span>
+                <span class="system-pill">Tipo pratica</span>
+                <span class="system-pill">Collaboratore</span>
+              </div>
+            </article>
+
+            <div class="system-rail col-start-6 col-span-2" style="--step-delay: 3s;"></div>
+            <div class="system-split col-start-2 col-span-10"
+              style="--step-delay: 4.5s; --split-left: 33px; --split-right: 181px; --split-branch: 50%;"><span></span></div>
+
+            <article class="system-node col-start-1 col-span-3" style="--step-delay: 4.5s;">
+              <span class="system-connector-in" aria-hidden="true"></span>
+              <div class="system-icon" aria-hidden="true">PDF</div>
+              <h3 class="mt-5 text-xl font-extrabold text-brand-950">PDF cartella cliente</h3>
+              <p class="mt-3 text-sm text-slate-600">Header professionale, corpo email e allegati incorporati con
+                naming progressivo.</p>
+            </article>
+
+            <article class="system-node col-start-8 col-span-4" style="--step-delay: 4.5s;">
+              <span class="system-connector-in" aria-hidden="true"></span>
+              <span class="system-connector-out" aria-hidden="true"></span>
+              <div class="system-icon" aria-hidden="true">DB</div>
+              <h3 class="mt-5 text-xl font-extrabold text-brand-950">Dashboard collaboratore</h3>
+              <p class="mt-3 text-sm text-slate-600">Workspace auto-creato con task, priorita e stato della pratica.</p>
+            </article>
+
+            <div class="system-rail col-start-9 col-span-2" style="--step-delay: 6s;"></div>
+            <div class="system-split col-start-5 col-span-8"
+              style="--step-delay: 6s; --split-left: 33px; --split-right: 132px; --split-branch: 63%;"><span></span></div>
+
+            <article class="system-node col-start-4 col-span-3" style="--step-delay: 6s;">
+              <span class="system-connector-in" aria-hidden="true"></span>
+              <span class="system-connector-out" aria-hidden="true"></span>
+              <div class="system-icon" aria-hidden="true">DRV</div>
+              <h3 class="mt-5 text-lg font-extrabold text-brand-950">Cartella Drive collaboratore</h3>
+              <p class="mt-3 text-sm text-slate-600">Materiali e file allineati alla pratica corretta.</p>
+            </article>
+
+            <article class="system-node col-start-10 col-span-3" style="--step-delay: 6s;">
+              <span class="system-connector-in" aria-hidden="true"></span>
+              <span class="system-connector-out" aria-hidden="true"></span>
+              <div class="system-icon" aria-hidden="true">DOC</div>
+              <h3 class="mt-5 text-lg font-extrabold text-brand-950">Documento Word riassuntivo</h3>
+              <p class="mt-3 text-sm text-slate-600">Riassunto operativo pronto per passaggio interno o revisione.</p>
+            </article>
+
+            <div class="system-split col-start-4 col-span-9"
+              style="--step-delay: 7.5s; --split-left: 132px; --split-right: 132px; --split-branch: 44.25%;"><span></span></div>
+            <div class="system-rail col-start-7 col-span-2" style="--step-delay: 7.5s;"></div>
+
+            <article class="system-node col-start-6 col-span-4" style="--step-delay: 7.5s;">
+              <span class="system-connector-in" aria-hidden="true"></span>
+              <div class="system-icon" aria-hidden="true">REP</div>
+              <h3 class="mt-5 text-xl font-extrabold text-brand-950">Report strategico aggregato</h3>
+              <p class="mt-3 text-sm text-slate-600">Legge pattern etichette, aggrega volumi e calcola il valore
+                economico generato dalla conversazione.</p>
+            </article>
+          </div>
+
+          <div class="lg:hidden space-y-4">
+            <article class="system-node relative w-full" style="--step-delay: 0s;">
+              <div class="system-icon" aria-hidden="true">✉</div>
+              <h3 class="mt-5 text-lg font-extrabold text-brand-950">Email arriva</h3>
+              <p class="mt-3 text-sm text-slate-600">Outlook, Gmail o PEC entrano nel flusso e vengono prese in carico
+                subito.</p>
+            </article>
+            <article class="system-node relative w-full" style="--step-delay: 1.5s;">
+              <div class="system-icon" aria-hidden="true">AI</div>
+              <h3 class="mt-5 text-lg font-extrabold text-brand-950">AI Agent</h3>
+              <p class="mt-3 text-sm text-slate-600">Applica tag automatici di urgenza e priorita, leggendo contenuto
+                e allegati.</p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                <span class="system-pill">Urgenza</span>
+                <span class="system-pill">Priorita</span>
+              </div>
+            </article>
+            <article class="system-node relative w-full" style="--step-delay: 3s;">
+              <div class="system-icon" aria-hidden="true">AVV</div>
+              <h3 class="mt-5 text-lg font-extrabold text-brand-950">Avvocato</h3>
+              <p class="mt-3 text-sm text-slate-600">Aggiunge tag decisionali e governa contesto, owner e destinazione
+                della lavorazione.</p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                <span class="system-pill">Cliente</span>
+                <span class="system-pill">Tipo pratica</span>
+                <span class="system-pill">Collaboratore</span>
+              </div>
+            </article>
+            <div class="grid gap-4">
+              <article class="system-node relative w-full" style="--step-delay: 4.5s;">
+                <div class="system-icon" aria-hidden="true">PDF</div>
+                <h3 class="mt-5 text-lg font-extrabold text-brand-950">PDF cartella cliente</h3>
+                <p class="mt-3 text-sm text-slate-600">Header professionale, corpo email e allegati incorporati.</p>
+              </article>
+              <article class="system-node relative w-full" style="--step-delay: 4.5s;">
+                <div class="system-icon" aria-hidden="true">DB</div>
+                <h3 class="mt-5 text-lg font-extrabold text-brand-950">Dashboard collaboratore</h3>
+                <p class="mt-3 text-sm text-slate-600">Workspace operativo auto-creato per il collaboratore corretto.</p>
+              </article>
             </div>
+            <div class="pl-4 border-l border-brand-100 space-y-4">
+              <article class="system-node relative w-full" style="--step-delay: 6s;">
+                <div class="system-icon" aria-hidden="true">DRV</div>
+                <h3 class="mt-5 text-lg font-extrabold text-brand-950">Cartella Drive collaboratore</h3>
+                <p class="mt-3 text-sm text-slate-600">File e materiali allineati automaticamente.</p>
+              </article>
+              <article class="system-node relative w-full" style="--step-delay: 6s;">
+                <div class="system-icon" aria-hidden="true">DOC</div>
+                <h3 class="mt-5 text-lg font-extrabold text-brand-950">Documento Word riassuntivo</h3>
+                <p class="mt-3 text-sm text-slate-600">Riassunto operativo pronto per revisione o handoff.</p>
+              </article>
+            </div>
+            <article class="system-node relative w-full" style="--step-delay: 7.5s;">
+              <div class="system-icon" aria-hidden="true">REP</div>
+              <h3 class="mt-5 text-lg font-extrabold text-brand-950">Report strategico aggregato</h3>
+              <p class="mt-3 text-sm text-slate-600">Dalle etichette emergono pattern, carico e valore economico
+                generato dalla conversazione email.</p>
+            </article>
+          </div>
+
+          <div class="mt-8 grid gap-3 text-sm text-slate-600 md:grid-cols-3">
+            <p class="border-l border-gold-500 pl-4">L'AI tagga e priorizza prima che il team tocchi la conversazione.</p>
+            <p class="border-l border-gold-500 pl-4">L'avvocato governa il contesto con tag decisionali, non con lavoro
+              manuale sparso.</p>
+            <p class="border-l border-gold-500 pl-4">Il sistema genera asset operativi e intelligence riusabile a partire
+              dalla stessa email.</p>
           </div>
         </div>
       </div>
