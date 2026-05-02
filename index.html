@@ -261,12 +261,16 @@
       grid-column: 1;
       grid-row: 3;
       --node-width: 215px;
+      justify-self: end;
+      transform: translateX(42px);
     }
 
     .orchestrator-node--bottom-right {
       grid-column: 3;
       grid-row: 3;
       --node-width: 215px;
+      justify-self: start;
+      transform: translateX(-42px);
     }
 
     .orchestrator-node h3 {
@@ -1061,9 +1065,10 @@
                 <line class="orchestrator-connection orchestrator-connection--dashboard" x1="50" y1="50" x2="16.5"
                   y2="45" />
                 <line class="orchestrator-connection orchestrator-connection--pdf" x1="50" y1="50" x2="83.5" y2="45" />
-                <line class="orchestrator-connection orchestrator-connection--report" x1="50" y1="50" x2="28"
+                <line class="orchestrator-connection orchestrator-connection--report" x1="50" y1="50" x2="33.5"
                   y2="81.5" />
-                <line class="orchestrator-connection orchestrator-connection--team" x1="50" y1="50" x2="72" y2="81.5" />
+                <line class="orchestrator-connection orchestrator-connection--team" x1="50" y1="50" x2="66.5"
+                  y2="81.5" />
               </svg>
 
               <article class="orchestrator-node orchestrator-node--top">
@@ -1517,29 +1522,35 @@
           <p class="mt-5 text-lg text-white/70">La tua email non contiene solo messaggi.<br>
             Contiene lavoro non tracciato, tempo non fatturato e valore che rischia di sparire.</p>
         </div>
-        <div class="mt-14 border-l border-white/15">
-          <div class="reveal grid gap-6 lg:grid-cols-[0.22fr_1fr_0.35fr] border-b border-white/12 py-8 pl-6">
-            <div>
-              <p class="text-gold-500 font-black text-3xl">L0</p>
-              <p class="mt-2 text-sm text-white/50">Email → Ordine → Report → Controllo</p>
+        <div class="mt-14 space-y-8">
+          <article
+            class="reveal rounded-3xl border border-gold-200/70 bg-gradient-to-br from-[#F2DFB1] via-[#DBBE77] to-[#B08E3C] p-8 md:p-10 text-brand-950 shadow-gold">
+            <div class="grid gap-8 lg:grid-cols-[0.2fr_1fr_0.33fr]">
+              <div>
+                <h3 class="text-3xl md:text-4xl font-extrabold leading-tight">Sistema completo INNOVALEX</h3>
+                <p class="mt-4 text-lg text-white/72">La tua inbox non contiene solo messaggi.<br>
+                  Contiene lavoro non tracciato, tempo non fatturato e valore che rischia di sparire.<br>
+                  InnovaLex trasforma email e PEC in lavoro ordinato, report economici e controllo operativo dello
+                  studio.</p>
+                <p class="mt-3 font-semibold text-brand-900">Sistema completo consigliato L1 + L2 + L3.</p>
+              </div>
+              <div class="text-left lg:text-right">
+                <p class="text-2xl font-extrabold">Setup completo: €9.800</p>
+                <p class="mt-1 text-sm text-white/55">Manutenzione trimestrale €600</p>
+                <a href="#contatti" data-cta="service-l0"
+                  class="mt-6 inline-flex rounded-full bg-brand-950 px-6 py-3 font-semibold text-white transition hover:bg-brand-900">Prenota
+                  la Diagnosi Operativa</a>
+              </div>
             </div>
-            <div>
-              <h3 class="text-3xl font-bold">Sistema Completo INNOVALEX</h3>
-              <p class="mt-3 text-white/72">Per studi che vogliono smettere di gestire email, PEC, allegati,
-                collaboratori
-                e rendicontazione economica</p>
-              <p class="mt-3 text-white/72">Include L1, L2 e L3.</p>
+          </article>
+
+          <div class="reveal rounded-3xl border border-white/14 bg-white/5 overflow-hidden">
+            <div class="border-b border-white/12 px-6 py-5 md:px-8">
+              <p class="text-xs uppercase tracking-[0.24em] text-gold-200 font-semibold">Layer inclusi nel sistema
+                INNOVALEX</p>
             </div>
-            <div class="text-left lg:text-right">
-              <p class="text-xl font-bold">Setup completo:<br>€10.000</p>
-              <p class="text-sm text-white/55">Manutenzione trimestrale da 600€</p>
-              <a href="#contatti" data-cta="service-l1"
-                class="mt-5 inline-flex text-gold-500 font-semibold hover:text-gold-200">Prenota la Diagnosi
-                Operativa</a>
-            </div>
-          </div>
-          <div class="mt-14 border-l border-white/15">
-            <div class="reveal grid gap-6 lg:grid-cols-[0.22fr_1fr_0.35fr] border-b border-white/12 py-8 pl-6">
+
+            <div class="grid gap-6 lg:grid-cols-[0.22fr_1fr_0.35fr] border-b border-white/12 px-6 py-8 md:px-8">
               <div>
                 <p class="text-gold-500 font-black text-3xl">L1</p>
                 <p class="mt-2 text-sm text-white/50">Email → Ordine</p>
@@ -1556,14 +1567,14 @@
               </div>
               <div class="text-left lg:text-right">
                 <p class="text-xl font-bold">Valore modulo:<br>€2.500 Setup</p>
-                <p class="text-sm text-white/55">Manutenzione trimestrale da 300€</p>
+                <p class="text-sm text-white/55">Manutenzione trimestrale 300€</p>
                 <a href="#contatti" data-cta="service-l1"
                   class="mt-5 inline-flex text-gold-500 font-semibold hover:text-gold-200">Prenota la Diagnosi
                   Operativa</a>
               </div>
             </div>
-            <div class="reveal grid gap-6 lg:grid-cols-[0.22fr_1fr_0.35fr] border-b border-white/12 py-8 pl-6"
-              style="--delay: 120ms">
+
+            <div class="grid gap-6 lg:grid-cols-[0.22fr_1fr_0.35fr] border-b border-white/12 px-6 py-8 md:px-8">
               <div>
                 <p class="text-gold-500 font-black text-3xl">L2</p>
                 <p class="mt-2 text-sm text-white/50">Email → Report</p>
@@ -1580,12 +1591,12 @@
                 <p class="mt-4 text-sm text-gold-200">Si innesta su L1. Non è un prodotto separato.</p>
               </div>
               <div class="text-left lg:text-right">
-                <p class="text-xl font-bold">Valore modulo:<br>€3.000 Setup</p>
-                <p class="text-sm text-white/55">Manutenzione trimestrale da 450€</p>
+                <p class="text-xl font-bold">Valore modulo:<br>€2.800 Setup</p>
+                <p class="text-sm text-white/55">Manutenzione trimestrale 450€</p>
               </div>
             </div>
-            <div class="reveal grid gap-6 lg:grid-cols-[0.22fr_1fr_0.35fr] border-b border-white/12 py-8 pl-6"
-              style="--delay: 120ms">
+
+            <div class="grid gap-6 lg:grid-cols-[0.22fr_1fr_0.35fr] px-6 py-8 md:px-8">
               <div>
                 <p class="text-gold-500 font-black text-3xl">L3</p>
                 <p class="mt-2 text-sm text-white/50">Email → Controllo</p>
@@ -1597,8 +1608,7 @@
                 <p class="mt-3 text-white/72">Dashboard collaboratori, assegnazioni, stato attività, conversazioni
                   chiuse,
                   blocco thread da escludere dai report, carichi di lavoro e vista per cliente, fascicolo e
-                  collaboratore.
-                </p>
+                  collaboratore.</p>
                 <p class="mt-4 text-sm text-gold-200">Completa L1 e L2 trasformando la inbox in controllo operativo.</p>
               </div>
               <div class="text-left lg:text-right">
@@ -1606,25 +1616,30 @@
                 <p class="text-sm text-white/55">Manutenzione trimestrale 600€</p>
               </div>
             </div>
-            <div class="reveal grid gap-6 lg:grid-cols-[0.22fr_1fr_0.35fr] py-8 pl-6" style="--delay: 240ms">
+          </div>
+
+          <article
+            class="reveal rounded-3xl border border-gold-500/30 bg-gradient-to-br from-brand-900 via-brand-950 to-[#050B1A] p-8 md:p-10"
+            style="--delay: 120ms">
+            <div class="grid gap-6 lg:grid-cols-[0.2fr_1fr_0.33fr]">
               <div>
                 <p class="text-gold-500 font-black text-3xl">L4</p>
-                <p class="mt-2 text-sm text-white/50">Studio → Sistema</p>
+                <p class="mt-2 text-sm text-gold-200/70">Per esigenze avanzate</p>
               </div>
               <div>
-                <h3 class="text-3xl font-bold">Sistema Custome</h3>
+                <h3 class="text-3xl font-bold">Sistema Custom</h3>
                 <p class="mt-3 text-white/72">Per studi che vogliono un’infrastruttura AI costruita sui propri flussi,
                   knowledge interno, practice area e integrazioni avanzate.</p>
               </div>
               <div class="text-left lg:text-right">
                 <p class="text-xl font-bold">Custom</p>
                 <p class="text-sm text-white/55">Progetto Dedicato</p>
-                <a href="#contatti" data-cta="service-l3"
+                <a href="#contatti" data-cta="service-l4"
                   class="mt-5 inline-flex text-gold-500 font-semibold hover:text-gold-200">Parliamo del Sistema
                   Custom</a>
               </div>
             </div>
-          </div>
+          </article>
         </div>
     </section>
 
