@@ -1838,13 +1838,19 @@
                 <option class="text-brand-950" value="50+ persone">50+ persone</option>
               </select>
             </div>
-            <div>
-              <fieldset id="urgentProblemGroup" class="border border-white/20 bg-white/5 px-4 py-4"
-                aria-labelledby="urgentProblemLegend">
-                <legend id="urgentProblemLegend" class="px-1 text-sm font-semibold">Quali sono oggi le priorità più
-                  urgenti?</legend>
-                <p class="mt-1 text-xs text-white/55">Puoi selezionare più opzioni.</p>
-                <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            <div class="relative">
+              <label class="text-sm font-semibold" for="urgentProblemToggle">Quali sono oggi le priorità più
+                urgenti?</label>
+              <button id="urgentProblemToggle" type="button" aria-haspopup="true" aria-expanded="false"
+                class="mt-2 flex w-full items-center justify-between gap-4 bg-white/10 border border-white/20 px-4 py-3 text-left text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-gold-500/40 focus:border-gold-500">
+                <span id="urgentProblemSummary" class="truncate text-white/75">Seleziona una o più priorità</span>
+                <span class="text-lg leading-none text-white/65">⌄</span>
+              </button>
+              <div id="urgentProblemGroup"
+                class="absolute left-0 right-0 top-full z-20 mt-2 hidden border border-white/20 bg-brand-900 p-4 shadow-soft"
+                aria-labelledby="urgentProblemToggle">
+                <p class="text-xs text-white/55">Puoi selezionare più opzioni.</p>
+                <div class="mt-3 grid gap-3 sm:grid-cols-2">
                   <label
                     class="flex items-center gap-3 border border-white/10 bg-white/5 px-3 py-3 text-sm text-white/90 transition hover:border-gold-500/40">
                     <input type="checkbox" name="urgentProblem" value="Email, PEC"
@@ -1876,7 +1882,7 @@
                     <span>Altro sistema personalizzato</span>
                   </label>
                 </div>
-              </fieldset>
+              </div>
             </div>
           </div>
           <div>
@@ -2322,14 +2328,44 @@
     const formSuccess = document.getElementById('form-success');
     const formError = document.getElementById('form-error');
     const formSubmitBtn = form.querySelector('button[type="submit"]');
+    const urgentProblemToggle = document.getElementById('urgentProblemToggle');
+    const urgentProblemSummary = document.getElementById('urgentProblemSummary');
     const urgentProblemGroup = document.getElementById('urgentProblemGroup');
-    document.querySelectorAll('input[name="urgentProblem"]').forEach(input => {
+    const urgentProblemInputs = [...document.querySelectorAll('input[name="urgentProblem"]')];
+    const updateUrgentProblemSummary = () => {
+      const selected = urgentProblemInputs.filter(input => input.checked).map(input => input.value);
+      urgentProblemSummary.textContent = selected.length ? selected.join(', ') : 'Seleziona una o più priorità';
+    };
+    const closeUrgentProblemDropdown = () => {
+      urgentProblemGroup.classList.add('hidden');
+      urgentProblemToggle.setAttribute('aria-expanded', 'false');
+    };
+    const openUrgentProblemDropdown = () => {
+      urgentProblemGroup.classList.remove('hidden');
+      urgentProblemToggle.setAttribute('aria-expanded', 'true');
+    };
+    urgentProblemToggle.addEventListener('click', () => {
+      const isHidden = urgentProblemGroup.classList.contains('hidden');
+      if (isHidden) {
+        openUrgentProblemDropdown();
+      } else {
+        closeUrgentProblemDropdown();
+      }
+    });
+    document.addEventListener('click', (event) => {
+      if (!urgentProblemToggle.contains(event.target) && !urgentProblemGroup.contains(event.target)) {
+        closeUrgentProblemDropdown();
+      }
+    });
+    urgentProblemInputs.forEach(input => {
       input.addEventListener('change', () => {
+        updateUrgentProblemSummary();
         if (document.querySelector('input[name="urgentProblem"]:checked')) {
-          urgentProblemGroup.classList.remove('border-red-400');
+          urgentProblemToggle.classList.remove('border-red-400');
         }
       });
     });
+    updateUrgentProblemSummary();
     const thankYouModal = document.getElementById('thank-you-modal');
     const thankYouBackdrop = document.getElementById('thank-you-backdrop');
     const thankYouClose = document.getElementById('thank-you-close');
@@ -2349,6 +2385,9 @@
     thankYouClose.addEventListener('click', closeThankYouModal);
     thankYouBackdrop.addEventListener('click', closeThankYouModal);
     document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !urgentProblemGroup.classList.contains('hidden')) {
+        closeUrgentProblemDropdown();
+      }
       if (event.key === 'Escape' && !thankYouModal.classList.contains('hidden')) {
         closeThankYouModal();
       }
@@ -2374,10 +2413,11 @@
       }
       const selectedUrgentProblems = [...document.querySelectorAll('input[name="urgentProblem"]:checked')].map(input => input.value);
       if (!selectedUrgentProblems.length) {
-        urgentProblemGroup.classList.add('border-red-400');
+        urgentProblemToggle.classList.add('border-red-400');
+        openUrgentProblemDropdown();
         valid = false;
       } else {
-        urgentProblemGroup.classList.remove('border-red-400');
+        urgentProblemToggle.classList.remove('border-red-400');
       }
       if (!valid) return;
 
