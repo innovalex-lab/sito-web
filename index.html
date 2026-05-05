@@ -78,6 +78,21 @@
       background: linear-gradient(105deg, rgba(7, 15, 38, 0.88) 0%, rgba(7, 15, 38, 0.68) 48%, rgba(7, 15, 38, 0.24) 100%);
     }
 
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .hero-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
+
     .text-shadow {
       text-shadow: 0 12px 40px rgba(2, 6, 23, 0.58);
     }
@@ -824,6 +839,17 @@
       }
 
     }
+
+    @media (max-width: 767px) {
+      .hero-image {
+        inset: 0 auto 0 0;
+        width: 128%;
+        max-width: none;
+        left: auto;
+        right: -6%;
+        object-position: 78% center;
+      }
+    }
   </style>
 </head>
 
@@ -870,8 +896,10 @@
 
   <main>
     <section id="home" class="relative min-h-[100svh] flex items-center overflow-hidden border-t-4 border-brand-950">
-      <img src="https://i.imgur.com/XH9HSju.png" alt="Studio legale con professionista al lavoro"
-        class="absolute inset-0 w-full h-full object-cover parallax" data-parallax="0.12" loading="eager" />
+      <div class="hero-media">
+        <img src="https://i.imgur.com/XH9HSju.png" alt="Studio legale con professionista al lavoro"
+          class="hero-image parallax" data-parallax="0.12" loading="eager" />
+      </div>
       <div class="absolute inset-0 hero-mask"></div>
       <div class="relative z-10 w-full">
         <div class="max-w-7xl mx-auto px-5 lg:px-8 pt-32 pb-16">
@@ -879,19 +907,19 @@
             <p class="reveal text-sm md:text-base font-semibold tracking-[0.28em] uppercase text-gold-200"
               style="--delay: 80ms">INNOVALEX</p>
             <h1 class="reveal mt-5 text-5xl md:text-7xl font-black leading-[0.95] text-shadow" style="--delay: 160ms">Tu
-              fai l’avvocato. <br> Noi liberiamo lo studio dal caos operativo</h1>
+              fai l’avvocato<br>Noi liberiamo lo studio dal caos operativo</h1>
             <p class="reveal mt-6 max-w-2xl text-lg md:text-2xl text-white/88" style="--delay: 240ms">Partiamo dal punto
               in cui si perdono tempo, controllo e margine ogni giorno.
             </p>
-            <p class="reveal mt-4 max-w-xl text-base text-white/72" style="--delay: 320ms">Sistema AI costruito sul tuo
-              studio. Server EU, GDPR nativo, ROI documentabile in 60 giorni. Massimo 6 studi al mese.</p>
+            <p class="reveal mt-4 max-w-xl text-base text-white/72" style="--delay: 320ms">Il Sistema AI per Studi
+              Legali d'Eccellenza che trasforma Email e PEC in lavoro ordinato, tracciato e rendicontabile.</p>
             <div class="reveal mt-9 flex flex-col sm:flex-row gap-4" style="--delay: 400ms">
               <a href="#contatti" data-cta="hero-demo"
                 class="inline-flex items-center justify-center rounded-full cta-gold text-brand-950 px-7 py-4 font-semibold">Prenota
                 la Diagnosi Operativa</a>
               <a href="#roi" data-cta="hero-roi"
                 class="inline-flex items-center justify-center rounded-full border border-white/45 text-white px-7 py-4 font-semibold hover:bg-white/10 transition">Quanto
-                vi sta costando l'inerzia? Calcola -></a>
+                vi costa la gestione email manuale? Calcola -></a>
             </div>
             <div class="reveal mt-10 grid grid-cols-3 gap-3 max-w-2xl text-white" style="--delay: 480ms">
               <div class="border-l border-gold-500/70 pl-4">
@@ -924,7 +952,7 @@
           <div class="grid gap-4 md:grid-cols-3">
             <div class="metric-panel reveal border border-slate-200 p-6 bg-white">
               <p class="text-4xl font-black text-brand-900">2h/giorno</p>
-              <p class="mt-4 font-semibold text-brand-900">perse nell’inbox</p>
+              <p class="mt-4 font-semibold text-brand-900">perse nell’email</p>
               <p class="mt-2 text-sm text-slate-600">Triage, priorità, allegati, follow-up e ricerche ripetute.</p>
             </div>
             <div class="metric-panel reveal border border-slate-200 p-6 bg-white" style="--delay: 100ms">
@@ -1571,7 +1599,7 @@
         <div class="reveal max-w-4xl">
           <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Confronto strategico</p>
           <h2 id="compare-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Ogni strumento ha un
-            ruolo.<br>InnovaLex copre il pezzo che oggi resta scoperto.</h2>
+            ruolo.<br>INNOVALEX copre il pezzo che oggi resta scoperto.</h2>
         </div>
         <div class="reveal mt-10 overflow-x-auto border border-slate-200 bg-white" style="--delay: 80ms">
           <table class="min-w-[1080px] w-full text-left">
@@ -1582,7 +1610,7 @@
                 <th class="px-5 py-4 text-base font-bold">ChatGPT / Claude generici</th>
                 <th class="px-5 py-4 text-base font-bold">Lexroom</th>
                 <th class="px-5 py-4 text-base font-bold">Kleos</th>
-                <th class="px-5 py-4 text-base font-bold">InnovaLex</th>
+                <th class="px-5 py-4 text-base font-bold">INNOVALEX</th>
               </tr>
             </thead>
             <tbody class="text-slate-700">
@@ -1662,7 +1690,7 @@
               <div>
                 <h3 class="text-2xl md:text-3xl font-extrabold leading-tight">Sistema INNOVALEX</h3>
                 <p class="mt-3 text-base md:text-lg text-brand-950/85">La tua email non contiene semplici messaggi.<br>
-                  InnovaLex trasforma email e PEC in lavoro ordinato,<br>report economici e controllo operativo dello
+                  INNOVALEX trasforma email e PEC in lavoro ordinato,<br>report economici e controllo operativo dello
                   studio e collaboratori.</p>
                 <p class="mt-3 font-semibold text-brand-900">Email → Ordine → Report → Controllo</p>
               </div>
@@ -1945,13 +1973,13 @@
           <details class="reveal border border-slate-200 bg-slate-50 p-6" style="--delay: 240ms">
             <summary class="cursor-pointer font-bold text-brand-950">Perché non usare solo Copilot o ChatGPT?</summary>
             <p class="mt-4 text-sm text-slate-600">Perché sono strumenti generici. <br>
-              InnovaLex lavora sui flussi reali dello studio: email, PEC, archiviazione, collaboratori e knowledge
+              INNOVALEX lavora sui flussi reali dello studio: email, PEC, archiviazione, collaboratori e knowledge
               interno.
               L’avvocato resta sempre nel controllo degli output rilevanti.</p>
           </details>
           <details class="reveal border border-slate-200 bg-slate-50 p-6" style="--delay: 320ms">
             <summary class="cursor-pointer font-bold text-brand-950">Quanto costa?</summary>
-            <p class="mt-4 text-sm text-slate-600">Il Sistema InnovaLex completo M1+M2+M3 parte da €9.800 setup.
+            <p class="mt-4 text-sm text-slate-600">Il Sistema INNOVALEX completo M1+M2+M3 parte da €9.800 setup.
               Per studi che vogliono partire in modo graduale, M1 è attivabile da €2.500 setup.
               La manutenzione dipende da volumi, caselle, report e complessità operativa.</p>
           </details>
@@ -1984,7 +2012,7 @@
             eliminando il lavoro ripetitivo
             e permettendo ai professionisti di concentrarsi su attività ad alto valore.</p>
           <p class="mt-5 text-lg text-slate-700">Ogni call e progetto è guidato direttamente da Federico. <br>
-            La delivery segue il metodo InnovaLex, con standard tecnici e controllo qualità centralizzato.</p>
+            La delivery segue il metodo INNOVALEX, con standard tecnici e controllo qualità centralizzato.</p>
           <div class="mt-8 border border-gold-500/40 bg-slate-50 p-5">
             <p class="text-sm uppercase tracking-[0.22em] text-gold-600 font-semibold">Disponibilità</p>
             <p class="mt-3 text-2xl font-extrabold text-brand-950"><span data-current-month>Questo mese</span>: <span
