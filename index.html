@@ -864,8 +864,7 @@
         </a>
         <nav
           class="hidden lg:flex items-center gap-3 xl:gap-4 text-[9px] xl:text-[10px] font-semibold uppercase tracking-[0.11em] xl:tracking-[0.14em] text-brand-900">
-          <a class="whitespace-nowrap hover:text-gold-600 transition" href="#problema">Il Costo del "Facciamo Come
-            Sempre"</a>
+          <a class="whitespace-nowrap hover:text-gold-600 transition" href="#problema">Il Problema"</a>
           <a class="whitespace-nowrap hover:text-gold-600 transition" href="#roi">Calcola il Tuo Costo</a>
           <a class="whitespace-nowrap hover:text-gold-600 transition" href="#metodo">Come Funziona</a>
           <a class="whitespace-nowrap hover:text-gold-600 transition" href="#risultati">Risultati Reali</a>
@@ -882,10 +881,9 @@
       </div>
       <div id="mobile-menu" class="lg:hidden hidden border-t border-slate-200 pb-5">
         <div class="flex flex-col gap-4 pt-4 text-brand-900 uppercase tracking-[0.16em] text-xs font-semibold">
-          <a class="hover:text-gold-600 transition" href="#problema">Il Costo del "Facciamo Come Sempre"</a>
-          <a class="hover:text-gold-600 transition" href="#metodo">Come Funziona</a>
+          <a class="hover:text-gold-600 transition" href="#problema">Il Problema"</a>
           <a class="hover:text-gold-600 transition" href="#roi">Calcola il Tuo Costo</a>
-          <a class="hover:text-gold-600 transition" href="#video">Il Sistema</a>
+          <a class="hover:text-gold-600 transition" href="#metodo">Come Funziona</a>
           <a class="hover:text-gold-600 transition" href="#risultati">Risultati Reali</a>
           <a class="hover:text-gold-600 transition" href="#faq">FAQ</a>
           <a class="hover:text-gold-600 transition" href="#founder">Chi Siamo</a>
@@ -1135,8 +1133,9 @@
           <div class="system-board-desktop hidden lg:grid grid-cols-12 gap-x-8 gap-y-0 items-start">
             <article class="system-node col-start-5 col-span-4" style="--step-delay: 0s;">
               <span class="system-connector-out" aria-hidden="true"></span>
-              <div class="system-icon" aria-hidden="true">✉</div>
-              <h3 class="mt-5 text-xl font-extrabold text-brand-950">Email arriva</h3>
+              <div class="system-icon" aria-hidden="true">📧</div>
+              <h3 class="mt-5 text-xl font-extrabold text-brand-950">Nuova Email</h3>
+              <p class="mt-3 text-sm text-slate-600">Outlook, Gmail o PEC entrano nel flusso e vengono prese in carico immediatamente.</p>
             </article>
 
             <div class="system-rail col-start-6 col-span-2" style="--step-delay: 0s;"></div>
@@ -1146,12 +1145,11 @@
               <span class="system-connector-out" aria-hidden="true"></span>
               <div class="system-icon" aria-hidden="true">AI</div>
               <h3 class="mt-5 text-xl font-extrabold text-brand-950">Agente AI</h3>
-              <p class="mt-3 text-sm text-slate-600">Analizza contenuto, oggetto e allegati. Applica tag automatici e
-                stima il livello di urgenza.</p>
+              <p class="mt-3 text-sm text-slate-600">Analizza contenuto, oggetto e allegati. Classifica per urgenza, priorità e tipo. Rileva scadenze, date di udienza e termini legali. Identifica se il mittente è un cliente esistente o un nuovo contatto.</p>
               <div class="mt-4 flex flex-wrap gap-2">
                 <span class="system-pill">Urgenza</span>
-                <span class="system-pill">Priorita</span>
-                <span class="system-pill">Pattern email</span>
+                <span class="system-pill">Priorità</span>
+                <span class="system-pill">Tipo</span>
               </div>
             </article>
 
@@ -1161,15 +1159,13 @@
               <span class="system-connector-in" aria-hidden="true"></span>
               <span class="system-connector-out" aria-hidden="true"></span>
               <div class="system-icon" aria-hidden="true">AVV</div>
-              <h3 class="mt-5 text-xl font-extrabold text-brand-950">Avvocato</h3>
-              <p class="mt-3 text-sm text-slate-600">Assegni una pratica con un'etichetta.
-                <br>Il collaboratore riceve automaticamente cartella, materiale, email precedenti e recap
-                operativo.
-              </p>
+              <h3 class="mt-5 text-xl font-extrabold text-brand-950">Pannello INNOVALEX</h3>
+              <p class="mt-3 text-sm text-slate-600">Un pannello integrato direttamente in Outlook, Gmail e qualsiasi webmail. L'avvocato vede la classificazione AI, conferma con un click, assegna cliente, pratica, collaboratore e urgenza. Senza uscire dalla casella email.</p>
               <div class="mt-4 flex flex-wrap gap-2">
                 <span class="system-pill">Cliente</span>
-                <span class="system-pill">Tipo pratica</span>
-                <span class="system-pill">Collaboratore</span>
+                <span class="system-pill">Pratica</span>
+                <span class="system-pill">Calendario</span>
+                <span class="system-pill">Urgenza</span>
               </div>
             </article>
 
@@ -1181,99 +1177,281 @@
 
             <article class="system-node col-start-1 col-span-4" style="--step-delay: 4.5s;">
               <span class="system-connector-in" aria-hidden="true"></span>
-              <div class="system-icon" aria-hidden="true">PDF</div>
-              <h3 class="mt-5 text-xl font-extrabold text-brand-950">PDF cartella cliente</h3>
-              <p class="mt-3 text-sm text-slate-600">Ogni email diventa automaticamente un documento PDF, archiviato
-                nella cartella del cliente giusto.
-              </p>
+              <div class="system-icon" aria-hidden="true">📄</div>
+              <h3 class="mt-5 text-xl font-extrabold text-brand-950">Archiviazione e Calendario</h3>
+              <p class="mt-3 text-sm text-slate-600">Ogni email diventa un PDF professionale archiviato nella cartella del cliente giusto. Le scadenze rilevate vengono proposte come eventi calendario con alert automatici a 30, 15, 7 e 1 giorno. I nuovi contatti vengono proposti per l'apertura di una nuova pratica.</p>
             </article>
 
             <article class="system-node col-start-5 col-span-4" style="--step-delay: 4.5s;">
               <span class="system-connector-in" aria-hidden="true"></span>
-              <div class="system-icon" aria-hidden="true">DB</div>
-              <h3 class="mt-5 text-xl font-extrabold text-brand-950">Assegnazione collaboratore</h3>
-              <p class="mt-3 text-sm text-slate-600">Una dashboard mostra chi sta lavorando su cosa, a che punto
-                è ogni pratica, dove si blocca il flusso.
-              </p>
+              <div class="system-icon" aria-hidden="true">📊</div>
+              <h3 class="mt-5 text-xl font-extrabold text-brand-950">Dashboard Collaboratori e Soci</h3>
+              <p class="mt-3 text-sm text-slate-600">Il collaboratore riceve cartella, materiale e recap operativo in automatico. Una dashboard mostra chi lavora su cosa, lo stato di ogni pratica, l'urgenza e le ore accumulate. Visibile chi porta valore: pratiche originate, gestite e valore economico per ogni socio.</p>
             </article>
 
             <article class="system-node col-start-9 col-span-4" style="--step-delay: 4.5s;">
               <span class="system-connector-in" aria-hidden="true"></span>
-              <div class="system-icon" aria-hidden="true">REP</div>
-              <h3 class="mt-5 text-xl font-extrabold text-brand-950">Report Economico</h3>
-              <p class="mt-3 text-sm text-slate-600">Ogni lunedì mattina ricevi il report economico della settimana
-                precedente:
-                <br>quante ore hai lavorato per ogni cliente, quale valore hai generato.
-              </p>
+              <div class="system-icon" aria-hidden="true">🧾</div>
+              <h3 class="mt-5 text-xl font-extrabold text-brand-950">Report e Fatturazione</h3>
+              <p class="mt-3 text-sm text-slate-600">Ogni lunedì mattina: report settimanale per cliente e pratica, con ore stimate e valore economico. Include le riunioni Teams e Google Meet rilevate dal calendario e associate alla pratica. Dal report, il sistema genera automaticamente la bozza di parcella pre-compilata, esportabile in PDF, Word o XML FatturaPA.</p>
             </article>
           </div>
 
           <div class="lg:hidden space-y-4">
             <article class="system-node relative w-full" style="--step-delay: 0s;">
-              <div class="system-icon" aria-hidden="true">✉</div>
-              <h3 class="mt-5 text-lg font-extrabold text-brand-950">Email arriva</h3>
-              <p class="mt-3 text-sm text-slate-600">Outlook, Gmail o PEC entrano nel flusso e vengono prese in carico
-                subito.</p>
+              <div class="system-icon" aria-hidden="true">📧</div>
+              <h3 class="mt-5 text-lg font-extrabold text-brand-950">Nuova Email</h3>
+              <p class="mt-3 text-sm text-slate-600">Outlook, Gmail o PEC entrano nel flusso e vengono prese in carico immediatamente.</p>
             </article>
             <article class="system-node relative w-full" style="--step-delay: 1.5s;">
               <div class="system-icon" aria-hidden="true">AI</div>
-              <h3 class="mt-5 text-lg font-extrabold text-brand-950">AI Agent</h3>
-              <p class="mt-3 text-sm text-slate-600">Applica tag automatici di urgenza e priorita, leggendo contenuto
-                e allegati.</p>
+              <h3 class="mt-5 text-lg font-extrabold text-brand-950">Agente AI</h3>
+              <p class="mt-3 text-sm text-slate-600">Analizza contenuto, oggetto e allegati. Classifica per urgenza, priorità e tipo. Rileva scadenze, date di udienza e termini legali e le aggiunge in calendario. Identifica se il mittente è un cliente esistente o un nuovo contatto.</p>
               <div class="mt-4 flex flex-wrap gap-2">
                 <span class="system-pill">Urgenza</span>
-                <span class="system-pill">Priorita</span>
+                <span class="system-pill">Priorità</span>
+                <span class="system-pill">Calendario</span>
               </div>
             </article>
             <article class="system-node relative w-full" style="--step-delay: 3s;">
               <div class="system-icon" aria-hidden="true">AVV</div>
-              <h3 class="mt-5 text-lg font-extrabold text-brand-950">Avvocato</h3>
-              <p class="mt-3 text-sm text-slate-600">Aggiunge tag decisionali e governa contesto, owner e destinazione
-                della lavorazione.</p>
+              <h3 class="mt-5 text-lg font-extrabold text-brand-950">Pannello INNOVALEX</h3>
+              <p class="mt-3 text-sm text-slate-600">Un pannello integrato direttamente in Outlook, Gmail e qualsiasi webmail. L'avvocato vede la classificazione AI, conferma con un click, assegna cliente, pratica, collaboratore e urgenza. Senza uscire dalla casella email.</p>
               <div class="mt-4 flex flex-wrap gap-2">
                 <span class="system-pill">Cliente</span>
-                <span class="system-pill">Tipo pratica</span>
+                <span class="system-pill">Pratica</span>
                 <span class="system-pill">Collaboratore</span>
+                <span class="system-pill">Urgenza</span>
               </div>
             </article>
             <div class="grid gap-4">
               <article class="system-node relative w-full" style="--step-delay: 4.5s;">
-                <div class="system-icon" aria-hidden="true">PDF</div>
-                <h3 class="mt-5 text-lg font-extrabold text-brand-950">PDF cartella cliente</h3>
-                <p class="mt-3 text-sm text-slate-600">Header professionale, corpo email e allegati incorporati.</p>
+                <div class="system-icon" aria-hidden="true">📄</div>
+                <h3 class="mt-5 text-lg font-extrabold text-brand-950">Archiviazione e Calendario</h3>
+                <p class="mt-3 text-sm text-slate-600">Ogni email diventa un PDF professionale archiviato nella cartella del cliente giusto. Le scadenze rilevate vengono proposte come eventi calendario con alert automatici a 30, 15, 7 e 1 giorno. I nuovi contatti vengono proposti per l'apertura di una nuova pratica.</p>
               </article>
               <article class="system-node relative w-full" style="--step-delay: 4.5s;">
-                <div class="system-icon" aria-hidden="true">DB</div>
-                <h3 class="mt-5 text-lg font-extrabold text-brand-950">Dashboard collaboratore</h3>
-                <p class="mt-3 text-sm text-slate-600">Una sola schermata ti dice chi sta lavorando su cosa, a che punto
-                  è ogni pratica, dove si blocca il flusso.</p>
-              </article>
-            </div>
-            <div class="pl-4 border-l border-brand-100 space-y-4">
-              <article class="system-node relative w-full" style="--step-delay: 6s;">
-                <div class="system-icon" aria-hidden="true">DRV</div>
-                <h3 class="mt-5 text-lg font-extrabold text-brand-950">Cartella Drive collaboratore</h3>
-                <p class="mt-3 text-sm text-slate-600">File e materiali allineati automaticamente.</p>
+                <div class="system-icon" aria-hidden="true">📊</div>
+                <h3 class="mt-5 text-lg font-extrabold text-brand-950">Dashboard Collaboratori e Soci</h3>
+                <p class="mt-3 text-sm text-slate-600">Il collaboratore riceve cartella, materiale e recap operativo in automatico. Una dashboard mostra chi lavora su cosa, lo stato di ogni pratica, l'urgenza e le ore accumulate. Visibile chi porta valore: pratiche originate, gestite e valore economico per ogni socio.</p>
               </article>
               <article class="system-node relative w-full" style="--step-delay: 6s;">
-                <div class="system-icon" aria-hidden="true">DOC</div>
-                <h3 class="mt-5 text-lg font-extrabold text-brand-950">Documento Word riassuntivo</h3>
-                <p class="mt-3 text-sm text-slate-600">Riassunto operativo pronto per revisione o handoff.</p>
-              </article>
-              <article class="system-node relative w-full" style="--step-delay: 7.5s;">
-                <div class="system-icon" aria-hidden="true">A2</div>
-                <h3 class="mt-5 text-lg font-extrabold text-brand-950">Agent AI economico</h3>
-                <p class="mt-3 text-sm text-slate-600">Legge la conversazione, crea sintesi email, stima economica e
-                  struttura il report per cliente.</p>
+                <div class="system-icon" aria-hidden="true">📈</div>
+                <h3 class="mt-5 text-lg font-extrabold text-brand-950">Report e Fatturazione</h3>
+                <p class="mt-3 text-sm text-slate-600">Ogni lunedì mattina: report settimanale per cliente e pratica, con ore stimate e valore economico. Include le riunioni Teams e Google Meet rilevate dal calendario e associate alla pratica. Dal report, il sistema genera automaticamente la bozza di parcella pre-compilata, esportabile in PDF, Word o XML FatturaPA.</p>
               </article>
             </div>
-            <article class="system-node relative w-full" style="--step-delay: 9s;">
-              <div class="system-icon" aria-hidden="true">REP</div>
-              <h3 class="mt-5 text-lg font-extrabold text-brand-950">Report strategico aggregato</h3>
-              <p class="mt-3 text-sm text-slate-600">Consolida email e valore per singolo cliente e produce il report
-                strategico finale.</p>
-            </article>
           </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <section id="pannello" class="py-20 md:py-24 bg-slate-50 border-t border-slate-200" aria-labelledby="panel-title">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="reveal max-w-4xl">
+          <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Il Pannello</p>
+          <h2 id="panel-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Il tuo centro di comando,<br>dentro la tua email.</h2>
+          <p class="mt-5 text-lg md:text-xl text-slate-600">Un pannello intelligente integrato in Outlook, Gmail e qualsiasi webmail.<br>Classifica, assegna e traccia senza uscire dalla tua casella.</p>
+        </div>
+
+        <div class="mt-12 grid gap-8 xl:grid-cols-[0.92fr_1.08fr] xl:items-start">
+          <div class="reveal border border-slate-200 bg-white p-4 shadow-soft" style="--delay: 80ms">
+            <img src="assets/estensione-browser.jpg" alt="Pannello INNOVALEX integrato nella webmail" class="w-full h-auto object-contain" loading="lazy" decoding="async" />
+          </div>
+
+          <div class="reveal border border-slate-200 bg-white p-6 md:p-8 shadow-soft" style="--delay: 140ms">
+            <p class="text-xs uppercase tracking-[0.24em] text-brand-700 font-semibold">Integrazione</p>
+            <div class="mt-5 space-y-4">
+              <div class="service-step border border-slate-200 bg-slate-50 p-5">
+                <p class="text-xs font-semibold uppercase tracking-[0.22em] text-brand-700">Outlook</p>
+                <p class="mt-4 text-lg font-bold text-brand-950">Integrazione nativa.</p>
+              </div>
+              <div class="service-step border border-slate-200 bg-slate-50 p-5">
+                <p class="text-xs font-semibold uppercase tracking-[0.22em] text-brand-700">Gmail e PEC</p>
+                <p class="mt-4 text-lg font-bold text-brand-950">Estensione installata in Chrome.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal mt-8 rounded-3xl border border-gold-200 bg-gold-200/45 px-6 py-5 text-brand-950" style="--delay: 400ms">
+          <p class="text-base md:text-lg font-bold">Tu confermi con un click dal pannello INNOVALEX. Il sistema fa tutto il resto.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="scadenzario" class="py-20 md:py-28 bg-slate-50" aria-labelledby="deadline-title">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="reveal max-w-4xl">
+          <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Scadenzario</p>
+          <h2 id="deadline-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Le scadenze non si dimenticano più.</h2>
+          <p class="mt-5 text-lg italic text-slate-600">Il sistema legge ogni email e PEC, rileva date con contesto legale, e le propone come eventi calendario. Tu confermi, il sistema ricorda.</p>
+        </div>
+        <div class="mt-12 grid gap-5 lg:grid-cols-3">
+          <article class="case-card reveal border border-slate-200 bg-white p-7 shadow-soft">
+            <p class="text-xs uppercase tracking-[0.24em] text-brand-700 font-semibold">Rilevamento</p>
+            <p class="mt-4 text-sm italic text-slate-500">“Udienza del 15 luglio”, “termine entro il 30”.</p>
+            <p class="mt-4 text-lg font-bold text-brand-950">L'AI estrae la data e il tipo. Tu confermi.</p>
+          </article>
+          <article class="case-card reveal border border-slate-200 bg-white p-7 shadow-soft" style="--delay: 120ms">
+            <p class="text-xs uppercase tracking-[0.24em] text-brand-700 font-semibold">Alert automatici</p>
+            <p class="mt-4 text-lg font-bold text-brand-950">Promemoria a 30, 15, 7 e 1 giorno.</p>
+            <p class="mt-4 text-sm font-semibold text-gold-600">Mai più una scadenza persa.</p>
+          </article>
+          <article class="case-card reveal border border-slate-200 bg-white p-7 shadow-soft" style="--delay: 240ms">
+            <p class="text-xs uppercase tracking-[0.24em] text-brand-700 font-semibold">PEC prioritaria</p>
+            <p class="mt-4 text-lg font-bold text-brand-950">Le comunicazioni da cancellerie tribunali hanno canale dedicato e alert immediato.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="meeting" class="py-20 md:py-28 bg-brand-950 text-white" aria-labelledby="meeting-title">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="reveal max-w-4xl">
+          <p class="text-xs uppercase tracking-[0.28em] text-gold-500 font-semibold">Meeting</p>
+          <h2 id="meeting-title" class="mt-4 text-4xl md:text-5xl font-extrabold">Ogni riunione conta.<br>Adesso si vede.</h2>
+          <p class="mt-5 text-lg text-white/72">Le riunioni Teams e Meet vengono rilevate dal calendario, associate alla pratica, e incluse nel report economico. Automaticamente.</p>
+        </div>
+        <div class="mt-12 grid gap-6 lg:grid-cols-2">
+          <article class="reveal border border-white/12 bg-white/5 p-7 md:p-8">
+            <p class="text-xs uppercase tracking-[0.24em] text-white/45 font-semibold">Prima</p>
+            <ul class="mt-6 space-y-3 text-lg text-white/78">
+              <li>Riunione di 45 minuti.</li>
+              <li>Nessuno la traccia.</li>
+              <li>Non entra nel report.</li>
+              <li class="font-bold text-red-300">Non viene fatturata.</li>
+            </ul>
+          </article>
+          <article class="reveal border border-gold-500/30 bg-white/7 p-7 md:p-8" style="--delay: 120ms">
+            <p class="text-xs uppercase tracking-[0.24em] text-gold-500 font-semibold">Dopo</p>
+            <ul class="mt-6 space-y-3 text-lg text-white/88">
+              <li>Riunione di 45 minuti.</li>
+              <li>Associata alla pratica.</li>
+              <li>Inclusa nel report.</li>
+            </ul>
+            <div class="mt-6 inline-flex items-center gap-3 rounded-full border border-gold-500/30 bg-gold-500/10 px-4 py-2">
+              <span class="text-xs uppercase tracking-[0.22em] text-gold-300 font-semibold">Valore</span>
+              <span class="text-2xl font-black text-white">€112,50</span>
+            </div>
+          </article>
+        </div>
+        <div class="reveal mt-8 rounded-3xl border border-white/12 bg-white/5 px-6 py-5" style="--delay: 200ms">
+          <p class="text-sm font-semibold text-gold-200">Integrazione nativa con Microsoft Teams, Google Meet e Outlook Calendar.</p>
+        </div>
+        <div class="mt-8 grid gap-4 md:grid-cols-3">
+          <article class="service-step reveal border border-white/12 bg-white/5 p-5" style="--delay: 240ms">
+            <p class="text-xs uppercase tracking-[0.22em] text-gold-400 font-semibold">1</p>
+            <p class="mt-3 text-sm text-white/78">Il sistema rileva il meeting dal tuo calendario.</p>
+          </article>
+          <article class="service-step reveal border border-white/12 bg-white/5 p-5" style="--delay: 320ms">
+            <p class="text-xs uppercase tracking-[0.22em] text-gold-400 font-semibold">2</p>
+            <p class="mt-3 text-sm text-white/78">Identifica i partecipanti. Se la mail corrisponde a un cliente in database, associa automaticamente.</p>
+          </article>
+          <article class="service-step reveal border border-white/12 bg-white/5 p-5" style="--delay: 400ms">
+            <p class="text-xs uppercase tracking-[0.22em] text-gold-400 font-semibold">3</p>
+            <p class="mt-3 text-sm text-white/78">Se rileva un indirizzo nuovo, propone: “Vuoi associare questo contatto a un cliente esistente?”</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="fatturazione" class="py-20 md:py-28 bg-white" aria-labelledby="billing-title">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="reveal max-w-4xl">
+          <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Fatturazione</p>
+          <h2 id="billing-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Dal report alla parcella.<br>Senza ricopiare nulla.</h2>
+          <p class="mt-5 text-lg italic text-slate-600">I dati del report diventano una bozza di parcella pre-compilata. Tu la rivedi, approvi, e la invii al tuo sistema di fatturazione.</p>
+        </div>
+        <div class="reveal mt-12 grid gap-4 md:grid-cols-4" style="--delay: 80ms">
+          <div class="service-step border border-slate-200 bg-slate-50 p-5 text-center">
+            <p class="text-xs uppercase tracking-[0.22em] text-brand-700 font-semibold">Step 1</p>
+            <p class="mt-4 text-lg font-bold text-brand-950">REPORT ECONOMICO</p>
+            <p class="mt-2 text-sm text-slate-600">Dati aggregati</p>
+          </div>
+          <div class="service-step border border-slate-200 bg-slate-50 p-5 text-center">
+            <p class="text-xs uppercase tracking-[0.22em] text-brand-700 font-semibold">Step 2</p>
+            <p class="mt-4 text-lg font-bold text-brand-950">BOZZA PARCELLA</p>
+            <p class="mt-2 text-sm text-slate-600">Pre-compilata</p>
+          </div>
+          <div class="service-step border border-slate-200 bg-slate-50 p-5 text-center">
+            <p class="text-xs uppercase tracking-[0.22em] text-brand-700 font-semibold">Step 3</p>
+            <p class="mt-4 text-lg font-bold text-brand-950">REVISIONE</p>
+            <p class="mt-2 text-sm text-slate-600">Avvocato approva</p>
+          </div>
+          <div class="service-step border border-slate-200 bg-slate-50 p-5 text-center">
+            <p class="text-xs uppercase tracking-[0.22em] text-brand-700 font-semibold">Step 4</p>
+            <p class="mt-4 text-lg font-bold text-brand-950">FATTURA</p>
+            <p class="mt-2 text-sm text-slate-600">Pronta per SDI</p>
+          </div>
+        </div>
+        <div class="mt-10 grid gap-5 lg:grid-cols-3">
+          <article class="case-card reveal border border-slate-200 bg-white p-7 shadow-soft" style="--delay: 120ms">
+            <p class="text-xs uppercase tracking-[0.24em] text-brand-700 font-semibold">Bozza automatica</p>
+            <p class="mt-4 text-lg font-bold text-brand-950">Attività, ore, importi: tutto estratto dal report.</p>
+            <p class="mt-3 text-sm text-slate-600">Formato Word modificabile.</p>
+          </article>
+          <article class="case-card reveal border border-slate-200 bg-white p-7 shadow-soft" style="--delay: 200ms">
+            <p class="text-xs uppercase tracking-[0.24em] text-brand-700 font-semibold">Export universale</p>
+            <p class="mt-4 text-lg font-bold text-brand-950">PDF, DOCX o XML FatturaPA.</p>
+            <p class="mt-3 text-sm text-slate-600">Compatibile con qualsiasi sistema di fatturazione.</p>
+          </article>
+          <article class="case-card reveal border border-slate-200 bg-white p-7 shadow-soft" style="--delay: 280ms">
+            <p class="text-xs uppercase tracking-[0.24em] text-brand-700 font-semibold">Zero doppio inserimento</p>
+            <p class="mt-4 text-lg font-bold text-brand-950">I dati vengono dal sistema, non dalla memoria dell'avvocato.</p>
+            <p class="mt-3 text-sm text-slate-600">Nessun errore di trascrizione.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="soci" class="py-20 md:py-28 bg-slate-50" aria-labelledby="partner-value-title">
+      <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="reveal max-w-4xl">
+          <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Valore per socio</p>
+          <h2 id="partner-value-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Chi porta valore? Ora lo sai.</h2>
+          <p class="mt-5 text-lg italic text-slate-600">Per ogni socio e collaboratore, il sistema traccia: pratiche originate, pratiche gestite, ore lavorate, valore economico generato. Il dato che nessun gestionale fornisce in automatico.</p>
+        </div>
+        <div class="reveal mt-12 overflow-x-auto border border-slate-200 bg-white shadow-soft" style="--delay: 80ms">
+          <table class="min-w-[760px] w-full text-left">
+            <thead class="border-b border-slate-200 bg-slate-50">
+              <tr class="text-brand-950">
+                <th class="px-5 py-4 text-sm font-bold uppercase tracking-[0.18em]">Socio</th>
+                <th class="px-5 py-4 text-sm font-bold uppercase tracking-[0.18em]">Originate</th>
+                <th class="px-5 py-4 text-sm font-bold uppercase tracking-[0.18em]">Gestite</th>
+                <th class="px-5 py-4 text-sm font-bold uppercase tracking-[0.18em]">Ore</th>
+                <th class="px-5 py-4 text-sm font-bold uppercase tracking-[0.18em]">Valore</th>
+              </tr>
+            </thead>
+            <tbody class="text-slate-700">
+              <tr class="border-b border-slate-200">
+                <td class="px-5 py-4 font-semibold text-brand-950">Avv. A</td>
+                <td class="px-5 py-4">12</td>
+                <td class="px-5 py-4">8</td>
+                <td class="px-5 py-4">340h</td>
+                <td class="px-5 py-4 font-semibold text-brand-950">€85.000</td>
+              </tr>
+              <tr class="border-b border-slate-200">
+                <td class="px-5 py-4 font-semibold text-brand-950">Avv. B</td>
+                <td class="px-5 py-4">6</td>
+                <td class="px-5 py-4">14</td>
+                <td class="px-5 py-4">520h</td>
+                <td class="px-5 py-4 font-semibold text-brand-950">€104.000</td>
+              </tr>
+              <tr>
+                <td class="px-5 py-4 font-semibold text-brand-950">Avv. C</td>
+                <td class="px-5 py-4">3</td>
+                <td class="px-5 py-4">11</td>
+                <td class="px-5 py-4">280h</td>
+                <td class="px-5 py-4 font-semibold text-brand-950">€56.000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="reveal mt-6 rounded-3xl border border-gold-200 bg-gold-200/45 px-6 py-5 text-brand-950" style="--delay: 160ms">
+          <p class="text-base md:text-lg font-bold">La base per la distribuzione degli utili. Generata automaticamente dal sistema.</p>
         </div>
       </div>
     </section>
@@ -1370,98 +1548,13 @@
       </div>
     </section>
 
-    <section id="confronto" class="py-20 md:py-28 bg-white" aria-labelledby="compare-title">
-      <div class="max-w-7xl mx-auto px-5 lg:px-8">
-        <div class="reveal max-w-4xl">
-          <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Confronto strategico</p>
-          <h2 id="compare-title" class="mt-4 text-4xl md:text-5xl font-extrabold text-brand-950">Kleos gestisce le
-            pratiche.<br>Lexroom trova le sentenze.<br>INNOVALEX gestisce tutto il resto.</h2>
-        </div>
-        <div class="reveal mt-10 overflow-x-auto border border-slate-200 bg-white" style="--delay: 80ms">
-          <table class="min-w-[1080px] w-full text-left">
-            <thead class="border-b border-slate-200 bg-slate-50">
-              <tr class="text-brand-950">
-                <th class="px-5 py-4 text-base font-bold">Domanda</th>
-                <th class="px-5 py-4 text-base font-bold">Microsoft Copilot</th>
-                <th class="px-5 py-4 text-base font-bold">ChatGPT / Claude generici</th>
-                <th class="px-5 py-4 text-base font-bold">Lexroom</th>
-                <th class="px-5 py-4 text-base font-bold">Kleos</th>
-                <th class="px-5 py-4 text-base font-bold">INNOVALEX</th>
-              </tr>
-            </thead>
-            <tbody class="text-slate-700">
-              <tr class="border-b border-slate-200 align-top">
-                <td class="px-5 py-4 font-semibold text-brand-950">Conosce il diritto italiano?</td>
-                <td class="px-5 py-4">No</td>
-                <td class="px-5 py-4">No</td>
-                <td class="px-5 py-4">Sì, ricerca</td>
-                <td class="px-5 py-4">No</td>
-                <td class="px-5 py-4 font-semibold text-brand-950">Sì, operazioni</td>
-              </tr>
-              <tr class="border-b border-slate-200 align-top">
-                <td class="px-5 py-4 font-semibold text-brand-950">GDPR nativo, server EU</td>
-                <td class="px-5 py-4">Parziale</td>
-                <td class="px-5 py-4">No</td>
-                <td class="px-5 py-4">Sì</td>
-                <td class="px-5 py-4">Sì</td>
-                <td class="px-5 py-4 font-semibold text-brand-950">Sì</td>
-              </tr>
-              <tr class="border-b border-slate-200 align-top">
-                <td class="px-5 py-4 font-semibold text-brand-950">Gestisce email e PEC come flusso operativo</td>
-                <td class="px-5 py-4">No</td>
-                <td class="px-5 py-4">No</td>
-                <td class="px-5 py-4">No</td>
-                <td class="px-5 py-4">No</td>
-                <td class="px-5 py-4 font-semibold text-brand-950">Sì</td>
-              </tr>
-              <tr class="border-b border-slate-200 align-top">
-                <td class="px-5 py-4 font-semibold text-brand-950">Traccia ore e valore per pratica automaticamente</td>
-                <td class="px-5 py-4">No</td>
-                <td class="px-5 py-4">No</td>
-                <td class="px-5 py-4">No</td>
-                <td class="px-5 py-4">Parziale</td>
-                <td class="px-5 py-4 font-semibold text-brand-950">Sì</td>
-              </tr>
-              <tr class="border-b border-slate-200 align-top">
-                <td class="px-5 py-4 font-semibold text-brand-950">Gestisce i collaboratori senza WhatsApp</td>
-                <td class="px-5 py-4">No</td>
-                <td class="px-5 py-4">No</td>
-                <td class="px-5 py-4">No</td>
-                <td class="px-5 py-4">No</td>
-                <td class="px-5 py-4 font-semibold text-brand-950">Sì</td>
-              </tr>
-              <tr class="border-b border-slate-200 align-top">
-                <td class="px-5 py-4 font-semibold text-brand-950">Si costruisce sui tuoi flussi reali</td>
-                <td class="px-5 py-4">No</td>
-                <td class="px-5 py-4">No</td>
-                <td class="px-5 py-4">No</td>
-                <td class="px-5 py-4">Parziale</td>
-                <td class="px-5 py-4 font-semibold text-brand-950">Sì</td>
-              </tr>
-              <tr class="align-top">
-                <td class="px-5 py-4 font-semibold text-brand-950">Interlocutore unico dalla firma al rinnovo</td>
-                <td class="px-5 py-4">No</td>
-                <td class="px-5 py-4">No</td>
-                <td class="px-5 py-4">No</td>
-                <td class="px-5 py-4">No</td>
-                <td class="px-5 py-4 font-semibold text-brand-950">Sì</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="reveal mt-5 text-sm leading-6 text-slate-500" style="--delay: 120ms">Lexroom e INNOVALEX sono
-          complementari, non concorrenti. INNOVALEX risolve il problema che Lexroom non tocca, l'operatività quotidiana
-          dello studio.</p>
-      </div>
-    </section>
-
     <section id="servizi" class="py-20 md:py-28 bg-brand-950 text-white" aria-labelledby="services-title">
       <div class="max-w-7xl mx-auto px-5 lg:px-8">
         <div class="reveal max-w-3xl">
           <p class="text-xs uppercase tracking-[0.28em] text-gold-500 font-semibold">Architettura INNOVALEX</p>
           <h2 id="services-title" class="mt-4 text-4xl md:text-5xl font-extrabold">Il tuo studio perde valore ogni
-            giorno in tre posti precisi. Ecco dove.</h2>
-          <p class="mt-5 text-lg text-white/70">M1, M2 e M3 non sono tre prodotti da comprare separatamente. Sono i
+            giorno in tre posti precisi.<br>INNOVALEX lo recupera.</h2>
+          <p class="mt-5 text-lg text-white/70">I sistemi non sono tre prodotti da comprare separatamente. Sono i
             tre layer dell'infrastruttura operativa che ogni studio professionale dovrebbe avere, e che quasi nessuno
             ha ancora costruito.</p>
         </div>
@@ -1480,10 +1573,7 @@
             </div>
             <div>
               <h3 class="text-3xl font-bold">Email Intelligente, il layer che elimina il lavoro invisibile</h3>
-              <p class="mt-3 text-white/72">Ogni email viene classificata
-                automaticamente per urgenza, pratica e azione richiesta. Ogni comunicazione viene archiviata in PDF
-                professionale nella cartella giusta, con il cliente giusto, con naming progressivo, prima ancora che tu
-                la apra.</p>
+              <p class="mt-3 text-white/72">Ogni email e PEC viene classificata automaticamente per urgenza, pratica e azione richiesta. Il pannello INNOVALEX, integrato direttamente in Outlook, Gmail o qualsiasi webmail, ti mostra la classificazione AI e ti permette di confermare con un click. Ogni comunicazione viene archiviata in PDF professionale nella cartella del cliente giusto, con naming progressivo, prima ancora che tu la apra.</p>
             </div>
             <div class="text-left lg:text-right"></div>
           </div>
@@ -1494,13 +1584,10 @@
               <p class="mt-2 text-sm text-white/50">Email → Report</p>
             </div>
             <div>
-              <h3 class="text-3xl font-bold">Report Economici, il layer che trasforma lavoro fatto in valore visibile
-              </h3>
-              <p class="mt-3 text-white/72">Ogni conversazione email viene analizzata
-                automaticamente dall'AI: ore lavorate stimate, valore economico calcolato sulla base della tua tariffa
-                oraria per tipo di pratica, ogni lunedì mattina ricevi il report settimanale aggregato per cliente e per
-                pratica.</p>
+              <h3 class="text-3xl font-bold">Report Economici, il layer che trasforma lavoro fatto in valore visibile</h3>
+              <p class="mt-3 text-white/72">Ogni conversazione email viene analizzata automaticamente: ore stimate, valore economico calcolato sulla base della tua tariffa per tipo di pratica. Ora include anche le riunioni Teams e Google Meet: rilevate dal tuo calendario, associate alla pratica, incluse nel report economico. Ogni minuto di lavoro reale, visibile e rendicontabile. Ogni lunedì mattina ricevi il report settimanale aggregato per cliente e pratica, generato in automatico e modificabile in Word.</p>
             </div>
+            <div class="text-left lg:text-right"></div>
           </div>
 
           <div class="grid gap-6 lg:grid-cols-[0.22fr_1fr_0.35fr] px-6 py-8 md:px-8">
@@ -1509,16 +1596,13 @@
               <p class="mt-2 text-sm text-white/50">Email → Controllo</p>
             </div>
             <div>
-              <h3 class="text-3xl font-bold">Dashboard Collaboratori, il layer che elimina la gestione via WhatsApp
-              </h3>
-              <p class="mt-3 text-white/72">Quando assegni una pratica a un collaboratore,
-                il sistema crea automaticamente la cartella con tutto il materiale, la dashboard con
-                il recap operativo e le scadenze tracciate. Il collaboratore riceve tutto strutturato. Tu vedi in
-                tempo reale a che punto è ogni pratica, dove si blocca il flusso e quanto tempo impiega ogni tipo di
-                attività.</p>
+              <h3 class="text-3xl font-bold">Dashboard Collaboratori, il layer che elimina la gestione via WhatsApp</h3>
+              <p class="mt-3 text-white/72">Quando assegni una pratica dal pannello INNOVALEX, il sistema crea automaticamente la cartella con tutti gli allegati, invia il riepilogo operativo al collaboratore e popola la dashboard di studio. Vedi in tempo reale chi sta lavorando su cosa, lo stato di ogni pratica, l'urgenza e le ore accumulate. Senza WhatsApp, senza rincorrere nessuno.</p>
             </div>
+            <div class="text-left lg:text-right"></div>
           </div>
         </div>
+      </div>
     </section>
 
     <section id="costo-operativo" class="py-20 md:py-24 bg-slate-50" aria-labelledby="cost-title">
@@ -1547,7 +1631,7 @@
             class="reveal rounded-3xl border border-gold-200/70 bg-gradient-to-br from-[#F2DFB1] via-[#DBBE77] to-[#B08E3C] p-7 md:p-8 text-brand-950 shadow-gold"
             style="--delay: 120ms">
             <p class="text-xs uppercase tracking-[0.24em] text-brand-900/70 font-semibold">Soluzione finale</p>
-            <h3 class="mt-4 text-3xl md:text-4xl font-extrabold leading-tight">INNOVALEX completo: €9.800
+            <h3 class="mt-4 text-3xl md:text-4xl font-extrabold leading-tight">INNOVALEX completo: €11.400
               setup + €300/mese</h3>
             <p class="mt-5 text-lg text-brand-950/85">Non stai valutando un software. Stai scegliendo la struttura che
               rende visibile il lavoro invisibile dello studio e lo trasforma in controllo, margine e parcelle meglio
@@ -1802,6 +1886,14 @@
               risolve, email non tracciate, ore non fatturabili, collaboratori non monitorati, pratiche fuori budget,
               è identico in qualsiasi studio professionale. Il layer tecnico è lo stesso. Il playbook si adatta al
               verticale in due o tre settimane.</p>
+          </details>
+          <details class="reveal border border-slate-200 bg-slate-50 p-6">
+            <summary class="cursor-pointer font-bold text-brand-950">Le riunioni Teams e Google Meet vengono tracciate automaticamente?</summary>
+            <p class="mt-4 text-sm text-slate-600">Sì. Il sistema legge il tuo calendario e rileva ogni riunione con partecipanti esterni. Se l'indirizzo email di un partecipante è già nel database clienti, la riunione viene associata automaticamente alla pratica corrispondente e inclusa nel report economico della settimana. Se l'indirizzo non è riconosciuto, il sistema propone di associarlo a un cliente esistente con un click. Il database si arricchisce progressivamente senza intervento manuale.</p>
+          </details>
+          <details class="reveal border border-slate-200 bg-slate-50 p-6">
+            <summary class="cursor-pointer font-bold text-brand-950">Posso generare la parcella direttamente dal report?</summary>
+            <p class="mt-4 text-sm text-slate-600">Sì. Il report M2 contiene già tutti i dati strutturati: attività, ore stimate, tariffa oraria per tipo di pratica, valore economico per cliente. Da questi dati il sistema genera automaticamente una bozza di parcella pre-compilata in formato Word modificabile. Puoi esportarla in PDF, DOCX o XML FatturaPA, compatibile con qualsiasi sistema di fatturazione. Non devi ricopiare nulla: i dati vengono dal sistema, non dalla tua memoria.</p>
           </details>
         </div>
       </div>
