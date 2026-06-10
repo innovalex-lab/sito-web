@@ -4,14 +4,14 @@ module.exports = async (req, res) => {
   }
 
   const token = process.env.CLICKUP_TOKEN;
-  const listId = process.env.CLICKUP_ROI_LIST_ID;
-  const status = process.env.CLICKUP_ROI_STATUS;
+  const listId = process.env.CLICKUP_ROI_LIST_ID || process.env.CLICKUP_LIST_ID;
+  const status = process.env.CLICKUP_ROI_STATUS || 'LEAD FORM';
   const resendKey = process.env.RESEND_API_KEY;
   const notifyEmail = process.env.ROI_LEAD_NOTIFY_EMAIL || 'federico.garau@innovalexai.it';
   const resendFrom = process.env.RESEND_FROM_EMAIL || 'INNOVALEX <onboarding@resend.dev>';
 
   if (!token || !listId) {
-    return res.status(500).json({ ok: false, error: 'Missing ROI ClickUp env vars' });
+    return res.status(500).json({ ok: false, error: 'Missing ClickUp env vars' });
   }
 
   const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {});
