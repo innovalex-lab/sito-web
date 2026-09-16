@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#070F26" />
   <title>INNOVALEX | L'Infrastruttura Operativa per Studi Legali</title>
   <meta name="description"
     content="INNOVALEX trasforma email, PEC e lavoro operativo invisibile in controllo, tracciabilità e valore economico per studi legali italiani." />
@@ -23,52 +24,43 @@
     content="INNOVALEX trasforma email, PEC e lavoro operativo invisibile in controllo, tracciabilità e valore economico per studi legali italiani." />
   <meta name="twitter:image" content="https://www.innovalexai.it/assets/innovalex-social.png" />
   <link rel="canonical" href="https://www.innovalexai.it/" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/innovalex-social.png" />
-  <link rel="apple-touch-icon" href="/assets/innovalex-social.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
+  <link rel="preload" as="image" href="assets/hero-studio-1600.avif" type="image/avif" fetchpriority="high" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
     rel="stylesheet" />
-
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/site.css" />
   <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            inter: ['Inter', 'system-ui', 'sans-serif']
-          },
-          colors: {
-            brand: {
-              950: '#070F26',
-              900: '#0B1633',
-              800: '#142B5F',
-              700: '#1E3A8A',
-              600: '#2B55C6',
-              100: '#E8EEF9'
-            },
-            gold: {
-              600: '#B08E3C',
-              500: '#C6A75B',
-              200: '#F2E7CD'
-            }
-          },
-          boxShadow: {
-            soft: '0 20px 60px rgba(15, 23, 42, 0.18)',
-            gold: '0 18px 44px rgba(198, 167, 91, 0.28)'
-          }
-        }
-      }
-    }
+    document.documentElement.classList.add('js');
+    window.__revealFallback = window.setTimeout(() => document.documentElement.classList.remove('js'), 4000);
   </script>
   <style>
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 5rem;
     }
 
     body {
       text-rendering: optimizeLegibility;
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    main > section {
+      scroll-margin-top: 5rem;
+    }
+
+    main > section:not(#home):not(#problema) {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 900px;
+    }
+
+    :where(a, button, input, select, textarea, summary):focus-visible {
+      outline: 3px solid rgba(198, 167, 91, 0.92);
+      outline-offset: 3px;
     }
 
     body.modal-open {
@@ -99,20 +91,60 @@
     }
 
     .reveal {
+      opacity: 1;
+      transform: none;
+    }
+
+    .js .reveal {
       opacity: 0;
       transform: translateY(20px);
       transition: opacity 720ms ease, transform 720ms ease;
       transition-delay: var(--delay, 0ms);
     }
 
-    .reveal.is-visible {
+    .js .reveal.is-visible {
       opacity: 1;
       transform: translateY(0);
     }
 
     .parallax {
       transform: translateY(var(--parallax, 0));
+    }
+
+    .parallax.is-parallax-active {
       will-change: transform;
+    }
+
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 60;
+      width: var(--scroll-progress, 0%);
+      height: 3px;
+      background: linear-gradient(90deg, #B08E3C, #E4C978);
+      box-shadow: 0 1px 12px rgba(198, 167, 91, 0.34);
+      pointer-events: none;
+      transition: width 80ms linear;
+    }
+
+    .mobile-menu-panel {
+      max-height: 0;
+      padding-bottom: 0;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(-0.5rem);
+      visibility: hidden;
+      transition: max-height 320ms ease, padding-bottom 320ms ease, opacity 220ms ease, transform 220ms ease, visibility 0s linear 320ms;
+    }
+
+    .mobile-menu-panel.is-open {
+      max-height: 30rem;
+      padding-bottom: 1.25rem;
+      opacity: 1;
+      transform: translateY(0);
+      visibility: visible;
+      transition-delay: 0s;
     }
 
     .cta-gold {
@@ -142,6 +174,44 @@
 
     .cta-brand:active {
       transform: translateY(0);
+    }
+
+    #site-header nav a {
+      position: relative;
+    }
+
+    #site-header nav a::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: -0.55rem;
+      left: 0;
+      height: 2px;
+      background: #C6A75B;
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 220ms ease;
+    }
+
+    #site-header nav a.is-active::after {
+      transform: scaleX(1);
+    }
+
+    .scroll-cue svg {
+      animation: scrollCue 1.8s ease-in-out infinite;
+    }
+
+    :where(input, select, textarea) {
+      transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    :where(input, select, textarea)[aria-invalid="true"] {
+      box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.16);
+      animation: fieldNudge 220ms ease-out;
+    }
+
+    :where(button, [role="button"]):disabled {
+      cursor: wait;
     }
 
     .workflow-line::before {
@@ -753,12 +823,61 @@
       }
     }
 
-    .case-card:hover,
-    .service-step:hover,
-    .metric-panel:hover {
-      transform: translateY(-3px);
-      border-color: rgba(198, 167, 91, 0.7);
-      box-shadow: 0 18px 42px rgba(15, 23, 42, 0.12);
+    @keyframes scrollCue {
+      0%, 100% {
+        transform: translateY(0);
+        opacity: 0.55;
+      }
+      50% {
+        transform: translateY(0.45rem);
+        opacity: 1;
+      }
+    }
+
+    @keyframes fieldNudge {
+      0%, 100% { transform: translateX(0); }
+      40% { transform: translateX(-3px); }
+      70% { transform: translateX(3px); }
+    }
+
+    .system-board .system-node,
+    .system-board .system-node::after,
+    .system-board .system-icon,
+    .system-board .system-connector-in::after,
+    .system-board .system-connector-out::after,
+    .system-board .system-rail::after,
+    .system-board .system-split span::before,
+    .system-board .system-split span::after {
+      animation-play-state: paused;
+    }
+
+    .system-board.is-animated .system-node,
+    .system-board.is-animated .system-node::after,
+    .system-board.is-animated .system-icon,
+    .system-board.is-animated .system-connector-in::after,
+    .system-board.is-animated .system-connector-out::after,
+    .system-board.is-animated .system-rail::after,
+    .system-board.is-animated .system-split span::before,
+    .system-board.is-animated .system-split span::after {
+      animation-play-state: running;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .case-card:hover,
+      .service-step:hover,
+      .metric-panel:hover {
+        transform: translateY(-3px);
+        border-color: rgba(198, 167, 91, 0.7);
+        box-shadow: 0 18px 42px rgba(15, 23, 42, 0.12);
+      }
+
+      article.overflow-hidden > picture img {
+        transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      article.overflow-hidden:hover > picture img {
+        transform: scale(1.018);
+      }
     }
 
     .sticky-cta {
@@ -811,6 +930,14 @@
 
       .parallax {
         transform: none;
+        will-change: auto;
+      }
+
+      .scroll-progress,
+      .mobile-menu-panel,
+      .scroll-cue svg {
+        transition: none;
+        animation: none;
       }
 
       .case-card,
@@ -855,12 +982,18 @@
 </head>
 
 <body class="font-inter text-slate-900 bg-white">
+  <div id="scroll-progress" class="scroll-progress" aria-hidden="true"></div>
   <header id="site-header"
-    class="fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 transition-shadow">
+    class="fixed top-0 left-0 right-0 z-40 bg-white border-b border-slate-200 transition-shadow">
     <div class="max-w-7xl mx-auto px-5 lg:px-8">
       <div class="flex items-center justify-between py-2">
         <a href="#home" class="inline-flex items-center" aria-label="InnovaLex home">
-          <img src="https://i.imgur.com/XT5vHmX.png" alt="InnovaLex" class="h-12 w-auto xl:h-14" />
+          <picture class="block">
+            <source srcset="assets/innovalex-logo-240.avif 240w, assets/innovalex-logo-400.avif 400w" type="image/avif" />
+            <source srcset="assets/innovalex-logo-240.webp 240w, assets/innovalex-logo-400.webp 400w" type="image/webp" />
+            <img src="assets/innovalex-logo.png" alt="InnovaLex" width="2784" height="1504"
+              class="h-12 w-auto xl:h-14" decoding="async" />
+          </picture>
         </a>
         <nav
           class="hidden lg:flex items-center gap-3 xl:gap-4 text-[9px] xl:text-[10px] font-semibold uppercase tracking-[0.11em] xl:tracking-[0.14em] text-brand-900">
@@ -872,14 +1005,15 @@
           <a class="whitespace-nowrap hover:text-gold-600 transition" href="#founder">Chi Siamo</a>
           <a class="whitespace-nowrap hover:text-gold-600 transition" href="#contatti">Diagnosi Gratuita</a>
         </nav>
-        <button id="menu-btn" class="lg:hidden text-brand-900" aria-label="Apri menu">
+        <button id="menu-btn" class="lg:hidden text-brand-900" aria-label="Apri menu" aria-controls="mobile-menu"
+          aria-expanded="false">
           <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
       </div>
-      <div id="mobile-menu" class="lg:hidden hidden border-t border-slate-200 pb-5">
+      <div id="mobile-menu" class="mobile-menu-panel lg:hidden border-t border-slate-200" aria-hidden="true">
         <div class="flex flex-col gap-4 pt-4 text-brand-900 uppercase tracking-[0.16em] text-xs font-semibold">
           <a class="hover:text-gold-600 transition" href="#problema">Il Problema"</a>
           <a class="hover:text-gold-600 transition" href="#roi">Calcola il Tuo Costo</a>
@@ -896,8 +1030,14 @@
   <main>
     <section id="home" class="relative min-h-[100svh] flex items-center overflow-hidden border-t-4 border-brand-950">
       <div class="hero-media">
-        <img src="https://i.imgur.com/XH9HSju.png" alt="Studio legale con professionista al lavoro"
-          class="hero-image parallax" data-parallax="0.12" loading="eager" />
+        <picture class="block h-full w-full">
+          <source srcset="assets/hero-studio-960.avif 960w, assets/hero-studio-1600.avif 1600w"
+            sizes="100vw" type="image/avif" />
+          <source srcset="assets/hero-studio-960.webp 960w, assets/hero-studio-1600.webp 1600w"
+            sizes="100vw" type="image/webp" />
+          <img src="assets/hero-studio.png" alt="Studio legale con professionista al lavoro" width="1672" height="941"
+            class="hero-image parallax" data-parallax="0.08" loading="eager" decoding="async" fetchpriority="high" />
+        </picture>
       </div>
       <div class="absolute inset-0 hero-mask"></div>
       <div class="relative z-10 w-full">
@@ -934,6 +1074,14 @@
           </div>
         </div>
       </div>
+      <a href="#problema"
+        class="scroll-cue absolute bottom-6 left-1/2 z-20 hidden -translate-x-1/2 items-center justify-center rounded-full border border-white/25 bg-brand-950/30 p-3 text-white/80 backdrop-blur-sm md:flex"
+        aria-label="Scorri alla sezione successiva">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" />
+        </svg>
+      </a>
     </section>
 
     <section id="problema" class="py-20 md:py-28 bg-white" aria-labelledby="problem-title">
@@ -946,7 +1094,7 @@
             <p class="mt-5 text-lg text-slate-600">Ogni giorno, il tuo studio produce valore che non riesce a
               misurare. E quello che non si misura non si fattura.</p>
           </div>
-          <div class="grid gap-4 md:grid-cols-3">
+          <div class="grid gap-4 md:grid-cols-2">
             <div class="metric-panel reveal border border-slate-200 p-6 bg-white">
               <p class="text-[2.8rem] md:text-[3rem] leading-[0.92] font-black tracking-tight text-brand-900"><span
                   class="block">€750</span><span class="block">/giorno</span></p>
@@ -1114,7 +1262,7 @@
 
             <div id="roi-lead-block"
               class="pointer-events-none max-h-0 translate-y-2 overflow-hidden border border-slate-200 bg-slate-50 opacity-0 shadow-soft transition-all duration-500 ease-out"
-              aria-hidden="true">
+              aria-hidden="true" inert>
               <div id="roi-lead-form-shell" class="p-6 md:p-8">
                 <p class="text-3xl font-extrabold text-brand-950 leading-tight"
                   style="font-family: Georgia, 'Times New Roman', serif;">Vuoi l'analisi completa per il tuo studio?</p>
@@ -1124,11 +1272,12 @@
                     <label for="roiLeadEmail" class="sr-only">La tua email professionale</label>
                     <input id="roiLeadEmail" name="roiLeadEmail" type="email"
                       class="w-full border border-slate-200 bg-white px-4 py-3 text-brand-950 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-gold-500/40 focus:border-gold-500"
-                      placeholder="La tua email professionale" aria-label="La tua email professionale" />
+                      placeholder="La tua email professionale" aria-label="La tua email professionale"
+                      autocomplete="email" inputmode="email" aria-describedby="roiLeadError" />
                   </div>
                   <button id="roiLeadSubmit" type="submit"
                     class="cta-brand inline-flex w-full items-center justify-center rounded-full px-6 py-3 font-semibold text-center">Ricevi l'analisi personalizzata</button>
-                  <p id="roiLeadError" class="hidden text-sm text-red-600"></p>
+                  <p id="roiLeadError" class="hidden text-sm text-red-600" role="alert" aria-live="polite"></p>
                 </form>
                 <p class="mt-4 text-xs leading-6 text-slate-500">I tuoi dati non vengono condivisi con terzi e li usiamo solo per inviarti l'analisi richiesta. <a href="privacy-policy.html" class="font-medium text-brand-800 hover:text-gold-600">Privacy Policy</a>.</p>
               </div>
@@ -1307,7 +1456,14 @@
 
         <div class="mt-12 grid gap-8 xl:grid-cols-[0.92fr_1.08fr] xl:items-start">
           <div class="reveal border border-slate-200 bg-white p-4 shadow-soft" style="--delay: 80ms">
-            <img src="assets/estensione-browser.jpg" alt="Pannello INNOVALEX integrato nella webmail" class="w-full h-auto object-contain" loading="lazy" decoding="async" />
+            <picture class="block">
+              <source srcset="assets/estensione-browser-640.avif 640w, assets/estensione-browser-1200.avif 1200w"
+                sizes="(min-width: 1280px) 42vw, 100vw" type="image/avif" />
+              <source srcset="assets/estensione-browser-640.webp 640w, assets/estensione-browser-1200.webp 1200w"
+                sizes="(min-width: 1280px) 42vw, 100vw" type="image/webp" />
+              <img src="assets/estensione-browser.jpg" alt="Pannello INNOVALEX integrato nella webmail"
+                width="1632" height="2226" class="w-full h-auto object-contain" loading="lazy" decoding="async" />
+            </picture>
           </div>
 
           <div class="reveal border border-slate-200 bg-white p-6 md:p-8 shadow-soft" style="--delay: 140ms">
@@ -1395,7 +1551,14 @@
         <div class="mt-12 grid gap-8 xl:grid-cols-[0.95fr_1.05fr] xl:items-start">
           <div class="reveal space-y-6" style="--delay: 80ms">
             <article class="overflow-hidden border border-white/12 bg-white/5 shadow-soft">
-              <img src="assets/report-economico.jpg" alt="Esempio di report economico INNOVALEX" class="w-full h-auto object-cover" loading="lazy" decoding="async" />
+              <picture class="block">
+                <source srcset="assets/report-economico-640.avif 640w, assets/report-economico-1200.avif 1200w"
+                  sizes="(min-width: 1280px) 43vw, 100vw" type="image/avif" />
+                <source srcset="assets/report-economico-640.webp 640w, assets/report-economico-1200.webp 1200w"
+                  sizes="(min-width: 1280px) 43vw, 100vw" type="image/webp" />
+                <img src="assets/report-economico.jpg" alt="Esempio di report economico INNOVALEX"
+                  width="1676" height="2366" class="w-full h-auto object-cover" loading="lazy" decoding="async" />
+              </picture>
             </article>
             <div id="fatturazione" class="rounded-3xl border border-gold-500/30 bg-white/7 p-6">
               <p class="text-xs uppercase tracking-[0.22em] text-gold-300 font-semibold">Dal report alla parcella</p>
@@ -1474,10 +1637,24 @@
 
           <div class="space-y-6 reveal" style="--delay: 180ms">
             <article class="overflow-hidden border border-slate-200 bg-white shadow-soft">
-              <img src="assets/dashboard-collaboratori.png" alt="Dashboard collaboratori INNOVALEX" class="w-full h-auto object-cover" loading="lazy" decoding="async" />
+              <picture class="block">
+                <source srcset="assets/dashboard-collaboratori-640.avif 640w, assets/dashboard-collaboratori-1200.avif 1200w"
+                  sizes="(min-width: 1280px) 45vw, 100vw" type="image/avif" />
+                <source srcset="assets/dashboard-collaboratori-640.webp 640w, assets/dashboard-collaboratori-1200.webp 1200w"
+                  sizes="(min-width: 1280px) 45vw, 100vw" type="image/webp" />
+                <img src="assets/dashboard-collaboratori.png" alt="Dashboard collaboratori INNOVALEX"
+                  width="3024" height="1224" class="w-full h-auto object-cover" loading="lazy" decoding="async" />
+              </picture>
             </article>
             <article class="overflow-hidden border border-slate-200 bg-white shadow-soft">
-              <img src="assets/valore-per-socio.png" alt="Tabella valore per socio INNOVALEX" class="w-full h-auto object-cover" loading="lazy" decoding="async" />
+              <picture class="block">
+                <source srcset="assets/valore-per-socio-640.avif 640w, assets/valore-per-socio-1200.avif 1200w"
+                  sizes="(min-width: 1280px) 45vw, 100vw" type="image/avif" />
+                <source srcset="assets/valore-per-socio-640.webp 640w, assets/valore-per-socio-1200.webp 1200w"
+                  sizes="(min-width: 1280px) 45vw, 100vw" type="image/webp" />
+                <img src="assets/valore-per-socio.png" alt="Tabella valore per socio INNOVALEX"
+                  width="3024" height="1498" class="w-full h-auto object-cover" loading="lazy" decoding="async" />
+              </picture>
             </article>
           </div>
         </div>
@@ -1523,8 +1700,8 @@
           <article class="case-card reveal border border-slate-200 bg-white p-7 md:p-9">
             <div class="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
               <div>
-                <img src="https://www.scln.it/images/the-firm/office/legal-network-logo.webp"
-                  alt="Logo SCLN Legal Network" loading="lazy" decoding="async" class="h-20 w-auto object-contain" />
+                <img src="assets/scln-logo.webp" alt="Logo SCLN Legal Network" width="737" height="752"
+                  loading="lazy" decoding="async" class="h-20 w-auto object-contain" />
                 <p class="text-sm uppercase tracking-[0.22em] text-slate-500 font-semibold">SCLN Legal Network</p>
                 <h3 class="mt-4 text-3xl md:text-4xl font-extrabold text-brand-950">Da ore disperse ogni settimana a
                   un'Infrastruttura Operativa misurabile.</h3>
@@ -1647,22 +1824,22 @@
         <div class="reveal max-w-5xl text-center mx-auto">
           <p class="text-xs uppercase tracking-[0.28em] text-gold-600 font-semibold">Investimento operativo</p>
           <h2 id="cost-title" class="mt-4 text-4xl md:text-5xl lg:text-5xl font-extrabold text-brand-950 leading-tight"
-            style="font-family: Georgia, 'Times New Roman', serif;">€200 al mese per avvocato.<br>Un decimo di una risorsa amministrativa.</h2>
-          <p class="mt-5 text-lg text-slate-600">Il setup si paga una volta sola. Gli abbonamenti crescono con lo studio: inizi con gli utenti che vuoi, aggiungi gli altri quando il valore è evidente. Nessun costo nascosto, nessun preventivo da attendere.</p>
+            style="font-family: Georgia, 'Times New Roman', serif;">€85 al mese per postazione.<br>Un'unica tariffa, tutte le funzionalità.</h2>
+          <p class="mt-5 text-lg text-slate-600">Il setup si paga una volta sola e varia in base alla dimensione dello studio. Poi attivi solo le postazioni che ti servono, con un prezzo mensile fisso e senza livelli di servizio.</p>
         </div>
 
-        <div class="mt-12 grid gap-6 lg:grid-cols-3 lg:items-stretch">
+        <div class="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4 xl:items-stretch">
           <article class="reveal h-full rounded-3xl border border-slate-200 bg-white p-7 shadow-soft">
             <div class="flex h-full flex-col">
               <div>
                 <div class="min-h-[7.25rem]">
                   <div class="flex items-start justify-between gap-3">
                     <h3 class="text-3xl font-extrabold text-brand-950" style="font-family: Georgia, 'Times New Roman', serif;">Professionista</h3>
-                    <span class="inline-flex opacity-0 rounded-full border border-transparent px-3 py-1 text-[11px] font-black uppercase tracking-[0.2em]">Spacer</span>
+                    <span class="inline-flex opacity-0 rounded-full border border-transparent px-3 py-1 text-[11px]" aria-hidden="true">&nbsp;</span>
                   </div>
                   <p class="mt-3 text-base font-medium text-slate-600">Per studi fino a 3 professionisti</p>
                 </div>
-                <p class="mt-6 text-4xl font-black tracking-tight text-brand-950">€1.990</p>
+                <p class="mt-6 text-4xl font-black tracking-tight text-brand-950">€850</p>
                 <p class="mt-2 text-xs uppercase tracking-[0.24em] text-gold-600 font-semibold">Una tantum</p>
                 <p class="mt-6 text-sm leading-7 text-slate-600">・Configurazione completa
                   <br>・Calibrazione AI
@@ -1672,7 +1849,7 @@
             </div>
           </article>
 
-          <article class="reveal h-full rounded-[2rem] border border-gold-200/70 bg-gradient-to-br from-[#F2DFB1] via-[#DBBE77] to-[#B08E3C] p-8 text-brand-950 shadow-gold lg:-translate-y-3"
+          <article class="reveal h-full rounded-[2rem] border border-gold-200/70 bg-gradient-to-br from-[#F2DFB1] via-[#DBBE77] to-[#B08E3C] p-8 text-brand-950 shadow-gold xl:-translate-y-3"
             style="--delay: 120ms">
             <div class="flex h-full flex-col">
               <div>
@@ -1683,7 +1860,7 @@
                   </div>
                   <p class="mt-3 text-base font-medium text-brand-950/80">Per studi da 4 a 10 professionisti</p>
                 </div>
-                <p class="mt-6 text-4xl font-black tracking-tight text-brand-950">€2.990</p>
+                <p class="mt-6 text-4xl font-black tracking-tight text-brand-950">€1.950</p>
                 <p class="mt-2 text-xs uppercase tracking-[0.24em] text-brand-950/70 font-semibold">Una tantum</p>
                 <p class="mt-6 text-sm leading-7 text-brand-950/85">・Configurazione completa
                 <br>・Calibrazione AI
@@ -1699,45 +1876,56 @@
               <div>
                 <div class="min-h-[7.25rem]">
                   <div class="flex items-start justify-between gap-3">
-                    <h3 class="text-3xl font-extrabold text-brand-950" style="font-family: Georgia, 'Times New Roman', serif;">Network</h3>
-                    <span class="inline-flex opacity-0 rounded-full border border-transparent px-3 py-1 text-[11px] font-black uppercase tracking-[0.2em]">Spacer</span>
+                    <h3 class="text-3xl font-extrabold text-brand-950" style="font-family: Georgia, 'Times New Roman', serif;">Strutturato</h3>
+                    <span class="inline-flex opacity-0 rounded-full border border-transparent px-3 py-1 text-[11px]" aria-hidden="true">&nbsp;</span>
                   </div>
-                  <p class="mt-3 text-base font-medium text-slate-600">Per studi oltre 10 professionisti</p>
+                  <p class="mt-3 text-base font-medium text-slate-600">Per studi da 11 a 20 professionisti</p>
                 </div>
-                <p class="mt-6 text-4xl font-black tracking-tight text-brand-950">€3.990</p>
+                <p class="mt-6 text-4xl font-black tracking-tight text-brand-950">€2.850</p>
                 <p class="mt-2 text-xs uppercase tracking-[0.24em] text-gold-600 font-semibold">Una tantum</p>
                 <p class="mt-6 text-sm leading-7 text-slate-600">・Configurazione multi-sede
                 <br>・Calibrazione AI
-                <br>・Utenti illimitati
+                <br>・Attivazione fino a 20 utenti
                 <br>・Onboarding dedicato</p>
               </div>
-              <p class="mt-auto pt-6 text-sm font-semibold text-brand-900">Per studi grandi e network multi-sede</p>
+              <p class="mt-auto pt-6 text-sm font-semibold text-brand-900">Per studi strutturati e team estesi</p>
+            </div>
+          </article>
+
+          <article class="reveal h-full rounded-3xl border border-slate-200 bg-white p-7 shadow-soft" style="--delay: 240ms">
+            <div class="flex h-full flex-col">
+              <div>
+                <div class="min-h-[7.25rem]">
+                  <div class="flex items-start justify-between gap-3">
+                    <h3 class="text-3xl font-extrabold text-brand-950" style="font-family: Georgia, 'Times New Roman', serif;">Network</h3>
+                    <span class="inline-flex opacity-0 rounded-full border border-transparent px-3 py-1 text-[11px]" aria-hidden="true">&nbsp;</span>
+                  </div>
+                  <p class="mt-3 text-base font-medium text-slate-600">Per studi con 21 o più professionisti</p>
+                </div>
+                <p class="mt-6 text-3xl font-black tracking-tight text-brand-950">Prezzo su misura</p>
+                <p class="mt-2 text-xs uppercase tracking-[0.24em] text-gold-600 font-semibold">Setup una tantum</p>
+                <p class="mt-6 text-sm leading-7 text-slate-600">・Configurazione multi-sede
+                <br>・Calibrazione AI
+                <br>・Attivazione personalizzata
+                <br>・Onboarding dedicato</p>
+              </div>
+              <p class="mt-auto pt-6 text-sm font-semibold text-brand-900">Per grandi studi e network multi-sede</p>
             </div>
           </article>
         </div>
 
         <article class="reveal mt-10 rounded-[2rem] border border-slate-200 bg-white p-7 md:p-9 shadow-soft" style="--delay: 220ms">
           <h3 class="text-3xl md:text-4xl font-extrabold text-brand-950 leading-tight"
-            style="font-family: Georgia, 'Times New Roman', serif;">Poi, un abbonamento mensile per ogni utente attivo.</h3>
-          <div class="mt-8 grid gap-6 lg:grid-cols-2">
-            <div class="rounded-3xl border border-slate-200 bg-slate-50 p-6">
-              <p class="text-xs uppercase tracking-[0.24em] text-brand-700 font-semibold">Operativo</p>
-              <p class="mt-4 text-4xl font-black tracking-tight text-brand-950">€200</p>
-              <p class="mt-2 text-sm uppercase tracking-[0.24em] text-gold-600 font-semibold">al mese per utente</p>
-              <ul class="mt-6 space-y-4 text-sm leading-7 text-slate-600">
-                <li><span class="font-semibold text-brand-950">ORDINE OPERATIVO:</span> email e PEC classificate, archiviate per cliente e pratica.</li>
-                <li><span class="font-semibold text-brand-950">VISIBILITÀ ECONOMICA:</span> report economici settimanali, valore per cliente e pratica, fatturazione pre-compilata.</li>
-              </ul>
-            </div>
-            <div class="rounded-3xl border border-gold-300 bg-gold-200/35 p-6 shadow-soft">
-              <p class="text-xs uppercase tracking-[0.24em] text-brand-700 font-semibold">Completo</p>
-              <p class="mt-4 text-4xl font-black tracking-tight text-brand-950">€300</p>
-              <p class="mt-2 text-sm uppercase tracking-[0.24em] text-gold-600 font-semibold">al mese per utente</p>
-              <ul class="mt-6 space-y-4 text-sm leading-7 text-slate-700">
-                <li><span class="font-semibold text-brand-950">Tutto quello di Operativo, piu:</span></li>
-                <li><span class="font-semibold text-brand-950">GOVERNANCE OPERATIVA:</span> dashboard collaboratori, assegnazione pratiche, valore per socio, controllo in tempo reale.</li>
-              </ul>
-            </div>
+            style="font-family: Georgia, 'Times New Roman', serif;">Una postazione completa. Un unico prezzo mensile.</h3>
+          <div class="mt-8 rounded-3xl border border-gold-300 bg-gold-200/35 p-6 md:p-8 shadow-soft">
+            <p class="text-xs uppercase tracking-[0.24em] text-brand-700 font-semibold">Postazione completa</p>
+            <p class="mt-4 text-5xl font-black tracking-tight text-brand-950">€85</p>
+            <p class="mt-2 text-sm uppercase tracking-[0.24em] text-gold-600 font-semibold">al mese per postazione</p>
+            <ul class="mt-6 grid gap-4 text-sm leading-7 text-slate-700 lg:grid-cols-3">
+              <li><span class="font-semibold text-brand-950">ORDINE OPERATIVO:</span> email e PEC classificate, archiviate per cliente e pratica.</li>
+              <li><span class="font-semibold text-brand-950">VISIBILITÀ ECONOMICA:</span> report economici settimanali, valore per cliente e pratica, fatturazione pre-compilata.</li>
+              <li><span class="font-semibold text-brand-950">GOVERNANCE OPERATIVA:</span> dashboard collaboratori, assegnazione pratiche, valore per socio e controllo in tempo reale.</li>
+            </ul>
           </div>
         </article>
 
@@ -1745,12 +1933,12 @@
           <p class="text-xs uppercase tracking-[0.26em] text-gold-500 font-semibold">Un esempio concreto</p>
           <p class="mt-5 text-3xl md:text-4xl font-extrabold leading-tight"
             style="font-family: Georgia, 'Times New Roman', serif;">Studio di 5 professionisti, sistema completo:
-            <br>€2.990 una tantum + €1.500/mese(5 utenti attivi)</p>
+            <br>€1.950 una tantum + €425/mese (5 postazioni attive)</p>
           <p class="mt-5 text-lg md:text-xl font-semibold text-gold-500">Il valore operativo recuperato per uno studio di questa dimensione supera €150.000 l'anno. ROI 10x entro 12 mesi.</p>
         </article>
 
         <div class="reveal mt-8 max-w-5xl mx-auto text-center" style="--delay: 340ms">
-          <p class="text-base md:text-lg leading-8 text-slate-700">Una risorsa amministrativa costa €28.000-35.000 lordi all'anno. Gestisce il lavoro a mano, un giorno alla volta, senza produrre dati strutturati. INNOVALEX costa €200 al mese per avvocato, lavora senza interruzioni, e trasforma ogni comunicazione in dato misurabile e fatturabile.</p>
+          <p class="text-base md:text-lg leading-8 text-slate-700">Una risorsa amministrativa costa €28.000-35.000 lordi all'anno. Gestisce il lavoro a mano, un giorno alla volta, senza produrre dati strutturati. INNOVALEX costa €85 al mese per postazione, lavora senza interruzioni e trasforma ogni comunicazione in dato misurabile e fatturabile.</p>
         </div>
 
         <div class="reveal mt-10 text-center" style="--delay: 400ms">
@@ -1772,26 +1960,26 @@
           <p class="mt-5 text-lg text-white/72">Alla fine dei 30 minuti sai esattamente quanto ti sta costando il tuo
             metodo attuale.</p>
         </div>
-        <form id="lead-form" class="reveal grid gap-5 bg-white/5 border border-white/10 p-6 md:p-8" novalidate>
+        <form id="lead-form" class="reveal grid gap-5 bg-white/5 border border-white/10 p-6 md:p-8" novalidate autocomplete="on">
           <div class="grid gap-5 md:grid-cols-2">
             <div>
               <label class="text-sm font-semibold" for="name">Nome</label>
               <input id="name" name="name" type="text"
                 class="mt-2 w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-gold-500/40 focus:border-gold-500"
-                placeholder="Nome e cognome" required aria-label="Nome" />
+                placeholder="Nome e cognome" required aria-label="Nome" autocomplete="name" />
             </div>
             <div>
               <label class="text-sm font-semibold" for="studio">Studio</label>
               <input id="studio" name="studio" type="text"
                 class="mt-2 w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-gold-500/40 focus:border-gold-500"
-                placeholder="Nome dello studio" required aria-label="Studio" />
+                placeholder="Nome dello studio" required aria-label="Studio" autocomplete="organization" />
             </div>
           </div>
           <div>
             <label class="text-sm font-semibold" for="email">Email</label>
             <input id="email" name="email" type="email"
               class="mt-2 w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-gold-500/40 focus:border-gold-500"
-              placeholder="nome@studio.it" required aria-label="Email" />
+              placeholder="nome@studio.it" required aria-label="Email" autocomplete="email" inputmode="email" />
           </div>
           <div class="grid gap-5 md:grid-cols-2">
             <div>
@@ -1812,7 +2000,7 @@
                   class="text-white/45">(opzionale)</span></label>
               <input id="phone" name="phone" type="tel"
                 class="mt-2 w-full bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-gold-500/40 focus:border-gold-500"
-                placeholder="+39 ..." aria-label="Telefono opzionale" />
+                placeholder="+39 ..." aria-label="Telefono opzionale" autocomplete="tel" inputmode="tel" />
             </div>
           </div>
           <div class="grid gap-5 md:grid-cols-2">
@@ -1898,8 +2086,8 @@
               la Diagnosi Operativa</button>
           </div>
           <p class="text-sm text-white/65">Partiamo dai tuoi numeri reali.</p>
-          <p id="form-success" class="hidden text-sm text-gold-200">Grazie. Ti contatteremo entro 24h.</p>
-          <p id="form-error" class="hidden text-sm text-red-200">Invio non riuscito. Riprova tra pochi minuti.</p>
+          <p id="form-success" class="hidden text-sm text-gold-200" role="status" aria-live="polite">Grazie. Ti contatteremo entro 24h.</p>
+          <p id="form-error" class="hidden text-sm text-red-200" role="alert" aria-live="assertive">Invio non riuscito. Riprova tra pochi minuti.</p>
         </form>
       </div>
     </section>
@@ -1955,8 +2143,14 @@
     <section id="founder" class="py-20 md:py-15 bg-white" aria-labelledby="founder-title">
       <div class="max-w-7xl mx-auto px-5 lg:px-8 grid gap-10 lg:grid-cols-[0.85fr_1.15fr] items-center">
         <div class="reveal">
-          <img src="assets/federico-garau-founder.png" alt="Federico Garau, founder INNOVALEX"
-            class="w-full max-h-[680px] object-cover" loading="lazy" />
+          <picture class="block">
+            <source srcset="assets/federico-garau-founder-640.avif 640w, assets/federico-garau-founder-900.avif 900w"
+              sizes="(min-width: 1024px) 40vw, 100vw" type="image/avif" />
+            <source srcset="assets/federico-garau-founder-640.webp 640w, assets/federico-garau-founder-900.webp 900w"
+              sizes="(min-width: 1024px) 40vw, 100vw" type="image/webp" />
+            <img src="assets/federico-garau-founder.png" alt="Federico Garau, founder INNOVALEX"
+              width="1058" height="1060" class="w-full max-h-[680px] object-cover" loading="lazy" decoding="async" />
+          </picture>
         </div>
         <div class="reveal">
           <p class="text-xs uppercase tracking-[0.28em] text-brand-700 font-semibold">Founder</p>
@@ -1977,7 +2171,7 @@
   <div id="thank-you-modal" class="fixed inset-0 z-[70] hidden items-center justify-center bg-brand-950/70 px-5 py-8"
     aria-hidden="true">
     <div id="thank-you-backdrop" class="absolute inset-0" aria-hidden="true"></div>
-    <div role="dialog" aria-modal="true" aria-labelledby="thank-you-title" aria-describedby="thank-you-description"
+    <div role="dialog" aria-modal="true" aria-labelledby="thank-you-title" aria-describedby="thank-you-description" tabindex="-1"
       class="relative z-10 w-full max-w-3xl overflow-hidden rounded-[28px] border border-gold-500/25 bg-white shadow-soft">
       <div class="grid gap-0 lg:grid-cols-[0.92fr_1.08fr]">
         <div class="bg-brand-950 px-6 py-8 text-white md:px-8 md:py-10">
@@ -2064,32 +2258,27 @@
     const menuBtn = document.getElementById('menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     const header = document.getElementById('site-header');
+    const scrollProgress = document.getElementById('scroll-progress');
+    const hero = document.getElementById('home');
     const parallaxEls = document.querySelectorAll('[data-parallax]');
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let lastCta = 'direct';
+    let heroIsVisible = true;
+    let scrollFrame = null;
 
-    const currentMonthLabels = document.querySelectorAll('[data-current-month]');
-    const slotLabels = document.querySelectorAll('[data-slots]');
-    const updateAvailability = () => {
-      const now = new Date();
-      const month = now.toLocaleDateString('it-IT', { month: 'long', year: 'numeric' });
-      const slots = Math.max(1, 3 - Math.floor((now.getDate() - 1) / 10));
-      currentMonthLabels.forEach(el => {
-        el.textContent = month.charAt(0).toUpperCase() + month.slice(1);
-      });
-      slotLabels.forEach(el => {
-        el.textContent = String(slots);
-      });
+    const setMobileMenu = (isOpen) => {
+      mobileMenu.classList.toggle('is-open', isOpen);
+      mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+      menuBtn.setAttribute('aria-expanded', String(isOpen));
     };
-    updateAvailability();
 
     menuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
+      setMobileMenu(!mobileMenu.classList.contains('is-open'));
     });
 
     document.querySelectorAll('a[href^="#"]').forEach(link => {
       link.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
+        setMobileMenu(false);
         if (link.dataset.cta) lastCta = link.dataset.cta;
       });
     });
@@ -2120,10 +2309,45 @@
         entry.target.classList.add('is-visible');
         entry.target.querySelectorAll('[data-counter]').forEach(animateCounter);
         if (entry.target.dataset.counter) animateCounter(entry.target);
+        observer.unobserve(entry.target);
       });
     }, { threshold: 0.18 });
     revealElements.forEach(el => observer.observe(el));
     document.querySelectorAll('[data-counter]').forEach(el => observer.observe(el));
+
+    const systemBoard = document.querySelector('.system-board');
+    if (systemBoard && !reduceMotion) {
+      const systemObserver = new IntersectionObserver(([entry]) => {
+        systemBoard.classList.toggle('is-animated', entry.isIntersecting);
+      }, { rootMargin: '-10% 0px -10% 0px', threshold: 0.1 });
+      systemObserver.observe(systemBoard);
+    }
+
+    if (!reduceMotion) {
+      const heroObserver = new IntersectionObserver(([entry]) => {
+        heroIsVisible = entry.isIntersecting;
+        parallaxEls.forEach(el => el.classList.toggle('is-parallax-active', heroIsVisible));
+      }, { threshold: 0 });
+      heroObserver.observe(hero);
+    }
+
+    const desktopNavLinks = [...document.querySelectorAll('#site-header nav a[href^="#"]')];
+    const navSections = desktopNavLinks
+      .map(link => document.querySelector(link.getAttribute('href')))
+      .filter(Boolean);
+    const navObserver = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter(entry => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      desktopNavLinks.forEach(link => {
+        const isActive = link.getAttribute('href') === `#${visible.target.id}`;
+        link.classList.toggle('is-active', isActive);
+        if (isActive) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    }, { rootMargin: '-20% 0px -62% 0px', threshold: [0, 0.2, 0.5] });
+    navSections.forEach(section => navObserver.observe(section));
 
     const formatCurrency = (value) => new Intl.NumberFormat('it-IT', {
       style: 'currency',
@@ -2198,10 +2422,12 @@
         roiLeadBlock.classList.remove('pointer-events-none', 'max-h-0', 'translate-y-2', 'opacity-0');
         roiLeadBlock.classList.add('max-h-[32rem]', 'translate-y-0', 'opacity-100');
         roiLeadBlock.setAttribute('aria-hidden', 'false');
+        roiLeadBlock.removeAttribute('inert');
       } else {
         roiLeadBlock.classList.add('pointer-events-none', 'max-h-0', 'translate-y-2', 'opacity-0');
         roiLeadBlock.classList.remove('max-h-[32rem]', 'translate-y-0', 'opacity-100');
         roiLeadBlock.setAttribute('aria-hidden', 'true');
+        roiLeadBlock.setAttribute('inert', '');
       }
     };
 
@@ -2302,6 +2528,7 @@
         updateUrgentProblemSummary();
         if (document.querySelector('input[name="urgentProblem"]:checked')) {
           urgentProblemToggle.classList.remove('border-red-400');
+          urgentProblemToggle.removeAttribute('aria-invalid');
         }
       });
     });
@@ -2309,13 +2536,17 @@
     const thankYouModal = document.getElementById('thank-you-modal');
     const thankYouBackdrop = document.getElementById('thank-you-backdrop');
     const thankYouClose = document.getElementById('thank-you-close');
+    const thankYouDialog = thankYouModal.querySelector('[role="dialog"]');
+    let modalTrigger = null;
     const closeThankYouModal = () => {
       thankYouModal.classList.add('hidden');
       thankYouModal.classList.remove('flex');
       thankYouModal.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('modal-open');
+      if (modalTrigger && typeof modalTrigger.focus === 'function') modalTrigger.focus();
     };
     const openThankYouModal = () => {
+      modalTrigger = document.activeElement;
       thankYouModal.classList.remove('hidden');
       thankYouModal.classList.add('flex');
       thankYouModal.setAttribute('aria-hidden', 'false');
@@ -2331,35 +2562,60 @@
       if (event.key === 'Escape' && !thankYouModal.classList.contains('hidden')) {
         closeThankYouModal();
       }
+      if (event.key === 'Tab' && !thankYouModal.classList.contains('hidden')) {
+        const focusable = [...thankYouDialog.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')];
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
     });
 
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       const requiredFields = ['name', 'studio', 'email', 'role', 'teamSize', 'dailyEmailVolume', 'currentTools'];
       let valid = true;
+      let firstInvalid = null;
       requiredFields.forEach(id => {
         const input = document.getElementById(id);
         if (!input.value.trim()) {
           input.classList.add('border-red-400');
+          input.setAttribute('aria-invalid', 'true');
+          if (!firstInvalid) firstInvalid = input;
           valid = false;
         } else {
           input.classList.remove('border-red-400');
+          input.removeAttribute('aria-invalid');
         }
       });
       const email = document.getElementById('email');
       if (!/\S+@\S+\.\S+/.test(email.value)) {
         email.classList.add('border-red-400');
+        email.setAttribute('aria-invalid', 'true');
+        if (!firstInvalid) firstInvalid = email;
         valid = false;
       }
       const selectedUrgentProblems = [...document.querySelectorAll('input[name="urgentProblem"]:checked')].map(input => input.value);
       if (!selectedUrgentProblems.length) {
         urgentProblemToggle.classList.add('border-red-400');
+        urgentProblemToggle.setAttribute('aria-invalid', 'true');
+        if (!firstInvalid) firstInvalid = urgentProblemToggle;
         openUrgentProblemDropdown();
         valid = false;
       } else {
         urgentProblemToggle.classList.remove('border-red-400');
+        urgentProblemToggle.removeAttribute('aria-invalid');
       }
-      if (!valid) return;
+      if (!valid) {
+        firstInvalid?.focus();
+        return;
+      }
 
       const payload = {
         name: form.name.value.trim(),
@@ -2411,7 +2667,7 @@
         openThankYouModal();
       } catch (error) {
         console.error('Lead submit error:', error);
-        formError.textContent = `Invio non riuscito: ${error.message || 'errore generico'}`;
+        formError.textContent = 'Invio non riuscito. Riprova tra pochi minuti.';
         formError.classList.remove('hidden');
       } finally {
         formSubmitBtn.disabled = false;
@@ -2425,9 +2681,11 @@
       roiLeadError.classList.add('hidden');
       roiLeadError.textContent = 'Invio non riuscito. Riprova tra pochi minuti.';
       roiLeadEmail.classList.remove('border-red-400');
+      roiLeadEmail.removeAttribute('aria-invalid');
 
       if (!/\S+@\S+\.\S+/.test(email)) {
         roiLeadEmail.classList.add('border-red-400');
+        roiLeadEmail.setAttribute('aria-invalid', 'true');
         roiLeadError.textContent = 'Inserisci un indirizzo email valido.';
         roiLeadError.classList.remove('hidden');
         return;
@@ -2468,7 +2726,7 @@
         setRoiLeadVisibility(true);
       } catch (error) {
         console.error('ROI lead submit error:', error);
-        roiLeadError.textContent = `Invio non riuscito: ${error.message || 'errore generico'}`;
+        roiLeadError.textContent = 'Invio non riuscito. Riprova tra pochi minuti.';
         roiLeadError.classList.remove('hidden');
       } finally {
         roiLeadSubmit.disabled = false;
@@ -2476,20 +2734,30 @@
       }
     });
 
-    const handleScroll = () => {
+    const renderScrollEffects = () => {
       const scrollY = window.scrollY;
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       const progress = maxScroll > 0 ? scrollY / maxScroll : 0;
       header.classList.toggle('shadow-md', scrollY > 20);
-      if (!reduceMotion) {
+      scrollProgress.style.setProperty('--scroll-progress', `${Math.min(100, progress * 100)}%`);
+      if (!reduceMotion && heroIsVisible) {
         parallaxEls.forEach(el => {
           const speed = parseFloat(el.dataset.parallax) || 0.1;
           el.style.setProperty('--parallax', `${scrollY * speed}px`);
         });
       }
+      scrollFrame = null;
     };
-    handleScroll();
+
+    const handleScroll = () => {
+      if (scrollFrame !== null) return;
+      scrollFrame = requestAnimationFrame(renderScrollEffects);
+    };
+
+    renderScrollEffects();
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
+    window.clearTimeout(window.__revealFallback);
   </script>
 </body>
 
