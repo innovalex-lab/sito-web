@@ -1,0 +1,33 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'INNOVALEX | Gestione dello studio legale dalla posta',
+  description = 'Da Outlook qualifichi ogni email con cliente, pratica, collaboratore e ore. Archivio, pratiche, team e valore economico in un solo posto.',
+} = Astro.props;
+
+// Solo la build di produzione è indicizzabile: le anteprime non devono finire su Google.
+const isProduction = process.env.VERCEL_ENV === 'production';
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+    {!isProduction && <meta name="robots" content="noindex, nofollow" />}
+  </head>
+  <body class="bg-white font-sans text-slate-900 antialiased">
+    <slot />
+  </body>
+</html>

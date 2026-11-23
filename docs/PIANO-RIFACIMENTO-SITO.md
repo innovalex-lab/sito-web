@@ -1,8 +1,27 @@
 # Piano di rifacimento del sito INNOVALEX
 
-Stato al 23/11/2026. Documento di sola pianificazione: nessun file del sito è stato modificato.
+Stato al 23/11/2026. Piano aggiornato con le decisioni di Federico all'avvio della fase 1.
 
 Legenda: **FACT** = verificato su file, codice o misura. **INFERENCE** = deduzione ragionata dai fatti. **OPINION** = raccomandazione. Le domande aperte sono nella sezione L.
+
+---
+
+## Decisioni del 23/11/2026
+
+Decisioni di Federico. Prevalgono su ogni altra parte di questo documento.
+
+- **L1, chiusa.** Form della diagnosi già corretto in produzione (58e6b05). L'avviso email non è attivo perché manca la chiave Resend. Il sistema di email (conferme, sequenze, newsletter) è in definizione a parte, fuori da questo lavoro. Il form del nuovo sito deve restare compatibile con `api/lead.js`.
+- **L2, chiusa.** "Attivo" vuol dire acceso su almeno uno studio reale.
+- **L3, chiusa.** I contatti restano su ClickUp finché l'ingresso lead del CRM non è pronto.
+- **L4, chiusa.** In futuro i lead entreranno in uno spazio del CRM dedicato a INNOVALEX.
+- **L5, chiusa.** `/contratti`, `robots.txt` e `sitemap.xml` restano fuori dal rifacimento e devono continuare a funzionare identici. Verifica nella sezione B.6.
+- **L6, chiusa.** Il calcolatore ROI si toglie al lancio del nuovo sito. Sul sito attuale resta per ora.
+- **L7, chiusa.** Le "automazioni attivabili per ruolo" non si citano.
+- **L8, chiusa.** Il dato Clio si scrive così, con fonte e link: "In media solo il 37% di una giornata di otto ore va in lavoro fatturabile".
+- **L9, aperta.** Logo vettoriale: risposta in arrivo. Non serve nella fase 1.
+- **L10, chiusa.** Si pubblica dopo l'accensione della V1 su SCLN.
+- **L11, chiusa.** Il Tavolo Fondatori non va sul sito.
+- **Pagina di ringraziamento.** Non deve promettere invii (caso studio, whitepaper) finché non esistono davvero.
 
 ---
 
@@ -153,16 +172,16 @@ Esito: **VERA** = confermata dal repo INNOVALEX. **NON VERA** = smentita da repo
 - **FACT, grave.** Form principale fermo dal commit ef677d3 del 10/06/2026. Il campo `revenueRange` è stato tolto dalla pagina ma `index.html:2499` lo legge ancora. Risultato: errore JavaScript, nessuna chiamata a `/api/lead`, nessun messaggio a chi compila.
 - **FACT.** Il form del calcolatore invece parte: la chiamata a `/api/roi-lead` viene eseguita.
 - **FACT.** Solo `api/roi-lead.js` avvisa via Resend. `api/lead.js` non ha un avviso di riserva se ClickUp fallisce.
-- **FACT.** Sullo stesso dominio è online una pagina `/contratti` che **non è in questo repo**, con le pagine `/contratti/privacy` e `/contratti/terms`. Anche `robots.txt` e `sitemap.xml` non sono nel repo, e la sitemap non contiene la home. Va capito chi li pubblica prima di cambiare il deploy (domanda L5).
+- **FACT.** Sullo stesso dominio è online una pagina `/contratti` che **non è in questo repo**, con le pagine `/contratti/privacy` e `/contratti/terms`. Anche `robots.txt` e `sitemap.xml` non sono nel repo, e la sitemap non contiene la home. Chi li pubblica è scritto nella sezione B.6.
 
 ### B.5 Igiene del repo
 
 | Problema | Azione proposta |
 |---|---|
 | `node_modules` versionato: 601 file, 13,2 MB | Togliere dal tracciamento nella fase 1 |
-| Video da circa 25 MB in `assets`, non usato dalla home | Togliere nella fase 1, dopo conferma |
+| Video da circa 25 MB in `assets`, non usato dalla home | Resta raggiungibile allo stesso indirizzo. Decide Federico se toglierlo |
 | Nome del pacchetto `new-project` | Rinominare in `innovalex-sito` |
-| Due file `eval "$(ssh-agent -s)"` e `eval "$(ssh-agent -s)".pub` | Da rimuovere. Li gestisce un'altra sessione |
+| Due file `eval "$(ssh-agent -s)"` e `eval "$(ssh-agent -s)".pub` | Tolti da main con f9fa073. Li gestisce un'altra sessione |
 | Meta Twitter con tag rotto, `index.html:22` | Sparisce con il rifacimento |
 | Virgolette doppie nel menu, "Il Problema\"", righe 1000 e 1018 | Sparisce con il rifacimento |
 | `>` isolato in Governance, riga 1432 | Sparisce con il rifacimento |
@@ -170,6 +189,29 @@ Esito: **VERA** = confermata dal repo INNOVALEX. **NON VERA** = smentita da repo
 | Pagine privacy e cookie caricano Tailwind da CDN | Portarle nel nuovo build |
 | Font caricati da Google | Ospitarli sul sito |
 | Emoji usate come icone nel flusso | Sparisce con il rifacimento |
+
+### B.6 Chi serve `/contratti`, `robots.txt` e `sitemap.xml`
+
+Verifica del 23/11/2026, solo in lettura.
+
+**Conclusione 1, certezza alta.** I cinque indirizzi sono pubblicati dall'applicazione Next.js del repo `innovalex-lab/innovalex-webapp`, come progetto Vercel distinto da `sito-web`.
+
+- **FACT.** Le risposte hanno `server: Vercel` e `x-matched-path` interni all'altra applicazione: `/`, `/privacy`, `/terms`, `/robots.txt`, `/sitemap.xml`.
+- **FACT.** La pagina carica i file da `/contratti/_next/` e ha il titolo "Analisi contratti con 4 agenti AI". `sito-web` non contiene Next.js.
+- **FACT.** `innovalex-webapp` contiene `app/robots.ts`, `app/sitemap.ts` e un `basePath` configurabile in `next.config.js`.
+- **FACT.** `x-vercel-id` mostra più passaggi su `/contratti` (`fra1:fra1:fra1`) e uno solo sulla home: la richiesta viene inoltrata.
+
+**Conclusione 2, certezza media.** La regola che porta questi indirizzi da `www.innovalexai.it` all'altro progetto è configurata su Vercel, fuori dai repo.
+
+- **FACT.** Nessun ramo di `sito-web` ha mai contenuto `vercel.json`, riscritture o redirect. Il `vercel.json` di `innovalex-webapp` non ne contiene.
+- **Non verificato.** Il pannello Vercel non è stato aperto, quindi il tipo esatto di regola non è confermato. Non è provato nemmeno che la regola sopravviva a un deploy con framework Astro: le risposte attuali arrivano in parte dalla cache.
+
+**Come la fase 8 li preserva.**
+
+1. Prima del merge, Federico o una sessione autorizzata individua nel pannello Vercel la regola e annota progetto, percorsi e destinazione. Non si modifica nulla.
+2. La build non deve contenere `contratti/`, `robots.txt` o `sitemap.xml`, perché un file statico con lo stesso percorso può avere la precedenza su una riscrittura. Oggi non li contiene. `@astrojs/sitemap` crea solo `sitemap-index.xml` e `sitemap-0.xml`.
+3. Prima del merge si salvano stato, tipo e contenuto dei cinque indirizzi. Subito dopo il deploy si confrontano, senza cache.
+4. Se un indirizzo cambia, si torna subito al deploy precedente con la promozione su Vercel. Solo dopo si valuta una riscrittura esplicita in `vercel.json` verso l'origine annotata al punto 1.
 
 ---
 
@@ -430,15 +472,7 @@ I testi sono bozze. Ogni frase su una funzione va ricontrollata con la sezione C
 - **Screenshot:** nessuno.
 - **CTA:** "Parla con noi".
 
-### 11. Tavolo Fondatori
-
-- **Scopo:** dare un motivo per muoversi adesso.
-- **Testo (DA CONFERMARE):** "Cerchiamo 20 studi per costruire con noi le prossime funzioni. Zero costi di setup. Adesioni entro il 31/01/2027."
-- **Visivo:** blocco scuro, unico nella pagina, con il numero 20 grande.
-- **Screenshot:** nessuno.
-- **CTA:** "Candida il tuo studio". Porta al form con la richiesta già indicata.
-
-### 12. Diagnosi operativa e form
+### 11. Diagnosi operativa e form
 
 - **Scopo:** la conversione.
 - **Testo:** "In 30 minuti guardiamo come il tuo studio gestisce posta, documenti, pratiche e ore. Alla fine sai cosa si può sistemare e da dove partire."
@@ -448,7 +482,7 @@ I testi sono bozze. Ogni frase su una funzione va ricontrollata con la sezione C
 - **CTA:** "Prenota la diagnosi".
 - **Dopo l'invio:** "Richiesta ricevuta. Ti scriviamo entro un giorno lavorativo." L'impegno sui tempi è da confermare.
 
-### 13. FAQ
+### 12. FAQ
 
 - **Scopo:** togliere le obiezioni.
 - **Bozze:**
@@ -462,7 +496,7 @@ I testi sono bozze. Ogni frase su una funzione va ricontrollata con la sezione C
 - **Screenshot:** nessuno.
 - **CTA:** "Fai la tua domanda nella diagnosi".
 
-### 14. Piè di pagina
+### 13. Piè di pagina
 
 - **Contenuto:** dati societari attuali, contatti, Privacy Policy, Cookie Policy. **Nessun prezzo in tutto il sito.**
 
@@ -522,7 +556,7 @@ Per il mobile si usa un ritaglio più stretto della stessa schermata, larghezza 
 | Ruolo | Note o campo esteso | Sì |
 | Persone nello studio | Note o campo esteso | Sì |
 | Priorità principale | Note | Sì |
-| Richiesta (diagnosi o Tavolo Fondatori) | Fonte | Automatico |
+| Richiesta (diagnosi) | Fonte | Automatico |
 | Consenso, versione informativa, data | Campi di consenso | Sì |
 
 - **Consenso.** Casella non preselezionata: "Ho letto l'informativa privacy". Eventuali comunicazioni commerciali con una seconda casella facoltativa.
@@ -543,7 +577,7 @@ Per il mobile si usa un ritaglio più stretto della stessa schermata, larghezza 
 - **Open Graph:** immagine nuova 1200 x 630 con logo su fondo chiaro. Oggi è 1024 x 1024.
 - **Dati strutturati:** `Organization`, `WebSite`, `SoftwareApplication` senza prezzo, `FAQPage` coerente con le FAQ visibili.
 - **Struttura:** un solo H1, titoli in ordine, testo alternativo descrittivo, `lang="it"`.
-- **Sitemap e robots:** la home va inserita. Prima va chiarito chi pubblica i file attuali (domanda L5).
+- **Sitemap e robots:** `/robots.txt` e `/sitemap.xml` appartengono a `innovalex-webapp` e restano identici (sezione B.6). Il nuovo sito non deve creare file con questi nomi. Come far entrare la home in sitemap si decide nella fase 7, senza cambiarli di nascosto.
 - **Percorsi da mantenere:** `/`, `/privacy-policy.html`, `/cookie-policy.html`, `/contratti`, `/contratti/privacy`, `/contratti/terms`, `/api/lead`, `/api/roi-lead`. Se un percorso cambia, redirect 301.
 - **Ancore:** mantenere `#contatti` e `#faq`.
 - **Misura:** copia dei titoli attuali e controllo di Search Console prima e dopo la pubblicazione, se Federico ha l'accesso.
@@ -579,7 +613,6 @@ Regole comuni: si lavora su rami dedicati, mai su main. Ogni fase si pubblica in
 - [ ] Tabella C rifatta quel giorno
 - [ ] Nessuna affermazione NON VERA o NON VERIFICABILE rimasta senza approvazione
 - [ ] Numeri e citazione approvati da Cocola
-- [ ] Condizioni del Tavolo Fondatori confermate
 - [ ] Form provato in produzione con un contatto vero
 - [ ] `/contratti` funzionante dopo il deploy
 - [ ] Privacy e cookie aggiornate e rilette
@@ -599,7 +632,7 @@ Regole comuni: si lavora su rami dedicati, mai su main. Ogni fase si pubblica in
 | Il CRM non è pronto alla data | Ingresso lead non costruito | Si pubblica con ClickUp e si passa dopo |
 | I lead finiscono nello studio sbagliato | Il CRM è multi studio | Studio deciso dal server, chiave limitata, prova con destinazione fittizia |
 | SEO perso nel passaggio | Cambia tutta la struttura | Stessi percorsi, redirect, confronto prima e dopo |
-| `/contratti` si rompe con il nuovo deploy | Non è nel repo e non sappiamo chi la serve | Domanda L5 prima della fase 1, controllo in anteprima |
+| `/contratti` si rompe con il nuovo deploy | Non è nel repo e la regola che la instrada non è visibile nei repo | Procedura della sezione B.6 nella fase 8 |
 | Screenshot con dati reali | Basta un errore di scheda | Solo demo, controllo a occhio |
 | Il sito sembra comunque fatto con l'AI | Le skill e i componenti pronti portano a forme simili | Direzione fissa, nessun kit adottato in blocco, passaggio con unslop-ui e critica umana |
 | Una skill esegue comandi non voluti | Alcune candidate lo fanno | Installata solo unslop-ui, senza script, con commit registrato |
@@ -610,46 +643,8 @@ Regole comuni: si lavora su rami dedicati, mai su main. Ogni fase si pubblica in
 
 ## L. Domande per Federico
 
-**L1. Riparo subito il form rotto sul sito attuale?** Oggi chi compila la diagnosi non ti arriva.
-- A (raccomandata): sì, in una sessione separata, su un ramo con anteprima. Si toglie una riga, già provata in locale.
-- B: si aspetta il sito nuovo, continuando a perdere richieste.
+Le domande L1-L8, L10 e L11 sono chiuse: le risposte sono in "Decisioni del 23/11/2026", in cima al documento.
 
-**L2. Cosa vuol dire "attivo" per il sito?**
-- A (raccomandata): acceso su almeno uno studio reale.
-- B: anche solo installato e acceso sullo studio di prova. Più funzioni da mostrare, ma rischi di promettere ciò che un cliente non può usare.
-
-**L3. Finché l'ingresso lead del CRM non è pronto, dove vanno i contatti?**
-- A (raccomandata): ClickUp con avviso via email, poi passaggio al CRM.
-- B: si aspetta il CRM prima di pubblicare il sito.
-
-**L4. In quale studio del CRM devono entrare i contatti di INNOVALEX?**
-- A (raccomandata): uno spazio dedicato a INNOVALEX, separato da SCLN e dallo studio di prova.
-- B: un altro spazio che indichi tu.
-
-**L5. Chi pubblica `/contratti`, `robots.txt` e `sitemap.xml`?** Sono online ma non in questo repo.
-- A (raccomandata): restano fuori dal rifacimento e identici. Mi dici quale progetto li serve, così li proteggo.
-- B: rientrano nel rifacimento, con un lavoro in più.
-
-**L6. Il calcolatore ROI resta?** Oggi usa percentuali fisse senza metodo.
-- A (raccomandata): si toglie al lancio e la diagnosi fa quel lavoro sui numeri veri.
-- B: si rifà con un metodo dichiarato, ma serve definirlo e costa almeno una sessione in più.
-
-**L7. Cosa sono le "automazioni attivabili per ruolo"?** Non le ho trovate nel repo.
-- A (raccomandata): non si citano finché non mi indichi dove sono.
-- B: sono un'altra funzione con un altro nome: dimmi quale.
-
-**L8. Come scriviamo il dato Clio?**
-- A (raccomandata): "In media solo il 37% di una giornata di otto ore va in lavoro fatturabile". È ciò che Clio misura.
-- B: "Il 37% del tempo di un avvocato diventa ore fatturate". Più semplice, ma meno preciso.
-
-**L9. Hai il logo originale in vettoriale (SVG, AI o PDF)?**
+**L9, aperta. Hai il logo originale in vettoriale (SVG, AI o PDF)?**
 - A (raccomandata): sì, me lo passi prima della fase 2.
 - B: no, si usa il PNG attuale, meno nitido sugli schermi ad alta densità.
-
-**L10. Quando si pubblica?**
-- A (raccomandata): dopo l'accensione della V1 su SCLN, così il sito mostra più funzioni vere.
-- B: prima, con il solo nucleo in produzione e il resto in "In arrivo". Utile se il Tavolo Fondatori deve partire subito.
-
-**L11. Confermi le condizioni del Tavolo Fondatori?** 20 studi, zero setup, adesioni entro il 31/01/2027.
-- A (raccomandata): confermate, si pubblicano così.
-- B: cambiano, mi scrivi quali.

@@ -1,15 +1,19 @@
 # INNOVALEX website
 
-Static landing page with Vercel serverless endpoints for lead collection.
+Sito Astro statico con funzioni serverless Vercel per i contatti.
 
 ## Development
 
+Serve Node 22.23.4 o superiore.
+
 ```bash
-npm install
+npm ci
+npm run dev
 npm run build
+npm run preview
 ```
 
-Open `index.html` for the static layout. API submissions require a local Vercel development server or the deployed domain.
+Le funzioni in `api/` girano su Vercel. Le pagine `/contratti`, `/robots.txt` e `/sitemap.xml` non sono in questo repo: vedi `docs/PIANO-RIFACIMENTO-SITO.md`.
 
 ## Checks
 
@@ -17,10 +21,4 @@ Open `index.html` for the static layout. API submissions require a local Vercel 
 npm test
 ```
 
-The production CSS is generated from `src/tailwind.css` into `assets/site.css`. Run `npm run build` after changing Tailwind utility classes.
-
-Optimized image variants can be regenerated with:
-
-```bash
-python3 scripts/optimize-images.py
-```
+Le prove in `scripts/legacy` controllano il vecchio `index.html`, conservato nella stessa cartella.
