@@ -1,2 +1,10 @@
 node_modules/
 .DS_Store
+
+# chiavi e segreti: mai nel repo
+eval*
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+.env
