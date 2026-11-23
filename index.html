@@ -2449,7 +2449,9 @@
 
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
-      const requiredFields = ['name', 'studio', 'email', 'role', 'teamSize', 'dailyEmailVolume', 'currentTools'];
+      // Il tasto Invio e requestSubmit possono arrivare anche con il pulsante disattivato.
+      if (formSubmitBtn.disabled) return;
+      const requiredFields =['name', 'studio', 'email', 'role', 'teamSize', 'dailyEmailVolume', 'currentTools'];
       let valid = true;
       let firstInvalid = null;
       requiredFields.forEach(id => {
@@ -2487,46 +2489,50 @@
         return;
       }
 
-      const payload = {
-        name: form.name.value.trim(),
-        studio: form.studio.value.trim(),
-        email: form.email.value.trim(),
-        phone: form.phone.value.trim(),
-        role: form.role.value,
-        teamSize: form.teamSize.value,
-        dailyEmailVolume: form.dailyEmailVolume.value.trim(),
-        currentTools: form.currentTools.value.trim(),
-        revenueRange: form.revenueRange.value,
-        urgentProblem: selectedUrgentProblems.join(', '),
-        hoursPerDay: form.emailsPerDay.value,
-        lawyers: selectedLawyers.value,
-        hourlyRate: selectedRate.value,
-        selectedFeatures: selectedFeatures.value,
-        estimatedAnnualValue: estimatedAnnualValue.value,
-        estimatedMonthlyHours: estimatedMonthlyHours.value,
-        sourceCta: sourceCta.value || lastCta,
-        timestamp: new Date().toISOString()
-      };
-
       formSuccess.classList.add('hidden');
       formError.classList.add('hidden');
-      formError.textContent = 'Invio non riuscito. Riprova tra pochi minuti.';
       formSubmitBtn.disabled = true;
       formSubmitBtn.classList.add('opacity-70', 'cursor-not-allowed');
+
+      // Senza un limite, una rete bloccata lascerebbe l'utente senza alcun esito.
+      const submitController = new AbortController();
+      const submitTimeout = setTimeout(() => submitController.abort(), 25000);
+      let leadSent = false;
 
       try {
         if (window.location.protocol === 'file:') {
           throw new Error('anteprima locale file:// non collegata all’API. Testa il form sul dominio online o su un server locale');
         }
+        const payload = {
+          name: form.name.value.trim(),
+          studio: form.studio.value.trim(),
+          email: form.email.value.trim(),
+          phone: form.phone.value.trim(),
+          role: form.role.value,
+          teamSize: form.teamSize.value,
+          dailyEmailVolume: form.dailyEmailVolume.value.trim(),
+          currentTools: form.currentTools.value.trim(),
+          urgentProblem: selectedUrgentProblems.join(', '),
+          hoursPerDay: form.emailsPerDay.value,
+          lawyers: selectedLawyers.value,
+          hourlyRate: selectedRate.value,
+          selectedFeatures: selectedFeatures.value,
+          estimatedAnnualValue: estimatedAnnualValue.value,
+          estimatedMonthlyHours: estimatedMonthlyHours.value,
+          sourceCta: sourceCta.value || lastCta,
+          timestamp: new Date().toISOString()
+        };
         const response = await fetch('/api/lead', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+          body: JSON.stringify(payload),
+          signal: submitController.signal
         });
         const data = await response.json().catch(() => ({}));
         if (!response.ok || !data.ok) {
-          throw new Error(data?.error || data?.details?.err || 'Request failed');
+          throw new Error(data?.error || 'Request failed');
         }
+        leadSent = true;
         formSuccess.classList.remove('hidden');
         formSuccess.textContent = 'Richiesta inviata correttamente.';
         form.reset();
@@ -2537,9 +2543,13 @@
         openThankYouModal();
       } catch (error) {
         console.error('Lead submit error:', error);
-        formError.textContent = 'Invio non riuscito. Riprova tra pochi minuti.';
-        formError.classList.remove('hidden');
+        // A richiesta già ricevuta, un errore dell'interfaccia non deve invitare a reinviarla.
+        if (!leadSent) {
+          formError.textContent = 'Invio non riuscito. I tuoi dati sono ancora nel modulo: riprova tra poco oppure scrivi a federico.garau@innovalexai.it.';
+          formError.classList.remove('hidden');
+        }
       } finally {
+        clearTimeout(submitTimeout);
         formSubmitBtn.disabled = false;
         formSubmitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
       }
