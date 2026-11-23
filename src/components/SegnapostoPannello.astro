@@ -1,0 +1,15 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: classi = '' } = Astro.props;
+---
+<!-- Proporzioni dello screenshot S1 (1600 x 1000). Si sostituisce nella fase 5. -->
+<div
+  role="img"
+  aria-label="Spazio riservato alla schermata del pannello in Outlook, in arrivo nella fase 5"
+  class:list={['flex aspect-[16/10] w-full items-center justify-center p-6 text-center text-corpo font-medium text-inchiostro', classi]}
+>
+  Schermata del pannello (fase 5)
+</div>

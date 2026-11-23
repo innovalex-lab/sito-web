@@ -1,0 +1,132 @@
+---
+import Base from '../../layouts/Base.astro';
+import Intestazione from '../../components/Intestazione.astro';
+import { colori, contrasto, coppie } from '../../lib/contrasto';
+
+const righe = coppie.map((c) => {
+  const valore = contrasto(colori[c.testo], colori[c.fondo]);
+  return { ...c, valore, passa: valore >= c.soglia };
+});
+const numero = (v: number) => v.toFixed(2).replace('.', ',');
+
+const scala = [
+  { nome: 'Display', classe: 'font-serif text-display font-medium', uso: 'Titolo principale' },
+  { nome: 'Titolo', classe: 'font-serif text-titolo font-semibold', uso: 'Titoli di sezione' },
+  { nome: 'Lead', classe: 'text-lead', uso: 'Testo introduttivo' },
+  { nome: 'Corpo', classe: 'text-corpo', uso: 'Testo corrente' },
+  { nome: 'Piccolo', classe: 'text-piccolo', uso: 'Menu e note' },
+];
+const stati = [
+  { nome: 'Normale', stato: undefined },
+  { nome: 'Sopra', stato: 'sopra' },
+  { nome: 'Focus', stato: 'focus' },
+  { nome: 'Premuto', stato: 'premuto' },
+];
+const spazi = [
+  { nome: 'Margine della pagina', valore: 'da 20 a 48 px', larghezza: 'var(--spacing-margine)' },
+  { nome: 'Altezza della barra', valore: '72 px', larghezza: 'var(--spacing-barra)' },
+  { nome: 'Spazio tra sezioni', valore: 'da 64 a 144 px', larghezza: 'var(--spacing-sezione)' },
+];
+---
+<Base title="Sistema grafico | INNOVALEX" anteprima>
+  <Intestazione />
+  <main id="contenuto" class="contenitore space-y-sezione py-16">
+    <h1 class="font-serif text-titolo font-semibold">Sistema grafico</h1>
+
+    <section aria-labelledby="s-logo">
+      <h2 id="s-logo" class="font-serif text-titolo font-semibold">Logo</h2>
+      <div class="mt-8 grid gap-8 md:grid-cols-[2fr_1fr]">
+        <div class="bg-bianco p-8 outline-1 outline-linea"><img src="/brand/innovalex-logo.svg" width="520" height="158" alt="Logo INNOVALEX completo" class="h-auto w-full max-w-[520px]" /></div>
+        <div class="bg-crema p-8"><img src="/brand/innovalex-mark.svg" width="150" height="156" alt="Simbolo INNOVALEX" /></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="s-colori">
+      <h2 id="s-colori" class="font-serif text-titolo font-semibold">Colori</h2>
+      <ul class="mt-8 grid grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-4">
+        {Object.entries(colori).map(([nome, valore]) => (
+          <li>
+            <div class="h-20 outline-1 -outline-offset-1 outline-linea" style={`background:${valore}`}></div>
+            <p class="mt-2 font-medium">{nome}</p>
+            <p class="text-piccolo text-testo-2">{valore}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section aria-labelledby="s-tipo">
+      <h2 id="s-tipo" class="font-serif text-titolo font-semibold">Tipografia</h2>
+      <div class="mt-8 space-y-8">
+        {scala.map((s) => (
+          <div>
+            <p class="text-piccolo text-testo-2">{s.nome}, {s.uso.toLowerCase()}</p>
+            <p class={s.classe}>Più tempo per fare l’avvocato</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section aria-labelledby="s-spazi">
+      <h2 id="s-spazi" class="font-serif text-titolo font-semibold">Spaziature e griglia</h2>
+      <ul class="mt-8 space-y-4">
+        {spazi.map((s) => (
+          <li class="flex items-center gap-4">
+            <span class="block h-4 shrink-0 bg-oro" style={`width:${s.larghezza}`}></span>
+            <span>{s.nome}, {s.valore}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="mt-6 max-w-testo">Griglia di 12 colonne, larghezza massima 1440 px, colonna di testo fino a 640 px.</p>
+      <div class="griglia mt-4" aria-hidden="true">
+        {Array.from({ length: 12 }).map(() => <div class="h-12 bg-carta"></div>)}
+      </div>
+    </section>
+
+    <section aria-labelledby="s-comp">
+      <h2 id="s-comp" class="font-serif text-titolo font-semibold">Pulsanti e link</h2>
+      <div class="mt-8 overflow-x-auto">
+        <table class="w-full min-w-[720px] border-collapse text-left [&_td]:px-3 [&_th]:px-3">
+          <thead>
+            <tr><th scope="col" class="py-3 pr-4">Stato</th><th scope="col" class="py-3 pr-4">Principale</th><th scope="col" class="py-3 pr-4">Secondario</th><th scope="col" class="py-3">Link</th></tr>
+          </thead>
+          <tbody>
+            {stati.map((s) => (
+              <tr class="odd:bg-carta">
+                <th scope="row" class="py-4 pr-4 font-medium">{s.nome}</th>
+                <td class="py-4 pr-4"><button type="button" class="btn btn-primario" data-stato={s.stato}>Prenota la diagnosi</button></td>
+                <td class="py-4 pr-4"><button type="button" class="btn btn-secondario" data-stato={s.stato}>Guarda come funziona</button></td>
+                <td class="py-4"><a href="#s-comp" class="link" data-stato={s.stato}>Informativa privacy</a></td>
+              </tr>
+            ))}
+            <tr class="odd:bg-carta">
+              <th scope="row" class="py-4 pr-4 font-medium">Disattivato</th>
+              <td class="py-4 pr-4"><button type="button" class="btn btn-primario" disabled>Prenota la diagnosi</button></td>
+              <td class="py-4 pr-4"><button type="button" class="btn btn-secondario" disabled>Guarda come funziona</button></td>
+              <td class="py-4 text-testo-2">Non previsto</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="s-contrasti">
+      <h2 id="s-contrasti" class="font-serif text-titolo font-semibold">Contrasti misurati</h2>
+      <div class="mt-8 overflow-x-auto">
+        <table class="w-full min-w-[720px] border-collapse text-left [&_td]:px-3 [&_th]:px-3">
+          <thead>
+            <tr><th scope="col" class="py-3 pr-4">Colore</th><th scope="col" class="py-3 pr-4">Fondo</th><th scope="col" class="py-3 pr-4">Uso</th><th scope="col" class="py-3 pr-4">Contrasto</th><th scope="col" class="py-3">Soglia</th></tr>
+          </thead>
+          <tbody>
+            {righe.map((r) => (
+              <tr class="odd:bg-carta">
+                <td class="py-3 pr-4">{r.testo}</td><td class="py-3 pr-4">{r.fondo}</td><td class="py-3 pr-4">{r.uso}</td>
+                <td class="py-3 pr-4 font-medium tabular-nums">{numero(r.valore)}:1</td>
+                <td class="py-3 tabular-nums">{numero(r.soglia)}:1, {r.passa ? 'superata' : 'non superata'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</Base>

@@ -6,6 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://www.innovalexai.it',
   output: 'static',
-  integrations: [react(), sitemap()],
+  // Le pagine di lavoro in /anteprima/ non devono mai entrare nella sitemap.
+  integrations: [react(), sitemap({ filter: (page) => !page.includes('/anteprima/') })],
   vite: { plugins: [tailwindcss()] },
 });

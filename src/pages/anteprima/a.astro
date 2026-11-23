@@ -1,0 +1,27 @@
+---
+import Base from '../../layouts/Base.astro';
+import Intestazione from '../../components/Intestazione.astro';
+import SegnapostoPannello from '../../components/SegnapostoPannello.astro';
+import { primaSchermata as c } from '../../content/prima-schermata';
+---
+<Base title="Direzione A | INNOVALEX" anteprima>
+  <Intestazione />
+  <main id="contenuto" class="min-h-[calc(100dvh-var(--spacing-barra))] bg-crema">
+    <section aria-labelledby="titolo" class="contenitore pt-12 pb-sezione lg:pt-20">
+      <h1 id="titolo" class="font-serif text-display font-medium text-inchiostro">{c.titolo}</h1>
+
+      <div class="griglia mt-10 gap-y-12 lg:mt-20">
+        <div class="col-span-12 lg:col-span-4">
+          <p class="max-w-testo text-lead text-inchiostro">{c.testo}</p>
+          <div class="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center lg:w-fit lg:flex-col lg:items-stretch">
+            <a class="btn btn-primario" href={c.principale.href}>{c.principale.testo}</a>
+            <a class="btn btn-secondario" href={c.secondario.href}>{c.secondario.testo}</a>
+          </div>
+        </div>
+        <div class="col-span-12 lg:col-span-7 lg:col-start-6">
+          <SegnapostoPannello class="bg-crema-2" />
+        </div>
+      </div>
+    </section>
+  </main>
+</Base>

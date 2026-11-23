@@ -1,0 +1,41 @@
+---
+const voci = [
+  { nome: 'Come funziona', href: '/#come-funziona' },
+  { nome: 'Benefici', href: '/#benefici' },
+  { nome: 'Caso studio', href: '/#caso-studio' },
+  { nome: 'Sicurezza', href: '/#sicurezza' },
+  { nome: 'Chi siamo', href: '/#chi-siamo' },
+  { nome: 'FAQ', href: '/#faq' },
+];
+---
+<a class="salta" href="#contenuto">Vai al contenuto</a>
+<header class="relative z-20 bg-bianco">
+  <div class="contenitore flex h-barra items-center justify-between gap-6">
+    <a href="/" class="shrink-0" aria-label="INNOVALEX, torna alla home">
+      <img src="/brand/innovalex-logo.svg" width="164" height="50" alt="" class="block h-[50px] w-[164px]" />
+    </a>
+
+    <nav aria-label="Principale" class="hidden lg:block">
+      <ul class="flex items-center gap-5 xl:gap-8">
+        {voci.map((v) => <li><a class="voce-menu" href={v.href}>{v.nome}</a></li>)}
+      </ul>
+    </nav>
+
+    <a class="btn btn-primario btn-compatto hidden shrink-0 lg:inline-flex" href="/#contatti">Prenota la diagnosi</a>
+
+    <details class="menu-mobile lg:hidden">
+      <summary>
+        <span class="quando-chiuso">Menu</span>
+        <span class="quando-aperto">Chiudi menu</span>
+      </summary>
+      <nav aria-label="Menu principale" class="absolute inset-x-0 top-full bg-bianco shadow-[0_12px_24px_rgb(20_26_61/0.16)]">
+        <ul class="contenitore py-2">
+          {voci.map((v) => (
+            <li><a class="flex min-h-12 items-center text-corpo font-medium text-inchiostro" href={v.href}>{v.nome}</a></li>
+          ))}
+          <li class="pt-2 pb-4"><a class="btn btn-primario w-full" href="/#contatti">Prenota la diagnosi</a></li>
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>
