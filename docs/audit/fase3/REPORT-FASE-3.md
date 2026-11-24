@@ -148,7 +148,9 @@ Larghezze 1440, 1024 e 390 px, ciascuna con e senza movimento ridotto. Le prove 
 
 ## 10. File
 
-- Video dello scorrimento completo: `home-scorrimento-1440.webm` (13.337 px di pagina), `home-scorrimento-390.webm` (14.313 px). Sono girati sull'anteprima, quindi mostrano gli avvisi arancioni.
+- Video dello scorrimento completo, girati sull'anteprima (quindi con gli avvisi arancioni):
+  - 1440 px, pagina di 13.337 px: https://raw.githubusercontent.com/innovalex-lab/sito-web/72184df/docs/audit/fase3/home-scorrimento-1440.webm
+  - 390 px, pagina di 14.313 px: https://raw.githubusercontent.com/innovalex-lab/sito-web/72184df/docs/audit/fase3/home-scorrimento-390.webm
 - Prima e dopo delle sezioni esistenti: `prima-dopo/`.
 - Sezioni nuove a 1440, 1024 e 390: `sezioni-nuove/`, con intestazione fissa, menu mobile e `movimento-ridotto/`.
 - Codice nuovo:
