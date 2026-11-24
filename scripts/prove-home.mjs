@@ -102,12 +102,76 @@ for (const ridotto of [false, true]) {
       ok(`${tag} AI: Conferma da tastiera`, await pagina.locator('.al-confermata').isVisible());
     } else ok(`${tag} AI: Conferma da tastiera`, false, 'pulsante non trovato');
 
+    // ---- Fase 3.1 ----
+    // Tutto lo studio: scorrimento orizzontale sotto i 768 px, griglia asimmetrica da 1200 px
+    const studio = await pagina.evaluate(() => {
+      const l = document.querySelector('.studio-griglia');
+      const r = (s) => document.querySelector(s).getBoundingClientRect();
+      return {
+        scorre: ['auto', 'scroll'].includes(getComputedStyle(l).overflowX) && l.scrollWidth > l.clientWidth + 1,
+        snap: getComputedStyle(document.querySelector('.blocco')).scrollSnapAlign,
+        punti: [...document.querySelectorAll('.studio-punto')].filter((a) => a.offsetParent).length,
+        bersagli: [...document.querySelectorAll('.studio-punto')].every((a) => document.querySelector(a.getAttribute('href'))),
+        ruoli: !document.querySelector('.blocco-ruoli'),
+        pratiche: r('#studio-pratiche').height,
+        cliente: r('#studio-cliente').height,
+        soci: r('#studio-soci').height,
+        team: r('#studio-team').height,
+      };
+    });
+    ok(`${tag} studio: niente blocco Ruoli e permessi`, studio.ruoli);
+    ok(`${tag} studio: link dei punti verso schede esistenti`, studio.bersagli);
+    if (w < 768) {
+      ok(`${tag} studio: scorrimento orizzontale con aggancio e sei punti`, studio.scorre && studio.snap.includes('start') && studio.punti === 6, JSON.stringify(studio));
+      await pagina.locator('.studio-punto').nth(4).click();
+      await pagina.waitForTimeout(900);
+      const sx = await pagina.evaluate(() => document.querySelector('#studio-team').getBoundingClientRect().left);
+      ok(`${tag} studio: il quinto punto porta alla scheda Team`, sx >= 0 && sx < 60, `sinistra ${Math.round(sx)}`);
+    } else {
+      ok(`${tag} studio: griglia senza scorrimento e senza punti`, !studio.scorre && studio.punti === 0, JSON.stringify(studio));
+    }
+    if (w >= 1200) {
+      ok(`${tag} studio: Pratiche e Valore per socio grandi`, studio.pratiche > studio.cliente * 1.6 && studio.soci > studio.team * 1.6, JSON.stringify(studio));
+    }
+
+    // Chi siamo: due ritratti caricati, 4:5, con width e height nel markup
+    const ritratti = await pagina.evaluate(() =>
+      [...document.querySelectorAll('.ritratto img')].map((i) => ({
+        attr: i.getAttribute('width') && i.getAttribute('height'),
+        caricata: i.complete && i.naturalWidth > 0,
+        rapporto: Math.round((i.getBoundingClientRect().height / i.getBoundingClientRect().width) * 100) / 100,
+        alt: i.alt,
+      })),
+    );
+    ok(`${tag} chi siamo: due ritratti 4:5 caricati, con width e height`, ritratti.length === 2 && ritratti.every((r) => r.attr && r.caricata && r.rapporto === 1.25 && r.alt), JSON.stringify(ritratti));
+    const testiChi = await pagina.evaluate(() => ({
+      ruolo: document.querySelector('.persona-fondatore .persona-ruolo').textContent,
+      citazione: document.querySelector('.caso-citazione').textContent,
+      email: document.querySelector('.caso-numeri').textContent.includes('600+'),
+      piede: document.querySelector('footer').textContent.includes('Federico Garau, Fondatore e amministratore'),
+    }));
+    ok(`${tag} chi siamo: ruolo, citazione, 600+ e piè di pagina`, testiChi.ruolo === 'Fondatore e amministratore' && testiChi.citazione.includes('Il valore non è stato aggiungere') && testiChi.email && testiChi.piede, JSON.stringify(testiChi));
+
+    // FAQ: cinque domande e il sottotitolo
+    const faq = await pagina.evaluate(() => ({ n: document.querySelectorAll('.faq-voce').length, sotto: document.querySelector('.faq-sottotitolo')?.textContent }));
+    ok(`${tag} FAQ: cinque domande con sottotitolo`, faq.n === 5 && faq.sotto?.startsWith('Le domande reali'), JSON.stringify(faq));
+
+    // Beneficio 2: a fine scena la cartella è da Paolo (con movimento ridotto subito, senza animazione)
+    const cartella = await pagina.evaluate(() => {
+      const c = document.querySelector('.bp-cartella');
+      const s = getComputedStyle(c);
+      return { transform: s.transform, durata: s.transitionDuration, easing: s.transitionTimingFunction.slice(0, 12) };
+    });
+    ok(`${tag} beneficio 2: cartella arrivata da Paolo`, cartella.transform === 'none', JSON.stringify(cartella));
+    if (!ridotto) ok(`${tag} beneficio 2: molla CSS con linear()`, cartella.easing.startsWith('linear('), JSON.stringify(cartella));
+    else ok(`${tag} beneficio 2: nessuna transizione con movimento ridotto`, cartella.durata.split(',').every((d) => parseFloat(d) === 0), JSON.stringify(cartella));
+
     ok(`${tag} console pulita`, console_.length === 0, console_.join(' | '));
 
     if (w === 1440 && !ridotto) {
       const html = await pagina.content();
       const testi = verificaTesti(html);
-      ok('test dei testi eseguito (solo avvisi noti in anteprima)', testi.every((t) => t.contesto.includes('Posta in arrivo')), testi.map((t) => t.regola).join(', '));
+      ok('test dei testi eseguito: nessun problema ("Posta in arrivo" è un\'eccezione esatta)', testi.length === 0, testi.map((t) => `${t.regola}: ${t.contesto}`).join(' | '));
       const avvisi = await pagina.locator('.avvisi-anteprima li').count();
       ok('avvisi di stato visibili in anteprima', avvisi > 0, `${avvisi} avvisi`);
     }

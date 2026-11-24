@@ -1,0 +1,201 @@
+{
+ "ai-1024": {
+  "misure": "(1024, 1095) -> (1024, 1096)"
+ },
+ "ai-1440": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "ai-390": {
+  "diversi": 3599,
+  "percento": 0.533,
+  "riquadro": [
+   28,
+   211,
+   362,
+   1307
+  ]
+ },
+ "benefici-1024": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "benefici-1440": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "benefici-390": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "chi-1024": {
+  "misure": "(1024, 743) -> (1024, 1461)"
+ },
+ "chi-1440": {
+  "misure": "(1440, 795) -> (1440, 1091)"
+ },
+ "chi-390": {
+  "misure": "(390, 1099) -> (390, 1844)"
+ },
+ "diagnosi-1024": {
+  "misure": "(1024, 705) -> (1024, 704)"
+ },
+ "diagnosi-1440": {
+  "diversi": 12880,
+  "percento": 1.175,
+  "riquadro": [
+   0,
+   0,
+   1440,
+   665
+  ]
+ },
+ "diagnosi-390": {
+  "diversi": 3088,
+  "percento": 0.699,
+  "riquadro": [
+   0,
+   0,
+   390,
+   130
+  ]
+ },
+ "eroe-1024": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "eroe-1440": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "eroe-390": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "faq-1024": {
+  "misure": "(1024, 379) -> (1024, 485)"
+ },
+ "faq-1440": {
+  "misure": "(1440, 409) -> (1440, 477)"
+ },
+ "faq-390": {
+  "misure": "(390, 410) -> (390, 606)"
+ },
+ "notte-1024": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "notte-1440": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "notte-390": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "piede-1024": {
+  "diversi": 985,
+  "percento": 0.358,
+  "riquadro": [
+   68,
+   74,
+   678,
+   106
+  ]
+ },
+ "piede-1440": {
+  "diversi": 10724,
+  "percento": 2.768,
+  "riquadro": [
+   48,
+   56,
+   1152,
+   217
+  ]
+ },
+ "piede-390": {
+  "diversi": 1000,
+  "percento": 0.483,
+  "riquadro": [
+   85,
+   98,
+   339,
+   240
+  ]
+ },
+ "scena1-1024": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "scena1-1440": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "scena1-390": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "scena2-1024": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "scena2-1440": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "scena2-390": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "scena3-1024": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "scena3-1440": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "scena3-390": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "scena4-1024": {
+  "diversi": 859,
+  "percento": 0.109,
+  "riquadro": [
+   422,
+   354,
+   823,
+   422
+  ]
+ },
+ "scena4-1440": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "scena4-390": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "scena5-1024": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "scena5-1440": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "scena5-390": {
+  "diversi": 0,
+  "percento": 0.0
+ },
+ "studio-1024": {
+  "misure": "(1024, 1092) -> (1024, 1892)"
+ },
+ "studio-1440": {
+  "misure": "(1440, 1081) -> (1440, 1341)"
+ },
+ "studio-390": {
+  "misure": "(390, 2213) -> (390, 728)"
+ }
+}

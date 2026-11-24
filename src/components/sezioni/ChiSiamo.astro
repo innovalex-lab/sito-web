@@ -1,27 +1,49 @@
 ---
-// Chi siamo e caso SCLN. Statica e compatta. Nessuna foto per ora: le cornici dei ritratti
-// hanno già la proporzione della foto (4:5) e oggi mostrano le iniziali.
-// I numeri SCLN sono "da confermare" in src/content/funzioni.ts; la citazione è vuota.
+// Chi siamo e caso SCLN. Statica.
+// Ritratti 4:5 in public/team/ (AVIF e WebP a 1x e 2x della misura mostrata, senza metadati):
+// Federico Garau 240 x 300 da 560 px in su, Francesco Cocola 176 x 220; tutti e due 104 x 130 sotto i 560 px.
+// Testi e dati da src/content/funzioni.ts: i numeri "da confermare" mostrano l'avviso in anteprima.
 import { casoScln, persone } from '../../content/funzioni';
 import { produzione } from '../../content/verifica';
+
+const misure: Record<string, { w: number; h: number; larghezze: number[] }> = {
+  'federico-garau': { w: 240, h: 300, larghezze: [104, 208, 240, 480] },
+  'francesco-cocola': { w: 176, h: 220, larghezze: [104, 176, 208, 352] },
+};
+const srcset = (foto: string, formato: string) =>
+  misure[foto].larghezze.map((l) => `/team/${foto}-${l}.${formato} ${l}w`).join(', ');
+const sizes = (foto: string) => `(min-width: 560px) ${misure[foto].w}px, 104px`;
+
+const [fondatore, cofondatore] = persone;
+const c = casoScln.citazione;
 ---
 <section id="chi-siamo" class="chi" aria-labelledby="t-chi">
   <div class="contenitore chi-interno">
-    <div class="chi-noi">
-      <h2 id="t-chi" class="sezione-titolo">INNOVALEX nasce dentro uno studio legale.</h2>
-      <ul class="persone">
-        {persone.map((p) => (
-          <li class="persona">
-            <span class="ritratto" aria-hidden="true"><span>{p.iniziali}</span></span>
-            <span class="persona-testo">
-              <b>{p.nome}</b>
-              <span class="persona-ruolo">{p.ruolo}</span>
-              {p.nota && <span class="persona-nota">{p.nota}</span>}
-            </span>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <h2 id="t-chi" class="sezione-titolo chi-titolo">INNOVALEX nasce dentro uno studio legale.</h2>
+
+    {[fondatore, cofondatore].map((p, i) => (
+      <div class:list={['persona', i === 0 ? 'persona-fondatore' : 'persona-cofondatore']}>
+        <picture class="ritratto">
+          <source type="image/avif" srcset={srcset(p.foto, 'avif')} sizes={sizes(p.foto)} />
+          <source type="image/webp" srcset={srcset(p.foto, 'webp')} sizes={sizes(p.foto)} />
+          <img
+            src={`/team/${p.foto}-${misure[p.foto].w}.webp`}
+            width={misure[p.foto].w}
+            height={misure[p.foto].h}
+            alt={`Ritratto di ${p.nome}`}
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
+        <div class="persona-testa">
+          <h3 class="persona-nome">{p.nome}</h3>
+          <p class="persona-ruolo">{p.ruolo}</p>
+        </div>
+        <div class="persona-testo">
+          {p.testo.map((t) => <p>{t}</p>)}
+        </div>
+      </div>
+    ))}
 
     <article id="caso-studio" class="caso" aria-labelledby="t-caso">
       <h3 id="t-caso" class="caso-titolo">{casoScln.studio}, {casoScln.citta}</h3>
@@ -35,11 +57,11 @@ import { produzione } from '../../content/verifica';
           </div>
         ))}
       </dl>
-      {casoScln.citazione ? (
-        <blockquote class="caso-citazione"><p>{casoScln.citazione}</p></blockquote>
-      ) : (
-        !produzione && <p class="caso-citazione-vuota">Spazio per la citazione dell’Avv. Cocola, vuoto finché non c’è un testo approvato.</p>
-      )}
+      <figure class="caso-citazione">
+        <blockquote><p>“{c.testo}”</p></blockquote>
+        <figcaption>{c.autore}, {c.ente}</figcaption>
+        {!produzione && c.stato !== 'confermato' && <p class="avviso-anteprima">Citazione da confermare</p>}
+      </figure>
     </article>
   </div>
 </section>

@@ -1,0 +1,41 @@
+{
+  "390": {
+    "conAvvisi": 13790,
+    "pagina": 12844,
+    "eroe": 929,
+    "notte": 756,
+    "benefici": 2066,
+    "studio": 727,
+    "ai": 1730,
+    "chi": 1843,
+    "diagnosi": 1132,
+    "faq": 606,
+    "piede": 530
+  },
+  "1024": {
+    "conAvvisi": 13301,
+    "pagina": 12880,
+    "eroe": 588,
+    "notte": 798,
+    "benefici": 1867,
+    "studio": 1891,
+    "ai": 1095,
+    "chi": 1460,
+    "diagnosi": 703,
+    "faq": 484,
+    "piede": 268
+  },
+  "1440": {
+    "conAvvisi": 13962,
+    "pagina": 13604,
+    "eroe": 867,
+    "notte": 921,
+    "benefici": 2292,
+    "studio": 1339,
+    "ai": 1170,
+    "chi": 1090,
+    "diagnosi": 760,
+    "faq": 476,
+    "piede": 268
+  }
+}

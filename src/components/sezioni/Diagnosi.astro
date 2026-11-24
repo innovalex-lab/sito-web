@@ -2,7 +2,7 @@
 // Diagnosi (ex chiusura del prototipo: stesso titolo e stesso stile), FAQ e piè di pagina.
 // Il form NON è qui: si costruisce in una sessione dedicata. Al suo posto un segnaposto
 // con le dimensioni del form futuro (campi del piano, sezione F.11), senza invii.
-import { faq } from '../../content/funzioni';
+import { faq, faqSottotitolo } from '../../content/funzioni';
 
 const campi = ['Nome e cognome', 'Studio', 'Email', 'Telefono', 'Ruolo', 'Persone nello studio', 'Priorità principale'];
 ---
@@ -26,7 +26,10 @@ const campi = ['Nome e cognome', 'Studio', 'Email', 'Telefono', 'Ruolo', 'Person
   </div>
 
   <div id="faq" class="contenitore faq">
-    <h2 class="faq-titolo">Domande frequenti</h2>
+    <div class="faq-testa">
+      <h2 class="faq-titolo">Domande frequenti</h2>
+      <p class="faq-sottotitolo">{faqSottotitolo}</p>
+    </div>
     <div class="faq-elenco">
       {faq.map((f) => (
         <details class="faq-voce">

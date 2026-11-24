@@ -2,73 +2,108 @@
 // Tutto lo studio in un posto. Sezione statica: sei blocchi, ognuno con un frammento
 // stilizzato e parziale dell'interfaccia (mai una schermata intera). Dati fittizi.
 // Lo stato di ogni blocco viene da src/content/funzioni.ts.
+// Desktop: griglia asimmetrica, Pratiche e Valore per socio grandi, gli altri quattro piccoli.
+// I frammenti sono lastre di vetro con lo stesso materiale della prima schermata e dei benefici.
+// Sotto i 768 px: scorrimento orizzontale solo CSS (scroll-snap), con indicatore di posizione
+// fatto di link alle schede; il punto attivo si accende con una timeline di scorrimento CSS.
 import { studio, stato } from '../../content/funzioni';
 import { produzione } from '../../content/verifica';
 
 const blocchi = studio.map((b) => ({ ...b, stato: stato(b.funzioni) }));
+const spigoli = '<span class="spigolo spigolo-basso"></span><span class="spigolo spigolo-sx"></span><span class="spigolo spigolo-dx"></span>';
+
+const fasi = [
+  { nome: 'Istruttoria', carte: [{ t: 'Rossi c. Edilvetta', m: 'Scadenza 27 nov', viva: true }, { t: 'Galli c. Ottica Sole', m: 'Sara Lombrici' }] },
+  { nome: 'Diffida inviata', carte: [{ t: 'Ferraro c. Lunaria', m: 'Paolo Neri' }, { t: 'Russo c. Termica Sud', m: 'Giulia Moro' }] },
+  { nome: 'Ricorso', carte: [{ t: 'Bianchi c. Edilnord', m: 'Giulia Moro' }] },
+  { nome: 'Decreto', carte: [{ t: 'Moretti c. Logistica Faro', m: 'Paolo Neri' }, { t: 'Conti c. Arredi Riva', m: 'Sara Lombrici' }] },
+];
+// Tre soci finti. Il valore è una barra relativa, senza cifre in euro.
+const soci = [
+  { sigla: 'LF', nome: 'Avv. Laura Ferri', originate: 14, gestite: 22, valore: 0.88 },
+  { sigla: 'MC', nome: 'Avv. Marco Conti', originate: 9, gestite: 17, valore: 0.64 },
+  { sigla: 'ES', nome: 'Avv. Elena Sarti', originate: 5, gestite: 12, valore: 0.42 },
+];
 ---
 <section id="studio" class="studio" aria-labelledby="t-studio">
-  <div class="contenitore">
+  <div class="contenitore studio-interno">
     <div class="studio-testa">
       <h2 id="t-studio" class="sezione-titolo">Tutto lo studio in un posto.</h2>
       <p class="studio-intro">Quello che qualifichi dalla posta alimenta il resto: pratiche, clienti, scadenze e team.</p>
     </div>
 
-    <ul class="studio-griglia">
+    <ul class="studio-griglia" aria-label="Le parti dello studio">
       {blocchi.map((b) => (
-        <li class:list={['blocco', `blocco-${b.id}`]}>
-          <div class="mini" data-ui aria-hidden="true">
-            {b.id === 'pratiche' && (
-              <div class="mini-pipeline">
-                <span class="mp-col"><b>Istruttoria <i>2</i></b><span class="mp-carta mp-viva">Rossi c. Edilvetta</span><span class="mp-carta">Galli c. Ottica Sole</span></span>
-                <span class="mp-col"><b>Diffida <i>1</i></b><span class="mp-carta">Ferraro c. Lunaria</span></span>
-                <span class="mp-col"><b>Ricorso <i>1</i></b><span class="mp-carta">Bianchi c. Edilnord</span></span>
+        <li id={`studio-${b.id}`} class:list={['blocco', `blocco-${b.taglia}`, `blocco-${b.id}`]}>
+          <div class="blocco-palco">
+            <div class="lastra lastra-libera blocco-lastra" data-ui aria-hidden="true">
+              <div class="vetro" set:html={spigoli} />
+              <div class="carta mini">
+                {b.id === 'pratiche' && (
+                  <div class="mini-pipeline">
+                    {fasi.map((f) => (
+                      <span class="mp-col">
+                        <b>{f.nome} <i>{f.carte.length}</i></b>
+                        {f.carte.map((c) => (
+                          <span class:list={['mp-carta', c.viva && 'mp-viva']}>{c.t}<small>{c.m}</small></span>
+                        ))}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {b.id === 'cliente' && (
+                  <div class="mini-avviso">
+                    <p class="ma-fase"><span class="ma-da">Istruttoria</span><span class="ma-freccia"></span><span class="ma-a">Diffida inviata</span></p>
+                    <p class="ma-messaggio">Buongiorno, la diffida a Edilvetta è partita oggi. Può caricare qui la quarta fattura.</p>
+                    <span class="ma-link">Carica i documenti</span>
+                  </div>
+                )}
+                {b.id === 'scadenze' && (
+                  <div class="mini-scadenza">
+                    <span class="ms-data"><b>27</b>nov</span>
+                    <span class="ms-testo"><b>Termine della diffida</b><small>Trovata nella mail di Marta Rossi</small></span>
+                    <span class="ms-azioni"><span class="ms-si">Conferma</span><span class="ms-no">Rifiuta</span></span>
+                  </div>
+                )}
+                {b.id === 'soci' && (
+                  <div class="mini-soci">
+                    <span class="vs-testa"><span>Socio</span><span>Originate</span><span>Gestite</span></span>
+                    {soci.map((s, i) => (
+                      <span class:list={['vs-riga', i === 0 && 'vs-primo']}>
+                        <span class="vs-chi"><span class="vs-sigla">{s.sigla}</span><b>{s.nome}</b></span>
+                        <span class="vs-num">{s.originate}</span>
+                        <span class="vs-num">{s.gestite}</span>
+                        <span class="vs-barra"><span style={`width:${s.valore * 100}%`}></span></span>
+                      </span>
+                    ))}
+                    <span class="vs-piede">Valore generato</span>
+                  </div>
+                )}
+                {b.id === 'team' && (
+                  <div class="mini-team">
+                    {[
+                      ['SL', 'Sara Lombrici', 0.82],
+                      ['PN', 'Paolo Neri', 0.55],
+                      ['GM', 'Giulia Moro', 0.34],
+                    ].map(([sigla, nome, carico]) => (
+                      <span class="tm-riga">
+                        <span class="tm-sigla">{sigla}</span>
+                        <span class="tm-nome">{nome}</span>
+                        <span class="tm-barra"><span style={`width:${Number(carico) * 100}%`}></span></span>
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {b.id === 'crm' && (
+                  <div class="mini-crm">
+                    <span class="mc-passo">Primo contatto</span>
+                    <span class="mc-passo">Incontro</span>
+                    <span class="mc-passo mc-ora">Incarico</span>
+                    <span class="mc-passo mc-pratica">Pratica aperta</span>
+                  </div>
+                )}
               </div>
-            )}
-            {b.id === 'cliente' && (
-              <div class="mini-avviso">
-                <p class="ma-fase"><span class="ma-da">Istruttoria</span><span class="ma-freccia"></span><span class="ma-a">Diffida inviata</span></p>
-                <p class="ma-messaggio">Buongiorno, la diffida a Edilvetta è partita oggi. Può caricare qui la quarta fattura.</p>
-                <span class="ma-link">Carica i documenti</span>
-              </div>
-            )}
-            {b.id === 'scadenze' && (
-              <div class="mini-scadenza">
-                <span class="ms-data"><b>27</b>nov</span>
-                <span class="ms-testo"><b>Termine della diffida</b><small>Trovata nella mail di Marta Rossi</small></span>
-                <span class="ms-azioni"><span class="ms-si">Conferma</span><span class="ms-no">Rifiuta</span></span>
-              </div>
-            )}
-            {b.id === 'team' && (
-              <div class="mini-team">
-                {[
-                  ['SL', 'Sara Lombrici', 0.82],
-                  ['PN', 'Paolo Neri', 0.55],
-                  ['GM', 'Giulia Moro', 0.34],
-                ].map(([sigla, nome, carico]) => (
-                  <span class="tm-riga">
-                    <span class="tm-sigla">{sigla}</span>
-                    <span class="tm-nome">{nome}</span>
-                    <span class="tm-barra"><span style={`width:${Number(carico) * 100}%`}></span></span>
-                  </span>
-                ))}
-              </div>
-            )}
-            {b.id === 'crm' && (
-              <div class="mini-crm">
-                <span class="mc-passo">Primo contatto</span>
-                <span class="mc-passo">Incontro</span>
-                <span class="mc-passo mc-ora">Incarico</span>
-                <span class="mc-passo mc-pratica">Pratica aperta</span>
-              </div>
-            )}
-            {b.id === 'ruoli' && (
-              <div class="mini-ruoli">
-                <span class="rl-riga"><b>Managing partner</b><span>tutto lo studio</span></span>
-                <span class="rl-riga"><b>Associate</b><span>le sue pratiche</span></span>
-                <span class="rl-riga"><b>Segreteria</b><span>posta e calendario</span></span>
-              </div>
-            )}
+            </div>
           </div>
           <h3 class="blocco-titolo">{b.titolo}</h3>
           <p class="blocco-testo">{b.testo}</p>
@@ -78,5 +113,12 @@ const blocchi = studio.map((b) => ({ ...b, stato: stato(b.funzioni) }));
         </li>
       ))}
     </ul>
+
+    <!-- Indicatore di posizione, solo sotto i 768 px. Ogni punto è un link alla sua scheda. -->
+    <nav class="studio-punti" aria-label="Scegli la parte dello studio">
+      {blocchi.map((b, i) => (
+        <a href={`#studio-${b.id}`} class="studio-punto"><span class="sr-only">{b.titolo}, {i + 1} di {blocchi.length}</span></a>
+      ))}
+    </nav>
   </div>
 </section>

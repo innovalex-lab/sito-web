@@ -25,9 +25,21 @@ export function avvisiContenuti(): Avviso[] {
   for (const b of studio) controlla(`Tutto lo studio, ${b.titolo}`, b.funzioni, false);
   for (const r of [...ai.legge, ...ai.daSolo]) controlla(`AI e automazioni, "${r.testo}"`, r.funzioni, false);
   for (const n of casoScln.numeri) {
-    if (n.stato !== 'confermato') avvisi.push({ dove: 'Caso SCLN', problema: `dato da confermare: ${n.valore} ${n.etichetta}`, esistente: false });
+    if (n.stato !== 'confermato') avvisi.push({ dove: 'Caso SCLN', problema: `dato da confermare: ${n.valore} ${n.etichetta} (fonte: ${n.fonte})`, esistente: false });
   }
+  const c = casoScln.citazione;
+  if (c.stato !== 'confermato') avvisi.push({ dove: 'Caso SCLN', problema: `citazione da confermare (fonte: ${c.fonte})`, esistente: false });
   return avvisi;
+}
+
+/** Dati del caso SCLN già confermati, con la loro fonte. Non generano avvisi. */
+export function datiConfermati() {
+  return [
+    ...casoScln.numeri.filter((n) => n.stato === 'confermato').map((n) => ({ dato: `${n.valore} ${n.etichetta}`, fonte: n.fonte })),
+    ...(casoScln.citazione.stato === 'confermato'
+      ? [{ dato: `citazione di ${casoScln.citazione.autore}, ${casoScln.citazione.ente}`, fonte: casoScln.citazione.fonte }]
+      : []),
+  ];
 }
 
 export function verificaPerBuild(): Avviso[] {
