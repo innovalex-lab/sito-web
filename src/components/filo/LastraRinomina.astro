@@ -7,26 +7,27 @@ interface Props {
 const { stato, class: classi = '' } = Astro.props;
 ---
 <div class:list={['lastra', classi]} data-stato={stato} data-ui>
-  <div class="vetro" aria-hidden="true"></div>
-  <div class="carta rn" role="img" aria-label="L'allegato scan_0042.pdf diventa 2026-11-12_Diffida_Rossi-c-Edilvetta.pdf. Scadenza proposta il 27 novembre 2026, da confermare.">
+  <div class="vetro" aria-hidden="true"><span class="spigolo spigolo-basso"></span><span class="spigolo spigolo-sx"></span><span class="spigolo spigolo-dx"></span></div>
+  <div class="carta rn" role="img" aria-label="L'allegato scan_0042.pdf diventa 2026-11-12_015_Diffida_Edilvetta.pdf. Scadenza rilevata il 27 novembre 2026, risposta alla diffida, da confermare o rifiutare.">
     <p class="rn-titolo">Allegato della mail</p>
     <div class="rn-file">
       <span class="ui-file-icona ui-file-icona-grande">PDF</span>
       <span class="rn-nomi">
         <span class="rn-vecchio a-sparisce">scan_0042.pdf</span>
-        <span class="rn-nuovo"><span class="a-scrivi">2026-11-12_Diffida_Rossi-c-Edilvetta.pdf</span></span>
+        <span class="rn-nuovo"><span class="a-scrivi">2026-11-12_015_Diffida_Edilvetta.pdf</span></span>
       </span>
     </div>
     <div class="rn-dati a-appare">
       <span><small>Tipo</small>Diffida</span>
-      <span><small>Pratica</small>Rossi c. Edilvetta</span>
+      <span><small>Pratica</small>Rossi Srl c. Edilvetta</span>
       <span><small>Ricevuta</small>12/11/2026</span>
     </div>
     <div class="rn-proposta a-sale">
       <div>
-        <p class="rn-etichetta">Scadenza proposta</p>
-        <p class="rn-data">27 novembre 2026</p>
-        <p class="rn-nota">Risposta alla diffida, 15 giorni indicati nel documento</p>
+        <p class="rn-etichetta">Scadenza rilevata</p>
+        <p class="rn-data">27 nov 2026</p>
+        <p class="rn-nota">Risposta alla diffida</p>
+        <p class="rn-nota rn-pratica">Rossi Srl c. Edilvetta: 15 giorni indicati nel documento</p>
       </div>
       <div class="rn-pulsanti">
         <span class="ui-btn">Conferma</span>

@@ -6,15 +6,15 @@ interface Props {
 }
 const { stato, class: classi = '' } = Astro.props;
 const campi = [
-  { etichetta: 'Cliente', valore: 'Rossi Srl' },
-  { etichetta: 'Pratica', valore: 'Rossi c. Edilvetta' },
-  { etichetta: 'Collaboratore', valore: 'Avv. Sara Lombrici', avatar: 'SL' },
+  { etichetta: 'Cliente', valore: 'Rossi Srl', scelta: true },
+  { etichetta: 'Pratica', valore: 'Rossi Srl c. Edilvetta: recupero credito', scelta: true },
+  { etichetta: 'Assegna a', valore: 'Sara Lombrici', avatar: 'SL' },
   { etichetta: 'Ore', valore: '1,5' },
 ];
 ---
 <div class:list={['lastra', classi]} data-stato={stato} data-ui>
-  <div class="vetro" aria-hidden="true"></div>
-  <div class="carta pn" role="img" aria-label="Pannello INNOVALEX in Outlook: cliente Rossi Srl, pratica Rossi c. Edilvetta, collaboratore Avv. Sara Lombrici, 1,5 ore. Si preme Conferma.">
+  <div class="vetro" aria-hidden="true"><span class="spigolo spigolo-basso"></span><span class="spigolo spigolo-sx"></span><span class="spigolo spigolo-dx"></span></div>
+  <div class="carta pn" role="img" aria-label="Pannello INNOVALEX in Outlook: cliente Rossi Srl, pratica Rossi Srl c. Edilvetta, assegnata ad Avv. Sara Lombrici, 1,5 ore, inclusa nel report. Si preme Conferma.">
     <div class="pn-mail">
       <p class="ol-oggetto">Diffida Edilvetta, documenti</p>
       <div class="ol-da">
@@ -26,8 +26,8 @@ const campi = [
     </div>
     <div class="pn-pannello">
       <div class="pn-testa">
-        <img src="/brand/innovalex-mark.svg" width="20" height="21" alt="" />
-        <span>Qualifica la mail</span>
+        <img src="/brand/innovalex-logo.svg" width="82" height="25" alt="" />
+        <span class="pn-utente">Sara Lombrici</span>
       </div>
       {campi.map((c, i) => (
         <div class="pn-campo" style={`--n:${i}`}>
@@ -35,13 +35,14 @@ const campi = [
           <span class="pn-valore">
             {c.avatar && <span class="ui-avatar ui-avatar-oro">{c.avatar}</span>}
             <span class="a-compila">{c.valore}</span>
+            {c.scelta && <span class="pn-freccia" aria-hidden="true"></span>}
           </span>
         </div>
       ))}
       <div class="pn-report"><span class="ui-spunta"></span>Includi nel report</div>
       <div class="pn-azione">
         <span class="pn-conferma a-premi">Conferma</span>
-        <span class="pn-fatto a-fatto"><span class="ui-spunta ui-spunta-chiara"></span>Archiviata in Rossi c. Edilvetta</span>
+        <span class="pn-fatto a-fatto"><span class="ui-spunta ui-spunta-chiara"></span>Archiviata in Rossi Srl c. Edilvetta</span>
       </div>
     </div>
   </div>

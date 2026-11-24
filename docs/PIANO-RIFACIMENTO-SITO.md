@@ -22,6 +22,7 @@ Decisioni di Federico. Prevalgono su ogni altra parte di questo documento.
 - **L10, chiusa.** Si pubblica dopo l'accensione della V1 su SCLN.
 - **L11, chiusa.** Il Tavolo Fondatori non va sul sito.
 - **Pagina di ringraziamento.** Non deve promettere invii (caso studio, whitepaper) finché non esistono davvero.
+- **Direzione grafica, 24/11/2026.** Approvata la direzione "Il filo d'oro" (`/anteprima/filo`, commit ba5a855): "veramente bellissimo, la direzione è quella giusta". Si porta al livello dei riferimenti (Legora, Resend, Metodo TRACCIA) senza cambiare concetto, testi o struttura delle sezioni. Per questa direzione non valgono le regole della fase 2 su zero JavaScript e assenza di animazioni, né i divieti E.1 su profondità ed effetti.
 
 ---
 

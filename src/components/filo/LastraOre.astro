@@ -7,10 +7,10 @@ interface Props {
 const { stato, class: classi = '' } = Astro.props;
 ---
 <div class:list={['lastra', classi]} data-stato={stato} data-ui>
-  <div class="vetro" aria-hidden="true"></div>
+  <div class="vetro" aria-hidden="true"><span class="spigolo spigolo-basso"></span><span class="spigolo spigolo-sx"></span><span class="spigolo spigolo-dx"></span></div>
   <div class="carta or" role="img" aria-label="Pratica Rossi c. Edilvetta, ore e valore: 5,0 ore confermate per 750 euro, compresa l'ora e mezza della diffida. 2,0 ore stimate restano a parte finché l'avvocato non le conferma.">
     <div class="or-testa">
-      <span><b>Rossi c. Edilvetta</b><small>Ore e valore</small></span>
+      <span><b>Rossi Srl c. Edilvetta</b><small>Email della pratica, ore e valore</small></span>
       <span class="or-totale">
         <small>Confermate</small>
         <span class="or-cifre">
@@ -21,10 +21,10 @@ const { stato, class: classi = '' } = Astro.props;
     </div>
     <div class="or-tabella">
       <div class="or-riga or-nuova a-scende">
-        <span>12/11</span><span>Diffida Edilvetta, mail qualificata</span><span>SL</span><span>1,5 h</span><span>225 €</span>
+        <span>12 nov</span><span>Diffida Edilvetta, documenti</span><span>SL</span><span>1,5 h</span><span>225 €</span>
       </div>
-      <div class="or-riga a-scivola"><span>10/11</span><span>Telefonata con Marta Rossi</span><span>SL</span><span>0,5 h</span><span>75 €</span></div>
-      <div class="or-riga a-scivola"><span>07/11</span><span>Esame del contratto d'appalto</span><span>SL</span><span>3,0 h</span><span>450 €</span></div>
+      <div class="or-riga a-scivola"><span>10 nov</span><span>Re: Contratto d'appalto, foto cantiere</span><span>SL</span><span>0,5 h</span><span>75 €</span></div>
+      <div class="or-riga a-scivola"><span>07 nov</span><span>Esame del contratto d'appalto</span><span>SL</span><span>3,0 h</span><span>450 €</span></div>
     </div>
     <div class="or-stimate">
       <span><small>Stimate, da confermare</small>Bozza di risposta alla diffida</span>

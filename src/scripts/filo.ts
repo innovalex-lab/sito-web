@@ -15,8 +15,7 @@ const pista = scena?.querySelector<HTMLElement>('.scena-pista') ?? null;
 const passi = scena ? [...scena.querySelectorAll<HTMLElement>('[data-passo]')] : [];
 const lastre = passi.map((p) => p.querySelector<HTMLElement>(':scope > .lastra')!);
 const filoScena = scena?.querySelector<SVGSVGElement>('.scena-filo') ?? null;
-const filoPonte = filoScena?.querySelector<SVGPathElement>('.filo-ponte') ?? null;
-const filoCucitura = filoScena?.querySelector<SVGPathElement>('.filo-cucitura') ?? null;
+const tratti = filoScena ? [...filoScena.querySelectorAll<SVGPathElement>('path')] : [];
 
 let attivo = -1;
 let inAttesa = false;
@@ -51,52 +50,51 @@ function impostaPasso(i: number) {
   disegnaFilo();
 }
 
-// Il filo esce dalla pastiglia attiva, raggiunge la lastra appena arrivata
-// e scende cucendo i perni delle lastre già posate.
+// Il filo esce dalla pastiglia attiva, entra nella lastra appena arrivata dal suo perno
+// e scende cucendo i perni delle lastre già posate. Un solo tracciato, con tangenti
+// continue alle giunzioni: orizzontale tra pastiglia e perno, verticale tra i perni.
 function centro(el: Element, base: DOMRect) {
   const r = el.getBoundingClientRect();
   return [r.left + r.width / 2 - base.left, r.top + r.height / 2 - base.top];
 }
 
 function disegnaFilo() {
-  if (!filoScena || !filoPonte || !filoCucitura) return;
+  if (!filoScena || !tratti.length) return;
   filoScena.classList.remove('disegnato');
   window.clearTimeout(timerFilo);
   timerFilo = window.setTimeout(() => {
     const i = attivo;
     const pastiglia = passi[i]?.querySelector('.pastiglia');
-    const carta = lastre[i]?.querySelector('.carta');
-    if (!pastiglia || !carta) return;
+    if (!pastiglia) return;
     const base = filoScena.getBoundingClientRect();
     const a = pastiglia.getBoundingClientRect();
-    const b = carta.getBoundingClientRect();
-    const x1 = a.right - base.left + 10;
-    const y1 = a.top + a.height / 2 - base.top;
-    const x2 = b.left - base.left + 2;
-    const y2 = b.top + b.height * 0.32 - base.top;
-    const m = (x2 - x1) * 0.55;
-    const f = (n: number) => n.toFixed(1);
-    filoPonte.setAttribute('d', `M${f(x1)} ${f(y1)} C${f(x1 + m)} ${f(y1)} ${f(x2 - m)} ${f(y2)} ${f(x2)} ${f(y2)}`);
-    // cucitura: perno della lastra attiva, poi i perni della pila dall'alto in basso
     const punti: number[][] = [];
     for (let k = i; k >= 0; k--) {
       const perno = lastre[k].querySelector('.perno-lastra');
       if (perno) punti.push(centro(perno, base));
     }
-    let d = '';
-    if (punti.length > 1) {
-      d = `M${f(punti[0][0])} ${f(punti[0][1])}`;
-      for (let k = 1; k < punti.length; k++) {
-        const [px, py] = punti[k - 1];
-        const [qx, qy] = punti[k];
-        const my = (py + qy) / 2;
-        d += ` C${f(px)} ${f(my)} ${f(qx)} ${f(my)} ${f(qx)} ${f(qy)}`;
-      }
+    if (!punti.length) return;
+    const f = (n: number) => n.toFixed(1);
+    const x1 = a.right - base.left + 8;
+    const y1 = a.top + a.height / 2 - base.top;
+    const [x2, y2] = punti[0];
+    // resta in orizzontale finché non ha superato la colonna del testo, così non passa sulla frase
+    const testa = passi[i].querySelector('.passo-testa')!.getBoundingClientRect();
+    const xs = Math.min(x2 - 60, Math.max(x1, testa.right - base.left + 24));
+    const m = (x2 - xs) * 0.55;
+    let d = `M${f(x1)} ${f(y1)} L${f(xs)} ${f(y1)} C${f(xs + m)} ${f(y1)} ${f(x2 - m)} ${f(y2)} ${f(x2)} ${f(y2)}`;
+    for (let k = 1; k < punti.length; k++) {
+      const [px, py] = punti[k - 1];
+      const [qx, qy] = punti[k];
+      const h = Math.max(12, (qy - py) * 0.55);
+      // dal perno della lastra attiva il filo prosegue in orizzontale, poi scende
+      const c1 = k === 1 ? `${f(px + h)} ${f(py)}` : `${f(px)} ${f(py + h)}`;
+      d += ` C${c1} ${f(qx)} ${f(qy - h)} ${f(qx)} ${f(qy)}`;
     }
-    filoCucitura.setAttribute('d', d);
+    for (const t of tratti) t.setAttribute('d', d);
     filoScena.getBoundingClientRect();
     filoScena.classList.add('disegnato');
-  }, 1250);
+  }, 1150);
 }
 
 // Le pastiglie portano al loro passaggio
@@ -167,6 +165,39 @@ function preparaModo() {
       osservaLastre.observe(lastra);
     }
   }
+}
+
+// Prima schermata: la pila segue appena il mouse. Solo con puntatore preciso e movimento consentito.
+const inclina = document.querySelector<HTMLElement>('[data-inclina]');
+const puntatore = matchMedia('(hover: hover) and (pointer: fine)');
+const eroe = inclina?.closest<HTMLElement>('.eroe');
+if (inclina && eroe) {
+  let mx = 0;
+  let my = 0;
+  let x = 0;
+  let y = 0;
+  let giro = 0;
+  const passo = () => {
+    x += (mx - x) * 0.07;
+    y += (my - y) * 0.07;
+    inclina.style.transform = `rotateX(${(-y * 4).toFixed(2)}deg) rotateY(${(x * 6).toFixed(2)}deg)`;
+    giro = Math.abs(mx - x) + Math.abs(my - y) > 0.002 ? requestAnimationFrame(passo) : 0;
+  };
+  const avvia = () => {
+    if (!giro) giro = requestAnimationFrame(passo);
+  };
+  eroe.addEventListener('pointermove', (e) => {
+    if (e.pointerType !== 'mouse' || !puntatore.matches || ridotto.matches) return;
+    const r = eroe.getBoundingClientRect();
+    mx = ((e.clientX - r.left) / r.width) * 2 - 1;
+    my = ((e.clientY - r.top) / r.height) * 2 - 1;
+    avvia();
+  });
+  eroe.addEventListener('pointerleave', () => {
+    mx = 0;
+    my = 0;
+    avvia();
+  });
 }
 
 // Elementi che si completano una volta sola quando entrano nello schermo.

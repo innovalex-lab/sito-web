@@ -8,7 +8,7 @@ import LastraRinomina from '../../components/filo/LastraRinomina.astro';
 import LastraOre from '../../components/filo/LastraOre.astro';
 import Benefici from '../../components/filo/Benefici.astro';
 import { primaSchermata as c } from '../../content/prima-schermata';
-import serifCorsivo from '@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-italic.woff2?url';
+import serifTitolo from '../../fonts/filo/serif-latino.woff2?url';
 import '../../styles/filo.css';
 
 const passi = [
@@ -39,16 +39,27 @@ const passi = [
   },
 ];
 ---
-<Base title="Il filo d'oro | INNOVALEX" anteprima>
+<Base title="Il filo d'oro | INNOVALEX" anteprima fontPropri>
   <Fragment slot="head">
-    <link rel="preload" href={serifCorsivo} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={serifTitolo} as="font" type="font/woff2" crossorigin />
     <script is:inline>document.documentElement.classList.add('js')</script>
   </Fragment>
 
   <div class="pagina-filo">
+    <svg class="filo-definizioni" width="0" height="0" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="oro-filo" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="100%" y2="100%">
+          <stop offset="0" stop-color="#e8cd92" />
+          <stop offset="0.45" stop-color="#a8823a" />
+          <stop offset="1" stop-color="#8a6a2c" />
+        </linearGradient>
+      </defs>
+    </svg>
     <Intestazione>
       <svg slot="logo" class="filo-logo" viewBox="-30 -12 120 74" width="120" height="74" aria-hidden="true" focusable="false">
-        <path pathLength="1" d="M75.6 2.2 C 62 -3.6, 34 -5.5, 4 -5.5 L -8 -5.5 Q -18 -5.5, -18 4.5 L -18 62" />
+        <path class="filo-alone" pathLength="1" d="M75.6 2.2 C 62 -3.6, 34 -5.5, 4 -5.5 L -8 -5.5 Q -18 -5.5, -18 4.5 L -18 62" />
+        <path class="filo-tratto" pathLength="1" d="M75.6 2.2 C 62 -3.6, 34 -5.5, 4 -5.5 L -8 -5.5 Q -18 -5.5, -18 4.5 L -18 62" />
+        <path class="filo-luce" pathLength="1" d="M75.6 2.2 C 62 -3.6, 34 -5.5, 4 -5.5 L -8 -5.5 Q -18 -5.5, -18 4.5 L -18 62" />
       </svg>
     </Intestazione>
 
@@ -70,13 +81,17 @@ const passi = [
               </div>
             </div>
             <div class="eroe-palco" aria-hidden="true">
+              <div class="eroe-luce"></div>
               <div class="eroe-prospettiva">
-                <div class="eroe-pila">
-                  <div class="eroe-posa" style="--k:0"><div class="galleggia"><LastraOre class="statica" /><span class="perno"></span></div></div>
-                  <div class="eroe-posa" style="--k:1"><div class="galleggia"><LastraRinomina class="statica" /><span class="perno"></span></div></div>
-                  <div class="eroe-posa" style="--k:2"><div class="galleggia"><LastraPannello class="statica" /><span class="perno"></span></div></div>
-                  <div class="eroe-posa" style="--k:3"><div class="galleggia"><LastraMail class="statica" /><span class="perno"></span></div></div>
-                  <span class="filo-verticale"></span>
+                <div class="eroe-inclina" data-inclina>
+                  <div class="eroe-pila">
+                    <span class="eroe-ombra"></span>
+                    <div class="eroe-posa" style="--k:0"><div class="galleggia"><LastraOre class="statica" /><span class="perno"></span></div></div>
+                    <div class="eroe-posa" style="--k:1"><div class="galleggia"><LastraRinomina class="statica" /><span class="perno"></span></div></div>
+                    <div class="eroe-posa" style="--k:2"><div class="galleggia"><LastraPannello class="statica" /><span class="perno"></span></div></div>
+                    <div class="eroe-posa" style="--k:3"><div class="galleggia"><LastraMail class="statica" /><span class="perno"></span></div></div>
+                    <span class="filo-verticale"><span class="filo-verticale-luce"></span></span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -102,7 +117,7 @@ const passi = [
                 </li>
               ))}
             </ol>
-            <svg class="scena-filo" aria-hidden="true" focusable="false"><path class="filo-ponte" pathLength="1" d="" /><path class="filo-cucitura" pathLength="1" d="" /></svg>
+            <svg class="scena-filo" aria-hidden="true" focusable="false"><path class="filo-alone" pathLength="1" d="" /><path class="filo-tratto" pathLength="1" d="" /><path class="filo-luce" pathLength="1" d="" /></svg>
           </div>
         </div>
       </section>

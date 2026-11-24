@@ -1,17 +1,36 @@
 ---
-// Tre benefici, ognuno con la sua interfaccia disegnata su misura. Dati fittizi.
+// Tre benefici, ognuno è una piccola scena che si anima entrando nello schermo. Dati fittizi.
+// Etichette e struttura seguono le schermate del prodotto (report, scheda pratica, pipeline).
 const pratiche = [
-  { nome: 'Rossi c. Edilvetta', conf: 5, stim: 2, valore: '750 €' },
-  { nome: 'Successione Galli', conf: 8.5, stim: 0, valore: '1.275 €' },
-  { nome: 'Appalto Bianchi', conf: 3, stim: 3.5, valore: '450 €' },
-  { nome: 'Locazione Ferraro', conf: 2, stim: 1, valore: '300 €' },
+  { nome: 'Rossi Srl c. Edilvetta', conf: 5, stim: 2, prima: '750 €', dopo: '1.050 €' },
+  { nome: 'Successione Galli', conf: 8.5, stim: 0, prima: '1.275 €', dopo: '1.275 €' },
+  { nome: 'Appalto Bianchi', conf: 3, stim: 3.5, prima: '450 €', dopo: '975 €' },
+  { nome: 'Locazione Ferraro', conf: 2, stim: 1, prima: '300 €', dopo: '450 €' },
 ];
 const massimo = 9;
+const ore = (n: number) => String(n).replace('.', ',');
+const spigoli = '<span class="spigolo spigolo-basso"></span><span class="spigolo spigolo-sx"></span><span class="spigolo spigolo-dx"></span>';
 const fasi = [
-  { nome: 'Nuova', carte: [{ t: 'Locazione Ferraro', p: 'GM' }, { t: 'Marchio Lunaria', p: 'PN' }] },
-  { nome: 'In lavorazione', carte: [{ t: 'Rossi c. Edilvetta', p: 'SL', mobile: true }, { t: 'Successione Galli', p: 'PN' }, { t: 'Appalto Bianchi', p: 'SL' }] },
-  { nome: 'In attesa del cliente', carte: [{ t: 'Sfratto via Mazzini', p: 'GM' }, { t: 'Recesso Ottica Sole', p: 'SL' }] },
-  { nome: 'Conclusa', carte: [{ t: 'Recupero crediti Moretti', p: 'PN' }] },
+  {
+    nome: 'Istruttoria',
+    prima: 3,
+    carte: [
+      { t: 'Rossi Srl c. Edilvetta: recupero credito', m: 'Sara Lombrici · 5,0 h', u: 'Alta', mobile: true },
+      { t: 'Ferraro Srl c. Lunaria Spa: recupero credito', m: 'Paolo Neri · 2,5 h', u: 'Bassa' },
+      { t: 'Galli Snc c. Ottica Sole: recupero credito', m: 'Sara Lombrici · 0 h', u: 'Bassa' },
+    ],
+  },
+  { nome: 'Diffida inviata', prima: 0, carte: [] },
+  {
+    nome: 'Ricorso depositato',
+    prima: 1,
+    carte: [{ t: 'Bianchi Costruzioni c. Edilnord: recupero credito', m: 'Giulia Moro · 12,4 h', u: 'Media' }],
+  },
+  {
+    nome: 'Decreto emesso',
+    prima: 1,
+    carte: [{ t: 'Moretti Spa c. Logistica Faro: recupero credito', m: 'Paolo Neri · 8,0 h', u: 'Bassa' }],
+  },
 ];
 ---
 <section id="benefici" class="benefici" data-binario aria-labelledby="t-benefici">
@@ -19,57 +38,79 @@ const fasi = [
   <div class="contenitore">
     <h2 id="t-benefici" class="sezione-titolo">Cosa cambia nello studio</h2>
 
-    <article class="beneficio beneficio-uno">
+    <!-- 1. Lastra grande a destra, una seconda lastra piccola che le si posa sopra -->
+    <article class="beneficio beneficio-uno" data-entra>
       <div class="beneficio-testo">
         <h3>Recuperi il fatturato nascosto</h3>
         <p>Ogni ora è collegata a cliente e pratica. Vedi quanto vale il lavoro fatto prima di preparare la proforma.</p>
       </div>
-      <div class="lastra lastra-libera bn-valore" data-entra data-ui>
-        <div class="vetro" aria-hidden="true"></div>
-        <div class="carta" role="img" aria-label="Novembre, Avv. Sara Lombrici: ore confermate e stimate per quattro pratiche, valore confermato del mese 2.775 euro.">
-          <div class="bv-testa">
-            <span><b>Novembre</b><small>Avv. Sara Lombrici</small></span>
-            <span class="bv-totale"><small>Valore confermato</small>2.775 €</span>
+      <div class="bn-palco bn-palco-valore">
+        <div class="lastra lastra-libera bn-valore" data-ui>
+          <div class="vetro" aria-hidden="true" set:html={spigoli} />
+          <div class="carta" role="img" aria-label="Novembre, Avv. Sara Lombrici: per quattro pratiche le ore stimate vengono confermate e il valore del mese passa da 2.775 a 3.750 euro.">
+            <div class="bv-testa">
+              <span><b>Novembre</b><small>Avv. Sara Lombrici, ore per pratica</small></span>
+              <span class="bv-totale">
+                <small>Valore confermato</small>
+                <span class="bv-cifre"><span class="bv-prima">2.775 €</span><span class="bv-dopo">3.750 €</span></span>
+              </span>
+            </div>
+            <div class="bv-righe">
+              {pratiche.map((p, i) => (
+                <div class="bv-riga" style={`--n:${i}`}>
+                  <span class="bv-nome">{p.nome}</span>
+                  <span class="bv-barra">
+                    <span class="bv-conf" style={`width:${(p.conf / massimo) * 100}%`}></span>
+                    {p.stim > 0 && (
+                      <span class="bv-stim" style={`width:${(p.stim / massimo) * 100}%`}><span class="bv-stim-oro"></span></span>
+                    )}
+                  </span>
+                  <span class="bv-euro"><span class="bv-prima">{p.prima}</span><span class="bv-dopo">{p.dopo}</span></span>
+                </div>
+              ))}
+            </div>
+            <div class="bv-legenda">
+              <span><i class="bv-l-conf"></i>Confermate</span>
+              <span><i class="bv-l-stim"></i>Stimate, da confermare</span>
+            </div>
           </div>
-          <div class="bv-righe">
-            {pratiche.map((p, i) => (
-              <div class="bv-riga" style={`--n:${i}`}>
-                <span class="bv-nome">{p.nome}</span>
-                <span class="bv-barra">
-                  <span class="bv-conf" style={`width:${(p.conf / massimo) * 100}%`}></span>
-                  {p.stim > 0 && <span class="bv-stim" style={`width:${(p.stim / massimo) * 100}%`}></span>}
-                </span>
-                <span class="bv-ore">{String(p.conf).replace('.', ',')} h</span>
-                <span class="bv-euro">{p.valore}</span>
-              </div>
-            ))}
-          </div>
-          <div class="bv-legenda">
-            <span><i class="bv-l-conf"></i>Confermate</span>
-            <span><i class="bv-l-stim"></i>Stimate, da confermare</span>
+        </div>
+        <div class="lastra lastra-libera bn-conferma" data-ui>
+          <div class="vetro" aria-hidden="true" set:html={spigoli} />
+          <div class="carta" aria-hidden="true">
+            <p class="bc-titolo">Ore stimate confermate</p>
+            <p class="bc-cifra">6,5 h</p>
+            <p class="bc-nota">Entrano nel report di novembre</p>
           </div>
         </div>
       </div>
     </article>
 
-    <article class="beneficio beneficio-due">
-      <div class="lastra lastra-libera bn-passaggio" data-entra data-ui>
-        <div class="vetro" aria-hidden="true"></div>
-        <div class="carta" role="img" aria-label="La pratica Rossi c. Edilvetta passa da Avv. Sara Lombrici ad Avv. Paolo Neri, con la cartella di lavoro, tre documenti e il riepilogo della conversazione.">
-          <div class="bp-passa">
-            <span class="ui-avatar ui-avatar-oro">SL</span>
-            <span class="bp-filo" aria-hidden="true"><span></span></span>
-            <span class="ui-avatar bp-arriva">PN</span>
-            <span class="bp-chi"><b>Assegnata ad Avv. Paolo Neri</b><small>Rossi c. Edilvetta, oggi</small></span>
-          </div>
-          <div class="bp-riepilogo">
-            <p class="bp-etichetta">Riepilogo della conversazione</p>
-            <p>Edilvetta contesta ritardi nel cantiere e chiede il pagamento del saldo. Rossi Srl ha mandato contratto e foto. Termine proposto per la risposta: 27/11.</p>
-          </div>
-          <div class="bp-file">
-            <span class="ui-file"><i>PDF</i><span>Diffida_Rossi-c-Edilvetta.pdf</span></span>
-            <span class="ui-file"><i>PDF</i><span>Contratto-appalto.pdf</span></span>
-            <span class="ui-file"><i>PDF</i><span>Foto-cantiere.pdf</span></span>
+    <!-- 2. La cartella passa da una persona all'altra, il testo a destra -->
+    <article class="beneficio beneficio-due" data-entra>
+      <div class="bn-palco bn-palco-passaggio">
+        <div class="lastra lastra-libera bn-passaggio" data-ui>
+          <div class="vetro" aria-hidden="true" set:html={spigoli} />
+          <div class="carta" role="img" aria-label="La pratica Rossi Srl c. Edilvetta passa da Avv. Sara Lombrici ad Avv. Paolo Neri: la cartella di lavoro con il riepilogo della conversazione e tre documenti arriva a lui, che riceve un avviso.">
+            <div class="bp-persone">
+              <span class="bp-persona bp-da"><span class="ui-avatar ui-avatar-oro">SL</span><span><b>Sara Lombrici</b><small>Senior Associate</small></span></span>
+              <span class="bp-filo" aria-hidden="true"><span></span></span>
+              <span class="bp-persona bp-a"><span class="ui-avatar bp-arriva">PN</span><span><b>Paolo Neri</b><small>Associate</small></span></span>
+            </div>
+            <div class="bp-pista">
+              <div class="bp-cartella">
+                <p class="bp-cartella-testa"><span class="ct-icona" aria-hidden="true"></span>Rossi Srl c. Edilvetta</p>
+                <div class="bp-riepilogo">
+                  <p class="bp-etichetta">Riepilogo della conversazione</p>
+                  <p>Edilvetta contesta ritardi nel cantiere e chiede il saldo. Rossi Srl ha mandato contratto e foto. Scadenza: 27 nov.</p>
+                </div>
+                <div class="bp-file">
+                  <span class="ui-file"><i>PDF</i><span>2026-11-12_015_Diffida_Edilvetta.pdf</span></span>
+                  <span class="ui-file"><i>PDF</i><span>2026-11-04_012_Contratto-appalto_Edilvetta.pdf</span></span>
+                </div>
+              </div>
+            </div>
+            <p class="bp-esito"><span class="ui-spunta"></span>Assegnata ad Avv. Paolo Neri: cartella di lavoro creata e notifica inviata</p>
           </div>
         </div>
       </div>
@@ -79,25 +120,38 @@ const fasi = [
       </div>
     </article>
 
-    <article class="beneficio beneficio-tre">
+    <!-- 3. A tutta larghezza: la pratica passa alla fase successiva -->
+    <article class="beneficio beneficio-tre" data-entra>
       <div class="beneficio-testo">
         <h3>Sai a che punto è ogni pratica</h3>
         <p>Vedi ogni pratica nella sua fase e chi la sta seguendo.</p>
       </div>
-      <div class="lastra lastra-libera bn-pipeline" data-entra data-ui>
-        <div class="vetro" aria-hidden="true"></div>
-        <div class="carta" role="img" aria-label="Pipeline delle pratiche in quattro fasi: nuova, in lavorazione, in attesa del cliente, conclusa. Rossi c. Edilvetta è in lavorazione con Avv. Sara Lombrici.">
-          {fasi.map((f) => (
-            <div class="pp-colonna">
-              <p class="pp-fase">{f.nome}<small>{f.carte.length}</small></p>
-              {f.carte.map((c) => (
-                <div class:list={['pp-carta', { 'pp-mobile': c.mobile }]}>
-                  <span>{c.t}</span>
-                  <span class="ui-avatar">{c.p}</span>
-                </div>
-              ))}
+      <div class="bn-palco bn-palco-pipeline">
+        <div class="lastra lastra-libera bn-pipeline" data-ui>
+          <div class="vetro" aria-hidden="true" set:html={spigoli} />
+          <div class="carta" role="img" aria-label="Pipeline delle pratiche di recupero crediti in quattro fasi: istruttoria, diffida inviata, ricorso depositato, decreto emesso. Rossi Srl c. Edilvetta passa da istruttoria a diffida inviata.">
+            <p class="pp-schede"><b>Recupero crediti</b><span>Locazioni</span><span>Lavoro</span><span>Societario</span></p>
+            <div class="pp-colonne">
+              {fasi.map((f, i) => {
+                const dopo = f.prima + (i === 0 ? -1 : i === 1 ? 1 : 0);
+                return (
+                  <div class="pp-colonna">
+                    <p class="pp-fase">
+                      {f.nome}
+                      <small class="pp-conta"><span class="pp-prima">{f.prima}</span><span class="pp-dopo">{dopo}</span></small>
+                    </p>
+                    {f.carte.map((c) => (
+                      <div class:list={['pp-carta', { 'pp-mobile': c.mobile }]}>
+                        <span class="pp-titolo">{c.t}</span>
+                        <span class="pp-meta">{c.m}</span>
+                        <span class:list={['pp-urgenza', { 'pp-alta': c.u === 'Alta' }]}>{c.u}</span>
+                      </div>
+                    ))}
+                  </div>
+                );
+              })}
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </article>
