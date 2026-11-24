@@ -1,0 +1,40 @@
+---
+// Lastra 1: la mail nella casella di Outlook. Dati fittizi.
+interface Props {
+  stato?: string;
+  class?: string;
+}
+const { stato, class: classi = '' } = Astro.props;
+---
+<div class:list={['lastra', classi]} data-stato={stato} data-ui>
+  <div class="vetro" aria-hidden="true"></div>
+  <div class="carta ol" role="img" aria-label="Outlook: arriva la mail di Rossi Srl con la diffida di Edilvetta e l'allegato scan_0042.pdf">
+    <div class="ol-testa">
+      <span class="ol-app">Outlook</span>
+      <span class="ol-cerca">Cerca</span>
+      <span class="ol-utente">SL</span>
+    </div>
+    <div class="ol-corpo">
+      <div class="ol-lista">
+        <p class="ol-cartella">Posta in arrivo</p>
+        <div class="ol-mail ol-nuova a-scende">
+          <b>Rossi Srl</b><time>09:42</time>
+          <span>Diffida Edilvetta, documenti</span>
+        </div>
+        <div class="ol-mail"><b>Studio Fabbri</b><time>09:10</time><span>Rinvio udienza del 3 dicembre</span></div>
+        <div class="ol-mail"><b>Amministrazione</b><time>Ieri</time><span>Note spese di novembre</span></div>
+        <div class="ol-mail"><b>Bianchi Costruzioni</b><time>Ieri</time><span>Bozza di contratto, revisione</span></div>
+      </div>
+      <div class="ol-lettura a-appare">
+        <p class="ol-oggetto">Diffida Edilvetta, documenti</p>
+        <div class="ol-da">
+          <span class="ui-avatar">MR</span>
+          <span><b>Marta Rossi</b><small>Rossi Srl, oggi alle 09:42</small></span>
+        </div>
+        <p class="ol-testo">Buongiorno Avvocata, le inoltro la diffida che Edilvetta ci ha mandato ieri. In allegato la scansione. Ci sentiamo per la risposta?</p>
+        <span class="ui-file"><i>PDF</i><span>scan_0042.pdf</span><small>1,2 MB</small></span>
+      </div>
+    </div>
+  </div>
+  <span class="perno-lastra" aria-hidden="true"></span>
+</div>

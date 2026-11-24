@@ -1,0 +1,36 @@
+---
+// Lastra 5: ore e valore della pratica, con le ore stimate tenute a parte. Dati fittizi.
+interface Props {
+  stato?: string;
+  class?: string;
+}
+const { stato, class: classi = '' } = Astro.props;
+---
+<div class:list={['lastra', classi]} data-stato={stato} data-ui>
+  <div class="vetro" aria-hidden="true"></div>
+  <div class="carta or" role="img" aria-label="Pratica Rossi c. Edilvetta, ore e valore: 5,0 ore confermate per 750 euro, compresa l'ora e mezza della diffida. 2,0 ore stimate restano a parte finché l'avvocato non le conferma.">
+    <div class="or-testa">
+      <span><b>Rossi c. Edilvetta</b><small>Ore e valore</small></span>
+      <span class="or-totale">
+        <small>Confermate</small>
+        <span class="or-cifre">
+          <span class="or-prima a-sparisce">3,5 h <b>525 €</b></span>
+          <span class="or-dopo a-appare">5,0 h <b>750 €</b></span>
+        </span>
+      </span>
+    </div>
+    <div class="or-tabella">
+      <div class="or-riga or-nuova a-scende">
+        <span>12/11</span><span>Diffida Edilvetta, mail qualificata</span><span>SL</span><span>1,5 h</span><span>225 €</span>
+      </div>
+      <div class="or-riga a-scivola"><span>10/11</span><span>Telefonata con Marta Rossi</span><span>SL</span><span>0,5 h</span><span>75 €</span></div>
+      <div class="or-riga a-scivola"><span>07/11</span><span>Esame del contratto d'appalto</span><span>SL</span><span>3,0 h</span><span>450 €</span></div>
+    </div>
+    <div class="or-stimate">
+      <span><small>Stimate, da confermare</small>Bozza di risposta alla diffida</span>
+      <span class="or-stimate-ore">2,0 h</span>
+      <span class="ui-btn ui-btn-piccolo">Conferma</span>
+    </div>
+  </div>
+  <span class="perno-lastra" aria-hidden="true"></span>
+</div>

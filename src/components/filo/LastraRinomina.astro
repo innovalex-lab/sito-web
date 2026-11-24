@@ -1,0 +1,38 @@
+---
+// Lastra 4: l'allegato prende un nome leggibile e arriva una scadenza proposta. Dati fittizi.
+interface Props {
+  stato?: string;
+  class?: string;
+}
+const { stato, class: classi = '' } = Astro.props;
+---
+<div class:list={['lastra', classi]} data-stato={stato} data-ui>
+  <div class="vetro" aria-hidden="true"></div>
+  <div class="carta rn" role="img" aria-label="L'allegato scan_0042.pdf diventa 2026-11-12_Diffida_Rossi-c-Edilvetta.pdf. Scadenza proposta il 27 novembre 2026, da confermare.">
+    <p class="rn-titolo">Allegato della mail</p>
+    <div class="rn-file">
+      <span class="ui-file-icona ui-file-icona-grande">PDF</span>
+      <span class="rn-nomi">
+        <span class="rn-vecchio a-sparisce">scan_0042.pdf</span>
+        <span class="rn-nuovo"><span class="a-scrivi">2026-11-12_Diffida_Rossi-c-Edilvetta.pdf</span></span>
+      </span>
+    </div>
+    <div class="rn-dati a-appare">
+      <span><small>Tipo</small>Diffida</span>
+      <span><small>Pratica</small>Rossi c. Edilvetta</span>
+      <span><small>Ricevuta</small>12/11/2026</span>
+    </div>
+    <div class="rn-proposta a-sale">
+      <div>
+        <p class="rn-etichetta">Scadenza proposta</p>
+        <p class="rn-data">27 novembre 2026</p>
+        <p class="rn-nota">Risposta alla diffida, 15 giorni indicati nel documento</p>
+      </div>
+      <div class="rn-pulsanti">
+        <span class="ui-btn">Conferma</span>
+        <span class="ui-btn ui-btn-vuoto">Rifiuta</span>
+      </div>
+    </div>
+  </div>
+  <span class="perno-lastra" aria-hidden="true"></span>
+</div>

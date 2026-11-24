@@ -35,6 +35,7 @@ const classiBody = anteprima
     <link rel="apple-touch-icon" href="/brand/favicon-180.png" />
     {anteprima && <link rel="preload" href={fontTitoli} as="font" type="font/woff2" crossorigin />}
     {(anteprima || !isProduction) && <meta name="robots" content="noindex, nofollow" />}
+    <slot name="head" />
   </head>
   <body class={classiBody}>
     <slot />

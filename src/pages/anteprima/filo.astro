@@ -1,0 +1,157 @@
+---
+import Base from '../../layouts/Base.astro';
+import Intestazione from '../../components/Intestazione.astro';
+import LastraMail from '../../components/filo/LastraMail.astro';
+import LastraPannello from '../../components/filo/LastraPannello.astro';
+import LastraCartella from '../../components/filo/LastraCartella.astro';
+import LastraRinomina from '../../components/filo/LastraRinomina.astro';
+import LastraOre from '../../components/filo/LastraOre.astro';
+import Benefici from '../../components/filo/Benefici.astro';
+import { primaSchermata as c } from '../../content/prima-schermata';
+import serifCorsivo from '@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-italic.woff2?url';
+import '../../styles/filo.css';
+
+const passi = [
+  {
+    titolo: 'Arriva una mail',
+    frase: 'Rossi Srl ti inoltra una diffida. La apri in Outlook, come fai ogni giorno.',
+    Lastra: LastraMail,
+  },
+  {
+    titolo: 'La qualifichi dal pannello',
+    frase: 'Accanto alla mail scegli cliente, pratica, collaboratore e ore. Poi premi Conferma.',
+    Lastra: LastraPannello,
+  },
+  {
+    titolo: 'Va nella cartella giusta',
+    frase: 'La mail diventa un PDF nella cartella di Rossi Srl, pratica Rossi c. Edilvetta, con il suo numero progressivo.',
+    Lastra: LastraCartella,
+  },
+  {
+    titolo: 'I documenti trovano il loro nome',
+    frase: 'La scansione prende un nome che si capisce. Il termine della diffida diventa una scadenza proposta. La confermi tu.',
+    Lastra: LastraRinomina,
+  },
+  {
+    titolo: 'Le ore diventano valore',
+    frase: "L'ora e mezza entra nel riepilogo della pratica con il suo valore. Le ore stimate restano a parte finché non le confermi.",
+    Lastra: LastraOre,
+  },
+];
+---
+<Base title="Il filo d'oro | INNOVALEX" anteprima>
+  <Fragment slot="head">
+    <link rel="preload" href={serifCorsivo} as="font" type="font/woff2" crossorigin />
+    <script is:inline>document.documentElement.classList.add('js')</script>
+  </Fragment>
+
+  <div class="pagina-filo">
+    <Intestazione>
+      <svg slot="logo" class="filo-logo" viewBox="-30 -12 120 74" width="120" height="74" aria-hidden="true" focusable="false">
+        <path pathLength="1" d="M75.6 2.2 C 62 -3.6, 34 -5.5, 4 -5.5 L -8 -5.5 Q -18 -5.5, -18 4.5 L -18 62" />
+      </svg>
+    </Intestazione>
+
+    <main id="contenuto">
+      <!-- 1. Prima schermata -->
+      <section class="eroe" data-binario aria-labelledby="titolo">
+        <div class="binario binario-eroe" aria-hidden="true"><span class="binario-pieno"></span><span class="binario-punta"></span></div>
+        <div class="contenitore eroe-interno">
+          <h1 id="titolo" class="eroe-titolo">
+            Meno tempo a gestire lo studio,<br />
+            <em class="eroe-oro">più tempo per fare l’avvocato.</em>
+          </h1>
+          <div class="eroe-sotto">
+            <div class="eroe-testo">
+              <p class="eroe-lead">{c.testo}</p>
+              <div class="eroe-azioni">
+                <a class="btn btn-primario" href={c.principale.href}>{c.principale.testo}</a>
+                <a class="btn btn-secondario" href="#come-funziona">{c.secondario.testo}</a>
+              </div>
+            </div>
+            <div class="eroe-palco" aria-hidden="true">
+              <div class="eroe-prospettiva">
+                <div class="eroe-pila">
+                  <div class="eroe-posa" style="--k:0"><div class="galleggia"><LastraOre class="statica" /><span class="perno"></span></div></div>
+                  <div class="eroe-posa" style="--k:1"><div class="galleggia"><LastraRinomina class="statica" /><span class="perno"></span></div></div>
+                  <div class="eroe-posa" style="--k:2"><div class="galleggia"><LastraPannello class="statica" /><span class="perno"></span></div></div>
+                  <div class="eroe-posa" style="--k:3"><div class="galleggia"><LastraMail class="statica" /><span class="perno"></span></div></div>
+                  <span class="filo-verticale"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Scena del filo -->
+      <section id="come-funziona" class="scena" data-scena data-binario aria-labelledby="t-scena">
+        <div class="binario" aria-hidden="true"><span class="binario-pieno"></span><span class="binario-punta"></span></div>
+        <div class="scena-pista">
+          <div class="scena-fissa contenitore">
+            <h2 id="t-scena" class="scena-titolo">Segui una mail, dall’arrivo al valore.</h2>
+            <ol class="passi">
+              {passi.map((p, i) => (
+                <li class="passo" data-passo={i} data-attivo={i === 0 ? '' : undefined} data-dopo={i > 0 ? '' : undefined} style={`--i:${i}`}>
+                  <div class="passo-testa">
+                    <span class="nodo" aria-hidden="true"></span>
+                    <h3 class="passo-titolo"><button type="button" class="pastiglia" data-vai={i}>{p.titolo}</button></h3>
+                    <p class="passo-frase">{p.frase}</p>
+                  </div>
+                  <p.Lastra class="lastra-scena" stato={i === 0 ? 'attiva' : 'futura'} />
+                </li>
+              ))}
+            </ol>
+            <svg class="scena-filo" aria-hidden="true" focusable="false"><path class="filo-ponte" pathLength="1" d="" /><path class="filo-cucitura" pathLength="1" d="" /></svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Sezione scura -->
+      <section class="notte" data-binario aria-labelledby="t-giornata">
+        <div class="binario" aria-hidden="true"><span class="binario-pieno"></span><span class="binario-punta"></span></div>
+        <div class="notte-luce" aria-hidden="true"></div>
+        <div class="contenitore notte-interno">
+          <p class="notte-numero" aria-hidden="true">37%</p>
+          <h2 id="t-giornata" class="notte-frase">In media solo il 37% di una giornata di otto ore va in lavoro fatturabile.</h2>
+          <figure class="giornata" data-entra>
+            <div class="giornata-lastra" aria-hidden="true">
+              <div class="giornata-ore">
+                {Array.from({ length: 8 }, () => <span></span>)}
+              </div>
+              <div class="giornata-pieno"></div>
+            </div>
+            <div class="giornata-scala" aria-hidden="true">
+              {['9', '10', '11', '12', '13', '14', '15', '16', '17'].map((h) => <span>{h}</span>)}
+            </div>
+            <figcaption class="giornata-legenda">
+              <span><i class="gl-oro"></i>Lavoro fatturabile, circa 3 ore su 8</span>
+              <span><i class="gl-resto"></i>Il resto: posta, ricerca di documenti, passaggi di consegne, aggiornamenti ai clienti</span>
+            </figcaption>
+          </figure>
+          <p class="fonte">
+            Fonte: <a href="https://www.clio.com/resources/legal-trends/" rel="noopener">Clio, Legal Trends Report 2024, dato internazionale</a>
+          </p>
+        </div>
+      </section>
+
+      <!-- 4. Tre benefici -->
+      <Benefici />
+
+      <!-- 5. Chiusura -->
+      <section class="chiusura" data-binario aria-labelledby="t-chiusura">
+        <div class="binario binario-fine" aria-hidden="true"><span class="binario-pieno"></span></div>
+        <div class="contenitore chiusura-interno">
+          <img class="nodo-fine" src="/brand/innovalex-mark.svg" width="34" height="35" alt="" />
+          <h2 id="t-chiusura" class="sezione-titolo">Vediamo il tuo studio in 30 minuti.</h2>
+          <p class="chiusura-testo">Guardiamo insieme come lo studio gestisce posta, documenti, pratiche e ore. Alla fine sai cosa si può sistemare e da dove partire.</p>
+          <a class="btn btn-primario" href="/#contatti">Prenota la diagnosi di 30 minuti</a>
+        </div>
+      </section>
+    </main>
+  </div>
+</Base>
+
+<script>
+  import '../../scripts/filo';
+</script>

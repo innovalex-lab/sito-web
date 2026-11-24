@@ -1,0 +1,59 @@
+{
+  "legora": {
+    "url": "https://legora.com/",
+    "height": 13575,
+    "frames": 23,
+    "scriptCount": 47,
+    "title": "Legora",
+    "canvas": 0,
+    "video": 3,
+    "svg": 6,
+    "sticky": 3,
+    "preserve3d": 0,
+    "fonts": [
+      "\"CUSTOMV2;Aktiv Grotesk VF Variable Regular\"",
+      "sans-serif",
+      "\"Legora Sans Regular\"",
+      "\"Legora Sans Medium\"",
+      "\"Aktiv Grotesk VF Variable Regular\""
+    ]
+  },
+  "resend": {
+    "url": "https://resend.com/home",
+    "height": 12359,
+    "frames": 21,
+    "scriptCount": 90,
+    "title": "Resend · Email for developers",
+    "canvas": 1,
+    "video": 5,
+    "svg": 109,
+    "sticky": 1,
+    "preserve3d": 0,
+    "fonts": [
+      "\"Inter Website\"",
+      "domaine",
+      "aBCFavorit",
+      "\"Commit Mono Website\"",
+      "-apple-system",
+      "Helvetica"
+    ]
+  },
+  "metodotraccia": {
+    "url": "https://metodotraccia.it/",
+    "height": 19929,
+    "frames": 24,
+    "scriptCount": 8,
+    "title": "Metodo TRACCIA — AI & Automazione Processi Aziendali",
+    "canvas": 0,
+    "video": 0,
+    "svg": 35,
+    "sticky": 2,
+    "preserve3d": 0,
+    "fonts": [
+      "Manrope",
+      "\"Instrument Serif\"",
+      "\"Space Grotesk\"",
+      "\"IBM Plex Mono\""
+    ]
+  }
+}

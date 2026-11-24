@@ -1,0 +1,39 @@
+---
+// Lastra 3: la mail diventa PDF nella cartella di cliente e pratica. Dati fittizi.
+interface Props {
+  stato?: string;
+  class?: string;
+}
+const { stato, class: classi = '' } = Astro.props;
+const file = [
+  { nome: '013_2026-11-07_Email_Foto-cantiere.pdf', data: '07/11/2026' },
+  { nome: '012_2026-11-04_Email_Contratto-appalto.pdf', data: '04/11/2026' },
+  { nome: '011_2026-10-28_Email_Incarico.pdf', data: '28/10/2026' },
+];
+---
+<div class:list={['lastra', classi]} data-stato={stato} data-ui>
+  <div class="vetro" aria-hidden="true"></div>
+  <div class="carta ct" role="img" aria-label="Cartella Rossi Srl, pratica Rossi c. Edilvetta: la mail entra come PDF numero 014, dopo i documenti 011, 012 e 013.">
+    <div class="ct-testa">
+      <span class="ct-icona" aria-hidden="true"></span>
+      <span class="ct-percorso">Clienti <i>/</i> Rossi Srl <i>/</i> <b>Rossi c. Edilvetta</b></span>
+    </div>
+    <div class="ct-colonne"><span>Nome</span><span>Data</span></div>
+    <div class="ct-elenco">
+      <div class="ct-riga ct-nuova a-scende">
+        <span class="ui-file-icona">PDF</span>
+        <span class="ct-nome">014_2026-11-12_Email_Diffida-Edilvetta.pdf</span>
+        <span class="ct-data">12/11/2026</span>
+      </div>
+      {file.map((f) => (
+        <div class="ct-riga a-scivola">
+          <span class="ui-file-icona">PDF</span>
+          <span class="ct-nome">{f.nome}</span>
+          <span class="ct-data">{f.data}</span>
+        </div>
+      ))}
+    </div>
+    <p class="ct-piede"><span class="ui-spunta"></span>Mail e allegato archiviati in PDF</p>
+  </div>
+  <span class="perno-lastra" aria-hidden="true"></span>
+</div>

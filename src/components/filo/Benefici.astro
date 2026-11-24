@@ -1,0 +1,105 @@
+---
+// Tre benefici, ognuno con la sua interfaccia disegnata su misura. Dati fittizi.
+const pratiche = [
+  { nome: 'Rossi c. Edilvetta', conf: 5, stim: 2, valore: '750 €' },
+  { nome: 'Successione Galli', conf: 8.5, stim: 0, valore: '1.275 €' },
+  { nome: 'Appalto Bianchi', conf: 3, stim: 3.5, valore: '450 €' },
+  { nome: 'Locazione Ferraro', conf: 2, stim: 1, valore: '300 €' },
+];
+const massimo = 9;
+const fasi = [
+  { nome: 'Nuova', carte: [{ t: 'Locazione Ferraro', p: 'GM' }, { t: 'Marchio Lunaria', p: 'PN' }] },
+  { nome: 'In lavorazione', carte: [{ t: 'Rossi c. Edilvetta', p: 'SL', mobile: true }, { t: 'Successione Galli', p: 'PN' }, { t: 'Appalto Bianchi', p: 'SL' }] },
+  { nome: 'In attesa del cliente', carte: [{ t: 'Sfratto via Mazzini', p: 'GM' }, { t: 'Recesso Ottica Sole', p: 'SL' }] },
+  { nome: 'Conclusa', carte: [{ t: 'Recupero crediti Moretti', p: 'PN' }] },
+];
+---
+<section id="benefici" class="benefici" data-binario aria-labelledby="t-benefici">
+  <div class="binario" aria-hidden="true"><span class="binario-pieno"></span><span class="binario-punta"></span></div>
+  <div class="contenitore">
+    <h2 id="t-benefici" class="sezione-titolo">Cosa cambia nello studio</h2>
+
+    <article class="beneficio beneficio-uno">
+      <div class="beneficio-testo">
+        <h3>Recuperi il fatturato nascosto</h3>
+        <p>Ogni ora è collegata a cliente e pratica. Vedi quanto vale il lavoro fatto prima di preparare la proforma.</p>
+      </div>
+      <div class="lastra lastra-libera bn-valore" data-entra data-ui>
+        <div class="vetro" aria-hidden="true"></div>
+        <div class="carta" role="img" aria-label="Novembre, Avv. Sara Lombrici: ore confermate e stimate per quattro pratiche, valore confermato del mese 2.775 euro.">
+          <div class="bv-testa">
+            <span><b>Novembre</b><small>Avv. Sara Lombrici</small></span>
+            <span class="bv-totale"><small>Valore confermato</small>2.775 €</span>
+          </div>
+          <div class="bv-righe">
+            {pratiche.map((p, i) => (
+              <div class="bv-riga" style={`--n:${i}`}>
+                <span class="bv-nome">{p.nome}</span>
+                <span class="bv-barra">
+                  <span class="bv-conf" style={`width:${(p.conf / massimo) * 100}%`}></span>
+                  {p.stim > 0 && <span class="bv-stim" style={`width:${(p.stim / massimo) * 100}%`}></span>}
+                </span>
+                <span class="bv-ore">{String(p.conf).replace('.', ',')} h</span>
+                <span class="bv-euro">{p.valore}</span>
+              </div>
+            ))}
+          </div>
+          <div class="bv-legenda">
+            <span><i class="bv-l-conf"></i>Confermate</span>
+            <span><i class="bv-l-stim"></i>Stimate, da confermare</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="beneficio beneficio-due">
+      <div class="lastra lastra-libera bn-passaggio" data-entra data-ui>
+        <div class="vetro" aria-hidden="true"></div>
+        <div class="carta" role="img" aria-label="La pratica Rossi c. Edilvetta passa da Avv. Sara Lombrici ad Avv. Paolo Neri, con la cartella di lavoro, tre documenti e il riepilogo della conversazione.">
+          <div class="bp-passa">
+            <span class="ui-avatar ui-avatar-oro">SL</span>
+            <span class="bp-filo" aria-hidden="true"><span></span></span>
+            <span class="ui-avatar bp-arriva">PN</span>
+            <span class="bp-chi"><b>Assegnata ad Avv. Paolo Neri</b><small>Rossi c. Edilvetta, oggi</small></span>
+          </div>
+          <div class="bp-riepilogo">
+            <p class="bp-etichetta">Riepilogo della conversazione</p>
+            <p>Edilvetta contesta ritardi nel cantiere e chiede il pagamento del saldo. Rossi Srl ha mandato contratto e foto. Termine proposto per la risposta: 27/11.</p>
+          </div>
+          <div class="bp-file">
+            <span class="ui-file"><i>PDF</i><span>Diffida_Rossi-c-Edilvetta.pdf</span></span>
+            <span class="ui-file"><i>PDF</i><span>Contratto-appalto.pdf</span></span>
+            <span class="ui-file"><i>PDF</i><span>Foto-cantiere.pdf</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="beneficio-testo">
+        <h3>Passi una pratica e non spieghi nulla</h3>
+        <p>Assegni la pratica a un collaboratore. Trova tutto nella stessa cartella, con il riepilogo della conversazione.</p>
+      </div>
+    </article>
+
+    <article class="beneficio beneficio-tre">
+      <div class="beneficio-testo">
+        <h3>Sai a che punto è ogni pratica</h3>
+        <p>Vedi ogni pratica nella sua fase e chi la sta seguendo.</p>
+      </div>
+      <div class="lastra lastra-libera bn-pipeline" data-entra data-ui>
+        <div class="vetro" aria-hidden="true"></div>
+        <div class="carta" role="img" aria-label="Pipeline delle pratiche in quattro fasi: nuova, in lavorazione, in attesa del cliente, conclusa. Rossi c. Edilvetta è in lavorazione con Avv. Sara Lombrici.">
+          {fasi.map((f) => (
+            <div class="pp-colonna">
+              <p class="pp-fase">{f.nome}<small>{f.carte.length}</small></p>
+              {f.carte.map((c) => (
+                <div class:list={['pp-carta', { 'pp-mobile': c.mobile }]}>
+                  <span>{c.t}</span>
+                  <span class="ui-avatar">{c.p}</span>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </article>
+  </div>
+</section>

@@ -1,0 +1,49 @@
+---
+// Lastra 2: il pannello INNOVALEX accanto alla mail in Outlook. Dati fittizi.
+interface Props {
+  stato?: string;
+  class?: string;
+}
+const { stato, class: classi = '' } = Astro.props;
+const campi = [
+  { etichetta: 'Cliente', valore: 'Rossi Srl' },
+  { etichetta: 'Pratica', valore: 'Rossi c. Edilvetta' },
+  { etichetta: 'Collaboratore', valore: 'Avv. Sara Lombrici', avatar: 'SL' },
+  { etichetta: 'Ore', valore: '1,5' },
+];
+---
+<div class:list={['lastra', classi]} data-stato={stato} data-ui>
+  <div class="vetro" aria-hidden="true"></div>
+  <div class="carta pn" role="img" aria-label="Pannello INNOVALEX in Outlook: cliente Rossi Srl, pratica Rossi c. Edilvetta, collaboratore Avv. Sara Lombrici, 1,5 ore. Si preme Conferma.">
+    <div class="pn-mail">
+      <p class="ol-oggetto">Diffida Edilvetta, documenti</p>
+      <div class="ol-da">
+        <span class="ui-avatar">MR</span>
+        <span><b>Marta Rossi</b><small>Rossi Srl</small></span>
+      </div>
+      <span class="pn-righe" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <span class="ui-file"><i>PDF</i><span>scan_0042.pdf</span></span>
+    </div>
+    <div class="pn-pannello">
+      <div class="pn-testa">
+        <img src="/brand/innovalex-mark.svg" width="20" height="21" alt="" />
+        <span>Qualifica la mail</span>
+      </div>
+      {campi.map((c, i) => (
+        <div class="pn-campo" style={`--n:${i}`}>
+          <span class="pn-etichetta">{c.etichetta}</span>
+          <span class="pn-valore">
+            {c.avatar && <span class="ui-avatar ui-avatar-oro">{c.avatar}</span>}
+            <span class="a-compila">{c.valore}</span>
+          </span>
+        </div>
+      ))}
+      <div class="pn-report"><span class="ui-spunta"></span>Includi nel report</div>
+      <div class="pn-azione">
+        <span class="pn-conferma a-premi">Conferma</span>
+        <span class="pn-fatto a-fatto"><span class="ui-spunta ui-spunta-chiara"></span>Archiviata in Rossi c. Edilvetta</span>
+      </div>
+    </div>
+  </div>
+  <span class="perno-lastra" aria-hidden="true"></span>
+</div>

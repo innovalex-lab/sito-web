@@ -11,9 +11,12 @@ const voci = [
 <a class="salta" href="#contenuto">Vai al contenuto</a>
 <header class="relative z-20 bg-bianco">
   <div class="contenitore flex h-barra items-center justify-between gap-6">
-    <a href="/" class="shrink-0" aria-label="INNOVALEX, torna alla home">
-      <img src="/brand/innovalex-logo.svg" width="164" height="50" alt="" class="block h-[50px] w-[164px]" />
-    </a>
+    <div class="relative shrink-0">
+      <a href="/" class="block" aria-label="INNOVALEX, torna alla home">
+        <img src="/brand/innovalex-logo.svg" width="164" height="50" alt="" class="block h-[50px] w-[164px]" />
+      </a>
+      <slot name="logo" />
+    </div>
 
     <nav aria-label="Principale" class="hidden lg:block">
       <ul class="flex items-center gap-5 xl:gap-8">
