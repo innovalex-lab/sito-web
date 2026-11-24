@@ -3,21 +3,18 @@
 // stilizzato e parziale dell'interfaccia (mai una schermata intera). Dati fittizi.
 // Lo stato di ogni blocco viene da src/content/funzioni.ts.
 // Desktop: griglia asimmetrica, Pratiche e Valore per socio grandi, gli altri quattro piccoli.
+// Fase 4: il blocco Pratiche mostra la scena del beneficio 3 (la pipeline), al posto della mini pipeline.
+// È l'unica animazione della sezione.
 // I frammenti sono lastre di vetro con lo stesso materiale della prima schermata e dei benefici.
 // Sotto i 768 px: scorrimento orizzontale solo CSS (scroll-snap), con indicatore di posizione
 // fatto di link alle schede; il punto attivo si accende con una timeline di scorrimento CSS.
+import ScenaPipeline from '../filo/ScenaPipeline.astro';
 import { studio, stato } from '../../content/funzioni';
 import { produzione } from '../../content/verifica';
 
 const blocchi = studio.map((b) => ({ ...b, stato: stato(b.funzioni) }));
 const spigoli = '<span class="spigolo spigolo-basso"></span><span class="spigolo spigolo-sx"></span><span class="spigolo spigolo-dx"></span>';
 
-const fasi = [
-  { nome: 'Istruttoria', carte: [{ t: 'Rossi c. Edilvetta', m: 'Scadenza 27 nov', viva: true }, { t: 'Galli c. Ottica Sole', m: 'Sara Lombrici' }] },
-  { nome: 'Diffida inviata', carte: [{ t: 'Ferraro c. Lunaria', m: 'Paolo Neri' }, { t: 'Russo c. Termica Sud', m: 'Giulia Moro' }] },
-  { nome: 'Ricorso', carte: [{ t: 'Bianchi c. Edilnord', m: 'Giulia Moro' }] },
-  { nome: 'Decreto', carte: [{ t: 'Moretti c. Logistica Faro', m: 'Paolo Neri' }, { t: 'Conti c. Arredi Riva', m: 'Sara Lombrici' }] },
-];
 // Tre soci finti. Il valore è una barra relativa, senza cifre in euro.
 const soci = [
   { sigla: 'LF', nome: 'Avv. Laura Ferri', originate: 14, gestite: 22, valore: 0.88 },
@@ -36,21 +33,12 @@ const soci = [
       {blocchi.map((b) => (
         <li id={`studio-${b.id}`} class:list={['blocco', `blocco-${b.taglia}`, `blocco-${b.id}`]}>
           <div class="blocco-palco">
+            {b.id === 'pratiche' ? (
+              <ScenaPipeline class="blocco-pipeline" />
+            ) : (
             <div class="lastra lastra-libera blocco-lastra" data-ui aria-hidden="true">
               <div class="vetro" set:html={spigoli} />
               <div class="carta mini">
-                {b.id === 'pratiche' && (
-                  <div class="mini-pipeline">
-                    {fasi.map((f) => (
-                      <span class="mp-col">
-                        <b>{f.nome} <i>{f.carte.length}</i></b>
-                        {f.carte.map((c) => (
-                          <span class:list={['mp-carta', c.viva && 'mp-viva']}>{c.t}<small>{c.m}</small></span>
-                        ))}
-                      </span>
-                    ))}
-                  </div>
-                )}
                 {b.id === 'cliente' && (
                   <div class="mini-avviso">
                     <p class="ma-fase"><span class="ma-da">Istruttoria</span><span class="ma-freccia"></span><span class="ma-a">Diffida inviata</span></p>
@@ -104,6 +92,7 @@ const soci = [
                 )}
               </div>
             </div>
+            )}
           </div>
           <h3 class="blocco-titolo">{b.titolo}</h3>
           <p class="blocco-testo">{b.testo}</p>

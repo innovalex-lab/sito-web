@@ -1139,7 +1139,7 @@
   }
 }
 
-/* ---------- Chi siamo e caso SCLN ---------- */
+/* ---------- Chi siamo, e il riquadro del caso SCLN usato in Risultati reali ---------- */
 
 .chi {
   padding-block: var(--spacing-sezione);
@@ -1162,21 +1162,13 @@
   align-items: center;
 }
 
-.persona-cofondatore {
-  grid-template-areas:
-    'foto testa'
-    'foto testo';
-  row-gap: 0.5rem;
-  align-items: start;
-}
-
 /* Cornice del ritratto 4:5: width e height del markup riservano lo spazio, niente CLS */
 .ritratto {
   grid-area: foto;
   display: block;
   overflow: hidden;
   border-radius: 0.4rem;
-  background: #ede4d3;
+  background: #ece4d4;
 }
 
 .ritratto img {
@@ -1233,13 +1225,6 @@
   color: var(--inchiostro);
 }
 
-.caso-stato {
-  margin-top: 0.35rem;
-  font-size: var(--text-piccolo);
-  font-weight: 650;
-  color: #067647;
-}
-
 .caso-numeri {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1276,24 +1261,6 @@
   width: fit-content;
 }
 
-.caso-citazione {
-  margin-top: 1.75rem;
-}
-
-.caso-citazione p {
-  font-family: var(--font-serif);
-  font-size: 1.25rem;
-  line-height: 1.45;
-  color: var(--inchiostro);
-}
-
-.caso-citazione figcaption {
-  margin-top: 0.75rem;
-  font-size: var(--text-piccolo);
-  font-weight: 600;
-  color: var(--testo-2);
-}
-
 @media (min-width: 560px) {
   .persona {
     grid-template-areas:
@@ -1305,13 +1272,9 @@
     align-items: start;
   }
 
-  .persona-fondatore {
+  /* Stessa cornice per i due ritratti: 240 x 300 */
+  .persona {
     grid-template-columns: 15rem minmax(0, 1fr);
-  }
-
-  .persona-cofondatore {
-    grid-template-columns: 11rem minmax(0, 1fr);
-    row-gap: 0.5rem;
   }
 
   .caso-numeri {
@@ -1321,30 +1284,14 @@
 
 @media (min-width: 1024px) {
   .chi-interno {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    grid-template-areas:
-      'titolo titolo'
-      'fondatore cofondatore'
-      'fondatore caso';
-    grid-template-rows: auto auto 1fr;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     column-gap: clamp(3rem, 6vw, 6rem);
-    row-gap: 3rem;
+    align-items: start;
   }
 
-  .chi-titolo {
-    grid-area: titolo;
-  }
-
-  .persona-fondatore {
-    grid-area: fondatore;
-  }
-
-  .persona-cofondatore {
-    grid-area: cofondatore;
-  }
-
-  .caso {
-    grid-area: caso;
+  .chi-testa {
+    position: sticky;
+    top: calc(var(--spacing-barra) + 3rem);
   }
 }
 

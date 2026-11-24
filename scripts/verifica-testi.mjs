@@ -4,10 +4,12 @@
 import fs from 'node:fs';
 
 export const regole = [
-  { nome: 'trattino lungo', re: /—/g },
+  { nome: 'trattino lungo', re: /\u2014/g },
   // Prezzi del prodotto: parole di listino o cifre in euro legate a un periodo o a un utente.
   // Le cifre fittizie dentro le interfacce disegnate (per esempio 2.775 €) non sono prezzi.
-  { nome: 'prezzo', re: /\b(prezz[oi]|listino|canone|abbonament[oi]|a partire da)\b|€\s?\d[\d.,]*\s?(\/|al|a|per)\s?(mese|anno|utente|licenza)|\d[\d.,]*\s?€\s?(\/|al|a|per)\s?(mese|anno|utente|licenza)/gi },
+  { nome: 'prezzo', re: /\b(prezz[oi]|listino|canone|abbonament[oi]|a partire da)\b|€\s?\d[\d.,]*\s?(\/|al|a|per)\s?(mese|anno|utente|licenza)|\d[\d.,]*\s?€\s?(\/|al|a|per)\s?(mese|anno|utente|licenza)/gi,
+    // Il costo dello spreco nella prima schermata del sito attuale (esempio di un avvocato), non un prezzo di INNOVALEX.
+    eccezioni: ['€66.000 /anno'] },
   // Eccezione decisa il 24/11/2026: "Posta in arrivo" è il nome della cartella di Outlook nelle lastre
   // (prima schermata e scena, passo 1), non un annuncio di funzioni future. Si esclude solo la stringa
   // esatta, maiuscola compresa: "posta in arrivo" o "In arrivo" da soli fanno ancora scattare la regola.

@@ -1,12 +1,16 @@
 ---
-// Piè di pagina: dati societari identici al sito attuale (scripts/legacy/index.html, righe 2106-2113),
+// Piè di pagina: testi e dati societari identici al sito attuale (scripts/legacy/index.html, righe 2101-2122),
 // tranne il ruolo di Federico Garau, "Fondatore e amministratore" dal 24/11/2026.
+import { piede } from '../../content/storia';
 ---
 <footer class="piede">
   <div class="contenitore piede-interno">
-    <a href="/" class="piede-logo" aria-label="INNOVALEX, torna all’inizio">
-      <img src="/brand/innovalex-logo.svg" width="164" height="50" alt="" loading="lazy" />
-    </a>
+    <div class="piede-marchio">
+      <a href="/" class="piede-logo" aria-label="INNOVALEX, torna all’inizio">
+        <img src="/brand/innovalex-logo.svg" width="164" height="50" alt="" loading="lazy" />
+      </a>
+      <p class="piede-motto" data-uguale>{piede.testo[0]}<br />{piede.testo[1]}</p>
+    </div>
     <div class="piede-dati">
       <p class="piede-titolo">Contatti</p>
       <p>Federico Garau, Fondatore e amministratore</p>
@@ -15,10 +19,14 @@
       <p class="piede-spazio">P. IVA: 01283740957</p>
       <p>Sede fiscale: Via San Giovanni 6, Ales, OR</p>
     </div>
-    <nav class="piede-link" aria-label="Documenti">
-      <a href="/privacy-policy.html">Privacy Policy</a>
-      <a href="/cookie-policy.html">Cookie Policy</a>
-      <a href="/contratti">Contratti</a>
-    </nav>
+    <div class="piede-compliance">
+      <p class="piede-titolo">Compliance</p>
+      <p data-uguale>{piede.compliance}</p>
+      <nav class="piede-link" aria-label="Documenti">
+        <a href="/privacy-policy.html">Privacy Policy</a>
+        <a href="/cookie-policy.html">Cookie Policy</a>
+        <a href="/contratti">Contratti</a>
+      </nav>
+    </div>
   </div>
 </footer>

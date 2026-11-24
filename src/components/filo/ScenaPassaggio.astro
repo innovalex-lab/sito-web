@@ -1,0 +1,35 @@
+---
+// Scena del beneficio 2 (fase 3), invariata: la cartella passa da Sara a Paolo, con la molla.
+// Si anima entrando nello schermo (data-entra). Dati fittizi.
+interface Props {
+  class?: string;
+}
+const { class: classi = '' } = Astro.props;
+const spigoli = '<span class="spigolo spigolo-basso"></span><span class="spigolo spigolo-sx"></span><span class="spigolo spigolo-dx"></span>';
+---
+<div class:list={["bn-palco bn-palco-passaggio", classi]} data-entra>
+  <div class="lastra lastra-libera bn-passaggio" data-ui>
+    <div class="vetro" aria-hidden="true" set:html={spigoli} />
+    <div class="carta" role="img" aria-label="La pratica Rossi Srl c. Edilvetta passa da Avv. Sara Lombrici ad Avv. Paolo Neri: la cartella di lavoro con il riepilogo della conversazione e tre documenti arriva a lui, che riceve un avviso.">
+      <div class="bp-persone">
+        <span class="bp-persona bp-da"><span class="ui-avatar ui-avatar-oro">SL</span><span><b>Sara Lombrici</b><small>Senior Associate</small></span></span>
+        <span class="bp-filo" aria-hidden="true"></span>
+        <span class="bp-persona bp-a"><span class="ui-avatar bp-arriva">PN</span><span><b>Paolo Neri</b><small>Associate</small></span></span>
+      </div>
+      <div class="bp-pista">
+        <div class="bp-cartella">
+          <p class="bp-cartella-testa"><span class="ct-icona" aria-hidden="true"></span>Rossi Srl c. Edilvetta</p>
+          <div class="bp-riepilogo">
+            <p class="bp-etichetta">Riepilogo della conversazione</p>
+            <p>Edilvetta contesta ritardi nel cantiere e chiede il saldo. Rossi Srl ha mandato contratto e foto. Scadenza: 27 nov.</p>
+          </div>
+          <div class="bp-file">
+            <span class="ui-file"><i>PDF</i><span>2026-11-12_015_Diffida_Edilvetta.pdf</span></span>
+            <span class="ui-file"><i>PDF</i><span>2026-11-04_012_Contratto-appalto_Edilvetta.pdf</span></span>
+          </div>
+        </div>
+      </div>
+      <p class="bp-esito"><span class="ui-spunta"></span>Assegnata ad Avv. Paolo Neri: cartella di lavoro creata e notifica inviata</p>
+    </div>
+  </div>
+</div>

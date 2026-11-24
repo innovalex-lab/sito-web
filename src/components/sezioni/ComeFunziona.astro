@@ -1,0 +1,46 @@
+---
+// 4. Come funziona. Testi del sito attuale sopra, la scena a 5 passi della fase 3 sotto, a tutta larghezza.
+// La scena non cambia: stesse lastre, stessi testi, stessa animazione (src/scripts/filo.ts).
+import LastraMail from '../filo/LastraMail.astro';
+import LastraPannello from '../filo/LastraPannello.astro';
+import LastraCartella from '../filo/LastraCartella.astro';
+import LastraRinomina from '../filo/LastraRinomina.astro';
+import LastraOre from '../filo/LastraOre.astro';
+import { comeFunziona as c } from '../../content/storia';
+
+const lastre = [LastraMail, LastraPannello, LastraCartella, LastraRinomina, LastraOre];
+const passi = c.scena.passi.map((p, i) => ({ ...p, Lastra: lastre[i] }));
+---
+<section id="come-funziona" class="scena" data-scena aria-labelledby="t-come">
+  <span id="metodo" class="ancora-vecchia" aria-hidden="true"></span>
+  <div class="contenitore come-intro">
+    <div class="come-testa">
+      <p class="etichetta" data-uguale>{c.etichetta}</p>
+      <h2 id="t-come" class="sezione-titolo">{c.titolo[0]}<br />{c.titolo[1]}</h2>
+      <div class="come-testo">
+        {c.testo.map((t, i) => <p class="lead" data-uguale={i === 0 ? '' : undefined}>{t}</p>)}
+      </div>
+    </div>
+    <div class="come-pannello">
+      <h3 class="cp-titolo" data-uguale>{c.pannello.titolo}</h3>
+      <p class="cp-testo">{c.pannello.testo}</p>
+    </div>
+  </div>
+
+  <div class="scena-pista">
+    <div class="scena-fissa contenitore">
+      <h3 class="scena-titolo">{c.scena.titolo}</h3>
+      <ol class="passi">
+        {passi.map((p, i) => (
+          <li class="passo" data-passo={i} data-attivo={i === 0 ? '' : undefined} data-dopo={i > 0 ? '' : undefined} style={`--i:${i}`}>
+            <div class="passo-testa">
+              <h4 class="passo-titolo"><button type="button" class="pastiglia" data-vai={i}>{p.titolo}</button></h4>
+              <p class="passo-frase">{p.frase}</p>
+            </div>
+            <p.Lastra class="lastra-scena" stato={i === 0 ? 'attiva' : 'futura'} />
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>

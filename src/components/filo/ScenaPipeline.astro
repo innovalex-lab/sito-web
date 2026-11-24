@@ -1,0 +1,59 @@
+---
+// Scena del beneficio 3 (fase 3), invariata: la pratica passa alla fase successiva della pipeline.
+// Si anima entrando nello schermo (data-entra). Dati fittizi.
+interface Props {
+  class?: string;
+}
+const { class: classi = '' } = Astro.props;
+const spigoli = '<span class="spigolo spigolo-basso"></span><span class="spigolo spigolo-sx"></span><span class="spigolo spigolo-dx"></span>';
+const fasi = [
+  {
+    nome: 'Istruttoria',
+    prima: 3,
+    carte: [
+      { t: 'Rossi Srl c. Edilvetta: recupero credito', m: 'Sara Lombrici · 5,0 h', u: 'Alta', mobile: true },
+      { t: 'Ferraro Srl c. Lunaria Spa: recupero credito', m: 'Paolo Neri · 2,5 h', u: 'Bassa' },
+      { t: 'Galli Snc c. Ottica Sole: recupero credito', m: 'Sara Lombrici · 0 h', u: 'Bassa' },
+    ],
+  },
+  { nome: 'Diffida inviata', prima: 0, carte: [] },
+  {
+    nome: 'Ricorso depositato',
+    prima: 1,
+    carte: [{ t: 'Bianchi Costruzioni c. Edilnord: recupero credito', m: 'Giulia Moro · 12,4 h', u: 'Media' }],
+  },
+  {
+    nome: 'Decreto emesso',
+    prima: 1,
+    carte: [{ t: 'Moretti Spa c. Logistica Faro: recupero credito', m: 'Paolo Neri · 8,0 h', u: 'Bassa' }],
+  },
+];
+---
+<div class:list={["bn-palco bn-palco-pipeline", classi]} data-entra>
+  <div class="lastra lastra-libera bn-pipeline" data-ui>
+    <div class="vetro" aria-hidden="true" set:html={spigoli} />
+    <div class="carta" role="img" aria-label="Pipeline delle pratiche di recupero crediti in quattro fasi: istruttoria, diffida inviata, ricorso depositato, decreto emesso. Rossi Srl c. Edilvetta passa da istruttoria a diffida inviata.">
+      <p class="pp-schede"><b>Recupero crediti</b><span>Locazioni</span><span>Lavoro</span><span>Societario</span></p>
+      <div class="pp-colonne">
+        {fasi.map((f, i) => {
+          const dopo = f.prima + (i === 0 ? -1 : i === 1 ? 1 : 0);
+          return (
+            <div class="pp-colonna">
+              <p class="pp-fase">
+                {f.nome}
+                <small class="pp-conta"><span class="pp-prima">{f.prima}</span><span class="pp-dopo">{dopo}</span></small>
+              </p>
+              {f.carte.map((c) => (
+                <div class:list={['pp-carta', { 'pp-mobile': c.mobile }]}>
+                  <span class="pp-titolo">{c.t}</span>
+                  <span class="pp-meta">{c.m}</span>
+                  <span class:list={['pp-urgenza', { 'pp-alta': c.u === 'Alta' }]}>{c.u}</span>
+                </div>
+              ))}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+</div>

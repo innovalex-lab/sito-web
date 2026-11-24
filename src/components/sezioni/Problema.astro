@@ -1,0 +1,70 @@
+---
+// 2. Il problema. Apertura su crema con il primo numero, poi la sezione scura della fase 3 con il 37%
+// e la barra della giornata (statica), la giornata tipo e la timeline dello spreco.
+// Unica animazione della sezione: la timeline si accende un orario alla volta mentre scorri.
+// Solo CSS (timeline di scorrimento, src/styles/storia.css); senza supporto o con movimento ridotto è tutta accesa.
+import { problema as c } from '../../content/storia';
+---
+<section id="problema" class="problema" aria-labelledby="t-problema">
+  <div class="contenitore problema-apertura">
+    <div class="problema-testa">
+      <p class="etichetta" data-uguale>{c.etichetta}</p>
+      <h2 id="t-problema" class="sezione-titolo" data-uguale>{c.titolo[0]}<br />{c.titolo[1]}</h2>
+      <p class="lead" data-uguale>{c.lead}</p>
+    </div>
+    <p class="problema-numero">
+      <span class="pn-cifra">{c.bruciato.cifra}</span>
+      <span class="pn-unita">{c.bruciato.unita}</span>
+      <span class="pn-testo">{c.bruciato.testo}</span>
+      <span class="pn-calcolo">{c.bruciato.calcolo}</span>
+    </p>
+  </div>
+
+  <div class="notte">
+    <div class="notte-luce" aria-hidden="true"></div>
+    <div class="contenitore notte-interno">
+      <p class="notte-numero" aria-hidden="true">{c.fatturabile.cifra}</p>
+      <div class="notte-frase">
+        <p class="notte-frase-grande">{c.fatturabile.testo}</p>
+        <p class="notte-frase-resto">{c.fatturabile.resto}</p>
+      </div>
+      <figure class="giornata">
+        <div class="giornata-lastra" aria-hidden="true">
+          <div class="giornata-ore">
+            {Array.from({ length: 8 }, () => <span></span>)}
+          </div>
+          <div class="giornata-pieno"></div>
+        </div>
+        <div class="giornata-scala" aria-hidden="true">
+          {['9', '10', '11', '12', '13', '14', '15', '16', '17'].map((h) => <span>{h}</span>)}
+        </div>
+        <figcaption class="giornata-legenda">
+          <span><i class="gl-oro"></i>Lavoro fatturabile, circa 3 ore su 8</span>
+          <span><i class="gl-resto"></i>Il resto: posta, ricerca di documenti, passaggi di consegne, aggiornamenti ai clienti</span>
+        </figcaption>
+      </figure>
+      <p class="fonte">
+        Fonte: <a href={c.fatturabile.fonte.href} rel="noopener">{c.fatturabile.fonte.testo}</a>
+      </p>
+
+      <div class="giornata-tipo">
+        <p class="etichetta etichetta-scura" data-uguale>{c.giornata.etichetta}</p>
+        <h3 class="gt-titolo" data-uguale>{c.giornata.titolo[0]}<br />{c.giornata.titolo[1]}</h3>
+        <p class="gt-testo" data-uguale>{c.giornata.testo}</p>
+      </div>
+
+      <div class="spreco">
+        <p class="etichetta etichetta-scura" data-uguale>{c.timeline.etichetta}</p>
+        <h3 class="spreco-titolo" data-uguale>{c.timeline.titolo}</h3>
+        <ol class="spreco-ore">
+          {c.timeline.ore.map((o) => (
+            <li class="spreco-ora">
+              <time class="so-ora">{o.ora}</time>
+              <span class="so-testo" data-uguale>{o.testo}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>

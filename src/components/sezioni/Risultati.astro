@@ -1,0 +1,50 @@
+---
+// 8. Risultati reali. Testi del sito attuale; numeri e citazione da src/content/funzioni.ts (casoScln).
+// 8, 80 e 41 sono "da confermare": in anteprima hanno l'avviso, in produzione fermano la build.
+// Accanto alla citazione il ritratto di Cocola, lo stesso ritaglio di Chi siamo (scripts/ritratti.py).
+import { casoScln } from '../../content/funzioni';
+import { risultati as c, prenota } from '../../content/storia';
+import { produzione } from '../../content/verifica';
+
+const q = casoScln.citazione;
+const foto = 'francesco-cocola';
+const srcset = (f: string) => [120, 240].map((l) => `/team/${foto}-${l}.${f} ${l}w`).join(', ');
+---
+<section id="risultati" class="risultati" aria-labelledby="t-risultati">
+  <div class="contenitore">
+    <div class="risultati-testa">
+      <p class="etichetta" data-uguale>{c.etichetta}</p>
+      <h2 id="t-risultati" class="sezione-titolo" data-uguale>{c.titolo}</h2>
+    </div>
+
+    <div class="risultati-griglia">
+      <article class="caso" aria-labelledby="t-caso">
+        <p class="caso-cliente" data-uguale>{c.cliente}</p>
+        <h3 id="t-caso" class="caso-titolo" data-uguale>{c.casoTitolo}</h3>
+        <p class="caso-testo">{c.casoTesto.testo}</p>
+        <dl class="caso-numeri">
+          {casoScln.numeri.map((n) => (
+            <div>
+              <dt>{n.etichetta}</dt>
+              <dd>{n.valore}</dd>
+              {!produzione && n.stato !== 'confermato' && <dd class="avviso-anteprima">Da confermare</dd>}
+            </div>
+          ))}
+        </dl>
+      </article>
+
+      <figure class="voce">
+        <picture class="voce-ritratto">
+          <source type="image/avif" srcset={srcset('avif')} sizes="120px" />
+          <source type="image/webp" srcset={srcset('webp')} sizes="120px" />
+          <img src={`/team/${foto}-120.webp`} width="120" height="150" alt="Ritratto di Francesco Cocola" loading="lazy" decoding="async" />
+        </picture>
+        <blockquote class="voce-citazione"><p data-uguale>“{q.testo}”</p></blockquote>
+        <figcaption class="voce-firma"><b data-uguale>{q.autore}</b><span data-uguale>{q.ente}</span></figcaption>
+        {!produzione && q.stato !== 'confermato' && <p class="avviso-anteprima">Citazione da confermare</p>}
+      </figure>
+    </div>
+
+    <p class="risultati-azione"><a class="btn btn-primario" href="#contatti">{prenota}</a></p>
+  </div>
+</section>

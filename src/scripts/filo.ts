@@ -1,4 +1,4 @@
-// Home: scena fissata, inclinazione della pila, ingressi. Il filo d'oro è stato tolto (decisione del 24/11).
+// Home: movimento della foto della prima schermata, scena fissata, ingressi.
 // Nessuna dipendenza. Scrive solo transform, attributi e classi.
 
 const ridotto = matchMedia('(prefers-reduced-motion: reduce)');
@@ -55,6 +55,7 @@ function misura() {
   inAttesa = false;
   const vh = window.innerHeight;
   aggiornaScena(vh);
+  muoviFoto();
 }
 
 function richiedi() {
@@ -96,37 +97,18 @@ function preparaModo() {
   }
 }
 
-// Prima schermata: la pila segue appena il mouse. Solo con puntatore preciso e movimento consentito.
-const inclina = document.querySelector<HTMLElement>('[data-inclina]');
-const puntatore = matchMedia('(hover: hover) and (pointer: fine)');
-const eroe = inclina?.closest<HTMLElement>('.eroe');
-if (inclina && eroe) {
-  let mx = 0;
-  let my = 0;
-  let x = 0;
-  let y = 0;
-  let giro = 0;
-  const passo = () => {
-    x += (mx - x) * 0.07;
-    y += (my - y) * 0.07;
-    inclina.style.transform = `rotateX(${(-y * 4).toFixed(2)}deg) rotateY(${(x * 6).toFixed(2)}deg)`;
-    giro = Math.abs(mx - x) + Math.abs(my - y) > 0.002 ? requestAnimationFrame(passo) : 0;
-  };
-  const avvia = () => {
-    if (!giro) giro = requestAnimationFrame(passo);
-  };
-  eroe.addEventListener('pointermove', (e) => {
-    if (e.pointerType !== 'mouse' || !puntatore.matches || ridotto.matches) return;
-    const r = eroe.getBoundingClientRect();
-    mx = ((e.clientX - r.left) / r.width) * 2 - 1;
-    my = ((e.clientY - r.top) / r.height) * 2 - 1;
-    avvia();
-  });
-  eroe.addEventListener('pointerleave', () => {
-    mx = 0;
-    my = 0;
-    avvia();
-  });
+// Prima schermata: la foto scende piano mentre scorri, come su main (velocità 0,08).
+// Solo transform, solo mentre la prima schermata è visibile, spento con movimento ridotto.
+const foto = document.querySelector<HTMLElement>('[data-parallasse]');
+let fotoVisibile = true;
+if (foto) {
+  new IntersectionObserver(([v]) => {
+    fotoVisibile = v.isIntersecting;
+  }).observe(foto.closest('section')!);
+}
+function muoviFoto() {
+  if (!foto || !fotoVisibile) return;
+  foto.style.transform = ridotto.matches ? '' : `translate3d(0, ${(window.scrollY * 0.08).toFixed(1)}px, 0)`;
 }
 
 // Elementi che si completano una volta sola quando entrano nello schermo.
@@ -141,6 +123,19 @@ const osservaIngressi = new IntersectionObserver(
   { rootMargin: '0px 0px -15% 0px', threshold: 0.3 },
 );
 document.querySelectorAll('[data-entra]').forEach((el) => osservaIngressi.observe(el));
+
+// Lastre singole fuori dalla scena (Ordine Operativo): passano da "futura" ad "attiva" entrando nello schermo.
+const osservaLastreSingole = new IntersectionObserver(
+  (voci) => {
+    for (const v of voci) {
+      if (!v.isIntersecting) continue;
+      v.target.querySelectorAll<HTMLElement>('.lastra').forEach((l) => (l.dataset.stato = 'attiva'));
+      osservaLastreSingole.unobserve(v.target);
+    }
+  },
+  { rootMargin: '0px 0px -15% 0px', threshold: 0.3 },
+);
+document.querySelectorAll('[data-lastra-entra]').forEach((el) => osservaLastreSingole.observe(el));
 
 preparaModo();
 fissata.addEventListener('change', preparaModo);

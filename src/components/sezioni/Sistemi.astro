@@ -1,0 +1,56 @@
+---
+// 5. Tre sistemi, una sola infrastruttura. Ogni sistema ha la stessa forma: etichetta, titolo, testo,
+// quattro voci brevi e una scena affiancata (al massimo metà della larghezza). Le scene sono quelle
+// della fase 3, spostate e ridimensionate, non ridisegnate:
+//   Ordine Operativo: la lastra della cartella con i PDF numerati (passo 3 della scena);
+//   Visibilità Economica: beneficio 1; Governance Operativa: beneficio 2.
+// Una sola animazione per sistema: la scena, quando entra nello schermo.
+import LastraCartella from '../filo/LastraCartella.astro';
+import ScenaValore from '../filo/ScenaValore.astro';
+import ScenaPassaggio from '../filo/ScenaPassaggio.astro';
+import { sistemi as c, prenota } from '../../content/storia';
+
+const [ordine, visibilita, governance] = c.elenco;
+const blocchi = [
+  { s: ordine, lato: 'destra' },
+  { s: visibilita, lato: 'sinistra' },
+  { s: governance, lato: 'destra' },
+];
+---
+<section id="sistemi" class="sistemi" aria-labelledby="t-sistemi">
+  <div class="contenitore">
+    <div class="sistemi-testa">
+      <h2 id="t-sistemi" class="sezione-titolo" data-uguale>{c.titolo[0]}<br />{c.titolo[1]}</h2>
+      <p class="lead">{c.testo}</p>
+    </div>
+
+    {blocchi.map(({ s, lato }) => (
+      <article id={s.id} class:list={['sistema', `sistema-${lato}`]} aria-labelledby={`t-${s.id}`}>
+        <div class="sistema-testo">
+          <p class="etichetta">{s.etichetta}</p>
+          <h3 id={`t-${s.id}`} class="sistema-titolo">{s.titolo}</h3>
+          <p class="sistema-intro">{s.testo}</p>
+          <ul class="sistema-voci">
+            {s.voci.map((v) => (
+              <li>
+                <h4 class="sv-nome">{v.nome}</h4>
+                <p class="sv-testo">{v.testo}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="sistema-scena">
+          {s.id === 'ordine-operativo' && (
+            <div class="bn-palco bn-palco-cartella" data-lastra-entra>
+              <LastraCartella class="lastra-libera bn-cartella" stato="futura" />
+            </div>
+          )}
+          {s.id === 'visibilita-economica' && <ScenaValore />}
+          {s.id === 'governance-operativa' && <ScenaPassaggio />}
+        </div>
+      </article>
+    ))}
+
+    <p class="sistemi-azione"><a class="btn btn-primario" href="#contatti">{prenota}</a></p>
+  </div>
+</section>

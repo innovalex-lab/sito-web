@@ -1,16 +1,18 @@
 ---
-// Diagnosi (ex chiusura del prototipo: stesso titolo e stesso stile), FAQ e piè di pagina.
-// Il form NON è qui: si costruisce in una sessione dedicata. Al suo posto un segnaposto
-// con le dimensioni del form futuro (campi del piano, sezione F.11), senza invii.
+// 9. Diagnosi e 10. FAQ. Testi della diagnosi dal sito attuale (fase 4).
+// Il form NON è qui: si collega a /api/lead nella sessione 2 (docs/PIANO-STORYLINE.md).
+// Al suo posto il segnaposto della fase 3, senza invii.
 import { faq, faqSottotitolo } from '../../content/funzioni';
+import { diagnosi as d } from '../../content/storia';
 
 const campi = ['Nome e cognome', 'Studio', 'Email', 'Telefono', 'Ruolo', 'Persone nello studio', 'Priorità principale'];
 ---
 <section id="contatti" class="chiusura diagnosi" aria-labelledby="t-chiusura">
   <div class="contenitore chiusura-interno diagnosi-interno">
     <div class="diagnosi-testo">
-      <h2 id="t-chiusura" class="sezione-titolo">Vediamo il tuo studio in 30 minuti.</h2>
-      <p class="chiusura-testo">In 30 minuti guardiamo come lo studio gestisce posta, documenti, pratiche e ore. Alla fine sai cosa si può sistemare e da dove partire.</p>
+      <p class="etichetta" data-uguale>{d.etichetta}</p>
+      <h2 id="t-chiusura" class="sezione-titolo" data-uguale>{d.titolo[0]}<br />{d.titolo[1]}</h2>
+      {d.testo.map((t) => <p class="chiusura-testo" data-uguale>{t}</p>)}
     </div>
 
     <div class="form-segnaposto" role="note" aria-label="Form della diagnosi (sessione dedicata)">

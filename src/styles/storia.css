@@ -1,0 +1,1247 @@
+/* Home, fase 4: storyline del sito attuale con la grafica nuova (docs/PIANO-STORYLINE.md).
+   Usa le variabili di .pagina-filo (filo.css). Qui: prima schermata, problema, calcolatore, come funziona,
+   tre sistemi, compliance, risultati reali, e gli adattamenti di studio, diagnosi, chi siamo e piè di pagina.
+   Proporzioni: nei blocchi affiancati la grafica occupa al massimo 5 colonne su 12. */
+
+.pagina-filo {
+  /* Oro leggibile come testo piccolo: 4,75:1 sul fondo più scuro della pagina (#ece4d4), 5,43:1 sulla crema */
+  --oro-testo: #7d5e26;
+  --fondo-ritratti: #ece4d4;
+  --velo: 16 21 50;
+}
+
+/* Le ancore del sito attuale (#roi, #metodo, #founder) portano ancora alla sezione giusta */
+.ancora-vecchia {
+  display: block;
+  height: 0;
+}
+
+/* ---------- Elementi comuni ---------- */
+
+/* Le etichette del sito attuale, in tondo e senza spaziatura larga */
+.etichetta {
+  color: var(--oro-testo);
+  font-size: 0.9375rem;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.etichetta-scura {
+  color: var(--oro-chiaro);
+}
+
+.etichetta + .sezione-titolo,
+.etichetta + h3 {
+  margin-top: 0.75rem;
+}
+
+.lead {
+  max-width: 38rem;
+  font-size: var(--text-lead);
+  line-height: 1.55;
+  color: var(--testo-2);
+}
+
+.sezione-titolo + .lead {
+  margin-top: 1.25rem;
+}
+
+.btn-oro {
+  background: var(--oro-chiaro);
+  border-color: var(--oro-chiaro);
+  color: var(--profondo);
+}
+
+.btn-oro:hover {
+  background: #e2c58d;
+  border-color: #e2c58d;
+}
+
+.btn-oro:active {
+  background: var(--oro-chiaro);
+  border-color: var(--oro-chiaro);
+  color: var(--profondo);
+}
+
+/* ---------- 1. Prima schermata ---------- */
+
+.eroe {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  min-height: calc(100svh - var(--spacing-barra));
+  align-items: center;
+  overflow: clip;
+  background: var(--profondo);
+  color: #fff;
+}
+
+.eroe-foto {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.eroe-foto img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+/* Velatura blu: come su main, più fitta a sinistra dove sta il testo */
+.eroe-velo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, rgb(var(--velo) / 0.9) 0%, rgb(var(--velo) / 0.74) 50%, rgb(var(--velo) / 0.3) 100%);
+}
+
+.eroe-interno {
+  width: 100%;
+  padding-block: clamp(2.5rem, 7vh, 5rem) clamp(3.5rem, 9vh, 6.5rem);
+}
+
+.eroe-marchio {
+  color: var(--oro-chiaro);
+  font-size: 0.9375rem;
+  font-weight: 650;
+  letter-spacing: 0.2em;
+}
+
+.eroe-titolo {
+  margin-top: 1rem;
+  font-family: var(--font-serif);
+  font-size: clamp(2.25rem, 0.95rem + 5.4vw, 5.75rem);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.eroe-lead {
+  max-width: 40rem;
+  margin-top: 1.5rem;
+  font-size: clamp(1.125rem, 1rem + 0.45vw, 1.375rem);
+  line-height: 1.5;
+  color: rgb(255 255 255 / 0.9);
+}
+
+.eroe-pulsante {
+  margin-top: 2.25rem;
+}
+
+.eroe-numeri {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  max-width: 62rem;
+  margin-top: 2.75rem;
+}
+
+/* I tre numeri con la linea oro, come su main */
+.eroe-numeri > div {
+  padding-left: 0.75rem;
+  border-left: 2px solid var(--oro-chiaro);
+}
+
+.eroe-cifra {
+  font-family: var(--font-serif);
+  font-size: clamp(1.375rem, 1rem + 1.5vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.eroe-unita {
+  font-size: 0.62em;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.eroe-etichetta {
+  margin-top: 0.45rem;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: rgb(255 255 255 / 0.84);
+}
+
+.eroe-nota {
+  max-width: 46rem;
+  margin-top: 1.5rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: rgb(255 255 255 / 0.84);
+}
+
+.eroe-nota a {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--oro-chiaro);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
+}
+
+.eroe :focus-visible {
+  outline-color: var(--oro-chiaro);
+}
+
+.eroe-scorri {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  display: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border-radius: 50%;
+  background: rgb(var(--velo) / 0.4);
+  box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / 0.35);
+  color: #fff;
+  transform: translateX(-50%);
+  transition: background-color 140ms ease-out;
+}
+
+.eroe-scorri:hover {
+  background: rgb(var(--velo) / 0.75);
+}
+
+@media (max-width: 767px) {
+  /* Come su main: la foto si allarga e mostra la bilancia; la velatura copre tutta la larghezza del testo */
+  .eroe-foto img {
+    inset: 0 -6% 0 auto;
+    width: 128%;
+    max-width: none;
+    object-position: 78% center;
+  }
+
+  .eroe-velo {
+    background: linear-gradient(180deg, rgb(var(--velo) / 0.84) 0%, rgb(var(--velo) / 0.8) 55%, rgb(var(--velo) / 0.9) 100%);
+  }
+}
+
+@media (min-width: 640px) {
+  .eroe-numeri {
+    gap: 1.5rem;
+  }
+
+  .eroe-numeri > div {
+    padding-left: 1rem;
+  }
+
+  .eroe-etichetta {
+    font-size: 0.9375rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .eroe-scorri {
+    display: grid;
+  }
+}
+
+/* Tra 768 e 1279 px il testo arriva sopra la bilancia illuminata: velatura più fitta fino a destra */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .eroe-velo {
+    background: linear-gradient(105deg, rgb(var(--velo) / 0.92) 0%, rgb(var(--velo) / 0.84) 55%, rgb(var(--velo) / 0.74) 85%, rgb(var(--velo) / 0.5) 100%);
+  }
+}
+
+/* ---------- 2. Il problema ---------- */
+
+.problema {
+  background: var(--crema);
+}
+
+.problema-apertura {
+  display: grid;
+  gap: 2.5rem;
+  padding-top: var(--spacing-sezione);
+  padding-bottom: clamp(3.5rem, 7vw, 6rem);
+}
+
+.problema-numero {
+  display: grid;
+  align-content: start;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-radius: 0.6rem;
+  background: #fff;
+  color: var(--inchiostro);
+}
+
+.pn-cifra {
+  font-family: var(--font-serif);
+  font-size: clamp(3.5rem, 2.4rem + 4vw, 6rem);
+  font-weight: 450;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.pn-unita {
+  margin-top: 0.35rem;
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+.pn-testo {
+  margin-top: 1rem;
+  font-size: 1.125rem;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+.pn-calcolo {
+  margin-top: 0.4rem;
+  line-height: 1.55;
+  color: var(--testo-2);
+}
+
+/* La sezione scura: la frase accanto al 37% è testo, non un titolo */
+.notte-frase {
+  max-width: 30rem;
+}
+
+.notte-frase-grande {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
+  font-weight: 450;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+
+.notte-frase-resto {
+  margin-top: 1rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-lead);
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: rgb(255 255 255 / 0.84);
+}
+
+.giornata-tipo,
+.spreco {
+  margin-top: clamp(3.5rem, 8vw, 6rem);
+}
+
+.gt-titolo,
+.spreco-titolo {
+  font-family: var(--font-serif);
+  font-weight: 450;
+  letter-spacing: -0.015em;
+  color: #fff;
+}
+
+.gt-titolo {
+  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
+  line-height: 1.15;
+}
+
+.gt-testo {
+  max-width: 34rem;
+  margin-top: 1.25rem;
+  font-size: var(--text-lead);
+  line-height: 1.55;
+  color: rgb(255 255 255 / 0.84);
+}
+
+.spreco-titolo {
+  font-size: 1.5rem;
+  line-height: 1.25;
+}
+
+/* La timeline dello spreco: un binario con cinque fermate */
+@property --luce {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 1;
+}
+
+.spreco-ore {
+  position: relative;
+  margin-top: 1.75rem;
+  padding: 0 0 0 2rem;
+  list-style: none;
+}
+
+.spreco-ore::before {
+  content: '';
+  position: absolute;
+  top: 1.1rem;
+  bottom: 1.1rem;
+  left: 0.45rem;
+  width: 2px;
+  background: rgb(255 255 255 / 0.18);
+}
+
+.spreco-ora {
+  --luce: 1;
+  position: relative;
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding-block: 0.7rem;
+}
+
+.spreco-ora::before {
+  content: '';
+  position: absolute;
+  top: 1.05rem;
+  left: -2rem;
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--oro-chiaro) calc(var(--luce) * 100%), var(--profondo));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--oro-chiaro) calc(var(--luce) * 100%), rgb(255 255 255 / 0.4));
+}
+
+.so-ora {
+  padding-top: 0.15rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in srgb, var(--oro-chiaro) calc(var(--luce) * 100%), rgb(255 255 255 / 0.62));
+}
+
+/* Spenta resta leggibile: bianco al 62% sul blu notte, oltre 7:1 */
+.so-testo {
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: rgb(255 255 255 / calc(0.62 + var(--luce) * 0.38));
+}
+
+/* Unica animazione della sezione: un orario si accende quando arriva a metà schermo.
+   Solo CSS. Senza timeline di scorrimento o con movimento ridotto la timeline è tutta accesa. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Proprietà separate: il minificatore unirebbe animation e animation-timeline in una forma che Chromium scarta */
+    .spreco-ora {
+      animation-name: accendi;
+      animation-fill-mode: both;
+      animation-timing-function: linear;
+      animation-timeline: view();
+      animation-range: cover 0% cover 50%;
+    }
+  }
+}
+
+@keyframes accendi {
+  0%,
+  82% {
+    --luce: 0;
+  }
+  100% {
+    --luce: 1;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* 8 colonne al titolo: le due frasi [=] stanno su due righe */
+  .problema-apertura {
+    grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+    column-gap: clamp(3rem, 6vw, 6rem);
+    align-items: end;
+  }
+
+  .giornata-tipo {
+    grid-column: 1;
+    align-self: start;
+  }
+
+  .spreco {
+    grid-column: 2;
+    align-self: start;
+  }
+}
+
+/* ---------- 3. Calcolatore ---------- */
+
+.calcolatore {
+  padding-block: var(--spacing-sezione);
+  background: #fff;
+}
+
+.calc-testa {
+  max-width: 48rem;
+}
+
+.calc-griglia {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.calc-campi {
+  display: grid;
+  gap: 1.75rem;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  border-radius: 0.6rem;
+  background: var(--carta);
+}
+
+.calc-nota {
+  max-width: 36rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--testo-2);
+}
+
+.cc-riga {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.cc-riga label {
+  font-weight: 650;
+  color: var(--inchiostro);
+}
+
+.cc-numero {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--testo-2);
+}
+
+.calcolatore input[type='number'],
+.ca-riga input {
+  min-height: 2.75rem;
+  border: 1.5px solid #c9c4b8;
+  border-radius: 0.4rem;
+  background: #fff;
+  color: var(--inchiostro);
+  font: inherit;
+  transition: border-color 140ms ease-out;
+}
+
+.calcolatore input[type='number'] {
+  width: 5.5rem;
+  padding: 0.4rem 0.6rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.calcolatore input[type='number']:hover,
+.ca-riga input:hover {
+  border-color: var(--inchiostro);
+}
+
+.calcolatore input[type='range'] {
+  display: block;
+  width: 100%;
+  height: 1.75rem;
+  margin-top: 0.6rem;
+  accent-color: var(--inchiostro);
+  cursor: pointer;
+}
+
+.cc-scala {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+  color: var(--ui-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.calc-sistemi {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.calc-sistemi legend {
+  margin-bottom: 0.75rem;
+  padding: 0;
+  font-weight: 650;
+  color: var(--inchiostro);
+}
+
+.cs-voce {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 0.85rem;
+  padding: 1rem 1.1rem;
+  border-radius: 0.5rem;
+  background: #fff;
+  box-shadow: inset 0 0 0 1.5px transparent;
+  cursor: pointer;
+  transition: box-shadow 140ms ease-out;
+}
+
+.cs-voce:hover {
+  box-shadow: inset 0 0 0 1.5px #c9c4b8;
+}
+
+.cs-voce:has(input:checked) {
+  box-shadow: inset 0 0 0 1.5px var(--oro);
+}
+
+.cs-voce input {
+  grid-row: 1 / span 2;
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-top: 0.2rem;
+  accent-color: var(--inchiostro);
+}
+
+.cs-testa {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.2rem 1rem;
+}
+
+.cs-nome {
+  font-weight: 650;
+  color: var(--inchiostro);
+}
+
+.cs-quota {
+  color: var(--oro-testo);
+  font-size: 0.875rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.cs-testo {
+  grid-column: 2;
+  margin-top: 0.3rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--testo-2);
+}
+
+.cs-massimo {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: var(--testo-2);
+}
+
+.calc-risultato {
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-radius: 0.6rem;
+  background: var(--profondo);
+  color: #fff;
+}
+
+.calc-risultato :focus-visible {
+  outline-color: var(--oro-chiaro);
+}
+
+.cr-etichetta {
+  font-size: 0.875rem;
+  font-weight: 650;
+  color: rgb(255 255 255 / 0.72);
+}
+
+.cr-voce {
+  margin-top: 1.25rem;
+  color: rgb(255 255 255 / 0.84);
+}
+
+.cr-annuale {
+  display: block;
+  margin-top: 0.3rem;
+  font-family: var(--font-serif);
+  font-size: clamp(2.75rem, 1.9rem + 3vw, 4.25rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--oro-chiaro);
+  font-variant-numeric: tabular-nums;
+}
+
+.cr-formula {
+  margin-top: 0.85rem;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: rgb(255 255 255 / 0.88);
+  font-variant-numeric: tabular-nums;
+}
+
+.cr-stima {
+  margin-top: 0.3rem;
+  font-size: 0.875rem;
+  color: rgb(255 255 255 / 0.72);
+}
+
+.cr-dettagli {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.cr-dettagli > div {
+  padding: 1rem;
+  border-radius: 0.45rem;
+  background: rgb(255 255 255 / 0.07);
+}
+
+.cr-dettagli dt {
+  font-size: 0.875rem;
+  color: rgb(255 255 255 / 0.76);
+}
+
+.cr-cifra {
+  margin-top: 0.3rem;
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.cr-sotto {
+  margin-top: 0.25rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: rgb(255 255 255 / 0.74);
+}
+
+.cr-pulsante {
+  width: 100%;
+  margin-top: 1.75rem;
+}
+
+/* La richiesta dell'analisi compare dopo il primo calcolo: l'animazione della sezione */
+.calc-analisi {
+  margin-top: 1rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border-radius: 0.6rem;
+  background: var(--crema);
+  opacity: 0;
+  transform: translateY(0.75rem);
+  transition:
+    opacity 0.45s var(--ease),
+    transform 0.6s var(--ease);
+}
+
+.calc-analisi.aperta {
+  opacity: 1;
+  transform: none;
+}
+
+.ca-titolo {
+  font-family: var(--font-serif);
+  font-size: 1.625rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--inchiostro);
+}
+
+.ca-testo {
+  margin-top: 0.75rem;
+  line-height: 1.55;
+  color: var(--testo-2);
+}
+
+.ca-modulo {
+  margin-top: 1.25rem;
+}
+
+.ca-modulo label {
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 650;
+  color: var(--inchiostro);
+}
+
+.ca-riga {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.45rem;
+}
+
+.ca-riga input {
+  flex: 1 1 14rem;
+  min-height: 3rem;
+  padding: 0.6rem 0.85rem;
+}
+
+.ca-riga input[aria-invalid='true'] {
+  border-color: #b42318;
+}
+
+.ca-riga .btn {
+  flex: 1 1 auto;
+}
+
+.ca-errore {
+  margin-top: 0.6rem;
+  color: #b42318;
+  font-size: 0.9375rem;
+  font-weight: 550;
+}
+
+.ca-privacy {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--testo-2);
+}
+
+.ca-privacy a {
+  color: var(--inchiostro);
+  text-decoration: underline;
+  text-decoration-color: var(--oro);
+  text-underline-offset: 0.2em;
+}
+
+.ca-fatto .ca-testo {
+  margin-top: 0.5rem;
+}
+
+@media (min-width: 1024px) {
+  .calc-griglia {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .calc-colonna {
+    position: sticky;
+    top: calc(var(--spacing-barra) + 1.5rem);
+  }
+}
+
+/* ---------- 4. Come funziona ---------- */
+
+.come-intro {
+  display: grid;
+  gap: 2rem;
+  padding-top: var(--spacing-sezione);
+}
+
+.come-testo .lead + .lead {
+  margin-top: 0.75rem;
+}
+
+.come-testa .sezione-titolo + .come-testo {
+  margin-top: 1.25rem;
+}
+
+.come-pannello {
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border-radius: 0.6rem;
+  background: #fff;
+}
+
+.cp-titolo {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--inchiostro);
+}
+
+.cp-testo {
+  margin-top: 0.6rem;
+  line-height: 1.6;
+  color: var(--testo-2);
+}
+
+/* In sequenza (telefono, schermo basso, movimento ridotto) la scena segue il testo senza un secondo spazio di sezione */
+@media (max-width: 1023px), (max-height: 599px), (prefers-reduced-motion: reduce) {
+  .come-intro + .scena-pista .scena-fissa {
+    padding-top: clamp(3.5rem, 8vw, 5rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .come-intro {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    column-gap: clamp(3rem, 6vw, 6rem);
+    row-gap: 0;
+    align-items: end;
+  }
+
+  .come-testa {
+    display: contents;
+  }
+
+  .come-testa > .etichetta,
+  .come-testa > .sezione-titolo {
+    grid-column: 1 / -1;
+  }
+
+  .come-testo {
+    grid-column: 1;
+  }
+
+  .come-pannello {
+    grid-column: 2;
+    margin-top: 1.25rem;
+  }
+}
+
+/* ---------- 5. Tre sistemi ---------- */
+
+.sistemi {
+  padding-block: var(--spacing-sezione);
+  background: var(--crema);
+}
+
+.sistemi-testa {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.sistema {
+  display: grid;
+  gap: 2.5rem;
+  margin-top: clamp(4rem, 9vw, 7.5rem);
+}
+
+.sistema-titolo {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  color: var(--inchiostro);
+}
+
+.sistema-intro {
+  max-width: 38rem;
+  margin-top: 1rem;
+  font-size: var(--text-lead);
+  line-height: 1.55;
+  color: var(--testo-2);
+}
+
+.sistema-voci {
+  display: grid;
+  gap: 1.5rem 2.25rem;
+  margin-top: 2rem;
+  padding: 0;
+  list-style: none;
+}
+
+.sv-nome {
+  font-size: 1.0625rem;
+  font-weight: 650;
+  line-height: 1.3;
+  color: var(--inchiostro);
+}
+
+.sv-testo {
+  margin-top: 0.35rem;
+  line-height: 1.55;
+  color: var(--testo-2);
+}
+
+.sistemi-azione {
+  margin-top: clamp(3.5rem, 7vw, 6rem);
+}
+
+/* La lastra della cartella fuori dalla scena: stessa misura delle altre due scene */
+.bn-cartella {
+  font-size: calc((100cqw - 2em) / 26);
+}
+
+@media (min-width: 640px) {
+  .sistema-voci {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .sistema {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2rem;
+    align-items: start;
+  }
+
+  /* Testo su 6 colonne, scena su 5, una colonna d'aria: la grafica resta sotto metà larghezza */
+  .sistema-destra .sistema-testo {
+    grid-column: 1 / span 6;
+  }
+
+  .sistema-destra .sistema-scena {
+    grid-column: 8 / -1;
+  }
+
+  .sistema-sinistra .sistema-testo {
+    grid-column: 7 / -1;
+  }
+
+  .sistema-sinistra .sistema-scena {
+    grid-column: 1 / span 5;
+    grid-row: 1;
+  }
+
+  /* La scena resta accanto alle voci mentre si leggono */
+  .sistema-scena {
+    position: sticky;
+    top: calc(var(--spacing-barra) + 3rem);
+    padding-top: 1rem;
+  }
+
+  .bn-valore,
+  .bn-cartella {
+    transform: perspective(110em) rotateY(-9deg) rotateX(5deg);
+  }
+
+  .bn-passaggio {
+    transform: perspective(110em) rotateY(8deg) rotateX(4deg);
+  }
+}
+
+/* ---------- 6. Tutto lo studio: la pipeline nel blocco Pratiche ---------- */
+
+.blocco-pipeline .bn-pipeline {
+  font-size: min(calc((100cqw - 2em) / 22), 1.15rem);
+}
+
+@media (max-width: 639px) {
+  .blocco-pipeline .bn-pipeline {
+    font-size: calc((100cqw - 2em) / 14);
+  }
+}
+
+@media (min-width: 1200px) {
+  .blocco-pratiche .blocco-palco {
+    display: flex;
+    flex: 1;
+    align-items: center;
+  }
+
+  .blocco-pipeline {
+    width: 100%;
+  }
+}
+
+/* ---------- 7. Compliance ---------- */
+
+.compliance {
+  padding-bottom: var(--spacing-sezione);
+  background: var(--profondo);
+  color: #fff;
+}
+
+.compliance-interno {
+  display: grid;
+  gap: 2rem;
+}
+
+.compliance-titolo {
+  font-family: var(--font-serif);
+  font-size: var(--text-titolo);
+  font-weight: 450;
+  line-height: 1.1;
+  letter-spacing: -0.018em;
+}
+
+.compliance-voci {
+  display: grid;
+  gap: 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.compliance-voci li {
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+  border-radius: 0.6rem;
+  background: rgb(255 255 255 / 0.06);
+}
+
+.cv-nome {
+  font-family: var(--font-serif);
+  font-size: 1.375rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.cv-testo {
+  margin-top: 0.6rem;
+  line-height: 1.55;
+  color: rgb(255 255 255 / 0.84);
+}
+
+.compliance-dpa {
+  color: rgb(255 255 255 / 0.84);
+}
+
+@media (min-width: 768px) {
+  .compliance-voci {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ---------- 8. Risultati reali ---------- */
+
+.risultati {
+  padding-block: var(--spacing-sezione);
+  background: var(--crema);
+}
+
+.risultati-testa {
+  max-width: 48rem;
+}
+
+.risultati-griglia {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.risultati .caso {
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  outline: 0;
+}
+
+.caso-cliente {
+  color: var(--oro-testo);
+  font-weight: 650;
+}
+
+.risultati .caso-titolo {
+  margin-top: 0.6rem;
+  font-size: clamp(1.625rem, 1.25rem + 1.4vw, 2.25rem);
+  line-height: 1.15;
+}
+
+.caso-testo {
+  max-width: 40rem;
+  margin-top: 1rem;
+  line-height: 1.6;
+  color: var(--testo-2);
+}
+
+.risultati .caso-numeri {
+  margin-top: 2rem;
+}
+
+/* La citazione sullo stesso fondo del ritratto: la foto non sembra un riquadro incollato */
+.voce {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  grid-template-areas:
+    'citazione citazione'
+    'foto firma';
+  gap: 1.75rem 1.25rem;
+  align-content: space-between;
+  align-items: end;
+  margin: 0;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border-radius: 0.6rem;
+  background: var(--fondo-ritratti);
+}
+
+.voce-ritratto {
+  grid-area: foto;
+  display: block;
+}
+
+.voce-ritratto img {
+  display: block;
+  width: 7.5rem;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  border-radius: 0.4rem;
+}
+
+.voce-citazione {
+  grid-area: citazione;
+  margin: 0;
+}
+
+.voce-citazione p {
+  font-family: var(--font-serif);
+  font-size: clamp(1.375rem, 1.1rem + 0.9vw, 1.75rem);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--inchiostro);
+}
+
+.voce-firma {
+  grid-area: firma;
+  padding-bottom: 0.25rem;
+}
+
+.voce-firma b {
+  display: block;
+  font-weight: 650;
+  color: var(--inchiostro);
+}
+
+.voce-firma span {
+  color: var(--testo-2);
+}
+
+.voce .avviso-anteprima {
+  grid-column: 1 / -1;
+}
+
+.risultati-azione {
+  margin-top: 2.5rem;
+}
+
+@media (min-width: 1024px) {
+  .risultati-griglia {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: stretch;
+  }
+}
+
+/* ---------- 9. Diagnosi e 10. FAQ: fondo bianco tra due sezioni crema ---------- */
+
+.diagnosi {
+  background: #fff;
+  border-top: 0;
+}
+
+.diagnosi .chiusura-testo {
+  margin: 1.1rem 0 0;
+}
+
+.diagnosi .faq-voce {
+  background: var(--carta);
+}
+
+/* ---------- 11. Chi siamo (impaginazione in sezioni.css) ---------- */
+
+.chi-pulsante {
+  margin-top: 1.75rem;
+}
+
+.chi-persone {
+  display: grid;
+  gap: 3.5rem;
+}
+
+/* ---------- 12. Piè di pagina ---------- */
+
+.piede-motto {
+  max-width: 24rem;
+  margin-top: 1rem;
+}
+
+.piede-compliance .piede-link {
+  margin-top: 0.5rem;
+}
+
+/* ---------- Movimento ridotto ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .calc-analisi,
+  .cs-voce,
+  .eroe-scorri,
+  .calcolatore input {
+    transition: none;
+  }
+}

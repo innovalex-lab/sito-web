@@ -1,0 +1,51 @@
+---
+// 1. Prima schermata: come il sito attuale (foto dello studio a tutto schermo, velatura blu, testo bianco a sinistra),
+// con la tipografia e i colori del sistema nuovo. La foto è quella di main (public/hero), non rigenerata.
+// È l'elemento LCP: precaricata in index.astro, fetchpriority alta, width e height espliciti, srcset come su main.
+// Movimento allo scorrimento solo con transform (src/scripts/filo.ts), spento con movimento ridotto.
+import { eroe as c } from '../../content/storia';
+import { fotoEroe } from '../../content/foto-eroe';
+
+---
+<section id="home" class="eroe" aria-labelledby="titolo">
+  <div class="eroe-foto">
+    <picture>
+      <source type="image/avif" srcset={fotoEroe.avif} sizes={fotoEroe.sizes} />
+      <source type="image/webp" srcset={fotoEroe.webp} sizes={fotoEroe.sizes} />
+      <img
+        src="/hero/hero-studio.png"
+        alt={c.foto}
+        width="1672"
+        height="941"
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+        data-parallasse
+      />
+    </picture>
+  </div>
+  <div class="eroe-velo" aria-hidden="true"></div>
+
+  <div class="contenitore eroe-interno">
+    <p class="eroe-marchio" data-uguale>{c.marchio}</p>
+    <h1 id="titolo" class="eroe-titolo" data-uguale>{c.titolo[0]}<br />{c.titolo[1]}</h1>
+    <p class="eroe-lead" data-uguale>{c.sottotitolo.testo}</p>
+    <a class="btn btn-oro eroe-pulsante" href={c.pulsante.href} data-uguale>{c.pulsante.testo}</a>
+
+    <dl class="eroe-numeri">
+      {c.numeri.map((n) => (
+        <div>
+          <dt class="eroe-cifra" data-uguale={n.uguale ? '' : undefined}>{n.cifra}{n.unita && <> <span class="eroe-unita">{n.unita}</span></>}</dt>
+          <dd class="eroe-etichetta" data-uguale={n.uguale ? '' : undefined}>{n.etichetta}</dd>
+        </div>
+      ))}
+    </dl>
+    <p class="eroe-nota">{c.nota.prima} <a href="#calcolatore">{c.nota.link}</a></p>
+  </div>
+
+  <a class="eroe-scorri" href="#problema" aria-label="Scorri alla sezione successiva">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" />
+    </svg>
+  </a>
+</section>

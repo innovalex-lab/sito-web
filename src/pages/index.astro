@@ -1,56 +1,32 @@
 ---
+// Home, fase 4: la storyline del sito attuale (index.html sul ramo main) illustrata dalla grafica nuova.
+// Ordine e testi: docs/PIANO-STORYLINE.md. Testi in src/content/storia.ts, stato delle funzioni in src/content/funzioni.ts.
 import Base from '../layouts/Base.astro';
 import Intestazione from '../components/Intestazione.astro';
-import LastraMail from '../components/filo/LastraMail.astro';
-import LastraPannello from '../components/filo/LastraPannello.astro';
-import LastraCartella from '../components/filo/LastraCartella.astro';
-import LastraRinomina from '../components/filo/LastraRinomina.astro';
-import LastraOre from '../components/filo/LastraOre.astro';
-import Benefici from '../components/filo/Benefici.astro';
+import Eroe from '../components/sezioni/Eroe.astro';
+import Problema from '../components/sezioni/Problema.astro';
+import Calcolatore from '../components/sezioni/Calcolatore.astro';
+import ComeFunziona from '../components/sezioni/ComeFunziona.astro';
+import Sistemi from '../components/sezioni/Sistemi.astro';
 import Studio from '../components/sezioni/Studio.astro';
 import Ai from '../components/sezioni/Ai.astro';
-import ChiSiamo from '../components/sezioni/ChiSiamo.astro';
+import Risultati from '../components/sezioni/Risultati.astro';
 import Diagnosi from '../components/sezioni/Diagnosi.astro';
+import ChiSiamo from '../components/sezioni/ChiSiamo.astro';
 import PiePagina from '../components/sezioni/PiePagina.astro';
-import { primaSchermata as c } from '../content/prima-schermata';
+import { fotoEroe } from '../content/foto-eroe';
 import { verificaPerBuild, produzione } from '../content/verifica';
 import serifTitolo from '../fonts/filo/serif-latino.woff2?url';
 import '../styles/filo.css';
 import '../styles/sezioni.css';
+import '../styles/storia.css';
 
 // Verifica dei contenuti: in produzione ferma la build, in anteprima mostra gli avvisi in fondo alla pagina.
 const avvisi = verificaPerBuild();
-
-const passi = [
-  {
-    titolo: 'Arriva una mail',
-    frase: 'Rossi Srl ti inoltra una diffida. La apri in Outlook, come fai ogni giorno.',
-    Lastra: LastraMail,
-  },
-  {
-    titolo: 'La qualifichi dal pannello',
-    frase: 'Accanto alla mail scegli cliente, pratica, collaboratore e ore. Poi premi Conferma.',
-    Lastra: LastraPannello,
-  },
-  {
-    titolo: 'Va nella cartella giusta',
-    frase: 'La mail diventa un PDF nella cartella di Rossi Srl, pratica Rossi c. Edilvetta, con il suo numero progressivo.',
-    Lastra: LastraCartella,
-  },
-  {
-    titolo: 'I documenti trovano il loro nome',
-    frase: 'La scansione prende un nome che si capisce. Il termine della diffida diventa una scadenza proposta. La confermi tu.',
-    Lastra: LastraRinomina,
-  },
-  {
-    titolo: 'Le ore diventano valore',
-    frase: "L'ora e mezza entra nel riepilogo della pratica con il suo valore. Le ore stimate restano a parte finché non le confermi.",
-    Lastra: LastraOre,
-  },
-];
 ---
 <Base sito fontPropri>
   <Fragment slot="head">
+    <link rel="preload" as="image" type="image/avif" imagesrcset={fotoEroe.avif} imagesizes={fotoEroe.sizes} fetchpriority="high" />
     <link rel="preload" href={serifTitolo} as="font" type="font/woff2" crossorigin />
     <script is:inline>document.documentElement.classList.add('js')</script>
   </Fragment>
@@ -59,96 +35,16 @@ const passi = [
     <Intestazione fissa />
 
     <main id="contenuto">
-      <!-- 1. Prima schermata -->
-      <section class="eroe" aria-labelledby="titolo">
-        <div class="contenitore eroe-interno">
-          <h1 id="titolo" class="eroe-titolo">
-            Meno tempo a gestire lo studio,<br />
-            <em class="eroe-oro">più tempo per fare l’avvocato.</em>
-          </h1>
-          <div class="eroe-sotto">
-            <div class="eroe-testo">
-              <p class="eroe-lead">{c.testo}</p>
-              <div class="eroe-azioni">
-                <a class="btn btn-primario" href={c.principale.href}>{c.principale.testo}</a>
-                <a class="btn btn-secondario" href="#come-funziona">{c.secondario.testo}</a>
-              </div>
-            </div>
-            <div class="eroe-palco" aria-hidden="true">
-              <div class="eroe-luce"></div>
-              <div class="eroe-prospettiva">
-                <div class="eroe-inclina" data-inclina>
-                  <div class="eroe-pila">
-                    <span class="eroe-ombra"></span>
-                    <div class="eroe-posa" style="--k:0"><div class="galleggia"><LastraOre class="statica" /></div></div>
-                    <div class="eroe-posa" style="--k:1"><div class="galleggia"><LastraRinomina class="statica" /></div></div>
-                    <div class="eroe-posa" style="--k:2"><div class="galleggia"><LastraPannello class="statica" /></div></div>
-                    <div class="eroe-posa" style="--k:3"><div class="galleggia"><LastraMail class="statica" /></div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 2. Scena: segui una mail -->
-      <section id="come-funziona" class="scena" data-scena aria-labelledby="t-scena">
-        <div class="scena-pista">
-          <div class="scena-fissa contenitore">
-            <h2 id="t-scena" class="scena-titolo">Segui una mail, dall’arrivo al valore.</h2>
-            <ol class="passi">
-              {passi.map((p, i) => (
-                <li class="passo" data-passo={i} data-attivo={i === 0 ? '' : undefined} data-dopo={i > 0 ? '' : undefined} style={`--i:${i}`}>
-                  <div class="passo-testa">
-                    <h3 class="passo-titolo"><button type="button" class="pastiglia" data-vai={i}>{p.titolo}</button></h3>
-                    <p class="passo-frase">{p.frase}</p>
-                  </div>
-                  <p.Lastra class="lastra-scena" stato={i === 0 ? 'attiva' : 'futura'} />
-                </li>
-              ))}
-            </ol>
-          </div>
-        </div>
-      </section>
-
-      <!-- 3. Sezione scura -->
-      <section class="notte" aria-labelledby="t-giornata">
-        <div class="notte-luce" aria-hidden="true"></div>
-        <div class="contenitore notte-interno">
-          <p class="notte-numero" aria-hidden="true">37%</p>
-          <h2 id="t-giornata" class="notte-frase">In media solo il 37% di una giornata di otto ore va in lavoro fatturabile.</h2>
-          <figure class="giornata" data-entra>
-            <div class="giornata-lastra" aria-hidden="true">
-              <div class="giornata-ore">
-                {Array.from({ length: 8 }, () => <span></span>)}
-              </div>
-              <div class="giornata-pieno"></div>
-            </div>
-            <div class="giornata-scala" aria-hidden="true">
-              {['9', '10', '11', '12', '13', '14', '15', '16', '17'].map((h) => <span>{h}</span>)}
-            </div>
-            <figcaption class="giornata-legenda">
-              <span><i class="gl-oro"></i>Lavoro fatturabile, circa 3 ore su 8</span>
-              <span><i class="gl-resto"></i>Il resto: posta, ricerca di documenti, passaggi di consegne, aggiornamenti ai clienti</span>
-            </figcaption>
-          </figure>
-          <p class="fonte">
-            Fonte: <a href="https://www.clio.com/resources/legal-trends/" rel="noopener">Clio, Legal Trends Report 2024, dato internazionale</a>
-          </p>
-        </div>
-      </section>
-
-      <!-- 4. Tre benefici -->
-      <Benefici />
-
-      <!-- 5. Nuove sezioni (fase 3) -->
+      <Eroe />
+      <Problema />
+      <Calcolatore />
+      <ComeFunziona />
+      <Sistemi />
       <Studio />
       <Ai />
-      <ChiSiamo />
-
-      <!-- 6. Diagnosi (ex chiusura), FAQ -->
+      <Risultati />
       <Diagnosi />
+      <ChiSiamo />
     </main>
     <PiePagina />
 
@@ -157,7 +53,7 @@ const passi = [
         <div class="contenitore">
           <p><b>Avvisi dell’anteprima ({avvisi.length}).</b> In produzione la build si ferma finché non sono risolti.</p>
           <ul>
-            {avvisi.map((a) => <li>{a.esistente ? 'Sezione esistente, ' : ''}{a.dove}: {a.problema}</li>)}
+            {avvisi.map((a) => <li>{a.dove}: {a.problema}</li>)}
           </ul>
         </div>
       </aside>

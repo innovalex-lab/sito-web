@@ -1,0 +1,57 @@
+---
+// Scena del beneficio 1 (fase 3), invariata: il valore del mese passa da 2.775 a 3.750 € quando confermi le ore stimate.
+// Si anima entrando nello schermo (data-entra). Dati fittizi.
+interface Props {
+  class?: string;
+}
+const { class: classi = '' } = Astro.props;
+const pratiche = [
+  { nome: 'Rossi Srl c. Edilvetta', conf: 5, stim: 2, prima: '750 €', dopo: '1.050 €' },
+  { nome: 'Successione Galli', conf: 8.5, stim: 0, prima: '1.275 €', dopo: '1.275 €' },
+  { nome: 'Appalto Bianchi', conf: 3, stim: 3.5, prima: '450 €', dopo: '975 €' },
+  { nome: 'Locazione Ferraro', conf: 2, stim: 1, prima: '300 €', dopo: '450 €' },
+];
+const massimo = 9;
+const ore = (n: number) => String(n).replace('.', ',');
+const spigoli = '<span class="spigolo spigolo-basso"></span><span class="spigolo spigolo-sx"></span><span class="spigolo spigolo-dx"></span>';
+---
+<div class:list={["bn-palco bn-palco-valore", classi]} data-entra>
+  <div class="lastra lastra-libera bn-valore" data-ui>
+    <div class="vetro" aria-hidden="true" set:html={spigoli} />
+    <div class="carta" role="img" aria-label="Novembre, Avv. Sara Lombrici: per quattro pratiche le ore stimate vengono confermate e il valore del mese passa da 2.775 a 3.750 euro.">
+      <div class="bv-testa">
+        <span><b>Novembre</b><small>Avv. Sara Lombrici, ore per pratica</small></span>
+        <span class="bv-totale">
+          <small>Valore confermato</small>
+          <span class="bv-cifre"><span class="bv-prima">2.775 €</span><span class="bv-dopo">3.750 €</span></span>
+        </span>
+      </div>
+      <div class="bv-righe">
+        {pratiche.map((p, i) => (
+          <div class="bv-riga" style={`--n:${i}`}>
+            <span class="bv-nome">{p.nome}</span>
+            <span class="bv-barra">
+              <span class="bv-conf" style={`width:${(p.conf / massimo) * 100}%`}></span>
+              {p.stim > 0 && (
+                <span class="bv-stim" style={`width:${(p.stim / massimo) * 100}%`}><span class="bv-stim-oro"></span></span>
+              )}
+            </span>
+            <span class="bv-euro"><span class="bv-prima">{p.prima}</span><span class="bv-dopo">{p.dopo}</span></span>
+          </div>
+        ))}
+      </div>
+      <div class="bv-legenda">
+        <span><i class="bv-l-conf"></i>Confermate</span>
+        <span><i class="bv-l-stim"></i>Stimate, da confermare</span>
+      </div>
+    </div>
+  </div>
+  <div class="lastra lastra-libera bn-conferma" data-ui>
+    <div class="vetro" aria-hidden="true" set:html={spigoli} />
+    <div class="carta" aria-hidden="true">
+      <p class="bc-titolo">Ore stimate confermate</p>
+      <p class="bc-cifra">6,5 h</p>
+      <p class="bc-nota">Entrano nel report di novembre</p>
+    </div>
+  </div>
+</div>

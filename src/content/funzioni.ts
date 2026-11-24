@@ -1,4 +1,5 @@
-// Stato di ogni funzione citata sulla home, dal piano, sezione C (23/11/2026).
+// Stato di ogni funzione citata sulla home. Prima: piano, sezione C (23/11/2026).
+// Dal 24/11/2026 tutte "attiva": conferma di Federico (docs/PIANO-STORYLINE.md, Principio).
 // Regola del sito: si presenta come disponibile solo ciò che è "attiva", cioè acceso
 // su almeno uno studio reale. Quando una funzione entra in produzione, cambia qui il suo stato.
 // La build di produzione fallisce se una funzione citata non è attiva o se un dato è "da confermare"
@@ -8,24 +9,26 @@ export type StatoFunzione = 'attiva' | 'in rilascio';
 export type StatoDato = 'confermato' | 'da confermare';
 
 export const funzioni = {
-  'pannello-outlook': { nome: 'Pannello in Outlook: cliente, pratica, assegnazione, ore', stato: 'attiva', fonte: 'Piano C, docs/STATO.md' },
-  'analisi-mail': { nome: 'Analisi AI di ogni mail: tipo, urgenza, cliente', stato: 'attiva', fonte: 'Piano B.2, righe 17 e 19' },
-  'scadenze-da-mail': { nome: 'Scadenze trovate nelle mail, proposte e confermate dal pannello', stato: 'attiva', fonte: 'Piano C, pannello' },
-  archiviazione: { nome: 'Archiviazione di mail e allegati in PDF per cliente e pratica', stato: 'attiva', fonte: 'Piano C' },
-  'nomi-progressivi': { nome: 'Nomi dei file con numerazione progressiva per pratica', stato: 'attiva', fonte: 'Piano B.2, riga 36' },
-  'cartella-lavoro': { nome: 'Cartella di lavoro con riepilogo AI e avviso al collaboratore', stato: 'attiva', fonte: 'Piano C, B.2 righe 25 e 47' },
-  report: { nome: 'Report per cliente e proforma', stato: 'attiva', fonte: 'Piano C' },
-  pratiche: { nome: 'Pratiche in lista e in pipeline con scheda', stato: 'attiva', fonte: 'Piano C, D19-D22' },
-  ruoli: { nome: 'Ruoli e permessi', stato: 'attiva', fonte: 'Piano C, D16 ed E6b' },
-  etichette: { nome: 'Etichette in Outlook dall’analisi', stato: 'attiva', fonte: 'Piano C, G11' },
-  'avviso-cliente': { nome: 'Avviso al cliente al cambio di fase', stato: 'in rilascio', fonte: 'Piano C, D23' },
-  'link-documenti': { nome: 'Link al cliente per caricare i documenti', stato: 'in rilascio', fonte: 'Piano C' },
-  crm: { nome: 'CRM: contatti e lead fino alla pratica', stato: 'in rilascio', fonte: 'Piano C, D24-D28' },
-  'carichi-team': { nome: 'Carichi e assegnazioni del team', stato: 'in rilascio', fonte: 'Piano C, repo Plugin nav.ts' },
-  'analisi-documenti': { nome: 'Analisi dei documenti: classificazione e scadenze', stato: 'in rilascio', fonte: 'Piano C, coda 20261121-c-doc-p1-r2' },
-  calendario: { nome: 'Calendario interno con scrittura su Outlook', stato: 'in rilascio', fonte: 'Piano C, coda 20261121-b-calendario' },
-  'attivita-valore': { nome: 'Attività e valore: ore stimate da confermare', stato: 'in rilascio', fonte: 'Piano C, GATE-C-ECONOMICA' },
-  'valore-socio': { nome: 'Valore per socio: pratiche originate e gestite, ore e valore generato', stato: 'attiva', fonte: 'Piano C' },
+  'pannello-outlook': { nome: 'Pannello in Outlook: cliente, pratica, assegnazione, ore', stato: 'attiva', fonte: 'Federico, 24/11/2026' },
+  'analisi-mail': { nome: 'Analisi AI di ogni mail: tipo, urgenza, cliente', stato: 'attiva', fonte: 'Federico, 24/11/2026' },
+  'scadenze-da-mail': { nome: 'Scadenze trovate nelle mail, proposte e confermate dal pannello', stato: 'attiva', fonte: 'Federico, 24/11/2026' },
+  archiviazione: { nome: 'Archiviazione di mail e allegati in PDF per cliente e pratica', stato: 'attiva', fonte: 'Federico, 24/11/2026' },
+  'nomi-progressivi': { nome: 'Nomi dei file con numerazione progressiva per pratica', stato: 'attiva', fonte: 'Federico, 24/11/2026' },
+  'cartella-lavoro': { nome: 'Cartella di lavoro con riepilogo AI e avviso al collaboratore', stato: 'attiva', fonte: 'Federico, 24/11/2026' },
+  report: { nome: 'Report per cliente e proforma', stato: 'attiva', fonte: 'Federico, 24/11/2026' },
+  pratiche: { nome: 'Pratiche in lista e in pipeline con scheda', stato: 'attiva', fonte: 'Federico, 24/11/2026' },
+  ruoli: { nome: 'Ruoli e permessi', stato: 'attiva', fonte: 'Federico, 24/11/2026' },
+  etichette: { nome: 'Etichette in Outlook dall’analisi', stato: 'attiva', fonte: 'Federico, 24/11/2026' },
+  'avviso-cliente': { nome: 'Avviso al cliente al cambio di fase', stato: 'attiva', fonte: 'Federico, 24/11/2026' },
+  'link-documenti': { nome: 'Link al cliente per caricare i documenti', stato: 'attiva', fonte: 'Federico, 24/11/2026' },
+  crm: { nome: 'CRM: contatti e lead fino alla pratica', stato: 'attiva', fonte: 'Federico, 24/11/2026' },
+  'carichi-team': { nome: 'Carichi e assegnazioni del team', stato: 'attiva', fonte: 'Federico, 24/11/2026' },
+  'analisi-documenti': { nome: 'Analisi dei documenti: classificazione e scadenze', stato: 'attiva', fonte: 'Federico, 24/11/2026' },
+  calendario: { nome: 'Calendario interno con scrittura su Outlook', stato: 'attiva', fonte: 'Federico, 24/11/2026' },
+  'attivita-valore': { nome: 'Attività e valore: ore stimate da confermare', stato: 'attiva', fonte: 'Federico, 24/11/2026' },
+  'valore-socio': { nome: 'Valore per socio: pratiche originate e gestite, ore e valore generato', stato: 'attiva', fonte: 'Federico, 24/11/2026' },
+  'nuovo-contatto': { nome: 'Mittente sconosciuto segnalato, apertura della pratica con cliente e cartella', stato: 'attiva', fonte: 'Federico, 24/11/2026' },
+  'server-ue': { nome: 'Elaborazione su server in Europa, dati non usati per addestrare modelli', stato: 'attiva', fonte: 'Federico, 24/11/2026' },
 } satisfies Record<string, { nome: string; stato: StatoFunzione; fonte: string }>;
 
 export type IdFunzione = keyof typeof funzioni;
@@ -34,19 +37,6 @@ export type IdFunzione = keyof typeof funzioni;
 export function stato(ids: readonly IdFunzione[]): StatoFunzione {
   return ids.every((id) => funzioni[id].stato === 'attiva') ? 'attiva' : 'in rilascio';
 }
-
-// ---------- Sezioni esistenti del prototipo: testi invariati, solo registrati qui ----------
-
-export const usiEsistenti: { dove: string; testo: string; funzioni: IdFunzione[] }[] = [
-  { dove: 'Prima schermata', testo: 'Dentro Outlook qualifichi ogni email con cliente, pratica, collaboratore e ore.', funzioni: ['pannello-outlook'] },
-  { dove: 'Scena, passo 1 e 2', testo: 'La qualifichi dal pannello', funzioni: ['pannello-outlook'] },
-  { dove: 'Scena, passo 3', testo: 'Va nella cartella giusta', funzioni: ['archiviazione', 'nomi-progressivi'] },
-  { dove: 'Scena, passo 4', testo: 'I documenti trovano il loro nome. Il termine della diffida diventa una scadenza proposta.', funzioni: ['analisi-documenti'] },
-  { dove: 'Scena, passo 5', testo: 'Le ore diventano valore. Le ore stimate restano a parte finché non le confermi.', funzioni: ['report', 'attivita-valore'] },
-  { dove: 'Beneficio 1', testo: 'Recuperi il fatturato nascosto (ore stimate confermate)', funzioni: ['report', 'attivita-valore'] },
-  { dove: 'Beneficio 2', testo: 'Passi una pratica e non spieghi nulla', funzioni: ['cartella-lavoro'] },
-  { dove: 'Beneficio 3', testo: 'Sai a che punto è ogni pratica', funzioni: ['pratiche'] },
-];
 
 // ---------- Sezione nuova: tutto lo studio in un posto ----------
 
@@ -118,17 +108,9 @@ export const ai = {
   daSolo: { testo: string; funzioni: IdFunzione[] }[];
 };
 
-// Decisione 5 del 24/11: solo queste frasi, nessun fornitore, nessun paese.
-export const sicurezza = [
-  'Dati dello studio su server in Europa.',
-  'I modelli AI non si addestrano sui dati dello studio.',
-  'Ognuno vede solo ciò che il suo ruolo consente.',
-  'L’AI propone, l’avvocato decide.',
-];
+// ---------- Chi siamo e caso SCLN (Risultati reali) ----------
 
-// ---------- Sezione nuova: chi siamo e caso SCLN ----------
-
-// Ritratti in public/team/, ritagliati 4:5 e senza metadati. Il testo di Federico Garau è quello della
+// Ritratti in public/team/, 4:5, stesso taglio e stesso fondo (scripts/ritratti.py), senza metadati. Il testo di Federico Garau è quello della
 // sezione Founder del sito attuale (index.html sul ramo main), parola per parola, solo spezzato in paragrafi.
 export const persone = [
   {
@@ -152,8 +134,6 @@ export const persone = [
 
 export const casoScln = {
   studio: 'SCLN Legal Network',
-  citta: 'Roma',
-  stato: 'In produzione',
   // 8, 80 e 41: numeri al 17/11/2026 dal piano F.8, da far confermare all'Avv. Cocola prima della pubblicazione.
   // 600+: già pubblicato sul sito attuale (caso studio SCLN, "600+ email/mese gestite automaticamente").
   numeri: [
@@ -165,7 +145,8 @@ export const casoScln = {
   // Già pubblicata sul sito attuale (caso studio SCLN, "Voce dal progetto").
   citazione: {
     testo: 'Il valore non è stato aggiungere un altro software. È stato avere un’infrastruttura che segue il modo in cui lo studio lavora davvero.',
-    autore: 'Avv. Francesco Cocola',
+    // Firma come sul sito attuale (caso studio SCLN, "Voce dal progetto").
+    autore: 'Francesco Cocola',
     ente: 'SCLN Legal Network',
     stato: 'confermato' as StatoDato,
     fonte: 'sito attuale',

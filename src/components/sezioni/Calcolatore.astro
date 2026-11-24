@@ -1,0 +1,117 @@
+---
+// 3. Calcolatore. Campi, intervalli, valori iniziali e formule identici a main (index.html, updateROI).
+// I risultati iniziali sono calcolati qui, così si leggono anche prima dello script.
+// L'unica animazione della sezione: la richiesta dell'analisi che compare dopo il primo calcolo.
+// Invio a /api/roi-lead con gli stessi campi di main: src/scripts/calcolatore.ts.
+import { calcolatore as c } from '../../content/storia';
+import { calcola, euro, formula } from '../../lib/calcolo';
+
+const iniziale = calcola({
+  ore: c.campi[0].valore,
+  tariffa: c.campi[1].valore,
+  avvocati: c.campi[2].valore,
+  quote: c.sistemi.filter((s) => s.iniziale).map((s) => s.quota),
+});
+const percento = (q: number) => `${Math.round(q * 100)}%`;
+---
+<section id="calcolatore" class="calcolatore" aria-labelledby="t-calcolatore">
+  <span id="roi" class="ancora-vecchia" aria-hidden="true"></span>
+  <div class="contenitore">
+    <div class="calc-testa">
+      <p class="etichetta" data-uguale>{c.etichetta}</p>
+      <h2 id="t-calcolatore" class="sezione-titolo" data-uguale>{c.titolo}</h2>
+      <p class="lead" data-uguale>{c.lead}</p>
+    </div>
+
+    <div class="calc-griglia" data-calcolatore>
+      <div class="calc-campi">
+        <p class="calc-nota">{c.nota}</p>
+        {c.campi.map((f) => (
+          <div class="calc-campo">
+            <div class="cc-riga">
+              <label for={`calc-${f.id}`} id={`calc-${f.id}-etichetta`} data-uguale>{f.etichetta}</label>
+              <span class="cc-numero">
+                <input
+                  type="number"
+                  id={`calc-${f.id}-numero`}
+                  inputmode="decimal"
+                  min={f.min}
+                  max={f.max}
+                  step={f.passo}
+                  value={f.valore}
+                  aria-label={`${f.etichetta}, valore esatto`}
+                  data-numero={f.id}
+                />
+                {f.unita && <span class="cc-unita" aria-hidden="true">{f.unita}</span>}
+              </span>
+            </div>
+            <input type="range" id={`calc-${f.id}`} min={f.min} max={f.max} step={f.passo} value={f.valore} data-campo={f.id} />
+            <div class="cc-scala" aria-hidden="true"><span>{String(f.min).replace('.', ',')}</span><span>{f.max}</span></div>
+          </div>
+        ))}
+
+        <fieldset class="calc-sistemi">
+          <legend data-uguale>{c.legenda}</legend>
+          {c.sistemi.map((s) => (
+            <label class="cs-voce">
+              <input type="checkbox" checked={s.iniziale} data-sistema={s.id} data-quota={s.quota} data-invio={s.invio} data-etichetta-lead={s.etichettaLead} />
+              <span class="cs-testa">
+                <span class="cs-nome">{s.nome}</span>
+                <span class="cs-quota">recupera il {percento(s.quota)} delle ore perse</span>
+              </span>
+              <span class="cs-testo" data-uguale>{s.testo}</span>
+            </label>
+          ))}
+          <p class="cs-massimo">Con tutti e tre: {percento(c.massimo)}, il massimo del calcolo.</p>
+        </fieldset>
+      </div>
+
+      <div class="calc-colonna">
+        <div class="calc-risultato">
+          <p class="cr-etichetta" data-uguale>{c.risultato.etichetta}</p>
+          <p class="cr-voce" id="cr-annuale-etichetta" data-uguale>{c.risultato.annuale}</p>
+          <output class="cr-annuale" id="cr-annuale" aria-labelledby="cr-annuale-etichetta" data-esito="annuale">{euro(iniziale.annuale)}</output>
+          <p class="cr-formula" data-esito="formula">{formula(iniziale, c.campi[0].valore, c.campi[1].valore, c.campi[2].valore)}</p>
+          <p class="cr-stima" data-esito="stima">{c.risultato.stima}</p>
+          <dl class="cr-dettagli">
+            <div>
+              <dt data-uguale>{c.risultato.oreMese}</dt>
+              <dd class="cr-cifra" data-esito="oreMese">{iniziale.oreMese.toFixed(0)}h</dd>
+              <dd class="cr-sotto" data-esito="oreGiorno">{iniziale.oreGiorno.toFixed(1)}h/giorno recuperate per avvocato</dd>
+            </div>
+            <div>
+              <dt data-uguale>{c.risultato.risparmio}</dt>
+              <dd class="cr-cifra" data-esito="mensile">{euro(iniziale.mensile)}</dd>
+              <dd class="cr-sotto" data-esito="mensileDettaglio">{iniziale.oreMese.toFixed(0)}h x {euro(c.campi[1].valore)}/h</dd>
+            </div>
+          </dl>
+          <a class="btn btn-oro cr-pulsante" href="#come-funziona" data-uguale>{c.risultato.soluzione}</a>
+        </div>
+
+        <div class="calc-analisi" id="calc-analisi" hidden data-analisi>
+          <div data-analisi-modulo>
+            <h3 class="ca-titolo" data-uguale>{c.analisi.titolo}</h3>
+            <p class="ca-testo">{c.analisi.testo}</p>
+            <form class="ca-modulo" novalidate data-analisi-form>
+              <label for="ca-email" data-uguale>{c.analisi.campo}</label>
+              <div class="ca-riga">
+                <input id="ca-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="ca-errore" />
+                <button type="submit" class="btn btn-primario" data-testo={c.analisi.pulsante} data-invio={c.analisi.invio}>{c.analisi.pulsante}</button>
+              </div>
+              <p id="ca-errore" class="ca-errore" role="alert" hidden data-errore-rete={c.analisi.errore} data-errore-email={c.analisi.emailNonValida}></p>
+            </form>
+            <p class="ca-privacy">{c.analisi.privacy} <a href="/privacy-policy.html">{c.analisi.privacyLink}</a>.</p>
+          </div>
+          <div class="ca-fatto" role="status" hidden data-analisi-fatto>
+            <p class="ca-titolo" data-uguale>{c.analisi.fatto}</p>
+            <p class="ca-testo" data-uguale>{c.analisi.fattoTesto}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import '../../scripts/calcolatore';
+</script>

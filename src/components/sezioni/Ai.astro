@@ -1,7 +1,8 @@
 ---
-// AI e automazioni. Statica, con due micro animazioni all'ingresso (isole Motion).
-// Sotto, le sole frasi di sicurezza consentite (decisione 5 del 24/11).
-import { ai, sicurezza, stato } from '../../content/funzioni';
+// AI e automazioni. Statica, con due micro animazioni all'ingresso (isole Motion). Invariata dalla fase 3.
+// Sotto, nella stessa fascia scura, la compliance del sito attuale (fase 4: sostituisce le quattro frasi di sicurezza).
+import { ai, stato } from '../../content/funzioni';
+import { compliance } from '../../content/storia';
 import { produzione } from '../../content/verifica';
 import { LeggeMail, Archivia } from './AiScene';
 
@@ -38,9 +39,20 @@ const colonne = [
         </div>
       ))}
     </div>
+  </div>
+</section>
 
-    <ul id="sicurezza" class="sicurezza" aria-label="Sicurezza e riservatezza">
-      {sicurezza.map((frase) => <li>{frase}</li>)}
+<section id="compliance" class="compliance" aria-labelledby="t-compliance">
+  <div class="contenitore compliance-interno">
+    <h2 id="t-compliance" class="compliance-titolo" data-uguale>{compliance.titolo[0]}<br />{compliance.titolo[1]}</h2>
+    <ul class="compliance-voci">
+      {compliance.voci.map((v) => (
+        <li>
+          <h3 class="cv-nome">{v.nome}</h3>
+          <p class="cv-testo">{v.testo}</p>
+        </li>
+      ))}
     </ul>
+    <p class="compliance-dpa" data-uguale>{compliance.dpa}</p>
   </div>
 </section>
