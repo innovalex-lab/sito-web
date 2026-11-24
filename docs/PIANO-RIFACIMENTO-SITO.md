@@ -1,6 +1,6 @@
 # Piano di rifacimento del sito INNOVALEX
 
-Stato al 23/11/2026. Piano aggiornato con le decisioni di Federico all'avvio della fase 1.
+Stato al 24/11/2026. Piano aggiornato con le decisioni di Federico all'avvio della fase 3.
 
 Legenda: **FACT** = verificato su file, codice o misura. **INFERENCE** = deduzione ragionata dai fatti. **OPINION** = raccomandazione. Le domande aperte sono nella sezione L.
 
@@ -23,6 +23,19 @@ Decisioni di Federico. Prevalgono su ogni altra parte di questo documento.
 - **L11, chiusa.** Il Tavolo Fondatori non va sul sito.
 - **Pagina di ringraziamento.** Non deve promettere invii (caso studio, whitepaper) finché non esistono davvero.
 - **Direzione grafica, 24/11/2026.** Approvata la direzione "Il filo d'oro" (`/anteprima/filo`, commit ba5a855): "veramente bellissimo, la direzione è quella giusta". Si porta al livello dei riferimenti (Legora, Resend, Metodo TRACCIA) senza cambiare concetto, testi o struttura delle sezioni. Per questa direzione non valgono le regole della fase 2 su zero JavaScript e assenza di animazioni, né i divieti E.1 su profondità ed effetti.
+
+## Decisioni del 24/11/2026
+
+Decisioni di Federico all'avvio della fase 3, sul prototipo approvato (commit 50ea2aa: "va benissimo, va solamente affinato"). Prevalgono sulle sezioni E e F.
+
+1. **Il filo d'oro si toglie.** Niente linea che si muove o collega le sezioni, nemmeno nella prima schermata e nella scena. Restano tutte le altre animazioni.
+2. **È un sito, non una presentazione.** Compatto, si arriva al form senza fatica. Le sezioni nuove alternano blocchi statici affiancati e micro animazioni, niente nuove scene lunghe.
+3. **Niente sezione "In arrivo"** e nessuna roadmap sul sito. La sezione F.7 non si fa.
+4. **Riservatezza.** Interfacce stilizzate e parziali, mai schermate intere del prodotto; niente elenchi esaustivi di funzioni, numeri interni o prezzi. Il dettaglio si vede nella diagnosi.
+5. **Sicurezza, solo queste frasi:** dati dello studio su server in Europa; i modelli AI non si addestrano sui dati dello studio; ognuno vede solo ciò che il suo ruolo consente; l'AI propone, l'avvocato decide. Niente nomi di fornitori, niente "Germania". Sostituisce l'elenco della sezione C.
+6. **Agente AI e automazioni attivabili per ruolo non si citano:** non sono attivi.
+7. **Librerie (correzione dello stesso giorno).** Kokonut UI e bklit UI sono ammesse, solo per i componenti che servono davvero e dopo la lettura del codice aggiunto. Motion per React è ammesso e consigliato nelle sezioni nuove; anime.js solo per dettagli che Motion non copre. Budget: 200 KB di JavaScript compresso, LCP mobile sotto 2,5 s, 60 fps. Le sezioni esistenti del prototipo non si cambiano: le proposte vanno nel report.
+8. **Pagina.** Il prototipo diventa la home `/`. `/anteprima/a`, `/anteprima/b` e `/anteprima/filo` sono tolte; `/anteprima/sistema` resta in noindex.
 
 ---
 

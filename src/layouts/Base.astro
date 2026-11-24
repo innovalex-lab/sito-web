@@ -7,8 +7,10 @@ interface Props {
   description?: string;
   /** Pagine interne di lavoro: mai indicizzate, nemmeno in produzione. */
   anteprima?: boolean;
-  /** Le pagine con font propri (anteprima/filo) non precaricano quello comune. */
+  /** Le pagine con font propri (la home) non precaricano quello comune. */
   fontPropri?: boolean;
+  /** La home: stesse classi delle pagine di anteprima, ma indicizzabile in produzione. */
+  sito?: boolean;
 }
 
 const {
@@ -16,12 +18,13 @@ const {
   description = 'Da Outlook qualifichi ogni email con cliente, pratica, collaboratore e ore. Archivio, pratiche, team e valore economico in un solo posto.',
   anteprima = false,
   fontPropri = false,
+  sito = false,
 } = Astro.props;
 
 // Solo la build di produzione è indicizzabile: le anteprime non devono finire su Google.
 const isProduction = process.env.VERCEL_ENV === 'production';
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const classiBody = anteprima
+const classiBody = anteprima || sito
   ? 'bg-bianco font-sans text-corpo text-inchiostro antialiased'
   : 'bg-white font-sans text-slate-900 antialiased';
 ---

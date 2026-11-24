@@ -1,0 +1,82 @@
+---
+// Tutto lo studio in un posto. Sezione statica: sei blocchi, ognuno con un frammento
+// stilizzato e parziale dell'interfaccia (mai una schermata intera). Dati fittizi.
+// Lo stato di ogni blocco viene da src/content/funzioni.ts.
+import { studio, stato } from '../../content/funzioni';
+import { produzione } from '../../content/verifica';
+
+const blocchi = studio.map((b) => ({ ...b, stato: stato(b.funzioni) }));
+---
+<section id="studio" class="studio" aria-labelledby="t-studio">
+  <div class="contenitore">
+    <div class="studio-testa">
+      <h2 id="t-studio" class="sezione-titolo">Tutto lo studio in un posto.</h2>
+      <p class="studio-intro">Quello che qualifichi dalla posta alimenta il resto: pratiche, clienti, scadenze e team.</p>
+    </div>
+
+    <ul class="studio-griglia">
+      {blocchi.map((b) => (
+        <li class:list={['blocco', `blocco-${b.id}`]}>
+          <div class="mini" data-ui aria-hidden="true">
+            {b.id === 'pratiche' && (
+              <div class="mini-pipeline">
+                <span class="mp-col"><b>Istruttoria <i>2</i></b><span class="mp-carta mp-viva">Rossi c. Edilvetta</span><span class="mp-carta">Galli c. Ottica Sole</span></span>
+                <span class="mp-col"><b>Diffida <i>1</i></b><span class="mp-carta">Ferraro c. Lunaria</span></span>
+                <span class="mp-col"><b>Ricorso <i>1</i></b><span class="mp-carta">Bianchi c. Edilnord</span></span>
+              </div>
+            )}
+            {b.id === 'cliente' && (
+              <div class="mini-avviso">
+                <p class="ma-fase"><span class="ma-da">Istruttoria</span><span class="ma-freccia"></span><span class="ma-a">Diffida inviata</span></p>
+                <p class="ma-messaggio">Buongiorno, la diffida a Edilvetta è partita oggi. Può caricare qui la quarta fattura.</p>
+                <span class="ma-link">Carica i documenti</span>
+              </div>
+            )}
+            {b.id === 'scadenze' && (
+              <div class="mini-scadenza">
+                <span class="ms-data"><b>27</b>nov</span>
+                <span class="ms-testo"><b>Termine della diffida</b><small>Trovata nella mail di Marta Rossi</small></span>
+                <span class="ms-azioni"><span class="ms-si">Conferma</span><span class="ms-no">Rifiuta</span></span>
+              </div>
+            )}
+            {b.id === 'team' && (
+              <div class="mini-team">
+                {[
+                  ['SL', 'Sara Lombrici', 0.82],
+                  ['PN', 'Paolo Neri', 0.55],
+                  ['GM', 'Giulia Moro', 0.34],
+                ].map(([sigla, nome, carico]) => (
+                  <span class="tm-riga">
+                    <span class="tm-sigla">{sigla}</span>
+                    <span class="tm-nome">{nome}</span>
+                    <span class="tm-barra"><span style={`width:${Number(carico) * 100}%`}></span></span>
+                  </span>
+                ))}
+              </div>
+            )}
+            {b.id === 'crm' && (
+              <div class="mini-crm">
+                <span class="mc-passo">Primo contatto</span>
+                <span class="mc-passo">Incontro</span>
+                <span class="mc-passo mc-ora">Incarico</span>
+                <span class="mc-passo mc-pratica">Pratica aperta</span>
+              </div>
+            )}
+            {b.id === 'ruoli' && (
+              <div class="mini-ruoli">
+                <span class="rl-riga"><b>Managing partner</b><span>tutto lo studio</span></span>
+                <span class="rl-riga"><b>Associate</b><span>le sue pratiche</span></span>
+                <span class="rl-riga"><b>Segreteria</b><span>posta e calendario</span></span>
+              </div>
+            )}
+          </div>
+          <h3 class="blocco-titolo">{b.titolo}</h3>
+          <p class="blocco-testo">{b.testo}</p>
+          {!produzione && b.stato !== 'attiva' && (
+            <p class="avviso-anteprima">Avviso di anteprima: funzione {b.stato}, non pubblicabile come disponibile.</p>
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

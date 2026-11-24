@@ -1,0 +1,46 @@
+---
+// AI e automazioni. Statica, con due micro animazioni all'ingresso (isole Motion).
+// Sotto, le sole frasi di sicurezza consentite (decisione 5 del 24/11).
+import { ai, sicurezza, stato } from '../../content/funzioni';
+import { produzione } from '../../content/verifica';
+import { LeggeMail, Archivia } from './AiScene';
+
+const colonne = [
+  { id: 'legge', titolo: 'Cosa legge l’AI per te', righe: ai.legge },
+  { id: 'da-solo', titolo: 'Cosa succede da solo', righe: ai.daSolo },
+];
+---
+<section id="ai" class="ai" aria-labelledby="t-ai">
+  <div class="contenitore ai-interno">
+    <h2 id="t-ai" class="ai-titolo">{ai.titolo}</h2>
+
+    <div class="ai-colonne">
+      {colonne.map((c) => (
+        <div class:list={['ai-colonna', `ai-${c.id}`]}>
+          <div class="ai-palco">
+            {c.id === 'legge' ? (
+              <LeggeMail client:visible={{ rootMargin: '300px' }} />
+            ) : (
+              <Archivia client:visible={{ rootMargin: '300px' }} />
+            )}
+          </div>
+          <h3 class="ai-sottotitolo">{c.titolo}</h3>
+          <ul class="ai-elenco">
+            {c.righe.map((r) => (
+              <li>
+                {r.testo}
+                {!produzione && stato(r.funzioni) !== 'attiva' && (
+                  <span class="avviso-anteprima avviso-scuro">Avviso di anteprima: funzione {stato(r.funzioni)}.</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <ul id="sicurezza" class="sicurezza" aria-label="Sicurezza e riservatezza">
+      {sicurezza.map((frase) => <li>{frase}</li>)}
+    </ul>
+  </div>
+</section>

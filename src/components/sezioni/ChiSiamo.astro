@@ -1,0 +1,45 @@
+---
+// Chi siamo e caso SCLN. Statica e compatta. Nessuna foto per ora: le cornici dei ritratti
+// hanno già la proporzione della foto (4:5) e oggi mostrano le iniziali.
+// I numeri SCLN sono "da confermare" in src/content/funzioni.ts; la citazione è vuota.
+import { casoScln, persone } from '../../content/funzioni';
+import { produzione } from '../../content/verifica';
+---
+<section id="chi-siamo" class="chi" aria-labelledby="t-chi">
+  <div class="contenitore chi-interno">
+    <div class="chi-noi">
+      <h2 id="t-chi" class="sezione-titolo">INNOVALEX nasce dentro uno studio legale.</h2>
+      <ul class="persone">
+        {persone.map((p) => (
+          <li class="persona">
+            <span class="ritratto" aria-hidden="true"><span>{p.iniziali}</span></span>
+            <span class="persona-testo">
+              <b>{p.nome}</b>
+              <span class="persona-ruolo">{p.ruolo}</span>
+              {p.nota && <span class="persona-nota">{p.nota}</span>}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <article id="caso-studio" class="caso" aria-labelledby="t-caso">
+      <h3 id="t-caso" class="caso-titolo">{casoScln.studio}, {casoScln.citta}</h3>
+      <p class="caso-stato">{casoScln.stato}</p>
+      <dl class="caso-numeri">
+        {casoScln.numeri.map((n) => (
+          <div>
+            <dt>{n.etichetta}</dt>
+            <dd>{n.valore}</dd>
+            {!produzione && n.stato !== 'confermato' && <dd class="avviso-anteprima">Da confermare</dd>}
+          </div>
+        ))}
+      </dl>
+      {casoScln.citazione ? (
+        <blockquote class="caso-citazione"><p>{casoScln.citazione}</p></blockquote>
+      ) : (
+        !produzione && <p class="caso-citazione-vuota">Spazio per la citazione dell’Avv. Cocola, vuoto finché non c’è un testo approvato.</p>
+      )}
+    </article>
+  </div>
+</section>
