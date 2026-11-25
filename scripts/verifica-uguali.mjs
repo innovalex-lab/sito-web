@@ -6,7 +6,7 @@
 //      rientrate sotto una riga [=] (per esempio le descrizioni dei tre sistemi nel calcolatore);
 //   2. la pagina costruita: ogni elemento con l'attributo data-uguale.
 // Per ognuna si controlla che ogni frase sia nel testo visibile di main. Per le frasi del piano si controlla
-// anche che siano nella pagina; quelle del form della diagnosi (sezione 9) arrivano nella sessione 2.
+// anche che siano nella pagina (dalla sessione 2 anche quelle del form della diagnosi).
 //
 // Il confronto ignora gli spazi, le virgolette, gli apostrofi e la punteggiatura (. , : ; ! ?): conta che
 // le parole e i numeri siano gli stessi e nello stesso ordine. Le differenze si elencano, non si correggono.
@@ -56,25 +56,21 @@ export function frasiPiano() {
   return frasi;
 }
 
-// Testi che arrivano con il form della diagnosi (sessione 2)
-const sessione2 = (f) => f.sezione.startsWith('9.') && f.riga > 152;
-
 export function confrontaUguali({ uguali, testoPagina }) {
   const main = normalizza(testoMain());
   const pagina = normalizza(testoPagina);
   const differenze = [];
-  const attese = [];
   for (const f of frasiPiano()) {
     const n = normalizza(f.frase);
     if (!main.includes(n)) differenze.push(`piano riga ${f.riga} (${f.sezione}): diverso da main: "${f.frase}"`);
-    if (!pagina.includes(n)) (sessione2(f) ? attese : differenze).push(`piano riga ${f.riga} (${f.sezione}): manca nella pagina: "${f.frase}"`);
+    if (!pagina.includes(n)) differenze.push(`piano riga ${f.riga} (${f.sezione}): manca nella pagina: "${f.frase}"`);
   }
   for (const u of uguali) {
     for (const f of u.split(/(?<=[.!?])\s+/)) {
       if (normalizza(f) && !main.includes(normalizza(f))) differenze.push(`pagina, data-uguale: diverso da main: "${f.trim()}"`);
     }
   }
-  return { frasi: frasiPiano().length, elementi: uguali.length, differenze, attese };
+  return { frasi: frasiPiano().length, elementi: uguali.length, differenze };
 }
 
 // Testo della pagina con uno spazio tra i nodi, compresi gli esiti nascosti (riuscito, errore)
@@ -101,6 +97,5 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   await browser.close();
   console.log(`Frasi [=] del piano: ${esito.frasi}. Elementi data-uguale nella pagina: ${esito.elementi}.`);
   console.log(esito.differenze.length ? `Differenze (${esito.differenze.length}):\n- ${esito.differenze.join('\n- ')}` : 'Nessuna differenza.');
-  if (esito.attese.length) console.log(`Attese nella sessione 2 (${esito.attese.length}):\n- ${esito.attese.join('\n- ')}`);
   process.exit(esito.differenze.length ? 1 : 0);
 }

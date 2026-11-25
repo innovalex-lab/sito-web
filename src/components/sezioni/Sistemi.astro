@@ -1,11 +1,11 @@
 ---
 // 5. Tre sistemi, una sola infrastruttura. Ogni sistema ha la stessa forma: etichetta, titolo, testo,
 // quattro voci brevi e una scena affiancata (al massimo metà della larghezza). Le scene sono quelle
-// della fase 3, spostate e ridimensionate, non ridisegnate:
-//   Ordine Operativo: la lastra della cartella con i PDF numerati (passo 3 della scena);
+// della fase 3, spostate e ridimensionate, non ridisegnate, tranne Ordine Operativo:
+//   Ordine Operativo: la lastra del nuovo contatto (sessione 2: prima era la cartella del passo 3, ripetuta);
 //   Visibilità Economica: beneficio 1; Governance Operativa: beneficio 2.
 // Una sola animazione per sistema: la scena, quando entra nello schermo.
-import LastraCartella from '../filo/LastraCartella.astro';
+import LastraContatto from '../filo/LastraContatto.astro';
 import ScenaValore from '../filo/ScenaValore.astro';
 import ScenaPassaggio from '../filo/ScenaPassaggio.astro';
 import { sistemi as c, prenota } from '../../content/storia';
@@ -41,8 +41,8 @@ const blocchi = [
         </div>
         <div class="sistema-scena">
           {s.id === 'ordine-operativo' && (
-            <div class="bn-palco bn-palco-cartella" data-lastra-entra>
-              <LastraCartella class="lastra-libera bn-cartella" stato="futura" />
+            <div class="bn-palco bn-palco-contatto" data-lastra-entra>
+              <LastraContatto class="lastra-libera bn-contatto" stato="futura" />
             </div>
           )}
           {s.id === 'visibilita-economica' && <ScenaValore />}
@@ -51,6 +51,6 @@ const blocchi = [
       </article>
     ))}
 
-    <p class="sistemi-azione"><a class="btn btn-primario" href="#contatti">{prenota}</a></p>
+    <p class="sistemi-azione"><a class="btn btn-primario" href="#contatti" data-cta="sistemi-diagnosi">{prenota}</a></p>
   </div>
 </section>

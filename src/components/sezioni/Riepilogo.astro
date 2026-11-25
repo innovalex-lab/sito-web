@@ -1,0 +1,55 @@
+---
+// 7. Riepilogo: al posto della sezione AI (decisione di Federico del 25/11/2026, docs/PIANO-STORYLINE.md).
+// Solo tipografia, nella fascia scura; sotto, nella stessa fascia, la compliance del sito attuale.
+// Nessuna animazione. Per un video futuro sopra i tre blocchi c'è lo slot "video":
+//   <Riepilogo><video slot="video" ... /></Riepilogo>
+// Senza slot non si mostra nulla, nemmeno un segnaposto.
+import { riepilogo as r, compliance, prenota } from '../../content/storia';
+
+const conVideo = Astro.slots.has('video');
+---
+<section id="riepilogo" class="riepilogo" aria-labelledby="t-riepilogo">
+  <div class="contenitore riepilogo-interno">
+    <h2 id="t-riepilogo" class="riepilogo-titolo"><span>{r.titolo[0]}</span> <span>{r.titolo[1]}</span></h2>
+    <p class="riepilogo-testo">{r.testo.testo}</p>
+
+    {conVideo && (
+      <div class="riepilogo-video">
+        <slot name="video" />
+      </div>
+    )}
+
+    <ul class="riepilogo-blocchi">
+      {r.blocchi.map((b) => (
+        <li class="riepilogo-blocco">
+          <h3 class="rb-titolo">{b.titolo}</h3>
+          <p class="rb-testo">{b.testo}</p>
+        </li>
+      ))}
+    </ul>
+
+    <p class="riepilogo-chiusura">
+      {r.chiusura.map((parte, i) => <>{i > 0 && ' '}<span>{parte}</span></>)}
+    </p>
+
+    <p class="riepilogo-azioni">
+      <a class="btn btn-chiaro" href={r.calcola.href} data-cta="riepilogo-calcola">{r.calcola.testo}</a>
+      <a class="btn btn-oro" href="#contatti" data-cta="riepilogo-diagnosi">{prenota}</a>
+    </p>
+  </div>
+</section>
+
+<section id="compliance" class="compliance" aria-labelledby="t-compliance">
+  <div class="contenitore compliance-interno">
+    <h2 id="t-compliance" class="compliance-titolo" data-uguale>{compliance.titolo[0]}<br />{compliance.titolo[1]}</h2>
+    <ul class="compliance-voci">
+      {compliance.voci.map((v) => (
+        <li>
+          <h3 class="cv-nome">{v.nome}</h3>
+          <p class="cv-testo">{v.testo}</p>
+        </li>
+      ))}
+    </ul>
+    <p class="compliance-dpa" data-uguale>{compliance.dpa}</p>
+  </div>
+</section>

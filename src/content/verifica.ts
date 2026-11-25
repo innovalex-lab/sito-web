@@ -2,7 +2,7 @@
 // e, sul testo finale, in astro.config.mjs (scripts/verifica-testi.mjs).
 // In produzione (VERCEL_ENV=production) ogni avviso fa fallire la build.
 // Nelle anteprime la pagina si costruisce comunque e mostra gli avvisi.
-import { ai, casoScln, funzioni, studio, type IdFunzione } from './funzioni';
+import { casoScln, funzioni, studio, type IdFunzione } from './funzioni';
 import * as storia from './storia';
 
 export interface Avviso {
@@ -41,7 +41,6 @@ export function avvisiContenuti(): Avviso[] {
   };
   for (const f of frasiConFunzioni()) controlla(`${f.dove}, "${f.testo.slice(0, 60)}"`, f.funzioni, false);
   for (const b of studio) controlla(`Tutto lo studio, ${b.titolo}`, b.funzioni, false);
-  for (const r of [...ai.legge, ...ai.daSolo]) controlla(`AI e automazioni, "${r.testo}"`, r.funzioni, false);
   for (const n of casoScln.numeri) {
     if (n.stato !== 'confermato') avvisi.push({ dove: 'Caso SCLN', problema: `dato da confermare: ${n.valore} ${n.etichetta} (fonte: ${n.fonte})`, esistente: false });
   }

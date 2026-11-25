@@ -30,7 +30,7 @@ import { fotoEroe } from '../../content/foto-eroe';
     <p class="eroe-marchio" data-uguale>{c.marchio}</p>
     <h1 id="titolo" class="eroe-titolo" data-uguale>{c.titolo[0]}<br />{c.titolo[1]}</h1>
     <p class="eroe-lead" data-uguale>{c.sottotitolo.testo}</p>
-    <a class="btn btn-oro eroe-pulsante" href={c.pulsante.href} data-uguale>{c.pulsante.testo}</a>
+    <a class="btn btn-oro eroe-pulsante" href={c.pulsante.href} data-cta="hero-demo" data-uguale>{c.pulsante.testo}</a>
 
     <dl class="eroe-numeri">
       {c.numeri.map((n) => (

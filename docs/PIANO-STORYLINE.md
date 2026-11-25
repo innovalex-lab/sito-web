@@ -95,7 +95,7 @@ Legenda dei testi: **[=]** testo del sito attuale, invariato. **[≈]** testo de
   - [≈] Archiviazione PDF automatica: "Ogni mail diventa un PDF nella cartella del cliente e della pratica giusti, con gli allegati, numerazione progressiva e zero intervento manuale." (tolta l'incorporazione degli allegati nel PDF, non verificata)
   - [≈] Scadenzario: "INNOVALEX rileva udienze, termini e depositi e te li propone. Tu confermi e finiscono in calendario, anche in Outlook." (tolti gli avvisi a 30, 15, 7 e 1 giorno e il canale della cancelleria)
   - [≈] Nuovo contatto: "Quando scrive un mittente sconosciuto, INNOVALEX te lo segnala e con un click apri la pratica, creando cliente e cartella." (tolto "senza inserimento manuale": l'aggancio lo fa l'avvocato)
-- Grafica: la lastra della cartella con i PDF numerati.
+- Grafica: la lastra del nuovo contatto (mail da un mittente non in anagrafica, il pannello lo segnala, un click apre la pratica: cliente creato, pratica aperta, cartella pronta). Dal 25/11 sostituisce la cartella con i PDF numerati, che era identica al passo 3 della scena.
 
 ### Visibilità Economica
 - [=] Titolo: "Il lavoro che fai diventa valore che si vede."
@@ -123,9 +123,18 @@ Legenda dei testi: **[=]** testo del sito attuale, invariato. **[≈]** testo de
 - Come adesso: blocchi asimmetrici e scorrimento su mobile, gli stessi sei blocchi. Funziona da riepilogo prima della prova reale.
 - La scena del beneficio 3 (la pipeline) entra qui come blocco grande di "Pratiche", al posto della mini pipeline.
 
-## 7. AI e compliance
+## 7. Riepilogo e compliance
 
-- AI: la sezione scura di adesso, invariata ("Il lavoro ripetitivo lo fa INNOVALEX. Le decisioni restano tue." con le due colonne e la scadenza da confermare).
+- Riepilogo, al posto della sezione AI (decisione di Federico del 25/11/2026). Stessa fascia scura, prima della compliance, solo tipografia:
+  - [+] Titolo: "Meno lavoro manuale. Più lavoro fatturato."
+  - [+] Testo: "Oggi solo il 37% della giornata diventa fattura. Il resto se ne va tra archiviazione, ricerche, recap e rincorse. INNOVALEX toglie il lavoro manuale e porta nel report il valore che oggi si perde. Un'azione sola: qualifichi la mail dal pannello, il sistema fa il resto."
+  - [+] "Tempo: il lavoro manuale lo fa INNOVALEX." "Archiviare, rinominare, cercare allegati, scrivere recap, segnare scadenze. Prima erano ore. Ora è un click dal pannello."
+  - [+] "Fatturato: il valore nascosto entra nel report." "Ogni email che conta diventa ore e valore, anche quelle che non avevi segnato: INNOVALEX le stima, tu le confermi. Nel report entra solo quello che includi tu, quindi sono numeri che puoi mostrare al cliente. La proforma è già pronta."
+  - [+] "Organizzazione: lo studio lavora in ordine." "Ogni pratica nella sua fase, ogni collaboratore con la sua cartella, il valore di ogni socio misurato. Nessun messaggio per sapere a che punto siete."
+  - [+] Chiusura, in grande e in oro: "Fai il conto: 2 ore al giorno recuperate = 440 ore l'anno = 66.000 € per avvocato."
+  - Pulsanti: "Calcola il tuo studio" (al calcolatore) e "Prenota la Diagnosi Operativa" (al form).
+  - La sezione AI esce con le sue due colonne e la scadenza interattiva. Il riconoscimento dei meeting dal calendario non si cita finché non è attivo.
+  - Sopra i tre blocchi c'è posto per un video futuro; oggi non si mostra nulla.
 - Compliance, al posto delle quattro frasi di sicurezza:
   - [=] "La Compliance non è un dettaglio. È la condizione per lavorare con uno studio legale."
   - [≈] GDPR: "Tutto il processo avviene su server in Europa. I dati del vostro studio non vengono usati per addestrare modelli AI." (tolti "certificati" e "non escono mai dall'UE", non documentati)
@@ -184,7 +193,7 @@ Come nella fase 3.1, con il tuo sottotitolo: segretaria, gestionale (riscritta c
 
 ## Cosa si riusa e cosa esce
 
-- **Si riusa:** colori, font, intestazione, foto della prima schermata del sito attuale, lastre, scena, sezione scura del 37%, tre scene dei benefici, blocchi dello studio, sezione AI, foto, FAQ, verifica dei testi.
+- **Si riusa:** colori, font, intestazione, foto della prima schermata del sito attuale, lastre, scena, sezione scura del 37%, tre scene dei benefici, blocchi dello studio, foto, FAQ, verifica dei testi. La sezione AI non si riusa più: dal 25/11 è sostituita dal riepilogo (sezione 7).
 - **Esce:**
   - la prima schermata con le lastre: torna quella del sito attuale;
   - il titolo "Cosa cambia nello studio": le tre scene vanno dentro i tre sistemi;

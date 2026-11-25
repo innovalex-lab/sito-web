@@ -211,17 +211,52 @@
   background: rgb(var(--velo) / 0.75);
 }
 
+/* Sotto i 768 px (sessione 2): la foto sta in alto, dove non c'è testo, con una velatura leggera,
+   così lo studio e la bilancia si riconoscono. Il testo comincia dove la velatura è già fitta
+   e prosegue sul blu pieno. I tre numeri vanno su due righe, le cifre non vanno mai a capo. */
 @media (max-width: 767px) {
-  /* Come su main: la foto si allarga e mostra la bilancia; la velatura copre tutta la larghezza del testo */
+  .eroe {
+    --foto-alta: clamp(15rem, 36svh, 22rem);
+    align-items: flex-start;
+  }
+
+  .eroe-foto {
+    bottom: auto;
+    height: var(--foto-alta);
+  }
+
   .eroe-foto img {
-    inset: 0 -6% 0 auto;
-    width: 128%;
-    max-width: none;
-    object-position: 78% center;
+    object-position: 88% 45%;
   }
 
   .eroe-velo {
-    background: linear-gradient(180deg, rgb(var(--velo) / 0.84) 0%, rgb(var(--velo) / 0.8) 55%, rgb(var(--velo) / 0.9) 100%);
+    bottom: auto;
+    height: var(--foto-alta);
+    background: linear-gradient(
+      180deg,
+      rgb(var(--velo) / 0.3) 0%,
+      rgb(var(--velo) / 0.22) 38%,
+      rgb(var(--velo) / 0.72) 62%,
+      rgb(var(--velo) / 0.93) 80%,
+      var(--profondo) 100%
+    );
+  }
+
+  .eroe-interno {
+    padding-top: calc(var(--foto-alta) - 4.25rem);
+  }
+
+  .eroe-numeri {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 1.5rem;
+  }
+
+  .eroe-numeri > div:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+
+  .eroe-cifra {
+    white-space: nowrap;
   }
 }
 
@@ -948,9 +983,95 @@
   margin-top: clamp(3.5rem, 7vw, 6rem);
 }
 
-/* La lastra della cartella fuori dalla scena: stessa misura delle altre due scene */
-.bn-cartella {
+/* La lastra del nuovo contatto (Ordine Operativo): stessa misura delle altre due scene,
+   stessi mattoni del pannello (src/components/filo/LastraContatto.astro) */
+.bn-contatto {
   font-size: calc((100cqw - 2em) / 26);
+}
+
+.nc {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 15.5em;
+}
+
+.nc-mail {
+  min-width: 0;
+  padding: 1.2em 1.3em;
+  border-right: 1px solid var(--ui-linea);
+  background: #fbfbfc;
+}
+
+.nc-mail .ol-oggetto {
+  font-size: 1.15em;
+}
+
+.nc-testo {
+  margin: 1em 0 1.1em;
+  color: #2c3358;
+  line-height: 1.5;
+}
+
+.nc-pannello {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  padding: 0.9em 1em 1em;
+  background: #fff;
+  box-shadow: -0.6em 0 1.2em -0.8em rgb(20 26 61 / 0.25); /* taste-skill-ignore: frammento d'interfaccia, come il pannello */
+}
+
+/* Il segnale del pannello: mittente sconosciuto, possibile nuovo cliente */
+.nc-avviso {
+  display: grid;
+  gap: 0.15em;
+  padding: 0.6em 0.75em;
+  border-radius: 0.4em;
+  background: #f6ecd8;
+  color: #5c4519;
+}
+
+.nc-avviso b {
+  font-weight: 650;
+}
+
+/* Il pulsante e, al suo posto dopo il click, l'esito */
+.nc-azione {
+  display: grid;
+  margin-top: 0.2em;
+}
+
+.nc-azione > * {
+  grid-area: 1 / 1;
+}
+
+.nc-azione .pn-conferma {
+  align-self: start;
+}
+
+.nc-esito {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 0.4em;
+  margin: 0;
+  padding: 0.65em 0.75em;
+  border-radius: 0.4em;
+  background: #edf0f7;
+  list-style: none;
+  font-weight: 580;
+}
+
+.nc-esito li {
+  display: flex;
+  align-items: center;
+}
+
+.nc-esito .ct-icona {
+  width: 1.15em;
+  height: 0.92em;
+  margin-right: 0.5em;
 }
 
 @media (min-width: 640px) {
@@ -992,7 +1113,7 @@
   }
 
   .bn-valore,
-  .bn-cartella {
+  .bn-contatto {
     transform: perspective(110em) rotateY(-9deg) rotateX(5deg);
   }
 
@@ -1022,6 +1143,170 @@
 
   .blocco-pipeline {
     width: 100%;
+  }
+}
+
+/* ---------- 7. Riepilogo (al posto della sezione AI) ----------
+   Solo tipografia: il titolo grande, il testo, tre blocchi in fila, il conto in oro, due pulsanti.
+   Stessa fascia scura e stessa luce calda della vecchia sezione AI; la compliance continua sotto. */
+
+.riepilogo {
+  position: relative;
+  overflow: clip;
+  padding-block: var(--spacing-sezione);
+  background:
+    radial-gradient(45% 40% at 85% 0%, rgb(178 146 92 / 0.22), rgb(178 146 92 / 0) 70%), /* taste-skill-ignore: la luce calda del prototipo, come nella sezione scura */
+    var(--profondo);
+  color: #fff;
+}
+
+.riepilogo :focus-visible,
+.compliance :focus-visible {
+  outline-color: var(--oro-chiaro);
+}
+
+.riepilogo-interno {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* Due frasi, due righe da 640 px in su */
+.riepilogo-titolo {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 0.75rem + 4.4vw, 5.25rem);
+  font-weight: 450;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+}
+
+.riepilogo-titolo span {
+  display: block;
+}
+
+.riepilogo-testo {
+  max-width: 40rem;
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  font-size: var(--text-lead);
+  line-height: 1.55;
+  color: rgb(255 255 255 / 0.88);
+}
+
+/* Spazio per un video futuro: esiste solo se la sezione riceve lo slot "video" */
+.riepilogo-video {
+  margin-top: clamp(3rem, 6vw, 5rem);
+}
+
+.riepilogo-video > * {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.6rem;
+}
+
+.riepilogo-blocchi {
+  display: grid;
+  gap: 2.5rem;
+  margin-top: clamp(3.5rem, 7vw, 6rem);
+  padding: 0;
+  list-style: none;
+}
+
+.rb-titolo {
+  font-family: var(--font-serif);
+  font-size: clamp(1.3rem, 0.55rem + 1.25vw, 1.75rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.rb-testo {
+  max-width: 34rem;
+  margin-top: 0.85rem;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: rgb(255 255 255 / 0.86);
+}
+
+/* Il conto: in grande e in oro. Ogni termine resta intero, la riga va a capo solo tra un termine e l'altro */
+.riepilogo-chiusura {
+  max-width: 24em;
+  margin-top: clamp(4rem, 9vw, 7.5rem);
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 1.05rem + 2.6vw, 3.5rem);
+  font-weight: 450;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: var(--oro-chiaro);
+  font-variant-numeric: lining-nums;
+}
+
+.riepilogo-chiusura span {
+  white-space: nowrap;
+}
+
+.riepilogo-azioni {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.btn-chiaro {
+  background: transparent;
+  border-color: rgb(255 255 255 / 0.75);
+  color: #fff;
+}
+
+.btn-chiaro:hover {
+  background: #fff;
+  border-color: #fff;
+  color: var(--profondo);
+}
+
+.btn-chiaro:active {
+  background: rgb(255 255 255 / 0.85);
+  border-color: rgb(255 255 255 / 0.85);
+  color: var(--profondo);
+}
+
+@media (max-width: 479px) {
+  .riepilogo-azioni .btn {
+    width: 100%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .riepilogo-testo {
+    max-width: 44rem;
+  }
+
+  .riepilogo-blocchi {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: clamp(2.5rem, 4vw, 4rem);
+  }
+}
+
+/* Da 1200 px il testo sta accanto al titolo, allineato alla sua ultima riga */
+@media (min-width: 1200px) {
+  .riepilogo-interno {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2rem;
+  }
+
+  .riepilogo-interno > * {
+    grid-column: 1 / -1;
+  }
+
+  .riepilogo-interno > .riepilogo-titolo {
+    grid-column: 1 / span 8;
+  }
+
+  .riepilogo-interno > .riepilogo-testo {
+    grid-column: 9 / -1;
+    align-self: end;
+    margin-top: 0;
+    padding-bottom: 0.4rem;
   }
 }
 
@@ -1243,5 +1528,186 @@
   .eroe-scorri,
   .calcolatore input {
     transition: none;
+  }
+}
+
+/* ---------- Lastre su telefono (sotto i 768 px, sessione 2) ----------
+   Rimpicciolita per intero, una lastra diventava illeggibile (testo dell'interfaccia sotto 8 px).
+   Sotto i 768 px ogni lastra mostra solo il dettaglio che conta per quel passo, a grandezza piena:
+   il testo dell'interfaccia parte da 14 px e non scende mai sotto 11 px reali.
+   Il ritaglio è per parti intere dell'interfaccia, non per pixel: nessuna parola tagliata al bordo.
+   Da 768 px in su non cambia nulla. */
+@media (max-width: 767px) {
+  .passo > .lastra,
+  .bn-valore,
+  .bn-passaggio,
+  .bn-contatto,
+  .bn-conferma {
+    height: auto;
+    aspect-ratio: auto;
+    font-size: 16px;
+  }
+
+  .passo > .lastra > .carta {
+    position: relative;
+    inset: auto;
+  }
+
+  .passo > .lastra > .carta,
+  .lastra-libera > .carta {
+    font-size: 14px;
+  }
+
+  /* I testi più piccoli dell'interfaccia restano a 11 px o più */
+  .lastra .ui-file i,
+  .lastra .ui-file-icona {
+    font-size: 0.8em;
+  }
+
+  /* Passo 1, la mail: la mail che arriva, aperta */
+  .ol-lista {
+    display: none;
+  }
+
+  .ol-corpo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Passo 2, il pannello: i campi e Conferma */
+  .pn {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pn-mail {
+    display: none;
+  }
+
+  .pn-pannello {
+    box-shadow: none;
+  }
+
+  /* Passo 3, la cartella: i PDF numerati, con il nome intero */
+  .ct-colonne {
+    display: none;
+  }
+
+  .ct-nome {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  /* Passo 4: il nome nuovo dell'allegato e la scadenza da confermare */
+  .rn-titolo,
+  .rn-dati {
+    display: none;
+  }
+
+  .rn-nuovo {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .rn-nuovo > span {
+    display: inline;
+  }
+
+  .pn-valore .ui-avatar {
+    font-size: 0.8em;
+  }
+
+  .rn-proposta {
+    margin-top: 1.1em;
+  }
+
+  /* Passo 5: il totale della pratica e le ore stimate */
+  .or-tabella {
+    display: none;
+  }
+
+  .or-stimate {
+    grid-template-columns: minmax(0, 1fr) auto;
+    margin-top: 0.4em;
+  }
+
+  .or-stimate .ui-btn {
+    grid-column: 1 / -1;
+  }
+
+  /* Visibilità Economica: il totale e le pratiche, nome sopra la barra */
+  .bv-testa {
+    flex-wrap: wrap;
+  }
+
+  .bv-riga {
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: 0.35em;
+  }
+
+  .bv-nome {
+    grid-column: 1 / -1;
+  }
+
+  .bv-legenda {
+    flex-wrap: wrap;
+    gap: 0.4em 1.2em;
+  }
+
+  .bn-conferma .carta {
+    font-size: 14px;
+  }
+
+  /* La lastra piccola si posa sotto la grande, senza coprirne la legenda */
+  .bn-conferma {
+    margin-top: 0.4em;
+  }
+
+  .bv-totale {
+    text-align: left;
+  }
+
+  .bv-totale .bv-cifre {
+    justify-items: start;
+  }
+
+  /* Governance Operativa: chi passa la pratica a chi, la cartella e l'esito */
+  .bp-riepilogo,
+  .bp-file {
+    display: none;
+  }
+
+  .bp-persone {
+    grid-template-columns: minmax(0, 1fr) 2.5em minmax(0, 1fr);
+    gap: 0.6em;
+  }
+
+  /* Avatar sopra il nome: il nome resta su una riga */
+  .bp-persona {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4em;
+  }
+
+  .bp-a {
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .bp-cartella {
+    width: 82cqw;
+  }
+
+  /* Ordine Operativo: chi scrive, poi il pannello con la segnalazione e l'esito */
+  .nc {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .nc-mail {
+    border-right: 0;
+    border-bottom: 1px solid var(--ui-linea);
+  }
+
+  .nc-testo,
+  .nc-mail .ui-file {
+    display: none;
   }
 }

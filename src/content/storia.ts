@@ -303,7 +303,41 @@ export const sistemi = {
   ],
 };
 
-// ---------- 7. Compliance (dopo la sezione AI) ----------
+// ---------- 7. Riepilogo (al posto della sezione AI, decisione di Federico del 25/11/2026) ----------
+
+export const riepilogo = {
+  titolo: ['Meno lavoro manuale.', 'Più lavoro fatturato.'],
+  testo: {
+    testo:
+      'Oggi solo il 37% della giornata diventa fattura. Il resto se ne va tra archiviazione, ricerche, recap e rincorse. INNOVALEX toglie il lavoro manuale e porta nel report il valore che oggi si perde. Un’azione sola: qualifichi la mail dal pannello, il sistema fa il resto.',
+    funzioni: ['pannello-outlook', 'archiviazione', 'report', 'cartella-lavoro'] as IdFunzione[],
+  },
+  blocchi: [
+    {
+      id: 'tempo',
+      titolo: 'Tempo: il lavoro manuale lo fa INNOVALEX.',
+      testo: 'Archiviare, rinominare, cercare allegati, scrivere recap, segnare scadenze. Prima erano ore. Ora è un click dal pannello.',
+      funzioni: ['archiviazione', 'nomi-progressivi', 'cartella-lavoro', 'scadenze-da-mail', 'calendario', 'pannello-outlook'] as IdFunzione[],
+    },
+    {
+      id: 'fatturato',
+      titolo: 'Fatturato: il valore nascosto entra nel report.',
+      testo: 'Ogni email che conta diventa ore e valore, anche quelle che non avevi segnato: INNOVALEX le stima, tu le confermi. Nel report entra solo quello che includi tu, quindi sono numeri che puoi mostrare al cliente. La proforma è già pronta.',
+      funzioni: ['pannello-outlook', 'attivita-valore', 'report'] as IdFunzione[],
+    },
+    {
+      id: 'organizzazione',
+      titolo: 'Organizzazione: lo studio lavora in ordine.',
+      testo: 'Ogni pratica nella sua fase, ogni collaboratore con la sua cartella, il valore di ogni socio misurato. Nessun messaggio per sapere a che punto siete.',
+      funzioni: ['pratiche', 'cartella-lavoro', 'carichi-team', 'valore-socio'] as IdFunzione[],
+    },
+  ],
+  // 2 ore x 220 giorni = 440 ore; 440 ore x 150 € = 66.000 € (stesso esempio della prima schermata)
+  chiusura: ['Fai il conto:', '2 ore al giorno recuperate', '= 440 ore l’anno', '= 66.000 € per avvocato.'],
+  calcola: { testo: 'Calcola il tuo studio', href: '#calcolatore' },
+};
+
+// ---------- 7. Compliance (dopo il riepilogo) ----------
 
 export const compliance = {
   titolo: ['La Compliance non è un dettaglio.', 'È la condizione per lavorare con uno studio legale.'],
@@ -342,7 +376,10 @@ export const risultati = {
   },
 };
 
-// ---------- 9. Diagnosi (il form arriva nella sessione 2) ----------
+// ---------- 9. Diagnosi e form ----------
+// Campi, etichette, valori delle tendine e nomi inviati identici al form di main (index.html, dopo il commit 58e6b05).
+// Invio a /api/lead con lo stesso formato di main (src/scripts/diagnosi.ts). Nuovi [+]: il consenso privacy,
+// gli errori accanto ai campi e la conferma dopo l'invio senza mail, caso studio e whitepaper (piano, sezione 9).
 
 export const diagnosi = {
   etichetta: 'Prima Call',
@@ -351,6 +388,55 @@ export const diagnosi = {
     'In 30 minuti analizziamo insieme i flussi reali del tuo studio: come gestisci le email oggi, quanto tempo va in operatività non fatturabile, come monitori il lavoro dei collaboratori, se sai esattamente quanto vale ogni pratica aperta.',
     'Alla fine dei 30 minuti sai esattamente quanto ti sta costando il tuo metodo attuale.',
   ],
+  form: {
+    nome: { etichetta: 'Nome', segnaposto: 'Nome e cognome', errore: 'Scrivi nome e cognome.' },
+    studio: { etichetta: 'Studio', errore: 'Scrivi il nome dello studio.' },
+    email: { etichetta: 'Email', segnaposto: 'nome@studio.it', errore: 'Inserisci un indirizzo email valido.' },
+    telefono: { etichetta: 'Telefono', facoltativo: '(opzionale)', segnaposto: '+39 ...' },
+    ruolo: {
+      etichetta: 'Ruolo',
+      vuoto: 'Seleziona ruolo',
+      opzioni: ['Titolare / Founder', 'Managing Partner', 'Partner', 'Responsabile operativo / IT', 'Altro'],
+      errore: 'Scegli il tuo ruolo.',
+    },
+    persone: {
+      etichetta: 'Quante persone lavorano nello studio?',
+      vuoto: 'Seleziona dimensione studio',
+      opzioni: ['1-3 persone', '4-10 persone', '11-20 persone', '21-50 persone', '50+ persone'],
+      errore: 'Scegli quante persone lavorano nello studio.',
+    },
+    priorita: {
+      etichetta: 'Quali sono oggi le priorità più urgenti?',
+      aiuto: 'Puoi selezionare più opzioni.',
+      // valore inviato (come main) e testo mostrato (come main)
+      opzioni: [
+        { valore: 'Email, PEC', testo: 'Gestire Email, PEC' },
+        { valore: 'Archiviazione', testo: 'Recuperare Valore economico' },
+        { valore: 'Collaboratori', testo: 'Organizzare Collaboratori e soci' },
+        { valore: 'Altro sistema personalizzato', testo: 'Altro sistema personalizzato' },
+      ],
+      errore: 'Scegli almeno una priorità.',
+    },
+    volume: { etichetta: 'Quante email/PEC gestite mediamente al giorno?', segnaposto: 'Es. 40 email + 12 PEC', errore: 'Scrivi quante email e PEC gestite al giorno.' },
+    strumenti: {
+      etichetta: 'Che strumenti usate oggi?',
+      segnaposto: 'Es. Outlook, Gmail, PEC, Kleos, Cliens, OneDrive, SharePoint...',
+      errore: 'Scrivi gli strumenti che usate oggi.',
+    },
+    consenso: {
+      prima: 'Ho letto la',
+      link: 'Privacy Policy',
+      dopo: 'e accetto di essere ricontattato per la diagnosi.',
+      errore: 'Serve il consenso per ricontattarti.',
+    },
+    pulsante: 'Prenota la Diagnosi Operativa',
+    invio: 'Invio in corso',
+    sotto: 'Partiamo dai tuoi numeri reali.',
+    riuscito: 'Grazie. Ti contatteremo entro 24h.',
+    errore: 'Invio non riuscito. Riprova tra pochi minuti.',
+    // Conferma dopo l'invio [≈]: senza mail di conferma, caso studio e whitepaper, che oggi non partono.
+    dopo: ['Analizziamo i dati che hai inviato nel form.', 'In call partiamo dai flussi reali dello studio, non da una demo generica.'],
+  },
 };
 
 // ---------- 11. Chi siamo e 12. piè di pagina ----------

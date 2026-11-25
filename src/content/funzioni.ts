@@ -87,27 +87,6 @@ export const studio = [
   },
 ] as const satisfies readonly { id: string; taglia: 'grande' | 'piccolo'; titolo: string; testo: string; funzioni: readonly IdFunzione[] }[];
 
-// ---------- Sezione nuova: AI e automazioni ----------
-
-export const ai = {
-  titolo: 'Il lavoro ripetitivo lo fa INNOVALEX. Le decisioni restano tue.',
-  legge: [
-    { testo: 'Analizza ogni mail: tipo, urgenza, cliente.', funzioni: ['analisi-mail'] },
-    { testo: 'Trova scadenze e termini e te li propone.', funzioni: ['scadenze-da-mail'] },
-    { testo: 'Riassume la conversazione per il collaboratore.', funzioni: ['cartella-lavoro'] },
-    { testo: 'Classifica i documenti e dà loro un nome chiaro.', funzioni: ['analisi-documenti'] },
-  ],
-  daSolo: [
-    { testo: 'Archivia in PDF nella cartella di cliente e pratica.', funzioni: ['archiviazione'] },
-    { testo: 'All’assegnazione crea la cartella di lavoro e avvisa il collaboratore.', funzioni: ['cartella-lavoro'] },
-    { testo: 'Mette le etichette alle mail in Outlook.', funzioni: ['etichette'] },
-  ],
-} satisfies {
-  titolo: string;
-  legge: { testo: string; funzioni: IdFunzione[] }[];
-  daSolo: { testo: string; funzioni: IdFunzione[] }[];
-};
-
 // ---------- Chi siamo e caso SCLN (Risultati reali) ----------
 
 // Ritratti in public/team/, 4:5, stesso taglio e stesso fondo (scripts/ritratti.py), senza metadati. Il testo di Federico Garau è quello della

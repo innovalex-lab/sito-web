@@ -44,8 +44,15 @@ function avvia(radice: HTMLElement) {
     esito('mensile').textContent = euro(e.mensile);
     esito('mensileDettaglio').textContent = `${e.oreMese.toFixed(0)}h x ${euro(tariffa)}/h`;
 
-    // Per la sessione 2 (form della diagnosi): i sistemi scelti con le etichette corrette.
+    // Per il form della diagnosi (src/scripts/diagnosi.ts): i dati che main passava a /api/lead,
+    // nello stesso formato di main, e i sistemi scelti con le etichette corrette.
+    radice.dataset.usato = toccato ? 'si' : 'no';
     radice.dataset.sistemiLead = scelti().map((s) => s.dataset.etichettaLead).join(', ');
+    radice.dataset.oreGiorno = ore.toFixed(1);
+    radice.dataset.avvocati = String(avvocati);
+    radice.dataset.tariffa = String(tariffa);
+    radice.dataset.valoreAnnuo = Math.round(Math.max(0, e.annuale)).toString();
+    radice.dataset.oreMese = Math.round(e.oreMese).toString();
 
     mostraAnalisi((toccato && e.annuale > 0 && e.oreMese > 0 && e.mensile > 0) || inviata);
   }

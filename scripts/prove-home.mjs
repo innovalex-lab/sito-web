@@ -2,16 +2,30 @@
 // uso: node scripts/prove-home.mjs http://localhost:4329/
 // Controlla a 1440, 1024 e 390 px, con e senza movimento ridotto: risposta 200, console pulita, nessuno
 // scorrimento orizzontale, un solo H1 e titoli in ordine, ancore del menu, intestazione fissa con il pulsante
-// sempre visibile, menu mobile con Esc, FAQ da tastiera, prima schermata, timeline del problema, calcolatore
-// (calcolo, nomi e percentuali, invio con chiamata intercettata), ritratti, contrasti, testi [=] e testi vietati.
+// sempre visibile, menu mobile con Esc, FAQ da tastiera, prima schermata (anche la versione sotto i 768 px),
+// timeline del problema, calcolatore (calcolo, nomi e percentuali, invio con chiamata intercettata), riepilogo,
+// lastra del nuovo contatto, lastre leggibili su telefono, form della diagnosi (campi mancanti, errore del server,
+// invio riuscito, doppio clic, contenuto uguale a main), ritratti, contrasti, testi [=] e testi vietati.
 // Nessun contatto vero: /api/roi-lead e /api/lead sono sempre intercettate e non escono dal browser.
 import { chromium } from 'playwright';
+import { execFileSync } from 'node:child_process';
 import { verificaTesti } from './verifica-testi.mjs';
 import { confrontaUguali, leggiPagina } from './verifica-uguali.mjs';
 
 const url = process.argv[2] ?? 'http://localhost:4329/';
 const esiti = [];
 const ok = (nome, vero, dettaglio = '') => esiti.push({ nome, vero: Boolean(vero), dettaglio });
+
+// Il form di main (index.html sul ramo main, letto con git show): chiavi inviate a /api/lead e valori delle tendine.
+const htmlMain = execFileSync('git', ['show', 'origin/main:index.html'], { cwd: new URL('..', import.meta.url), encoding: 'utf8', maxBuffer: 2e7 });
+const formMain = (() => {
+  const corpo = htmlMain.match(/const payload = \{([\s\S]*?)\};\s*const response = await fetch\('\/api\/lead'/)[1];
+  const chiavi = [...corpo.matchAll(/^\s*(\w+):/gm)].map((m) => m[1]);
+  const opzioni = (id) => [...htmlMain.match(new RegExp(`<select id="${id}"[\\s\\S]*?</select>`))[0].matchAll(/value="([^"]*)"/g)].map((m) => m[1]);
+  const priorita = [...htmlMain.matchAll(/name="urgentProblem" value="([^"]*)"/g)].map((m) => m[1]);
+  const nomi = [...htmlMain.match(/<form id="lead-form"[\s\S]*?<\/form>/)[0].matchAll(/ name="(\w+)"/g)].map((m) => m[1]);
+  return { chiavi, ruolo: opzioni('role'), persone: opzioni('teamSize'), priorita, nomi: [...new Set(nomi)] };
+})();
 const spazi = (t) => (t ?? '').replace(/[  ]/g, ' ').trim();
 
 // Contrasto in pagina: testo contro il primo fondo pieno risalendo gli antenati (con le velature composte).
@@ -190,7 +204,7 @@ for (const ridotto of [false, true]) {
     const console_ = [];
     pagina.on('console', (m) => {
       // la risposta 502 e l'avviso della prova d'errore del calcolatore sono voluti
-      if (modo === 'errore' && /status of 502|Analisi del calcolatore non inviata/.test(m.text())) return;
+      if (modo === 'errore' && /status of 502|Analisi del calcolatore non inviata|Richiesta di diagnosi non inviata/.test(m.text())) return;
       console_.push(`${m.type()}: ${m.text()}`);
     });
     pagina.on('pageerror', (e) => console_.push(`errore: ${e.message}`));
@@ -231,6 +245,34 @@ for (const ridotto of [false, true]) {
     const eroeSotto = eroeContrasti.filter((c) => c.rapporto < c.soglia);
     const eroeMin = eroeContrasti.reduce((m, c) => (c.rapporto < m.rapporto ? c : m), eroeContrasti[0]);
     ok(`${tag} prima schermata: testo sulla foto sopra soglia in ogni punto`, eroeSotto.length === 0, `minimo ${eroeMin.rapporto} (${eroeMin.testo})${eroeSotto.length ? ' sotto: ' + JSON.stringify(eroeSotto) : ''}`);
+
+    // Numeri: le cifre non vanno mai a capo; sotto i 768 px due sopra e uno sotto, la foto in alto dove non c'è testo
+    const numeri = await pagina.evaluate(() => {
+      // Righe = altezza del blocco diviso l'interlinea (l'unità più piccola sta sulla stessa riga)
+      const righe = (el) => {
+        const cs = getComputedStyle(el);
+        return Math.round(el.getBoundingClientRect().height / parseFloat(cs.lineHeight));
+      };
+      const blocchi = [...document.querySelectorAll('.eroe-numeri > div')].map((d) => Math.round(d.getBoundingClientRect().top));
+      const foto = document.querySelector('.eroe-foto').getBoundingClientRect();
+      const eroe = document.querySelector('.eroe').getBoundingClientRect();
+      const marchio = document.querySelector('.eroe-marchio').getBoundingClientRect();
+      return {
+        righe: [...document.querySelectorAll('.eroe-cifra')].map(righe),
+        blocchi,
+        foto: Math.round(foto.height),
+        eroe: Math.round(eroe.height),
+        testo: Math.round(marchio.top - foto.top),
+        velo: getComputedStyle(document.querySelector('.eroe-velo')).backgroundImage.match(/0\.\d+/)?.[0],
+      };
+    });
+    ok(`${tag} prima schermata: le cifre dei tre numeri non vanno a capo`, numeri.righe.every((n) => n === 1), JSON.stringify(numeri.righe));
+    if (w < 768) {
+      ok(`${tag} prima schermata (telefono): numeri su due righe, due sopra e uno sotto`, numeri.blocchi[0] === numeri.blocchi[1] && numeri.blocchi[2] > numeri.blocchi[0], JSON.stringify(numeri.blocchi));
+      ok(`${tag} prima schermata (telefono): foto in alto con velatura leggera, testo sotto`, numeri.foto < numeri.eroe * 0.5 && Number(numeri.velo) <= 0.3 && numeri.testo > numeri.foto * 0.6, JSON.stringify(numeri));
+    } else {
+      ok(`${tag} prima schermata: foto a tutta altezza e numeri in fila, come nella sessione 1`, numeri.foto === numeri.eroe && new Set(numeri.blocchi).size === 1, JSON.stringify(numeri));
+    }
 
     // Movimento della foto: solo transform, spento con movimento ridotto
     await pagina.evaluate(() => window.scrollTo(0, 400));
@@ -273,7 +315,7 @@ for (const ridotto of [false, true]) {
 
     // Ordine delle sezioni come il piano
     const ordine = await pagina.evaluate(() => [...document.querySelectorAll('main > section, main > div > section')].map((s) => s.id).filter(Boolean).join(' '));
-    ok(`${tag} ordine delle sezioni come il piano`, ordine === 'home problema calcolatore come-funziona sistemi studio ai compliance risultati contatti chi-siamo', ordine);
+    ok(`${tag} ordine delle sezioni come il piano`, ordine === 'home problema calcolatore come-funziona sistemi studio riepilogo compliance risultati contatti chi-siamo', ordine);
 
     // Menu come il piano, ancore esistenti
     const menu = await pagina.evaluate(() => [...document.querySelectorAll('[data-menu] nav a')].map((a) => a.textContent.trim()).join(' · '));
@@ -327,6 +369,8 @@ for (const ridotto of [false, true]) {
       ['.sistemi', '.risultati', '.chi'].map((s) => [...document.querySelectorAll(`${s} a[href="#contatti"]`)].filter((a) => a.textContent.trim() === 'Prenota la Diagnosi Operativa').length),
     );
     ok(`${tag} pulsante "Prenota la Diagnosi Operativa" dopo i sistemi, in Risultati e in Chi siamo`, prenota.every((n) => n === 1), prenota.join(','));
+    const prenotaRiep = await pagina.locator('.riepilogo a[href="#contatti"]', { hasText: 'Prenota la Diagnosi Operativa' }).count();
+    ok(`${tag} pulsante "Prenota la Diagnosi Operativa" anche sotto il conto del riepilogo`, prenotaRiep === 1);
 
     // Proporzioni: nei blocchi affiancati la grafica sta entro metà larghezza
     const proporzioni = await pagina.evaluate(() =>
@@ -348,14 +392,55 @@ for (const ridotto of [false, true]) {
     const faq = await pagina.evaluate(() => ({ n: document.querySelectorAll('.faq-voce').length, sotto: document.querySelector('.faq-sottotitolo')?.textContent }));
     ok(`${tag} FAQ: cinque domande con sottotitolo`, faq.n === 5 && faq.sotto?.startsWith('Le domande reali'), JSON.stringify(faq));
 
-    // Isola AI: la proposta si conferma da tastiera
-    const conferma = pagina.locator('.al-si');
-    if (await conferma.count()) {
-      await conferma.focus();
-      await pagina.keyboard.press('Enter');
-      await pagina.waitForTimeout(500);
-      ok(`${tag} AI: Conferma da tastiera`, await pagina.locator('.al-confermata').isVisible());
-    } else ok(`${tag} AI: Conferma da tastiera`, false, 'pulsante non trovato');
+    // Riepilogo al posto della sezione AI: testi esatti, tre blocchi, il conto, due pulsanti, nessun segnaposto video
+    const riep = await pagina.evaluate(() => {
+      const t = (el) => (el?.textContent ?? '').replace(/\s+/g, ' ').trim();
+      const sez = document.querySelector('#riepilogo');
+      const blocchi = [...sez.querySelectorAll('.riepilogo-blocco')];
+      const link = [...sez.querySelectorAll('.riepilogo-azioni a')].map((a) => `${t(a)} > ${a.getAttribute('href')}`);
+      return {
+        titolo: t(sez.querySelector('h2')),
+        testo: t(sez.querySelector('.riepilogo-testo')),
+        blocchi: blocchi.map((b) => `${t(b.querySelector('h3')).split(':')[0]}`),
+        cime: blocchi.map((b) => Math.round(b.getBoundingClientRect().top)),
+        chiusura: t(sez.querySelector('.riepilogo-chiusura')),
+        oro: getComputedStyle(sez.querySelector('.riepilogo-chiusura')).color,
+        link,
+        video: Boolean(sez.querySelector('.riepilogo-video')),
+        ai: Boolean(document.querySelector('#ai, .ai, astro-island')),
+        compliance: sez.nextElementSibling?.id,
+      };
+    });
+    ok(`${tag} riepilogo: titolo, testo e conto come il brief, in oro`, riep.titolo === 'Meno lavoro manuale. Più lavoro fatturato.' && riep.testo.startsWith('Oggi solo il 37% della giornata diventa fattura.') && riep.testo.endsWith('il sistema fa il resto.') && riep.chiusura === 'Fai il conto: 2 ore al giorno recuperate = 440 ore l’anno = 66.000 € per avvocato.' && riep.oro === 'rgb(210, 176, 114)', JSON.stringify({ t: riep.titolo, c: riep.chiusura, oro: riep.oro }));
+    ok(`${tag} riepilogo: tre blocchi ${w >= 1024 ? 'in fila' : 'in colonna'}`, riep.blocchi.join(',') === 'Tempo,Fatturato,Organizzazione' && (w >= 1024 ? new Set(riep.cime).size === 1 : riep.cime[0] < riep.cime[1] && riep.cime[1] < riep.cime[2]), JSON.stringify(riep.cime));
+    ok(`${tag} riepilogo: pulsanti al calcolatore e al form, nessun segnaposto video, sezione AI tolta, compliance subito dopo`, riep.link.join(' | ') === 'Calcola il tuo studio > #calcolatore | Prenota la Diagnosi Operativa > #contatti' && !riep.video && !riep.ai && riep.compliance === 'compliance', JSON.stringify(riep));
+
+    // Ordine Operativo: la lastra nuova del nuovo contatto, non più la cartella della scena
+    const contatto = await pagina.evaluate(() => {
+      const s = document.querySelector('#ordine-operativo .sistema-scena');
+      return { lastra: Boolean(s.querySelector('.bn-contatto .nc')), cartella: Boolean(s.querySelector('.ct')), testo: s.textContent.replace(/\s+/g, ' ') };
+    });
+    ok(`${tag} Ordine Operativo: lastra del nuovo contatto (segnalazione, Apri pratica, cliente, pratica, cartella)`, contatto.lastra && !contatto.cartella && ['Mittente non in anagrafica', 'Possibile nuovo cliente', 'Apri pratica', 'Cliente creato', 'Pratica aperta', 'Cartella pronta'].every((x) => contatto.testo.includes(x)), JSON.stringify({ lastra: contatto.lastra, cartella: contatto.cartella }));
+
+    // Lastre: sotto i 768 px solo il dettaglio, testo dell'interfaccia mai sotto 11 px; da 768 px come prima
+    const lastre = await pagina.evaluate(() => {
+      const piccoli = [];
+      let minimo = 99;
+      for (const l of document.querySelectorAll('.passo > .lastra, .sistema-scena .lastra')) {
+        const giro = document.createTreeWalker(l, NodeFilter.SHOW_TEXT);
+        while (giro.nextNode()) {
+          const el = giro.currentNode.parentElement;
+          if (!giro.currentNode.nodeValue.trim() || !el.getClientRects().length) continue;
+          const fs = parseFloat(getComputedStyle(el).fontSize);
+          minimo = Math.min(minimo, fs);
+          if (fs < 11) piccoli.push(`${fs} ${giro.currentNode.nodeValue.trim().slice(0, 20)}`);
+        }
+      }
+      const carta = document.querySelector('.passo > .lastra > .carta');
+      return { minimo: +minimo.toFixed(1), piccoli, posizione: getComputedStyle(carta).position, lista: getComputedStyle(document.querySelector('.ol-lista')).display };
+    });
+    if (w < 768) ok(`${tag} lastre (telefono): solo il dettaglio, testo dell'interfaccia almeno 11 px`, !lastre.piccoli.length && lastre.lista === 'none', `minimo ${lastre.minimo} px ${lastre.piccoli.join(' | ')}`);
+    else ok(`${tag} lastre: intere come nella sessione 1`, lastre.posizione === 'absolute' && lastre.lista !== 'none', JSON.stringify({ minimo: lastre.minimo, posizione: lastre.posizione, lista: lastre.lista }));
 
     // Tutto lo studio: la pipeline nel blocco Pratiche, scorrimento orizzontale sotto i 768 px
     const studio = await pagina.evaluate(() => {
@@ -374,7 +459,7 @@ for (const ridotto of [false, true]) {
     // Scene dei sistemi: a fine ingresso sono compiute (con movimento ridotto subito)
     const scene = await pagina.evaluate(() => ({
       cartella: getComputedStyle(document.querySelector('.bp-cartella')).transform,
-      lastra: document.querySelector('.bn-cartella').dataset.stato,
+      lastra: document.querySelector('.bn-contatto').dataset.stato,
     }));
     ok(`${tag} sistemi: la cartella è arrivata da Paolo e la lastra di Ordine Operativo è attiva`, scene.cartella === 'none' && scene.lastra === 'attiva', JSON.stringify(scene));
 
@@ -468,6 +553,109 @@ for (const ridotto of [false, true]) {
     ok(`${tag} calcolatore: payload con gli stessi campi e lo stesso formato di main`, payloadOk, JSON.stringify(p));
     ok(`${tag} calcolatore: chiamata solo a /api/roi-lead`, chiamate.every((c) => new URL(c.url).pathname === '/api/roi-lead'));
 
+    // ---- Form della diagnosi ----
+    chiamate.length = 0;
+    modo = 'blocca';
+    // Origine del clic: il pulsante del riepilogo porta al form
+    await pagina.locator('.riepilogo a[data-cta="riepilogo-diagnosi"]').click();
+    await pagina.waitForTimeout(ridotto ? 200 : 1200);
+    const form = pagina.locator('[data-diagnosi-form]');
+    const struttura = await pagina.evaluate(() => {
+      const f = document.querySelector('[data-diagnosi-form]');
+      const campi = [...f.querySelectorAll('input:not([type=checkbox]), select, textarea')];
+      const etichette = campi.every((c) => {
+        const l = f.querySelector(`label[for="${c.id}"]`);
+        return l && l.getClientRects().length && l.textContent.trim();
+      });
+      const opzioni = (id) => [...f.querySelectorAll(`#${id} option`)].map((o) => o.value);
+      const consenso = f.querySelector('#consenso');
+      return {
+        etichette,
+        legenda: Boolean(f.querySelector('#urgentProblem legend')?.getClientRects().length),
+        ruolo: opzioni('role'),
+        persone: opzioni('teamSize'),
+        priorita: [...f.querySelectorAll('input[name="urgentProblem"]')].map((i) => i.value),
+        nomi: [...new Set([...f.querySelectorAll('[name]')].map((i) => i.name))],
+        consenso: !consenso.checked && consenso.closest('label').querySelector('a')?.getAttribute('href'),
+        segnaposto: !document.querySelector('.form-segnaposto'),
+      };
+    });
+    ok(`${tag} form: etichette sempre visibili, segnaposto della fase 3 tolto`, struttura.etichette && struttura.legenda && struttura.segnaposto, JSON.stringify(struttura));
+    ok(`${tag} form: valori delle tendine e delle priorità identici a main`, JSON.stringify([struttura.ruolo, struttura.persone, struttura.priorita]) === JSON.stringify([formMain.ruolo, formMain.persone, formMain.priorita]), JSON.stringify(struttura.priorita));
+    const nomiMain = formMain.nomi.filter((n) => !/^(emailsPerDay|selectedFeatures|estimatedAnnualValue|estimatedMonthlyHours|selectedLawyers|selectedRate|sourceCta)$/.test(n));
+    ok(`${tag} form: nomi dei campi come main, più il consenso`, JSON.stringify(struttura.nomi.filter((n) => n !== 'consenso').sort()) === JSON.stringify(nomiMain.sort()), `${struttura.nomi.join(',')} / main ${nomiMain.join(',')}`);
+    ok(`${tag} form: consenso privacy non preselezionato, con link alla Privacy Policy`, struttura.consenso === '/privacy-policy.html', String(struttura.consenso));
+
+    // Campi mancanti: errore accanto a ogni campo, fuoco sul primo, nessuna chiamata
+    const inviaForm = form.locator('button[type="submit"]');
+    await inviaForm.click();
+    const vuoto = await pagina.evaluate(() => ({
+      errori: [...document.querySelectorAll('[data-diagnosi-form] .mo-errore')].filter((e) => !e.hidden).map((e) => e.id.replace('err-', '')),
+      fuoco: document.activeElement?.id,
+      invalidi: document.querySelectorAll('[data-diagnosi-form] [aria-invalid="true"]').length,
+    }));
+    ok(`${tag} form: campi mancanti, errori accanto ai campi, fuoco sul primo, nessuna chiamata`, vuoto.errori.length === 9 && vuoto.fuoco === 'name' && vuoto.invalidi === 9 && chiamate.length === 0, JSON.stringify(vuoto));
+
+    await form.locator('#name').fill('Prova Automatica');
+    await form.locator('#studio').fill('Studio di Prova');
+    await form.locator('#email').fill('prova@esempio.it');
+    await form.locator('#phone').fill('+39 000 0000000');
+    await form.locator('#role').selectOption('Managing Partner');
+    await form.locator('#teamSize').selectOption('4-10 persone');
+    await form.locator('input[name="urgentProblem"][value="Email, PEC"]').check();
+    await form.locator('input[name="urgentProblem"][value="Collaboratori"]').check();
+    await form.locator('#dailyEmailVolume').fill('40 email + 12 PEC');
+    await form.locator('#currentTools').fill('Outlook, PEC');
+    await inviaForm.click();
+    const senzaConsenso = await pagina.evaluate(() => [...document.querySelectorAll('[data-diagnosi-form] .mo-errore')].filter((e) => !e.hidden).map((e) => e.id));
+    ok(`${tag} form: senza consenso resta solo quell'errore, nessuna chiamata`, senzaConsenso.join() === 'err-consenso' && chiamate.length === 0, senzaConsenso.join());
+    await form.locator('#consenso').check();
+
+    // Errore del server: messaggio visibile, dati ancora nel form, si può riprovare
+    modo = 'errore';
+    await inviaForm.click();
+    await pagina.waitForTimeout(400);
+    const erroreForm = await pagina.evaluate(() => ({
+      testo: document.querySelector('[data-diagnosi-errore]').textContent.trim(),
+      visibile: !document.querySelector('[data-diagnosi-errore]').hidden,
+      nome: document.querySelector('#name').value,
+      ruolo: document.querySelector('#role').value,
+      priorita: document.querySelectorAll('input[name="urgentProblem"]:checked').length,
+      consenso: document.querySelector('#consenso').checked,
+      abilitato: !document.querySelector('[data-diagnosi-form] button[type="submit"]').disabled,
+    }));
+    ok(`${tag} form: errore del server visibile, dati ancora nel form, si può riprovare`, erroreForm.visibile && erroreForm.testo === 'Invio non riuscito. Riprova tra pochi minuti.' && erroreForm.nome === 'Prova Automatica' && erroreForm.ruolo === 'Managing Partner' && erroreForm.priorita === 2 && erroreForm.consenso && erroreForm.abilitato && chiamate.length === 1, JSON.stringify(erroreForm));
+
+    // Invio riuscito con doppio clic: una sola chiamata, la conferma al posto del form
+    modo = 'ok';
+    chiamate.length = 0;
+    await inviaForm.dblclick();
+    await inviaForm.click({ force: true }).catch(() => {});
+    await pagina.waitForTimeout(1200);
+    const conferma = await pagina.evaluate(() => {
+      const f = document.querySelector('[data-diagnosi-fatto]');
+      return {
+        visibile: !f.hidden && !!f.getClientRects().length,
+        formNascosto: document.querySelector('[data-diagnosi-form]').hidden,
+        testo: f.innerText.replace(/\s+/g, ' ').trim(),
+        fuoco: f.contains(document.activeElement),
+      };
+    });
+    ok(`${tag} form: doppio clic bloccato, una sola chiamata, conferma visibile`, chiamate.length === 1 && conferma.visibile && conferma.formNascosto && conferma.fuoco, `${chiamate.length} chiamate ${JSON.stringify(conferma)}`);
+    ok(`${tag} form: conferma come il piano, senza mail di conferma, caso studio o whitepaper`, conferma.testo === 'Grazie. Ti contatteremo entro 24h. Analizziamo i dati che hai inviato nel form. In call partiamo dai flussi reali dello studio, non da una demo generica.' && !/mail di conferma|caso studio|whitepaper/i.test(conferma.testo), conferma.testo);
+    const pf = chiamate[0]?.corpo ?? {};
+    const attesoForm = {
+      name: 'Prova Automatica', studio: 'Studio di Prova', email: 'prova@esempio.it', phone: '+39 000 0000000', role: 'Managing Partner', teamSize: '4-10 persone',
+      dailyEmailVolume: '40 email + 12 PEC', currentTools: 'Outlook, PEC', urgentProblem: 'Email, PEC, Collaboratori',
+      // il calcolatore è stato usato poco sopra: tre sistemi, 2 ore, 10 avvocati, 150 €
+      hoursPerDay: '2.0', lawyers: '10', hourlyRate: '150', selectedFeatures: 'Ordine Operativo, Visibilità Economica, Governance Operativa',
+      estimatedAnnualValue: '613800', estimatedMonthlyHours: '409', sourceCta: 'riepilogo-diagnosi',
+    };
+    const diversi = Object.entries(attesoForm).filter(([k, v]) => pf[k] !== v).map(([k]) => `${k}=${JSON.stringify(pf[k])}`);
+    ok(`${tag} form: chiavi inviate uguali a main, nello stesso ordine (${formMain.chiavi.length})`, Object.keys(pf).join(',') === formMain.chiavi.join(','), `${Object.keys(pf).join(',')} / main ${formMain.chiavi.join(',')}`);
+    ok(`${tag} form: contenuto inviato nel formato di main, con i dati del calcolatore e l'origine del clic`, !diversi.length && !Number.isNaN(Date.parse(pf.timestamp)), diversi.join(' '));
+    ok(`${tag} form: chiamata solo a /api/lead`, chiamate.every((c) => new URL(c.url).pathname === '/api/lead'));
+
     // ---- Contrasti ----
     const contrasti = await pagina.evaluate(misuraContrasti);
     ok(`${tag} contrasti sopra soglia (${contrasti.misurati} testi misurati)`, contrasti.sotto.length === 0, `minimo ${contrasti.minimo.rapporto} su ${contrasti.minimo.soglia} (${contrasti.minimo.testo}), su immagine (non misurati qui) ${contrasti.saltati}${contrasti.sotto.length ? ' sotto: ' + JSON.stringify(contrasti.sotto.slice(0, 6)) : ''}`);
@@ -480,12 +668,38 @@ for (const ridotto of [false, true]) {
       ok('testi vietati: nessuno (eccezioni esatte: "Posta in arrivo", "€66.000 /anno")', testi.length === 0, testi.map((t) => `${t.regola}: ${t.contesto}`).join(' | '));
       const uguali = confrontaUguali(await leggiPagina(pagina));
       ok(`testi [=] uguali a main (${uguali.frasi} frasi del piano, ${uguali.elementi} elementi)`, uguali.differenze.length === 0, uguali.differenze.join(' | '));
-      ok(`testi [=] del form della diagnosi attesi in sessione 2 (${uguali.attese.length})`, true, uguali.attese.map((a) => a.split(': ').at(-1)).join(' '));
       const avvisi = await pagina.locator('.avvisi-anteprima li').allTextContents();
       ok('avvisi di anteprima: solo i tre numeri SCLN da confermare', avvisi.length === 3 && avvisi.every((a) => a.startsWith('Caso SCLN')), avvisi.join(' | '));
     }
     await pagina.close();
   }
+}
+
+// Form senza aver usato il calcolatore: le chiavi del calcolatore ci sono ma vuote, origine 'direct'
+{
+  const pagina = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  const chiamate = [];
+  await pagina.route(/\/api\/(roi-lead|lead)(\?|$)/, (r) => {
+    chiamate.push(r.request().postDataJSON());
+    return r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' });
+  });
+  await pagina.goto(url, { waitUntil: 'networkidle' });
+  const f = pagina.locator('[data-diagnosi-form]');
+  await f.locator('#name').fill('Prova Automatica');
+  await f.locator('#studio').fill('Studio di Prova');
+  await f.locator('#email').fill('prova@esempio.it');
+  await f.locator('#role').selectOption('Partner');
+  await f.locator('#teamSize').selectOption('1-3 persone');
+  await f.locator('input[name="urgentProblem"]').first().check();
+  await f.locator('#dailyEmailVolume').fill('20');
+  await f.locator('#currentTools').fill('Gmail');
+  await f.locator('#consenso').check();
+  await f.locator('button[type="submit"]').click();
+  await pagina.waitForTimeout(600);
+  const p = chiamate[0] ?? {};
+  const vuoti = ['hoursPerDay', 'lawyers', 'hourlyRate', 'selectedFeatures', 'estimatedAnnualValue', 'estimatedMonthlyHours'].every((k) => p[k] === '');
+  ok('form senza calcolatore: chiavi del calcolatore vuote, telefono vuoto, origine direct', chiamate.length === 1 && vuoti && p.phone === '' && p.sourceCta === 'direct' && p.urgentProblem === 'Email, PEC', JSON.stringify(p));
+  await pagina.close();
 }
 await browser.close();
 
