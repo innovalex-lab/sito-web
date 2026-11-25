@@ -2,7 +2,9 @@
 
 Stato: confermato da Federico il 24/11/2026, con la prima schermata del sito attuale. Sessione 1 di Claude Code in preparazione.
 
-Legenda dei testi: **[=]** testo del sito attuale, invariato. **[≈]** testo del sito attuale, corretto solo dove dice una cosa non vera oggi (motivo tra parentesi). **[+]** testo nuovo.
+Legenda dei testi: **[=]** testo del sito attuale, invariato. **[≈]** testo del sito attuale, corretto solo dove dice una cosa non vera oggi (motivo tra parentesi). **[+]** testo nuovo. **[25/11]** testo del sito attuale cambiato per decisione di Federico in quella data (tra parentesi il testo di prima): lo script di confronto con main lo elenca tra i modificati, non tra gli errori.
+
+Nome dell'offerta: dal 25/11/2026 la "Diagnosi Operativa" si chiama "analisi gratuita" in tutto il testo visibile (decisione di Federico). I dati inviati a /api/lead e /api/roi-lead, gli id e le ancore non cambiano.
 
 ## Principio
 
@@ -15,7 +17,9 @@ Legenda dei testi: **[=]** testo del sito attuale, invariato. **[≈]** testo de
 
 ## Menu
 
-[=] Il Problema · Calcola il Tuo Costo · Come Funziona · Risultati Reali · FAQ · Chi Siamo · pulsante "Diagnosi Gratuita".
+[=] Il Problema · Calcola il Tuo Costo · Come Funziona · Risultati Reali · FAQ · Chi Siamo.
+
+[25/11] Pulsante del menu: "Analisi gratuita" (era "Diagnosi Gratuita").
 
 ## 1. Prima schermata (aggiornata il 24/11: come il sito attuale)
 
@@ -116,7 +120,7 @@ Legenda dei testi: **[=]** testo del sito attuale, invariato. **[≈]** testo de
   - [+] Pipeline delle pratiche: "Ogni pratica nella sua fase, dalla prima mail alla chiusura."
   - [+] Avviso al cliente: "Cambi fase e il cliente riceve l'aggiornamento, con il link per mandarti i documenti. Basta messaggi per sapere a che punto siete."
 - Grafica: la scena del beneficio 2 (la cartella che passa da Sara a Paolo, con la molla).
-- Pulsante dopo i tre sistemi: "Prenota la Diagnosi Operativa".
+- Pulsante dopo i tre sistemi: "Prenota l'analisi gratuita".
 
 ## 6. Tutto lo studio in un posto
 
@@ -131,8 +135,7 @@ Legenda dei testi: **[=]** testo del sito attuale, invariato. **[≈]** testo de
   - [+] "Tempo: il lavoro manuale lo fa INNOVALEX." "Archiviare, rinominare, cercare allegati, scrivere recap, segnare scadenze. Prima erano ore. Ora è un click dal pannello."
   - [+] "Fatturato: il valore nascosto entra nel report." "Ogni email che conta diventa ore e valore, anche quelle che non avevi segnato: INNOVALEX le stima, tu le confermi. Nel report entra solo quello che includi tu, quindi sono numeri che puoi mostrare al cliente. La proforma è già pronta."
   - [+] "Organizzazione: lo studio lavora in ordine." "Ogni pratica nella sua fase, ogni collaboratore con la sua cartella, il valore di ogni socio misurato. Nessun messaggio per sapere a che punto siete."
-  - [+] Chiusura, in grande e in oro: "Fai il conto: 2 ore al giorno recuperate = 440 ore l'anno = 66.000 € per avvocato."
-  - Pulsanti: "Calcola il tuo studio" (al calcolatore) e "Prenota la Diagnosi Operativa" (al form).
+  - La sezione finisce con un solo pulsante, in oro: "Prenota l'analisi gratuita" (al form). Tolti il 25/11, per decisione di Federico, il conto in oro sotto i tre blocchi e il pulsante "Calcola il tuo studio".
   - La sezione AI esce con le sue due colonne e la scadenza interattiva. Il riconoscimento dei meeting dal calendario non si cita finché non è attivo.
   - Sopra i tre blocchi c'è posto per un video futuro; oggi non si mostra nulla.
 - Compliance, al posto delle quattro frasi di sicurezza:
@@ -151,12 +154,12 @@ Legenda dei testi: **[=]** testo del sito attuale, invariato. **[≈]** testo de
 - [≈] "Il progetto ha lavorato su archiviazione automatica di tutte le comunicazioni, report economici per pratica e cliente, dashboard collaboratori in tempo reale. Il valore è stato misurato su tempo recuperato, governance operativa e visibilità economica." (tolto "settimanali")
 - Numeri: 600+ email al mese, 8 caselle collegate, 80 pratiche aperte, 41 clienti attivi. Questi ultimi tre restano bloccati dal test finché Cocola non li conferma.
 - [=] Citazione: "Il valore non è stato aggiungere un altro software. È stato avere un'infrastruttura che segue il modo in cui lo studio lavora davvero." Francesco Cocola, SCLN Legal Network. Con la sua foto.
-- Pulsante: "Prenota la Diagnosi Operativa".
+- Pulsante: "Prenota l'analisi gratuita".
 
-## 9. Diagnosi e form
+## 9. Analisi gratuita e form
 
 - [=] "Prima Call"
-- [=] "Diagnosi Operativa in 30 minuti"
+- [25/11] Titolo: "Analisi gratuita del tuo studio, in 30 minuti" (era "Diagnosi Operativa in 30 minuti").
 - [=] "In 30 minuti analizziamo insieme i flussi reali del tuo studio: come gestisci le email oggi, quanto tempo va in operatività non fatturabile, come monitori il lavoro dei collaboratori, se sai esattamente quanto vale ogni pratica aperta."
 - [=] "Alla fine dei 30 minuti sai esattamente quanto ti sta costando il tuo metodo attuale."
 - Campi [=], tutti quelli di oggi:
@@ -167,7 +170,8 @@ Legenda dei testi: **[=]** testo del sito attuale, invariato. **[≈]** testo de
   - priorità, anche più di una (gestire email e PEC, recuperare valore economico, organizzare collaboratori e soci, altro);
   - email e PEC al giorno;
   - strumenti usati oggi.
-- [=] Pulsante: "Prenota la Diagnosi Operativa. Partiamo dai tuoi numeri reali."
+- [+] Consenso privacy, non preselezionato: "Ho letto la Privacy Policy e accetto di essere ricontattato per l'analisi gratuita."
+- [25/11] Pulsante: "Prenota l'analisi gratuita. Partiamo dai tuoi numeri reali." (era "Prenota la Diagnosi Operativa. Partiamo dai tuoi numeri reali.")
 - [=] Esito: "Grazie. Ti contatteremo entro 24h." In caso di errore: "Invio non riuscito. Riprova tra pochi minuti."
 - Pagina di conferma [≈]: tolte la mail di conferma e l'invio di caso studio e whitepaper, perché oggi non parte nulla. Tornano con il funnel email. Restano: "Analizziamo i dati che hai inviato nel form." e "In call partiamo dai flussi reali dello studio, non da una demo generica."
 - Invio: stessa chiamata a /api/lead di oggi, stessi campi. È già sistemata dal commit 58e6b05.
@@ -182,7 +186,7 @@ Come nella fase 3.1, con il tuo sottotitolo: segretaria, gestionale (riscritta c
 - Federico Garau, Fondatore e amministratore, con il tuo testo Founder [=].
 - Avv. Francesco Cocola, Co-fondatore.
 - Foto: stessa cornice, stesso taglio, stesso fondo (è il lavoro della fase 3.2, che entra qui).
-- [=] Pulsante finale: "Prenota la Diagnosi Operativa".
+- [25/11] Pulsante finale: "Prenota l'analisi gratuita" (era "Prenota la Diagnosi Operativa").
 
 ## 12. Piè di pagina
 

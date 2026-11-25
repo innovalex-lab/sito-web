@@ -1,4 +1,5 @@
-// Verifica dei testi della home sull'HTML finale (testo visibile, aria-label e alt).
+// Verifica dei testi della home sull'HTML finale: testo visibile, title, meta description e gli attributi
+// che diventano testo (aria-label, alt, title, placeholder, data-testo, data-invio, data-errore-*).
 // Si usa da astro.config.mjs a fine build, oppure a mano: node scripts/verifica-testi.mjs dist/index.html
 // In produzione (VERCEL_ENV=production) ogni violazione ferma la build; nelle anteprime è un avviso.
 import fs from 'node:fs';
@@ -17,10 +18,16 @@ export const regole = [
   { nome: '"agente AI"', re: /\bagent[ei]\s+(AI|IA)\b/gi },
   { nome: '"Germania"', re: /german[iy]a?\b/gi },
   { nome: '"Tavolo Fondatori"', re: /tavolo\s+fondatori/gi },
+  // Decisione di Federico del 25/11/2026: la "Diagnosi Operativa" si chiama "analisi gratuita" in tutto il testo visibile.
+  // I nomi interni (data-cta="menu-diagnosi", classi, id) non sono testo e non passano da qui.
+  { nome: '"diagnosi" (dal 25/11/2026 si dice "analisi gratuita")', re: /\bdiagnos\w*/gi },
 ];
 
 export function testoVisibile(html) {
-  const attributi = [...html.matchAll(/\s(?:aria-label|alt|title)="([^"]*)"/g)].map((m) => m[1]);
+  const attributi = [
+    ...[...html.matchAll(/\s(?:aria-label|alt|title|placeholder|data-testo|data-invio|data-errore-[a-z]+)="([^"]*)"/g)].map((m) => m[1]),
+    ...[...html.matchAll(/<meta\s+name="description"\s+content="([^"]*)"/g)].map((m) => m[1]),
+  ];
   const corpo = html
     .replace(/<script[\s\S]*?<\/script>/gi, ' ')
     .replace(/<style[\s\S]*?<\/style>/gi, ' ')

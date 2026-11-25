@@ -93,14 +93,14 @@ const spazi = [
             {stati.map((s) => (
               <tr class="odd:bg-carta">
                 <th scope="row" class="py-4 pr-4 font-medium">{s.nome}</th>
-                <td class="py-4 pr-4"><button type="button" class="btn btn-primario" data-stato={s.stato}>Prenota la diagnosi</button></td>
+                <td class="py-4 pr-4"><button type="button" class="btn btn-primario" data-stato={s.stato}>Prenota l’analisi gratuita</button></td>
                 <td class="py-4 pr-4"><button type="button" class="btn btn-secondario" data-stato={s.stato}>Guarda come funziona</button></td>
                 <td class="py-4"><a href="#s-comp" class="link" data-stato={s.stato}>Informativa privacy</a></td>
               </tr>
             ))}
             <tr class="odd:bg-carta">
               <th scope="row" class="py-4 pr-4 font-medium">Disattivato</th>
-              <td class="py-4 pr-4"><button type="button" class="btn btn-primario" disabled>Prenota la diagnosi</button></td>
+              <td class="py-4 pr-4"><button type="button" class="btn btn-primario" disabled>Prenota l’analisi gratuita</button></td>
               <td class="py-4 pr-4"><button type="button" class="btn btn-secondario" disabled>Guarda come funziona</button></td>
               <td class="py-4 text-testo-2">Non previsto</td>
             </tr>

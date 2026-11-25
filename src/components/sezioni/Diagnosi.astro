@@ -1,5 +1,6 @@
 ---
-// 9. Diagnosi e 10. FAQ. Testi della diagnosi e campi del form dal sito attuale (index.html su main, dopo 58e6b05).
+// 9. Analisi gratuita (fino al 25/11/2026 "Diagnosi Operativa") e 10. FAQ. Testi e campi del form dal sito attuale
+// (index.html su main, dopo 58e6b05). I nomi interni (file, classi, data-diagnosi, data-cta) restano quelli di prima.
 // Il form invia a /api/lead con lo stesso formato di main (src/scripts/diagnosi.ts; api/lead.js non cambia).
 // Etichette sempre visibili, errori accanto al campo, consenso privacy non preselezionato.
 // Dopo l'invio: la conferma del piano al posto del form. Con un errore il form resta compilato.
@@ -13,7 +14,7 @@ const campo = (id: string) => ({ id, 'aria-describedby': `err-${id}` });
   <div class="contenitore chiusura-interno diagnosi-interno">
     <div class="diagnosi-testo">
       <p class="etichetta" data-uguale>{d.etichetta}</p>
-      <h2 id="t-chiusura" class="sezione-titolo" data-uguale>{d.titolo[0]}<br />{d.titolo[1]}</h2>
+      <h2 id="t-chiusura" class="sezione-titolo" data-modificato="25/11">{d.titolo[0]}<br />{d.titolo[1]}</h2>
       {d.testo.map((t) => <p class="chiusura-testo" data-uguale>{t}</p>)}
     </div>
 
@@ -91,7 +92,7 @@ const campo = (id: string) => ({ id, 'aria-describedby': `err-${id}` });
         </div>
 
         <div class="mo-invio">
-          <button type="submit" class="btn btn-primario" data-testo={f.pulsante} data-invio={f.invio} data-uguale>{f.pulsante}</button>
+          <button type="submit" class="btn btn-primario" data-testo={f.pulsante} data-invio={f.invio} data-modificato="25/11">{f.pulsante}</button>
           <p class="mo-sotto" data-uguale>{f.sotto}</p>
         </div>
         <p class="mo-esito mo-esito-errore" role="alert" hidden data-diagnosi-errore data-uguale>{f.errore}</p>

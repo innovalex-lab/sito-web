@@ -1,7 +1,7 @@
 ---
 // 7. Riepilogo: al posto della sezione AI (decisione di Federico del 25/11/2026, docs/PIANO-STORYLINE.md).
 // Tipografia e tre icone a tratto, nella fascia scura; sotto, nella stessa fascia, la compliance del sito attuale.
-// Ordine di lettura: titolo, testo, tre blocchi, conto in oro, pulsanti. Nessuna animazione. Per un video futuro sopra i tre blocchi c'è lo slot "video":
+// Ordine di lettura: titolo, testo, tre blocchi, un solo pulsante che porta al form. Nessuna animazione. Per un video futuro sopra i tre blocchi c'è lo slot "video":
 //   <Riepilogo><video slot="video" ... /></Riepilogo>
 // Senza slot non si mostra nulla, nemmeno un segnaposto.
 import { riepilogo as r, compliance, prenota } from '../../content/storia';
@@ -12,7 +12,7 @@ const conVideo = Astro.slots.has('video');
 // giunti e terminazioni tondi, spigoli vivi, nessun fondo. Il disegno parte dal bordo sinistro (x = 1)
 // per stare a filo con la parola chiave, e poggia sulla stessa base (y = 38,5).
 const icone: Record<string, string[]> = {
-  // Orologio: le lancette segnano le due, come le due ore al giorno del conto
+  // Orologio: le lancette segnano le due, come le due ore al giorno dell'esempio della prima schermata
   tempo: ['M37.25 20a17.75 17.75 0 1 1-35.5 0a17.75 17.75 0 0 1 35.5 0z', 'M19.5 10v10l6.25-3.6', 'M19.5 5.5v1.75M34 20h-1.75M19.5 34.5v-1.75M5 20h1.75'],
   // Pagina del report con l'angolo piegato e tre barre che salgono
   fatturato: ['M1.75 2.25h18.5l8 8v27.5H1.75z', 'M20.25 2.25v8h8', 'M8.25 31.5v-5M15 31.5v-9.5M21.75 31.5v-14', 'M8.25 10.25h5.5'],
@@ -43,14 +43,7 @@ const icone: Record<string, string[]> = {
       ))}
     </ul>
 
-    <p class="riepilogo-chiusura">
-      {r.chiusura.map((parte, i) => <>{i > 0 && ' '}<span>{parte}</span></>)}
-    </p>
-
-    <p class="riepilogo-azioni">
-      <a class="btn btn-chiaro" href={r.calcola.href} data-cta="riepilogo-calcola">{r.calcola.testo}</a>
-      <a class="btn btn-oro" href="#contatti" data-cta="riepilogo-diagnosi">{prenota}</a>
-    </p>
+    <p class="riepilogo-azione"><a class="btn btn-oro" href="#contatti" data-cta="riepilogo-diagnosi">{prenota}</a></p>
   </div>
 </section>
 

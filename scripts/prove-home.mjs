@@ -4,12 +4,14 @@
 // scorrimento orizzontale, un solo H1 e titoli in ordine, ancore del menu, intestazione fissa con il pulsante
 // sempre visibile, menu mobile con Esc, FAQ da tastiera, prima schermata (anche la versione sotto i 768 px),
 // timeline del problema, calcolatore (calcolo, nomi e percentuali, invio con chiamata intercettata), riepilogo,
-// lastra del nuovo contatto, lastre leggibili su telefono, form della diagnosi (campi mancanti, errore del server,
-// invio riuscito, doppio clic, contenuto uguale a main), ritratti, contrasti, testi [=] e testi vietati.
+// lastra del nuovo contatto, lastre leggibili su telefono, form dell'analisi gratuita (campi mancanti, errore del
+// server, invio riuscito, doppio clic, contenuto uguale a main), ritratti, contrasti, testi [=], testi cambiati
+// per decisione di Federico e testi vietati (dal 25/11/2026 anche "diagnosi", in ogni pagina del sito).
 // Nessun contatto vero: /api/roi-lead e /api/lead sono sempre intercettate e non escono dal browser.
 import { chromium } from 'playwright';
 import { execFileSync } from 'node:child_process';
-import { verificaTesti } from './verifica-testi.mjs';
+import { readdirSync } from 'node:fs';
+import { verificaTesti, testoVisibile } from './verifica-testi.mjs';
 import { confrontaUguali, leggiPagina } from './verifica-uguali.mjs';
 
 const url = process.argv[2] ?? 'http://localhost:4329/';
@@ -345,7 +347,7 @@ for (const ridotto of [false, true]) {
         }, href);
         ok(`${tag} clic su ${href}`, pos.hash === href && pos.t >= pos.barra - 2 && pos.t < pos.barra + 60, `top ${Math.round(pos.t)}, barra ${Math.round(pos.barra)}`);
         const pulsante = await pagina.locator('header a[href="#contatti"]').isVisible();
-        ok(`${tag} pulsante della diagnosi visibile dopo ${href}`, pulsante);
+        ok(`${tag} pulsante "Analisi gratuita" del menu visibile dopo ${href}`, pulsante);
       }
     }
 
@@ -364,13 +366,34 @@ for (const ridotto of [false, true]) {
       ok(`${tag} menu mobile: Invio apre, Esc chiude e riporta il fuoco`, aperto && !stato.aperto && stato.fuoco, JSON.stringify({ aperto, ...stato }));
     }
 
-    // Tre pulsanti "Prenota la Diagnosi Operativa": dopo i sistemi, dopo Risultati reali, in Chi siamo
-    const prenota = await pagina.evaluate(() =>
-      ['.sistemi', '.risultati', '.chi'].map((s) => [...document.querySelectorAll(`${s} a[href="#contatti"]`)].filter((a) => a.textContent.trim() === 'Prenota la Diagnosi Operativa').length),
+    // Nome nuovo dell'offerta (decisione di Federico del 25/11): pulsante del menu, quattro pulsanti "Prenota l'analisi
+    // gratuita" (dopo i sistemi, in fondo al riepilogo, dopo Risultati reali, in Chi siamo), titolo, consenso e pulsante del form
+    const nome = await pagina.evaluate(() => {
+      const t = (el) => (el?.innerText ?? '').replace(/\s+/g, ' ').trim();
+      return {
+        menu: t(document.querySelector('header a[data-cta="menu-diagnosi"]')),
+        prenota: ['.sistemi', '.riepilogo', '.risultati', '.chi'].map((s) => [...document.querySelectorAll(`${s} a[href="#contatti"]`)].map((a) => a.textContent.trim()).join('+')),
+        titolo: t(document.querySelector('#contatti h2')),
+        consenso: t(document.querySelector('.mo-consenso label')),
+        pulsante: t(document.querySelector('[data-diagnosi-form] button[type="submit"]')),
+        dopoInvio: document.querySelector('[data-diagnosi-form] button[type="submit"]').dataset.testo,
+        sotto: t(document.querySelector('.mo-sotto')),
+        // i valori interni restano quelli di prima
+        cta: [...document.querySelectorAll('a[data-cta][href$="#contatti"]')].map((a) => a.dataset.cta).join(','),
+      };
+    });
+    ok(`${tag} menu: pulsante "Analisi gratuita"`, nome.menu === 'Analisi gratuita', nome.menu);
+    ok(`${tag} pulsante "Prenota l’analisi gratuita" dopo i sistemi, in fondo al riepilogo, in Risultati e in Chi siamo`, nome.prenota.every((x) => x === 'Prenota l’analisi gratuita'), nome.prenota.join(' | '));
+    ok(
+      `${tag} form: titolo "Analisi gratuita del tuo studio, in 30 minuti", consenso e pulsante con il nome nuovo`,
+      nome.titolo === 'Analisi gratuita del tuo studio, in 30 minuti' &&
+        nome.consenso === 'Ho letto la Privacy Policy e accetto di essere ricontattato per l’analisi gratuita.' &&
+        nome.pulsante === 'Prenota l’analisi gratuita' &&
+        nome.dopoInvio === nome.pulsante &&
+        nome.sotto === 'Partiamo dai tuoi numeri reali.',
+      JSON.stringify(nome),
     );
-    ok(`${tag} pulsante "Prenota la Diagnosi Operativa" dopo i sistemi, in Risultati e in Chi siamo`, prenota.every((n) => n === 1), prenota.join(','));
-    const prenotaRiep = await pagina.locator('.riepilogo a[href="#contatti"]', { hasText: 'Prenota la Diagnosi Operativa' }).count();
-    ok(`${tag} pulsante "Prenota la Diagnosi Operativa" anche sotto il conto del riepilogo`, prenotaRiep === 1);
+    ok(`${tag} origine del clic dei pulsanti verso il form identica a prima`, nome.cta === 'menu-diagnosi,sistemi-diagnosi,riepilogo-diagnosi,risultati-diagnosi,founder-demo', nome.cta);
 
     // Proporzioni: nei blocchi affiancati la grafica sta entro metà larghezza
     const proporzioni = await pagina.evaluate(() =>
@@ -392,19 +415,24 @@ for (const ridotto of [false, true]) {
     const faq = await pagina.evaluate(() => ({ n: document.querySelectorAll('.faq-voce').length, sotto: document.querySelector('.faq-sottotitolo')?.textContent }));
     ok(`${tag} FAQ: cinque domande con sottotitolo`, faq.n === 5 && faq.sotto?.startsWith('Le domande reali'), JSON.stringify(faq));
 
-    // Riepilogo al posto della sezione AI: testi esatti, tre blocchi, il conto, due pulsanti, nessun segnaposto video
+    // Riepilogo al posto della sezione AI: testi esatti, tre blocchi, un solo pulsante in fondo, nessun segnaposto video.
+    // Dal 25/11 (sessione 2.2) niente conto in oro e niente pulsante "Calcola il tuo studio".
     const riep = await pagina.evaluate(() => {
       const t = (el) => (el?.textContent ?? '').replace(/\s+/g, ' ').trim();
       const sez = document.querySelector('#riepilogo');
       const blocchi = [...sez.querySelectorAll('.riepilogo-blocco')];
-      const link = [...sez.querySelectorAll('.riepilogo-azioni a')].map((a) => `${t(a)} > ${a.getAttribute('href')}`);
+      const link = [...sez.querySelectorAll('a')].map((a) => `${t(a)} > ${a.getAttribute('href')}`);
+      const azione = sez.querySelector('.riepilogo-azione');
+      const bottone = azione.querySelector('a');
+      const [ra, rb, rs] = [sez.querySelector('.riepilogo-blocchi'), bottone, sez].map((e) => e.getBoundingClientRect());
+      const sb = getComputedStyle(bottone);
       return {
         titolo: t(sez.querySelector('h2')),
         testo: t(sez.querySelector('.riepilogo-testo')),
         blocchi: blocchi.map((b) => `${t(b.querySelector('h3')).split(':')[0]}`),
         cime: blocchi.map((b) => Math.round(b.getBoundingClientRect().top)),
         // Sessione 2.1: ordine di lettura, riga del testo, parola chiave in oro su una riga sua, icone
-        ordine: ['.riepilogo-titolo', '.riepilogo-testo', '.riepilogo-blocchi', '.riepilogo-chiusura', '.riepilogo-azioni'].map((q) => {
+        ordine: ['.riepilogo-titolo', '.riepilogo-testo', '.riepilogo-blocchi', '.riepilogo-azione'].map((q) => {
           const r = sez.querySelector(q).getBoundingClientRect();
           return { cima: Math.round(r.top), fondo: Math.round(r.bottom), sinistra: Math.round(r.left) };
         }),
@@ -475,19 +503,32 @@ for (const ridotto of [false, true]) {
           };
         }),
         immagini: sez.querySelectorAll('img, use, picture, [class*="emoji"]').length,
-        chiusura: t(sez.querySelector('.riepilogo-chiusura')),
-        oro: getComputedStyle(sez.querySelector('.riepilogo-chiusura')).color,
+        // Sessione 2.2: la sezione finisce con il pulsante oro
+        tutto: t(sez),
+        tolti: sez.querySelectorAll('.riepilogo-chiusura, .riepilogo-azioni, .btn-chiaro, [data-cta="riepilogo-calcola"]').length,
+        bottone: {
+          oro: bottone.classList.contains('btn-oro') && sb.backgroundColor,
+          cta: bottone.dataset.cta,
+          ultimo: azione === sez.querySelector('.riepilogo-interno').lastElementChild && !azione.nextElementSibling,
+          sopra: Math.round(rb.top - ra.bottom),
+          sotto: Math.round(rs.bottom - rb.bottom),
+          sinistra: Math.round(rb.left - sez.querySelector('.riepilogo-titolo').getBoundingClientRect().left),
+          largo: Math.round(rb.width),
+          interno: Math.round(azione.getBoundingClientRect().width),
+          alto: Math.round(rb.height),
+        },
         link,
         video: Boolean(sez.querySelector('.riepilogo-video')),
         ai: Boolean(document.querySelector('#ai, .ai, astro-island')),
         compliance: sez.nextElementSibling?.id,
       };
     });
-    ok(`${tag} riepilogo: titolo, testo e conto come il brief, in oro`, riep.titolo === 'Meno lavoro manuale. Più lavoro fatturato.' && riep.testo.startsWith('Oggi solo il 37% della giornata diventa fattura.') && riep.testo.endsWith('il sistema fa il resto.') && riep.chiusura === 'Fai il conto: 2 ore al giorno recuperate = 440 ore l’anno = 66.000 € per avvocato.' && riep.oro === 'rgb(210, 176, 114)', JSON.stringify({ t: riep.titolo, c: riep.chiusura, oro: riep.oro }));
+    ok(`${tag} riepilogo: titolo e testo come il brief`, riep.titolo === 'Meno lavoro manuale. Più lavoro fatturato.' && riep.testo.startsWith('Oggi solo il 37% della giornata diventa fattura.') && riep.testo.endsWith('il sistema fa il resto.'), JSON.stringify({ t: riep.titolo }));
+    ok(`${tag} riepilogo: tolti il conto in oro e il pulsante "Calcola il tuo studio"`, riep.tolti === 0 && !/Fai il conto|440 ore|66\.000|Calcola il tuo studio/.test(riep.tutto), `${riep.tolti} elementi`);
     ok(`${tag} riepilogo: tre blocchi ${w >= 1024 ? 'in fila' : 'in colonna'}`, riep.blocchi.join(',') === 'Tempo,Fatturato,Organizzazione' && (w >= 1024 ? new Set(riep.cime).size === 1 : riep.cime[0] < riep.cime[1] && riep.cime[1] < riep.cime[2]), JSON.stringify(riep.cime));
     {
       const o = riep.ordine;
-      ok(`${tag} riepilogo: titolo, testo, blocchi, conto e pulsanti uno sotto l'altro, testo sotto il titolo`, o.every((e, i) => i === 0 || e.cima >= o[i - 1].fondo) && o[1].sinistra === o[0].sinistra, JSON.stringify(o));
+      ok(`${tag} riepilogo: titolo, testo, blocchi e pulsante uno sotto l'altro, testo sotto il titolo`, o.every((e, i) => i === 0 || e.cima >= o[i - 1].fondo) && o[1].sinistra === o[0].sinistra, JSON.stringify(o));
       ok(`${tag} riepilogo: riga del testo di 65 caratteri al massimo`, Math.max(...riep.righe) <= 66, riep.righe.join(', '));
       const ti = riep.titoli;
       ok(
@@ -511,7 +552,17 @@ for (const ridotto of [false, true]) {
       );
       ok(`${tag} riepilogo: icone senza fondo, cerchio o riquadro dietro, senza riempimenti e senza animazioni`, ic.every((x) => !x.dietro && x.pieni === 0 && !x.mossa), JSON.stringify(ic.map((x) => ({ dietro: x.dietro, pieni: x.pieni, mossa: x.mossa }))));
     }
-    ok(`${tag} riepilogo: pulsanti al calcolatore e al form, nessun segnaposto video, sezione AI tolta, compliance subito dopo`, riep.link.join(' | ') === 'Calcola il tuo studio > #calcolatore | Prenota la Diagnosi Operativa > #contatti' && !riep.video && !riep.ai && riep.compliance === 'compliance', JSON.stringify(riep));
+    ok(`${tag} riepilogo: un solo pulsante, al form, nessun segnaposto video, sezione AI tolta, compliance subito dopo`, riep.link.join(' | ') === 'Prenota l’analisi gratuita > #contatti' && !riep.video && !riep.ai && riep.compliance === 'compliance', JSON.stringify(riep.link));
+    {
+      // Il pulsante chiude la sezione: oro come quello della prima schermata, a filo sinistro con il titolo,
+      // staccato dai tre blocchi (almeno 48 px) e con sotto lo spazio di fine sezione, più largo di quello sopra
+      const b = riep.bottone;
+      ok(
+        `${tag} riepilogo: la sezione finisce con il pulsante oro, con lo spazio giusto sopra e sotto`,
+        b.oro === 'rgb(210, 176, 114)' && b.cta === 'riepilogo-diagnosi' && b.ultimo && b.sinistra === 0 && b.sopra >= 48 && b.sopra <= 80 && b.sotto >= 64 && b.sotto > b.sopra && b.alto >= 44 && (w < 480 ? b.largo === b.interno : b.largo < b.interno),
+        JSON.stringify(b),
+      );
+    }
 
     // Ordine Operativo: la lastra nuova del nuovo contatto, non più la cartella della scena
     const contatto = await pagina.evaluate(() => {
@@ -651,7 +702,7 @@ for (const ridotto of [false, true]) {
     ok(`${tag} calcolatore: payload con gli stessi campi e lo stesso formato di main`, payloadOk, JSON.stringify(p));
     ok(`${tag} calcolatore: chiamata solo a /api/roi-lead`, chiamate.every((c) => new URL(c.url).pathname === '/api/roi-lead'));
 
-    // ---- Form della diagnosi ----
+    // ---- Form dell'analisi gratuita (i nomi interni restano "diagnosi") ----
     chiamate.length = 0;
     modo = 'blocca';
     // Origine del clic: il pulsante del riepilogo porta al form
@@ -766,6 +817,12 @@ for (const ridotto of [false, true]) {
       ok('testi vietati: nessuno (eccezioni esatte: "Posta in arrivo", "€66.000 /anno")', testi.length === 0, testi.map((t) => `${t.regola}: ${t.contesto}`).join(' | '));
       const uguali = confrontaUguali(await leggiPagina(pagina));
       ok(`testi [=] uguali a main (${uguali.frasi} frasi del piano, ${uguali.elementi} elementi)`, uguali.differenze.length === 0, uguali.differenze.join(' | '));
+      // Non errori: testi che erano [=] e che Federico ha deciso di cambiare. Il confronto li elenca a parte.
+      ok(
+        `testi modificati per decisione di Federico del 25/11, non errori (${uguali.modifiche.length} testi del piano, ${uguali.elementiModificati} elementi)`,
+        uguali.modifiche.length === 4 && uguali.elementiModificati === 4 && uguali.modifiche.every((m) => m.data === '25/11' && m.era) && uguali.differenze.length === 0,
+        uguali.modifiche.map((m) => `"${m.era}" > "${m.ora}"`).join(' | '),
+      );
       const avvisi = await pagina.locator('.avvisi-anteprima li').allTextContents();
       ok('avvisi di anteprima: solo i tre numeri SCLN da confermare', avvisi.length === 3 && avvisi.every((a) => a.startsWith('Caso SCLN')), avvisi.join(' | '));
     }
@@ -800,6 +857,33 @@ for (const ridotto of [false, true]) {
   await pagina.close();
 }
 await browser.close();
+
+// Nome dell'offerta: nessun testo visibile con "diagnosi" in nessuna pagina costruita (dist), compresi title,
+// meta description e attributi che diventano testo. Unica eccezione, frase per frase: la Privacy Policy, testo
+// legale datato e identico a main, che resta com'è finché non lo decide Federico con l'Avv. Cocola.
+{
+  const dist = new URL('../dist/', import.meta.url);
+  const pagine = readdirSync(dist, { recursive: true }).filter((f) => f.endsWith('.html')).map((f) => '/' + f.replace(/(^|\/)index\.html$/, '$1'));
+  const legali = {
+    '/privacy-policy.html': [
+      'richieste di diagnosi operativa, demo e approfondimento commerciale',
+      'preparare la diagnosi operativa e la call iniziale',
+      'della diagnosi iniziale e degli eventuali successivi scambi commerciali',
+    ],
+  };
+  const trovati = [];
+  let lasciati = 0;
+  for (const percorso of pagine) {
+    const risposta = await fetch(new URL(percorso, url));
+    let testo = risposta.ok ? testoVisibile(await risposta.text()) : `pagina non servita (${risposta.status}): diagnosi`;
+    for (const frase of legali[percorso] ?? []) {
+      lasciati += testo.split(frase).length - 1;
+      testo = testo.replaceAll(frase, ' ');
+    }
+    for (const m of testo.matchAll(/diagnos\w*/gi)) trovati.push(`${percorso}: "${testo.slice(Math.max(0, m.index - 40), m.index + 40).trim()}"`);
+  }
+  ok(`nessun testo visibile con "diagnosi" nelle ${pagine.length} pagine del sito (${pagine.join(', ')}); nella Privacy Policy restano ${lasciati} frasi legali`, pagine.length >= 4 && trovati.length === 0 && lasciati === 3, trovati.join(' | '));
+}
 
 const falliti = esiti.filter((e) => !e.vero);
 for (const e of esiti) console.log(`${e.vero ? 'OK  ' : 'NO  '} ${e.nome}${e.dettaglio ? `  (${e.dettaglio})` : ''}`);

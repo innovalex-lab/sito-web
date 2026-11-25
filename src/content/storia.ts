@@ -20,8 +20,10 @@ export const menu = [
   { nome: 'FAQ', href: '#faq' },
   { nome: 'Chi Siamo', href: '#chi-siamo' },
 ];
-export const menuPulsante = { nome: 'Diagnosi Gratuita', href: '#contatti' };
-export const prenota = 'Prenota la Diagnosi Operativa';
+// Dal 25/11/2026 la "Diagnosi Operativa" si chiama "analisi gratuita" in tutto il testo visibile (decisione di Federico).
+// I valori inviati a /api/lead (data-cta, nomi dei campi) non cambiano.
+export const menuPulsante = { nome: 'Analisi gratuita', href: '#contatti' };
+export const prenota = 'Prenota l’analisi gratuita';
 
 // ---------- 1. Prima schermata ----------
 
@@ -337,9 +339,6 @@ export const riepilogo = {
       funzioni: ['pratiche', 'cartella-lavoro', 'carichi-team', 'valore-socio'] as IdFunzione[],
     },
   ],
-  // 2 ore x 220 giorni = 440 ore; 440 ore x 150 € = 66.000 € (stesso esempio della prima schermata)
-  chiusura: ['Fai il conto:', '2 ore al giorno recuperate', '= 440 ore l’anno', '= 66.000 € per avvocato.'],
-  calcola: { testo: 'Calcola il tuo studio', href: '#calcolatore' },
 };
 
 // ---------- 7. Compliance (dopo il riepilogo) ----------
@@ -381,14 +380,14 @@ export const risultati = {
   },
 };
 
-// ---------- 9. Diagnosi e form ----------
+// ---------- 9. Analisi gratuita e form ----------
 // Campi, etichette, valori delle tendine e nomi inviati identici al form di main (index.html, dopo il commit 58e6b05).
 // Invio a /api/lead con lo stesso formato di main (src/scripts/diagnosi.ts). Nuovi [+]: il consenso privacy,
 // gli errori accanto ai campi e la conferma dopo l'invio senza mail, caso studio e whitepaper (piano, sezione 9).
 
 export const diagnosi = {
   etichetta: 'Prima Call',
-  titolo: ['Diagnosi Operativa', 'in 30 minuti'],
+  titolo: ['Analisi gratuita del tuo studio,', 'in 30 minuti'],
   testo: [
     'In 30 minuti analizziamo insieme i flussi reali del tuo studio: come gestisci le email oggi, quanto tempo va in operatività non fatturabile, come monitori il lavoro dei collaboratori, se sai esattamente quanto vale ogni pratica aperta.',
     'Alla fine dei 30 minuti sai esattamente quanto ti sta costando il tuo metodo attuale.',
@@ -431,10 +430,10 @@ export const diagnosi = {
     consenso: {
       prima: 'Ho letto la',
       link: 'Privacy Policy',
-      dopo: 'e accetto di essere ricontattato per la diagnosi.',
+      dopo: 'e accetto di essere ricontattato per l’analisi gratuita.',
       errore: 'Serve il consenso per ricontattarti.',
     },
-    pulsante: 'Prenota la Diagnosi Operativa',
+    pulsante: 'Prenota l’analisi gratuita',
     invio: 'Invio in corso',
     sotto: 'Partiamo dai tuoi numeri reali.',
     riuscito: 'Grazie. Ti contatteremo entro 24h.',

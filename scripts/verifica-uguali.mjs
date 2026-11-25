@@ -8,6 +8,14 @@
 // Per ognuna si controlla che ogni frase sia nel testo visibile di main. Per le frasi del piano si controlla
 // anche che siano nella pagina (dalla sessione 2 anche quelle del form della diagnosi).
 //
+// Testi cambiati per decisione di Federico (dal 25/11/2026). Erano [=] e ora sono diversi da main apposta:
+// non sono errori e lo script li elenca a parte.
+//   - nel piano hanno la data della decisione al posto di [=] e il testo di main tra parentesi:
+//       [25/11] Pulsante finale: "Prenota l'analisi gratuita" (era "Prenota la Diagnosi Operativa").
+//   - nella pagina hanno data-modificato="25/11" al posto di data-uguale.
+// Per ognuno si controlla che il testo nuovo sia nella pagina, che il testo di prima fosse davvero quello
+// di main e che nella pagina non sia rimasto. Un elemento data-modificato deve avere la sua riga nel piano.
+//
 // Il confronto ignora gli spazi, le virgolette, gli apostrofi e la punteggiatura (. , : ; ! ?): conta che
 // le parole e i numeri siano gli stessi e nello stesso ordine. Le differenze si elencano, non si correggono.
 import { execFileSync } from 'node:child_process';
@@ -56,10 +64,46 @@ export function frasiPiano() {
   return frasi;
 }
 
-export function confrontaUguali({ uguali, testoPagina }) {
+const inFrasi = (t) => t.split(/(?<=[.!?])\s+/).filter((f) => normalizza(f));
+
+// Testi del piano cambiati per decisione: la riga comincia con la data tra parentesi quadre, per esempio [25/11].
+export function modifichePiano() {
+  const righe = readFileSync(new URL('docs/PIANO-STORYLINE.md', radice), 'utf8').split('\n');
+  const modifiche = [];
+  let sezione = '';
+  for (const [n, riga] of righe.entries()) {
+    if (riga.startsWith('#')) sezione = riga.replace(/^#+\s*/, '');
+    const data = riga.split('"')[0].match(/\[(\d{1,2}\/\d{1,2})\]/)?.[1];
+    const ora = riga.match(/"([^"]+)"/)?.[1];
+    if (!data || !ora) continue;
+    modifiche.push({ riga: n + 1, sezione, data, ora, era: riga.match(/\(era "([^"]+)"/)?.[1] ?? '' });
+  }
+  return modifiche;
+}
+
+export function confrontaUguali({ uguali, modificati = [], testoPagina }) {
   const main = normalizza(testoMain());
   const pagina = normalizza(testoPagina);
   const differenze = [];
+  const modifiche = modifichePiano();
+  for (const m of modifiche) {
+    const dove = `piano riga ${m.riga} (${m.sezione}), cambiato il ${m.data}`;
+    if (!m.era) differenze.push(`${dove}: manca il testo di prima tra parentesi, (era "...")`);
+    const nuove = inFrasi(m.ora).map(normalizza);
+    for (const f of inFrasi(m.ora)) if (!pagina.includes(normalizza(f))) differenze.push(`${dove}: manca nella pagina: "${f}"`);
+    for (const f of inFrasi(m.era)) {
+      const n = normalizza(f);
+      if (!main.includes(n)) differenze.push(`${dove}: il testo di prima non è quello di main: "${f}"`);
+      if (!nuove.includes(n) && pagina.includes(n)) differenze.push(`${dove}: il testo di prima è ancora nella pagina: "${f}"`);
+    }
+  }
+  for (const e of modificati) {
+    for (const f of inFrasi(e.testo)) {
+      if (!modifiche.some((m) => m.data === e.data && normalizza(m.ora).includes(normalizza(f)))) {
+        differenze.push(`pagina, data-modificato="${e.data}": non c'è una riga [${e.data}] nel piano per "${f.trim()}"`);
+      }
+    }
+  }
   for (const f of frasiPiano()) {
     const n = normalizza(f.frase);
     if (!main.includes(n)) differenze.push(`piano riga ${f.riga} (${f.sezione}): diverso da main: "${f.frase}"`);
@@ -70,7 +114,7 @@ export function confrontaUguali({ uguali, testoPagina }) {
       if (normalizza(f) && !main.includes(normalizza(f))) differenze.push(`pagina, data-uguale: diverso da main: "${f.trim()}"`);
     }
   }
-  return { frasi: frasiPiano().length, elementi: uguali.length, differenze };
+  return { frasi: frasiPiano().length, elementi: uguali.length, modifiche, elementiModificati: modificati.length, differenze };
 }
 
 // Testo della pagina con uno spazio tra i nodi, compresi gli esiti nascosti (riuscito, errore)
@@ -84,6 +128,8 @@ export const leggiPagina = async (pagina) =>
     return {
       testoPagina: testi.join(' '),
       uguali: [...document.querySelectorAll('[data-uguale]')].map((e) => e.textContent.replace(/\s+/g, ' ').trim()),
+      // un <br> nel titolo vale uno spazio
+      modificati: [...document.querySelectorAll('[data-modificato]')].map((e) => ({ data: e.dataset.modificato, testo: e.innerText.replace(/\s+/g, ' ').trim() })),
     };
   });
 
@@ -96,6 +142,11 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const esito = confrontaUguali(await leggiPagina(pagina));
   await browser.close();
   console.log(`Frasi [=] del piano: ${esito.frasi}. Elementi data-uguale nella pagina: ${esito.elementi}.`);
+  if (esito.modifiche.length) {
+    const date = [...new Set(esito.modifiche.map((m) => m.data))].join(', ');
+    console.log(`Modificati per decisione di Federico del ${date}, non sono errori (${esito.modifiche.length} testi del piano, ${esito.elementiModificati} elementi data-modificato):`);
+    for (const m of esito.modifiche) console.log(`- ${m.sezione}: prima "${m.era}", ora "${m.ora}"`);
+  }
   console.log(esito.differenze.length ? `Differenze (${esito.differenze.length}):\n- ${esito.differenze.join('\n- ')}` : 'Nessuna differenza.');
   process.exit(esito.differenze.length ? 1 : 0);
 }
