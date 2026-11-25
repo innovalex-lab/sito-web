@@ -312,22 +312,27 @@ export const riepilogo = {
       'Oggi solo il 37% della giornata diventa fattura. Il resto se ne va tra archiviazione, ricerche, recap e rincorse. INNOVALEX toglie il lavoro manuale e porta nel report il valore che oggi si perde. Un’azione sola: qualifichi la mail dal pannello, il sistema fa il resto.',
     funzioni: ['pannello-outlook', 'archiviazione', 'report', 'cartella-lavoro'] as IdFunzione[],
   },
+  // Titolo di ogni blocco in due parti: la parola chiave su una riga sua, in oro, e il resto sotto in bianco.
+  // A schermo i due punti non si vedono (c'è l'a capo); restano nel testo letto dai lettori di schermo.
   blocchi: [
     {
       id: 'tempo',
-      titolo: 'Tempo: il lavoro manuale lo fa INNOVALEX.',
+      chiave: 'Tempo',
+      resto: 'il lavoro manuale lo fa INNOVALEX.',
       testo: 'Archiviare, rinominare, cercare allegati, scrivere recap, segnare scadenze. Prima erano ore. Ora è un click dal pannello.',
       funzioni: ['archiviazione', 'nomi-progressivi', 'cartella-lavoro', 'scadenze-da-mail', 'calendario', 'pannello-outlook'] as IdFunzione[],
     },
     {
       id: 'fatturato',
-      titolo: 'Fatturato: il valore nascosto entra nel report.',
+      chiave: 'Fatturato',
+      resto: 'il valore nascosto entra nel report.',
       testo: 'Ogni email che conta diventa ore e valore, anche quelle che non avevi segnato: INNOVALEX le stima, tu le confermi. Nel report entra solo quello che includi tu, quindi sono numeri che puoi mostrare al cliente. La proforma è già pronta.',
       funzioni: ['pannello-outlook', 'attivita-valore', 'report'] as IdFunzione[],
     },
     {
       id: 'organizzazione',
-      titolo: 'Organizzazione: lo studio lavora in ordine.',
+      chiave: 'Organizzazione',
+      resto: 'lo studio lavora in ordine.',
       testo: 'Ogni pratica nella sua fase, ogni collaboratore con la sua cartella, il valore di ogni socio misurato. Nessun messaggio per sapere a che punto siete.',
       funzioni: ['pratiche', 'cartella-lavoro', 'carichi-team', 'valore-socio'] as IdFunzione[],
     },

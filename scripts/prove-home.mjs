@@ -403,6 +403,78 @@ for (const ridotto of [false, true]) {
         testo: t(sez.querySelector('.riepilogo-testo')),
         blocchi: blocchi.map((b) => `${t(b.querySelector('h3')).split(':')[0]}`),
         cime: blocchi.map((b) => Math.round(b.getBoundingClientRect().top)),
+        // Sessione 2.1: ordine di lettura, riga del testo, parola chiave in oro su una riga sua, icone
+        ordine: ['.riepilogo-titolo', '.riepilogo-testo', '.riepilogo-blocchi', '.riepilogo-chiusura', '.riepilogo-azioni'].map((q) => {
+          const r = sez.querySelector(q).getBoundingClientRect();
+          return { cima: Math.round(r.top), fondo: Math.round(r.bottom), sinistra: Math.round(r.left) };
+        }),
+        righe: (() => {
+          const nodo = sez.querySelector('.riepilogo-testo').firstChild;
+          const r = document.createRange();
+          const out = [];
+          let cima = null;
+          let inizio = 0;
+          for (let i = 0; i < nodo.length; i++) {
+            r.setStart(nodo, i);
+            r.setEnd(nodo, i + 1);
+            const c = r.getClientRects()[0];
+            if (!c) continue;
+            if (cima === null) cima = c.top;
+            if (Math.abs(c.top - cima) > 4) {
+              out.push(nodo.data.slice(inizio, i).trim().length);
+              inizio = i;
+              cima = c.top;
+            }
+          }
+          out.push(nodo.data.slice(inizio).trim().length);
+          return out;
+        })(),
+        titoli: blocchi.map((b) => {
+          const [chiave, resto, punti, p] = ['.rb-chiave', '.rb-resto', '.rb-due-punti', '.rb-testo'].map((q) => b.querySelector(q));
+          const [sc, sr] = [getComputedStyle(chiave), getComputedStyle(resto)];
+          const [rc, rr, rp] = [chiave, resto, punti].map((e) => e.getBoundingClientRect());
+          const righe = (e) => new Set([...e.getClientRects()].map((c) => Math.round(c.top))).size;
+          return {
+            intero: t(b.querySelector('h3')),
+            chiave: chiave.firstChild.data,
+            resto: t(resto),
+            coloreChiave: sc.color,
+            coloreResto: sr.color,
+            corpoChiave: parseFloat(sc.fontSize),
+            corpoResto: parseFloat(sr.fontSize),
+            aCapo: rr.top >= rc.bottom - 1,
+            unaRiga: Math.round(rc.height) <= Math.round(parseFloat(sc.fontSize) * 1.2),
+            duePuntiNascosti: rp.width <= 1 && rp.height <= 1,
+            cimaResto: Math.round(rr.top),
+            cimaTesto: Math.round(p.getBoundingClientRect().top),
+            sinistra: Math.round(rc.left),
+          };
+        }),
+        icone: blocchi.map((b) => {
+          const svg = b.firstElementChild;
+          const s = getComputedStyle(svg);
+          const r = svg.getBoundingClientRect();
+          const tracciati = [...svg.querySelectorAll('*')];
+          return {
+            svg: svg.tagName.toLowerCase() === 'svg' && tracciati.length > 0 && tracciati.every((e) => e.tagName.toLowerCase() === 'path'),
+            nascosta: svg.getAttribute('aria-hidden') === 'true' && !svg.querySelector('title, desc'),
+            lato: [Math.round(r.width), Math.round(r.height)],
+            sinistra: Math.round(r.left),
+            fondo: Math.round(r.bottom),
+            tratto: s.stroke,
+            spessore: parseFloat(s.strokeWidth),
+            fisso: tracciati.every((e) => getComputedStyle(e).vectorEffect === 'non-scaling-stroke'),
+            estremi: `${s.strokeLinecap} ${s.strokeLinejoin}`,
+            pieni: tracciati.filter((e) => getComputedStyle(e).fill !== 'none').length,
+            dietro: s.backgroundColor !== 'rgba(0, 0, 0, 0)' || s.backgroundImage !== 'none' || s.borderTopWidth !== '0px' || s.boxShadow !== 'none',
+            mossa: [svg, ...tracciati].some((e) => {
+              const c = getComputedStyle(e);
+              return c.animationName !== 'none' || parseFloat(c.transitionDuration) > 0;
+            }),
+            disegno: tracciati.map((e) => e.getAttribute('d')).join(' '),
+          };
+        }),
+        immagini: sez.querySelectorAll('img, use, picture, [class*="emoji"]').length,
         chiusura: t(sez.querySelector('.riepilogo-chiusura')),
         oro: getComputedStyle(sez.querySelector('.riepilogo-chiusura')).color,
         link,
@@ -413,6 +485,32 @@ for (const ridotto of [false, true]) {
     });
     ok(`${tag} riepilogo: titolo, testo e conto come il brief, in oro`, riep.titolo === 'Meno lavoro manuale. Più lavoro fatturato.' && riep.testo.startsWith('Oggi solo il 37% della giornata diventa fattura.') && riep.testo.endsWith('il sistema fa il resto.') && riep.chiusura === 'Fai il conto: 2 ore al giorno recuperate = 440 ore l’anno = 66.000 € per avvocato.' && riep.oro === 'rgb(210, 176, 114)', JSON.stringify({ t: riep.titolo, c: riep.chiusura, oro: riep.oro }));
     ok(`${tag} riepilogo: tre blocchi ${w >= 1024 ? 'in fila' : 'in colonna'}`, riep.blocchi.join(',') === 'Tempo,Fatturato,Organizzazione' && (w >= 1024 ? new Set(riep.cime).size === 1 : riep.cime[0] < riep.cime[1] && riep.cime[1] < riep.cime[2]), JSON.stringify(riep.cime));
+    {
+      const o = riep.ordine;
+      ok(`${tag} riepilogo: titolo, testo, blocchi, conto e pulsanti uno sotto l'altro, testo sotto il titolo`, o.every((e, i) => i === 0 || e.cima >= o[i - 1].fondo) && o[1].sinistra === o[0].sinistra, JSON.stringify(o));
+      ok(`${tag} riepilogo: riga del testo di 65 caratteri al massimo`, Math.max(...riep.righe) <= 66, riep.righe.join(', '));
+      const ti = riep.titoli;
+      ok(
+        `${tag} riepilogo: parola chiave su una riga sua, in oro chiaro e più grande; resto sotto in bianco; due punti non a schermo`,
+        ti.map((x) => x.chiave).join(',') === 'Tempo,Fatturato,Organizzazione' &&
+          ti.map((x) => x.resto).join(' | ') === 'il lavoro manuale lo fa INNOVALEX. | il valore nascosto entra nel report. | lo studio lavora in ordine.' &&
+          ti.map((x) => x.intero).join(' | ') === 'Tempo: il lavoro manuale lo fa INNOVALEX. | Fatturato: il valore nascosto entra nel report. | Organizzazione: lo studio lavora in ordine.' &&
+          ti.every((x) => x.coloreChiave === 'rgb(210, 176, 114)' && x.coloreResto === 'rgb(255, 255, 255)' && x.corpoChiave >= 24 && x.corpoChiave >= x.corpoResto * 1.5 && x.aCapo && x.unaRiga && x.duePuntiNascosti),
+        JSON.stringify(ti.map((x) => ({ c: x.chiave, colore: x.coloreChiave, corpo: `${x.corpoChiave}/${x.corpoResto}`, aCapo: x.aCapo, unaRiga: x.unaRiga, punti: x.duePuntiNascosti }))),
+      );
+      if (w >= 1024) ok(`${tag} riepilogo: resto del titolo e testo sulla stessa riga nei tre blocchi`, new Set(ti.map((x) => x.cimaResto)).size === 1 && new Set(ti.map((x) => x.cimaTesto)).size === 1, JSON.stringify(ti.map((x) => [x.cimaResto, x.cimaTesto])));
+      const ic = riep.icone;
+      const lato = w >= 768 ? 40 : 32;
+      ok(
+        `${tag} riepilogo: tre icone SVG in linea da ${lato} px, tratto oro da 1,5 px, a sinistra sopra la parola chiave, nascoste ai lettori di schermo`,
+        ic.length === 3 &&
+          new Set(ic.map((x) => x.disegno)).size === 3 &&
+          riep.immagini === 0 &&
+          ic.every((x, i) => x.svg && x.nascosta && x.lato[0] === lato && x.lato[1] === lato && x.tratto === 'rgb(210, 176, 114)' && x.spessore === 1.5 && x.fisso && x.estremi === 'round round' && x.sinistra === ti[i].sinistra && x.fondo <= ti[i].cimaResto),
+        JSON.stringify(ic.map((x) => ({ lato: x.lato, tratto: x.tratto, spessore: x.spessore, estremi: x.estremi, nascosta: x.nascosta, sinistra: x.sinistra }))),
+      );
+      ok(`${tag} riepilogo: icone senza fondo, cerchio o riquadro dietro, senza riempimenti e senza animazioni`, ic.every((x) => !x.dietro && x.pieni === 0 && !x.mossa), JSON.stringify(ic.map((x) => ({ dietro: x.dietro, pieni: x.pieni, mossa: x.mossa }))));
+    }
     ok(`${tag} riepilogo: pulsanti al calcolatore e al form, nessun segnaposto video, sezione AI tolta, compliance subito dopo`, riep.link.join(' | ') === 'Calcola il tuo studio > #calcolatore | Prenota la Diagnosi Operativa > #contatti' && !riep.video && !riep.ai && riep.compliance === 'compliance', JSON.stringify(riep));
 
     // Ordine Operativo: la lastra nuova del nuovo contatto, non più la cartella della scena
