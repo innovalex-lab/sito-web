@@ -77,9 +77,9 @@
 }
 
 .studio-intro {
-  max-width: 34rem;
+  max-width: var(--misura);
   font-size: var(--text-lead);
-  line-height: 1.55;
+  line-height: 1.6;
   color: var(--testo-2);
 }
 
@@ -99,31 +99,25 @@
 .blocco-titolo {
   margin-top: 0.9rem;
   font-family: var(--font-serif);
-  font-size: 1.5rem;
-  font-weight: 500;
-  line-height: 1.15;
-  letter-spacing: -0.012em;
+  font-size: var(--text-voce);
   color: var(--inchiostro);
 }
 
 .blocco-grande .blocco-titolo {
-  font-size: clamp(1.5rem, 1.2rem + 0.8vw, 1.875rem);
+  font-size: 1.5rem;
 }
 
 .blocco-testo {
-  max-width: 30rem;
+  max-width: var(--misura);
   margin-top: 0.5rem;
-  line-height: 1.55;
+  line-height: 1.6;
   color: var(--testo-2);
 }
 
-/* La lastra: stesso vetro, spessore e luce delle lastre della prima schermata e dei benefici
-   (.lastra, .vetro, .spigolo, .carta in filo.css), con una leggera inclinazione ferma che mostra lo spessore. */
+/* La lastra: stesso materiale delle lastre della scena e dei benefici (.lastra, .vetro, .carta in filo.css),
+   piatta: fondo pieno, bordo di 1 px, ombra corta. */
 .blocco-lastra {
-  --spessore: 0.7em;
   font-size: 1rem;
-  transform: perspective(90em) rotateX(9deg);
-  transform-origin: 50% 100%;
 }
 
 .blocco-lastra > .carta.mini {
@@ -739,7 +733,7 @@
   grid-area: foto;
   display: block;
   overflow: hidden;
-  border-radius: 0.4rem;
+  border-radius: var(--raggio);
   background: #ece4d4;
 }
 
@@ -757,9 +751,7 @@
 
 .persona-nome {
   font-family: var(--font-serif);
-  font-size: 1.375rem;
-  font-weight: 500;
-  line-height: 1.2;
+  font-size: var(--text-voce);
   color: var(--inchiostro);
 }
 
@@ -771,7 +763,7 @@
 
 .persona-testo {
   grid-area: testo;
-  max-width: 34rem;
+  max-width: var(--misura);
   line-height: 1.6;
   color: var(--testo-2);
 }
@@ -782,18 +774,13 @@
 
 .caso {
   align-self: start;
-  padding: clamp(1.5rem, 3vw, 2.25rem);
-  border-radius: 0.6rem;
-  background: #fff;
-  outline: 1px solid rgb(30 38 86 / 0.08);
-  outline-offset: -1px;
+  padding: var(--spazio-titolo) 0 0;
+  border-top: 1px solid var(--linea-oro);
 }
 
 .caso-titolo {
   font-family: var(--font-serif);
-  font-size: 1.625rem;
-  font-weight: 500;
-  line-height: 1.15;
+  font-size: var(--text-sottotitolo);
   color: var(--inchiostro);
 }
 
@@ -820,10 +807,10 @@
 .caso-numeri dd:not(.avviso-anteprima) {
   order: 1;
   font-family: var(--font-serif);
-  font-size: clamp(2.25rem, 1.9rem + 1vw, 2.75rem);
-  font-weight: 450;
+  font-size: var(--text-numero-piccolo);
+  font-weight: var(--peso-titoli);
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: var(--spaziatura-titoli);
   color: var(--inchiostro);
   font-variant-numeric: tabular-nums;
 }
@@ -894,7 +881,7 @@
   .modulo-area {
     margin-inline: 0;
     padding: clamp(1.75rem, 3.5vw, 2.75rem);
-    border-radius: 0.6rem;
+    border-radius: var(--raggio-riquadro);
   }
 }
 
@@ -934,8 +921,8 @@
   width: 100%;
   min-height: 3rem;
   padding: 0.7rem 0.85rem;
-  border: 1.5px solid #8a8ea6;
-  border-radius: 0.4rem;
+  border: 1px solid #8a8ea6;
+  border-radius: var(--raggio);
   background: #fff;
   color: var(--inchiostro);
   font: inherit;
@@ -993,7 +980,7 @@
   gap: 0.7rem;
   min-height: 2.75rem;
   padding: 0.55rem 0.85rem;
-  border-radius: 0.4rem;
+  border-radius: var(--raggio);
   background: #fff;
   color: var(--inchiostro);
   line-height: 1.4;
@@ -1009,11 +996,11 @@
 }
 
 .mo-opzione:has(input:checked) {
-  box-shadow: inset 0 0 0 1.5px var(--inchiostro);
+  box-shadow: inset 0 0 0 1px var(--inchiostro);
 }
 
 .mo-scelte[aria-invalid='true'] .mo-opzione {
-  box-shadow: inset 0 0 0 1.5px #b42318;
+  box-shadow: inset 0 0 0 1px #b42318;
 }
 
 .mo-consenso .mo-opzione {
@@ -1083,10 +1070,7 @@
 
 .mo-fatto-titolo {
   font-family: var(--font-serif);
-  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
-  font-weight: 500;
-  line-height: 1.15;
-  letter-spacing: -0.015em;
+  font-size: var(--text-sottotitolo);
   color: var(--inchiostro);
 }
 
@@ -1132,9 +1116,7 @@
 
 .faq-titolo {
   font-family: var(--font-serif);
-  font-size: clamp(1.75rem, 1.5rem + 1vw, 2.25rem);
-  font-weight: 500;
-  line-height: 1.15;
+  font-size: var(--text-sottotitolo);
   color: var(--inchiostro);
 }
 
@@ -1153,9 +1135,8 @@
 
 /* Scalino di tono invece dei filetti */
 .faq-voce {
-  padding-inline: clamp(1rem, 2vw, 1.5rem);
-  border-radius: 0.5rem;
-  background: #efe6d6;
+  padding-inline: 0;
+  border-top: 1px solid var(--linea-oro);
 }
 
 .faq-voce summary {
@@ -1166,8 +1147,8 @@
   gap: 1.5rem;
   padding: 0.75rem 0;
   color: var(--inchiostro);
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: 1.0625rem;
+  font-weight: 550;
   line-height: 1.35;
   cursor: pointer;
   list-style: none;
@@ -1183,25 +1164,24 @@
   flex: none;
   width: 0.9rem;
   height: 0.9rem;
-  background:
-    linear-gradient(var(--oro), var(--oro)) center / 100% 2px no-repeat,
-    linear-gradient(var(--oro), var(--oro)) center / 2px 100% no-repeat;
+  background: linear-gradient(var(--oro), var(--oro)) center / 100% 1px no-repeat,
+    linear-gradient(var(--oro), var(--oro)) center / 1px 100% no-repeat;
   transition: transform 180ms ease-out;
 }
 
 .faq-voce[open] summary::after {
-  background: linear-gradient(var(--oro), var(--oro)) center / 100% 2px no-repeat;
+  background: linear-gradient(var(--oro), var(--oro)) center / 100% 1px no-repeat;
 }
 
 .faq-voce summary:hover {
   text-decoration: underline;
   text-decoration-color: var(--oro);
-  text-decoration-thickness: 2px;
+  text-decoration-thickness: 1px;
   text-underline-offset: 0.3em;
 }
 
 .faq-voce p {
-  max-width: 40rem;
+  max-width: var(--misura);
   padding-bottom: 1.25rem;
   line-height: 1.6;
   color: var(--testo-2);

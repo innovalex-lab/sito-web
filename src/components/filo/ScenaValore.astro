@@ -13,11 +13,10 @@ const pratiche = [
 ];
 const massimo = 9;
 const ore = (n: number) => String(n).replace('.', ',');
-const spigoli = '<span class="spigolo spigolo-basso"></span><span class="spigolo spigolo-sx"></span><span class="spigolo spigolo-dx"></span>';
 ---
 <div class:list={["bn-palco bn-palco-valore", classi]} data-entra>
   <div class="lastra lastra-libera bn-valore" data-ui>
-    <div class="vetro" aria-hidden="true" set:html={spigoli} />
+    <div class="vetro" aria-hidden="true"></div>
     <div class="carta" role="img" aria-label="Novembre, Avv. Sara Lombrici: per quattro pratiche le ore stimate vengono confermate e il valore del mese passa da 2.775 a 3.750 euro.">
       <div class="bv-testa">
         <span><b>Novembre</b><small>Avv. Sara Lombrici, ore per pratica</small></span>
@@ -47,7 +46,7 @@ const spigoli = '<span class="spigolo spigolo-basso"></span><span class="spigolo
     </div>
   </div>
   <div class="lastra lastra-libera bn-conferma" data-ui>
-    <div class="vetro" aria-hidden="true" set:html={spigoli} />
+    <div class="vetro" aria-hidden="true"></div>
     <div class="carta" aria-hidden="true">
       <p class="bc-titolo">Ore stimate confermate</p>
       <p class="bc-cifra">6,5 h</p>

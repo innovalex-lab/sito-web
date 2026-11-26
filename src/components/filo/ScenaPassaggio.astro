@@ -5,11 +5,10 @@ interface Props {
   class?: string;
 }
 const { class: classi = '' } = Astro.props;
-const spigoli = '<span class="spigolo spigolo-basso"></span><span class="spigolo spigolo-sx"></span><span class="spigolo spigolo-dx"></span>';
 ---
 <div class:list={["bn-palco bn-palco-passaggio", classi]} data-entra>
   <div class="lastra lastra-libera bn-passaggio" data-ui>
-    <div class="vetro" aria-hidden="true" set:html={spigoli} />
+    <div class="vetro" aria-hidden="true"></div>
     <div class="carta" role="img" aria-label="La pratica Rossi Srl c. Edilvetta passa da Avv. Sara Lombrici ad Avv. Paolo Neri: la cartella di lavoro con il riepilogo della conversazione e tre documenti arriva a lui, che riceve un avviso.">
       <div class="bp-persone">
         <span class="bp-persona bp-da"><span class="ui-avatar ui-avatar-oro">SL</span><span><b>Sara Lombrici</b><small>Senior Associate</small></span></span>

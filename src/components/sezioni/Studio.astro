@@ -5,7 +5,7 @@
 // Desktop: griglia asimmetrica, Pratiche e Valore per socio grandi, gli altri quattro piccoli.
 // Fase 4: il blocco Pratiche mostra la scena del beneficio 3 (la pipeline), al posto della mini pipeline.
 // È l'unica animazione della sezione.
-// I frammenti sono lastre di vetro con lo stesso materiale della prima schermata e dei benefici.
+// I frammenti sono lastre con lo stesso materiale della scena e dei benefici: fondo pieno, bordo sottile.
 // Sotto i 768 px: scorrimento orizzontale solo CSS (scroll-snap), con indicatore di posizione
 // fatto di link alle schede; il punto attivo si accende con una timeline di scorrimento CSS.
 import ScenaPipeline from '../filo/ScenaPipeline.astro';
@@ -13,7 +13,6 @@ import { studio, stato } from '../../content/funzioni';
 import { produzione } from '../../content/verifica';
 
 const blocchi = studio.map((b) => ({ ...b, stato: stato(b.funzioni) }));
-const spigoli = '<span class="spigolo spigolo-basso"></span><span class="spigolo spigolo-sx"></span><span class="spigolo spigolo-dx"></span>';
 
 // Tre soci finti. Il valore è una barra relativa, senza cifre in euro.
 const soci = [
@@ -37,7 +36,7 @@ const soci = [
               <ScenaPipeline class="blocco-pipeline" />
             ) : (
             <div class="lastra lastra-libera blocco-lastra" data-ui aria-hidden="true">
-              <div class="vetro" set:html={spigoli} />
+              <div class="vetro" aria-hidden="true"></div>
               <div class="carta mini">
                 {b.id === 'cliente' && (
                   <div class="mini-avviso">

@@ -503,11 +503,12 @@ for (const ridotto of [false, true]) {
           };
         }),
         immagini: sez.querySelectorAll('img, use, picture, [class*="emoji"]').length,
-        // Sessione 2.2: la sezione finisce con il pulsante oro
+        // Sessione 2.2: la sezione finisce con il pulsante oro.
+        // Sessione 3: sul fondo scuro il pulsante è a filo oro chiaro, testo oro chiaro, senza fondo, angoli da 3 px.
         tutto: t(sez),
         tolti: sez.querySelectorAll('.riepilogo-chiusura, .riepilogo-azioni, .btn-chiaro, [data-cta="riepilogo-calcola"]').length,
         bottone: {
-          oro: bottone.classList.contains('btn-oro') && sb.backgroundColor,
+          oro: bottone.classList.contains('btn-oro') && [sb.borderTopColor, sb.color, sb.backgroundColor, sb.borderTopWidth, sb.borderTopLeftRadius, sb.boxShadow].join(' / '),
           cta: bottone.dataset.cta,
           ultimo: azione === sez.querySelector('.riepilogo-interno').lastElementChild && !azione.nextElementSibling,
           sopra: Math.round(rb.top - ra.bottom),
@@ -554,12 +555,12 @@ for (const ridotto of [false, true]) {
     }
     ok(`${tag} riepilogo: un solo pulsante, al form, nessun segnaposto video, sezione AI tolta, compliance subito dopo`, riep.link.join(' | ') === 'Prenota l’analisi gratuita > #contatti' && !riep.video && !riep.ai && riep.compliance === 'compliance', JSON.stringify(riep.link));
     {
-      // Il pulsante chiude la sezione: oro come quello della prima schermata, a filo sinistro con il titolo,
+      // Il pulsante chiude la sezione: oro come quello della prima schermata (filo e testo oro chiaro dalla sessione 3), a filo sinistro con il titolo,
       // staccato dai tre blocchi (almeno 48 px) e con sotto lo spazio di fine sezione, più largo di quello sopra
       const b = riep.bottone;
       ok(
         `${tag} riepilogo: la sezione finisce con il pulsante oro, con lo spazio giusto sopra e sotto`,
-        b.oro === 'rgb(210, 176, 114)' && b.cta === 'riepilogo-diagnosi' && b.ultimo && b.sinistra === 0 && b.sopra >= 48 && b.sopra <= 80 && b.sotto >= 64 && b.sotto > b.sopra && b.alto >= 44 && (w < 480 ? b.largo === b.interno : b.largo < b.interno),
+        b.oro === 'rgb(210, 176, 114) / rgb(210, 176, 114) / rgba(0, 0, 0, 0) / 1px / 3px / none' && b.cta === 'riepilogo-diagnosi' && b.ultimo && b.sinistra === 0 && b.sopra >= 48 && b.sopra <= 80 && b.sotto >= 64 && b.sotto > b.sopra && b.alto >= 44 && (w < 480 ? b.largo === b.interno : b.largo < b.interno),
         JSON.stringify(b),
       );
     }

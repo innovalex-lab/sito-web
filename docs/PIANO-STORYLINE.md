@@ -119,7 +119,7 @@ Nome dell'offerta: dal 25/11/2026 la "Diagnosi Operativa" si chiama "analisi gra
   - [=] Dashboard collaboratori: "Una schermata mostra l'intero studio: chi sta lavorando su cosa, lo stato di ogni pratica, il livello di urgenza e le ore accumulate. Se una pratica si blocca, si vede subito."
   - [+] Pipeline delle pratiche: "Ogni pratica nella sua fase, dalla prima mail alla chiusura."
   - [+] Avviso al cliente: "Cambi fase e il cliente riceve l'aggiornamento, con il link per mandarti i documenti. Basta messaggi per sapere a che punto siete."
-- Grafica: la scena del beneficio 2 (la cartella che passa da Sara a Paolo, con la molla).
+- Grafica: la scena del beneficio 2 (la cartella che passa da Sara a Paolo; dal 26/11, sessione 3, con una curva morbida senza molla).
 - Pulsante dopo i tre sistemi: "Prenota l'analisi gratuita".
 
 ## 6. Tutto lo studio in un posto

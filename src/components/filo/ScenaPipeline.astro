@@ -5,7 +5,6 @@ interface Props {
   class?: string;
 }
 const { class: classi = '' } = Astro.props;
-const spigoli = '<span class="spigolo spigolo-basso"></span><span class="spigolo spigolo-sx"></span><span class="spigolo spigolo-dx"></span>';
 const fasi = [
   {
     nome: 'Istruttoria',
@@ -31,7 +30,7 @@ const fasi = [
 ---
 <div class:list={["bn-palco bn-palco-pipeline", classi]} data-entra>
   <div class="lastra lastra-libera bn-pipeline" data-ui>
-    <div class="vetro" aria-hidden="true" set:html={spigoli} />
+    <div class="vetro" aria-hidden="true"></div>
     <div class="carta" role="img" aria-label="Pipeline delle pratiche di recupero crediti in quattro fasi: istruttoria, diffida inviata, ricorso depositato, decreto emesso. Rossi Srl c. Edilvetta passa da istruttoria a diffida inviata.">
       <p class="pp-schede"><b>Recupero crediti</b><span>Locazioni</span><span>Lavoro</span><span>Societario</span></p>
       <div class="pp-colonne">
