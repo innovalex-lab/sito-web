@@ -1,5 +1,6 @@
 ---
 // 4. Come funziona. Testi del sito attuale sopra, la scena a 5 passi della fase 3 sotto, a tutta larghezza.
+// Tra le due, dal 26/11, la frase in evidenza: un paragrafo solo, in serif, la prima frase più grande del resto.
 // La scena non cambia: stesse lastre, stessi testi, stessa animazione (src/scripts/filo.ts).
 import LastraMail from '../filo/LastraMail.astro';
 import LastraPannello from '../filo/LastraPannello.astro';
@@ -25,6 +26,7 @@ const passi = c.scena.passi.map((p, i) => ({ ...p, Lastra: lastre[i] }));
       <h3 class="cp-titolo" data-uguale>{c.pannello.titolo}</h3>
       <p class="cp-testo">{c.pannello.testo}</p>
     </div>
+    <p class="come-frase"><span class="cf-prima">{c.frase.prima}</span> <span class="cf-resto">{c.frase.resto}</span></p>
   </div>
 
   <div class="scena-pista">

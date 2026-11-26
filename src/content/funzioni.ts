@@ -91,7 +91,15 @@ export const studio = [
 
 // Ritratti in public/team/, 4:5, stesso taglio e stesso fondo (scripts/ritratti.py), senza metadati. Il testo di Federico Garau è quello della
 // sezione Founder del sito attuale (index.html sul ramo main), parola per parola, solo spezzato in paragrafi.
-export const persone = [
+export interface Persona {
+  nome: string;
+  ruolo: string;
+  foto: string;
+  testo: string[];
+  citazione?: { testo: string; stato: StatoDato; fonte: string; funzioni: IdFunzione[] };
+}
+
+export const persone: Persona[] = [
   {
     nome: 'Federico Garau',
     ruolo: 'Fondatore',
@@ -107,7 +115,17 @@ export const persone = [
     nome: 'Avv. Francesco Cocola',
     ruolo: 'Co-fondatore',
     foto: 'francesco-cocola',
-    testo: ['Segue ogni fase dello sviluppo ed è il primo a usarlo nel suo studio.'],
+    testo: [],
+    // Dal 26/11/2026 la sua citazione al posto della riga di prima ("Segue ogni fase dello sviluppo ed è il primo a usarlo nel suo studio.").
+    // Testo approvato da Federico; manca l'approvazione dell'Avv. Cocola: in anteprima si vede con l'avviso,
+    // in produzione ferma la build finché qui lo stato non diventa "confermato" (src/content/verifica.ts).
+    citazione: {
+      testo:
+        'In quasi trent’anni di professione ho comprato, usato e lasciato quasi tutti i software per studi legali. Ognuno risolveva un pezzo e mi costringeva a reinserire i dati a mano. Nessuno partiva dalla posta. INNOVALEX l’abbiamo costruito su questo.',
+      stato: 'da confermare',
+      fonte: 'testo approvato da Federico il 26/11/2026, da far approvare all’Avv. Cocola',
+      funzioni: ['analisi-mail', 'pannello-outlook'],
+    },
   },
 ];
 

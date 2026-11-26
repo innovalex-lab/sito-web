@@ -2,7 +2,9 @@
 
 Stato: confermato da Federico il 24/11/2026, con la prima schermata del sito attuale. Sessione 1 di Claude Code in preparazione.
 
-Legenda dei testi: **[=]** testo del sito attuale, invariato. **[≈]** testo del sito attuale, corretto solo dove dice una cosa non vera oggi (motivo tra parentesi). **[+]** testo nuovo. **[25/11]** testo del sito attuale cambiato per decisione di Federico in quella data (tra parentesi il testo di prima): lo script di confronto con main lo elenca tra i modificati, non tra gli errori.
+Legenda dei testi: **[=]** testo del sito attuale, invariato. **[≈]** testo del sito attuale, corretto solo dove dice una cosa non vera oggi (motivo tra parentesi). **[+]** testo nuovo. **[25/11]**, **[26/11]** testo del sito attuale cambiato per decisione di Federico in quella data (tra parentesi il testo di prima): lo script di confronto con main lo elenca tra i modificati, non tra gli errori.
+
+Leve commerciali del 26/11/2026: dalla call con un'esperta di marketing legale, testi approvati da Federico (fase 4, sessione 4). Toccano le sezioni 2, 4, 5, 7 e 11. La Visibilità Economica diventa la sezione principale della pagina.
 
 Nome dell'offerta: dal 25/11/2026 la "Diagnosi Operativa" si chiama "analisi gratuita" in tutto il testo visibile (decisione di Federico). I dati inviati a /api/lead e /api/roi-lead, gli id e le ancore non cambiano.
 
@@ -51,7 +53,8 @@ Nome dell'offerta: dal 25/11/2026 la "Diagnosi Operativa" si chiama "analisi gra
   - 10:04 "Il collaboratore dice: 'sì, ci guardo'."
   - 11:00 "Cinque messaggi WhatsApp per sapere a che punto siete."
   - 13:00 "Quattro ore lavorate. Una e mezza fatturabili."
-- Grafica: la sezione scura di adesso, con la barra della giornata al 37%. La timeline si accende un orario alla volta mentre scorri: è l'animazione di questa sezione.
+- [+] Dal 26/11 un sesto orario dopo le 13:00, stesso stile e stessa accensione degli altri: "Venerdì, 18:30" e "Il timesheet della settimana, ricostruito a memoria."
+- Grafica: la sezione scura di adesso, con la barra della giornata al 37%. La timeline si accende un orario alla volta mentre scorri: è l'animazione di questa sezione. La colonna degli orari è larga quanto "Venerdì, 18:30"; sotto i 640 px l'orario sta sopra il testo.
 
 ## 3. Calcolatore
 
@@ -81,6 +84,8 @@ Nome dell'offerta: dal 25/11/2026 la "Diagnosi Operativa" si chiama "analisi gra
 - [=] "La tua email contiene già tutto quello che ti serve per gestire lo Studio."
 - [≈] "INNOVALEX parte da lì: integra un'Infrastruttura Operativa in quello che usi già ogni giorno, la tua casella email." (prima: "non aggiunge un nuovo sistema", ma c'è la dashboard)
 - [≈] Il Pannello: "Il tuo centro di comando, dentro la tua email. Un pannello integrato in Outlook: classifica, assegna e traccia senza uscire dalla tua casella. Tu confermi con un click, il sistema fa tutto il resto." (solo Outlook: Gmail e PEC non sono nella V1)
+- [+] Frase in evidenza (dal 26/11), tra l'apertura e la scena: "Gli altri software aspettano che tu inserisca i dati. INNOVALEX lavora in background mentre gestisci la posta. Un click dal pannello e parte tutto: archivio, cartella al collaboratore con il riepilogo, scadenza in calendario, ore nel report, fino alla proforma."
+  - Un paragrafo solo, in serif, isolato, con molto spazio sopra e sotto. Due livelli: la prima frase grande, il resto sotto più piccolo.
 - Grafica: la scena a 5 passi di adesso ("Segui una mail, dall'arrivo al valore"), testi dei passi invariati. Sostituisce lo schema vecchio con le emoji e "Agente AI".
 
 ## 5. Tre sistemi, una sola infrastruttura
@@ -89,7 +94,8 @@ Nome dell'offerta: dal 25/11/2026 la "Diagnosi Operativa" si chiama "analisi gra
   - [=] "Una sola infrastruttura. Tre risultati che cambiano come lavori."
   - [=] "I sistemi non sono tre prodotti da comprare separatamente. Sono i tre punti in cui oggi si brucia valore."
   - È l'apertura della sezione "Architettura" in fondo al sito attuale. Quella sezione sparisce, perché ripeteva questa.
-- Ogni sistema ha la stessa forma: etichetta, titolo, testo, quattro voci brevi, una scena animata affiancata.
+- Ordine Operativo e Governance Operativa hanno la stessa forma: etichetta, titolo, testo, quattro voci brevi, una scena animata affiancata.
+- Visibilità Economica (dal 26/11) esce da questo schema: è la sezione principale della pagina (vedi sotto).
 
 ### Ordine Operativo
 - [≈] Titolo: "Ogni email al posto giusto." (tolto "prima ancora che tu la apra": dipende dai tempi di elaborazione)
@@ -101,15 +107,19 @@ Nome dell'offerta: dal 25/11/2026 la "Diagnosi Operativa" si chiama "analisi gra
   - [≈] Nuovo contatto: "Quando scrive un mittente sconosciuto, INNOVALEX te lo segnala e con un click apri la pratica, creando cliente e cartella." (tolto "senza inserimento manuale": l'aggancio lo fa l'avvocato)
 - Grafica: la lastra del nuovo contatto (mail da un mittente non in anagrafica, il pannello lo segnala, un click apre la pratica: cliente creato, pratica aperta, cartella pronta). Dal 25/11 sostituisce la cartella con i PDF numerati, che era identica al passo 3 della scena.
 
-### Visibilità Economica
-- [=] Titolo: "Il lavoro che fai diventa valore che si vede."
-- [≈] Testo: "Questo report normalmente non esiste. INNOVALEX lo prepara per cliente e pratica. Per ricostruirlo a mano servirebbero decine di ore di lettura, ricerca, controllo allegati e ricostruzione delle attività." (tolto "ogni settimana": vedi i punti da confermare)
-- Voci:
-  - [≈] Report economico: "Ogni email inclusa nel report, marcata dal pannello con un click, alimenta il calcolo di ore e valore per cliente e pratica. Il report è modificabile in Word." (tolto "pronto ogni lunedì mattina")
-  - [+] Ore stimate: "Le ore che non hai segnato le stima INNOVALEX. Restano a parte finché non le confermi." (sostituisce le riunioni di Teams e Meet, che non sono ancora costruite)
-  - [≈] Dal report alla parcella: "La parcella nasce dal report, non dalla memoria. Attività, ore, tariffa per tipo di pratica e valore per cliente sono già lì: INNOVALEX prepara la proforma. Zero doppio inserimento." (tolti XML FatturaPA e "compatibile con qualsiasi sistema")
-  - [=] Valore per socio: "Per ogni socio e collaboratore INNOVALEX traccia pratiche originate, pratiche gestite, ore lavorate e valore economico generato. La base oggettiva per la distribuzione degli utili, senza discussioni e senza memoria."
-- Grafica: la scena del beneficio 1 (il valore del mese che passa da 2.775 a 3.750 € quando confermi le ore stimate).
+### Visibilità Economica: la sezione principale della pagina (dal 26/11)
+- Resta al suo posto, tra Ordine Operativo e Governance Operativa, ma esce dallo schema degli altri due: fascia blu notte a tutta larghezza, la più curata della pagina.
+- Etichetta: "Visibilità Economica".
+- [26/11] Titolo: "Il controllo economico dei grandi studi internazionali. Senza timesheet." (era "Il lavoro che fai diventa valore che si vede.")
+- [+] Testo: "I grandi studi sanno quanto vale ogni cliente, ogni pratica, ogni professionista. Lo sanno perché hanno un ufficio finance e chiedono il timesheet ogni venerdì. INNOVALEX ti dà gli stessi numeri partendo dalle mail che gestisci già." (al posto del testo [≈] "Questo report normalmente non esiste...")
+- Quattro leve, ognuna con il suo titolo in serif e il testo sotto. Griglia 2 x 2 da 768 px in su, in colonna sotto. Al posto delle quattro voci di prima (Report economico, Ore stimate, Dal report alla parcella, Valore per socio):
+  - [+] "Niente timesheet." / "Le ore nascono dalle mail che qualifichi dal pannello. Quelle che non hai segnato le stima INNOVALEX, tu le confermi."
+  - [+] "Quanto vale ogni cliente e ogni pratica." / "Ore e valore sempre aggiornati. Anche a forfait sai quanto lavoro c'è davvero dietro il compenso concordato."
+  - [26/11] Quanto vale ogni persona dello studio: "Per ogni socio e collaboratore: pratiche originate, pratiche gestite, ore e valore generato. La base oggettiva per dividere gli utili e organizzare il team." (era "Per ogni socio e collaboratore INNOVALEX traccia pratiche originate, pratiche gestite, ore lavorate e valore economico generato. La base oggettiva per la distribuzione degli utili, senza discussioni e senza memoria.")
+  - [+] "Numeri che puoi mostrare al cliente." / "Ogni euro del report è collegato alle mail da cui nasce. Dal report nasce la proforma."
+- Non si scrivono costo, margine, preventivi o "ogni lunedì": non sono confermati.
+- Grafica: la scena del beneficio 1 (il valore del mese che passa da 2.775 a 3.750 € quando confermi le ore stimate), accanto al testo, entro metà larghezza. Dal 26/11 la lastra piccola delle ore confermate si posa in basso a destra, sotto la legenda, che prima copriva per metà.
+- Le frasi delle leve sono collegate alle funzioni in src/content/storia.ts: report, ore stimate da confermare, valore per socio, pannello.
 
 ### Governance Operativa
 - [=] Titolo: "Sai sempre chi sta facendo cosa. Senza rincorrere nessuno."
@@ -133,7 +143,7 @@ Nome dell'offerta: dal 25/11/2026 la "Diagnosi Operativa" si chiama "analisi gra
   - [+] Titolo: "Meno lavoro manuale. Più lavoro fatturato."
   - [+] Testo: "Oggi solo il 37% della giornata diventa fattura. Il resto se ne va tra archiviazione, ricerche, recap e rincorse. INNOVALEX toglie il lavoro manuale e porta nel report il valore che oggi si perde. Un'azione sola: qualifichi la mail dal pannello, il sistema fa il resto."
   - [+] "Tempo: il lavoro manuale lo fa INNOVALEX." "Archiviare, rinominare, cercare allegati, scrivere recap, segnare scadenze. Prima erano ore. Ora è un click dal pannello."
-  - [+] "Fatturato: il valore nascosto entra nel report." "Ogni email che conta diventa ore e valore, anche quelle che non avevi segnato: INNOVALEX le stima, tu le confermi. Nel report entra solo quello che includi tu, quindi sono numeri che puoi mostrare al cliente. La proforma è già pronta."
+  - [+] "Fatturato: il valore nascosto entra nel report." "Niente timesheet. Ogni email che conta diventa ore e valore, anche quelle che non avevi segnato: INNOVALEX le stima, tu le confermi. Nel report entra solo quello che includi tu, quindi sono numeri che puoi mostrare al cliente. La proforma è già pronta."
   - [+] "Organizzazione: lo studio lavora in ordine." "Ogni pratica nella sua fase, ogni collaboratore con la sua cartella, il valore di ogni socio misurato. Nessun messaggio per sapere a che punto siete."
   - La sezione finisce con un solo pulsante, in oro: "Prenota l'analisi gratuita" (al form). Tolti il 25/11, per decisione di Federico, il conto in oro sotto i tre blocchi e il pulsante "Calcola il tuo studio".
   - La sezione AI esce con le sue due colonne e la scadenza interattiva. Il riconoscimento dei meeting dal calendario non si cita finché non è attivo.
@@ -183,8 +193,11 @@ Come nella fase 3.1, con il tuo sottotitolo: segretaria, gestionale (riscritta c
 ## 11. Chi siamo
 
 - [+] "INNOVALEX nasce dentro uno studio legale."
+- [+] Sotto il titolo (dal 26/11): "Un avvocato con quasi trent'anni di professione e un esperto di automazione e intelligenza artificiale, fianco a fianco ogni giorno per un anno. Gli altri software lavorano a pezzi: uno per le pratiche, uno per i documenti, uno per le fatture, e i dati da reinserire a mano in ognuno. Noi siamo partiti da dove nasce il lavoro, la posta, e abbiamo costruito un solo sistema che il lavoro lo fa al posto tuo."
 - Federico Garau, Fondatore (dal 26/11, era "Fondatore e amministratore"), con il tuo testo Founder [=].
-- Avv. Francesco Cocola, Co-fondatore.
+- Avv. Francesco Cocola, Co-fondatore. Dal 26/11, al posto della riga di prima, la sua citazione, in serif:
+  - [+] "In quasi trent'anni di professione ho comprato, usato e lasciato quasi tutti i software per studi legali. Ognuno risolveva un pezzo e mi costringeva a reinserire i dati a mano. Nessuno partiva dalla posta. INNOVALEX l'abbiamo costruito su questo."
+  - Da confermare: manca l'approvazione dell'Avv. Cocola. In anteprima si vede con l'avviso, in produzione ferma la build finché non è segnata confermata (src/content/funzioni.ts, persone).
 - Foto: stessa cornice, stesso taglio, stesso fondo (è il lavoro della fase 3.2, che entra qui).
 - [25/11] Pulsante finale: "Prenota l'analisi gratuita" (era "Prenota la Diagnosi Operativa").
 
@@ -220,6 +233,7 @@ Main e la produzione non si toccano fino al collaudo finale.
 2. **Report "ogni lunedì".** Tolto. Se il report settimanale automatico è già acceso, si rimette.
 3. **SCLN, "20 ore recuperate a settimana" e "156.000 € l'anno".** Fuori. Rientrano se Cocola li conferma.
 4. **Percentuali del calcolatore (75%, 10%, 8%).** Restano le tue, solo rese visibili.
+5. **Citazione dell'Avv. Cocola in Chi siamo (26/11).** Approvata da Federico, da far approvare a Cocola. Finché non è confermata, la build di produzione si ferma.
 
 ## Rischi
 

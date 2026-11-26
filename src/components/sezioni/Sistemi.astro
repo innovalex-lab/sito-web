@@ -1,21 +1,20 @@
 ---
-// 5. Tre sistemi, una sola infrastruttura. Ogni sistema ha la stessa forma: etichetta, titolo, testo,
-// quattro voci brevi e una scena affiancata (al massimo metà della larghezza). Le scene sono quelle
-// della fase 3, spostate e ridimensionate, non ridisegnate, tranne Ordine Operativo:
+// 5. Tre sistemi, una sola infrastruttura. Ordine Operativo e Governance Operativa hanno la stessa forma:
+// etichetta, titolo, testo, quattro voci brevi e una scena affiancata (al massimo metà della larghezza).
+// Dal 26/11 Visibilità Economica è la sezione principale della pagina: resta tra i due, ma esce dallo schema,
+// in una fascia blu notte a tutta larghezza. Titolo in due righe, testo e scena affiancati, poi le quattro leve
+// in una griglia 2 x 2 (in colonna sotto i 768 px), ognuna con il suo titolo in serif.
+// Le scene sono quelle della fase 3, spostate e ridimensionate, non ridisegnate, tranne Ordine Operativo:
 //   Ordine Operativo: la lastra del nuovo contatto (sessione 2: prima era la cartella del passo 3, ripetuta);
-//   Visibilità Economica: beneficio 1; Governance Operativa: beneficio 2.
+//   Visibilità Economica: beneficio 1, il valore che sale; Governance Operativa: beneficio 2.
 // Una sola animazione per sistema: la scena, quando entra nello schermo.
+import SistemaAffiancato from './SistemaAffiancato.astro';
 import LastraContatto from '../filo/LastraContatto.astro';
 import ScenaValore from '../filo/ScenaValore.astro';
 import ScenaPassaggio from '../filo/ScenaPassaggio.astro';
 import { sistemi as c, prenota } from '../../content/storia';
 
 const [ordine, visibilita, governance] = c.elenco;
-const blocchi = [
-  { s: ordine, lato: 'destra' },
-  { s: visibilita, lato: 'sinistra' },
-  { s: governance, lato: 'destra' },
-];
 ---
 <section id="sistemi" class="sistemi" aria-labelledby="t-sistemi">
   <div class="contenitore">
@@ -24,32 +23,42 @@ const blocchi = [
       <p class="lead">{c.testo}</p>
     </div>
 
-    {blocchi.map(({ s, lato }) => (
-      <article id={s.id} class:list={['sistema', `sistema-${lato}`]} aria-labelledby={`t-${s.id}`}>
+    <SistemaAffiancato s={ordine} lato="destra">
+      <div class="bn-palco bn-palco-contatto" data-lastra-entra>
+        <LastraContatto class="lastra-libera bn-contatto" stato="futura" />
+      </div>
+    </SistemaAffiancato>
+  </div>
+
+  <div class="sistema-fascia">
+    <div class="contenitore">
+      <article id={visibilita.id} class="sistema sistema-principale" aria-labelledby={`t-${visibilita.id}`}>
         <div class="sistema-testo">
-          <p class="etichetta">{s.etichetta}</p>
-          <h3 id={`t-${s.id}`} class="sistema-titolo">{s.titolo}</h3>
-          <p class="sistema-intro">{s.testo}</p>
-          <ul class="sistema-voci">
-            {s.voci.map((v) => (
-              <li>
-                <h4 class="sv-nome">{v.nome}</h4>
-                <p class="sv-testo">{v.testo}</p>
-              </li>
-            ))}
-          </ul>
+          <p class="etichetta etichetta-scura">{visibilita.etichetta}</p>
+          <h3 id={`t-${visibilita.id}`} class="sistema-titolo sp-titolo" data-modificato="26/11">
+            <span>{visibilita.titoloParti[0]}</span> <span>{visibilita.titoloParti[1]}</span>
+          </h3>
+          <p class="sistema-intro sp-intro">{visibilita.testo}</p>
         </div>
         <div class="sistema-scena">
-          {s.id === 'ordine-operativo' && (
-            <div class="bn-palco bn-palco-contatto" data-lastra-entra>
-              <LastraContatto class="lastra-libera bn-contatto" stato="futura" />
-            </div>
-          )}
-          {s.id === 'visibilita-economica' && <ScenaValore />}
-          {s.id === 'governance-operativa' && <ScenaPassaggio />}
+          <ScenaValore />
         </div>
+        <ul class="sp-leve">
+          {visibilita.voci.map((v) => (
+            <li class="sp-leva">
+              <h4 class="sp-leva-titolo">{v.nome}</h4>
+              <p class="sp-leva-testo" data-modificato={v.modificato}>{v.testo}</p>
+            </li>
+          ))}
+        </ul>
       </article>
-    ))}
+    </div>
+  </div>
+
+  <div class="contenitore">
+    <SistemaAffiancato s={governance} lato="destra" class="sistema-dopo-fascia">
+      <ScenaPassaggio />
+    </SistemaAffiancato>
 
     <p class="sistemi-azione"><a class="btn btn-primario" href="#contatti" data-cta="sistemi-diagnosi">{prenota}</a></p>
   </div>

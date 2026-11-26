@@ -2,7 +2,7 @@
 // e, sul testo finale, in astro.config.mjs (scripts/verifica-testi.mjs).
 // In produzione (VERCEL_ENV=production) ogni avviso fa fallire la build.
 // Nelle anteprime la pagina si costruisce comunque e mostra gli avvisi.
-import { casoScln, funzioni, studio, type IdFunzione } from './funzioni';
+import { casoScln, funzioni, persone, studio, type IdFunzione } from './funzioni';
 import * as storia from './storia';
 
 export interface Avviso {
@@ -46,6 +46,14 @@ export function avvisiContenuti(): Avviso[] {
   }
   const c = casoScln.citazione;
   if (c.stato !== 'confermato') avvisi.push({ dove: 'Caso SCLN', problema: `citazione da confermare (fonte: ${c.fonte})`, esistente: false });
+  // Citazioni in Chi siamo (dal 26/11/2026 quella dell'Avv. Cocola): funzioni attive e approvazione della persona
+  for (const p of persone) {
+    if (!p.citazione) continue;
+    controlla(`Chi siamo, citazione di ${p.nome}`, p.citazione.funzioni, false);
+    if (p.citazione.stato !== 'confermato') {
+      avvisi.push({ dove: 'Chi siamo', problema: `citazione di ${p.nome} da confermare (fonte: ${p.citazione.fonte})`, esistente: false });
+    }
+  }
   return avvisi;
 }
 

@@ -143,9 +143,11 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   await browser.close();
   console.log(`Frasi [=] del piano: ${esito.frasi}. Elementi data-uguale nella pagina: ${esito.elementi}.`);
   if (esito.modifiche.length) {
-    const date = [...new Set(esito.modifiche.map((m) => m.data))].join(', ');
-    console.log(`Modificati per decisione di Federico del ${date}, non sono errori (${esito.modifiche.length} testi del piano, ${esito.elementiModificati} elementi data-modificato):`);
-    for (const m of esito.modifiche) console.log(`- ${m.sezione}: prima "${m.era}", ora "${m.ora}"`);
+    console.log(`Modificati per decisione di Federico, non sono errori (${esito.modifiche.length} testi del piano, ${esito.elementiModificati} elementi data-modificato). Per data:`);
+    for (const data of [...new Set(esito.modifiche.map((m) => m.data))]) {
+      console.log(`${data}:`);
+      for (const m of esito.modifiche.filter((x) => x.data === data)) console.log(`- ${m.sezione}: prima "${m.era}", ora "${m.ora}"`);
+    }
   }
   console.log(esito.differenze.length ? `Differenze (${esito.differenze.length}):\n- ${esito.differenze.join('\n- ')}` : 'Nessuna differenza.');
   process.exit(esito.differenze.length ? 1 : 0);

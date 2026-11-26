@@ -7,6 +7,8 @@
 // lastra del nuovo contatto, lastre leggibili su telefono, form dell'analisi gratuita (campi mancanti, errore del
 // server, invio riuscito, doppio clic, contenuto uguale a main), ritratti, contrasti, testi [=], testi cambiati
 // per decisione di Federico e testi vietati (dal 25/11/2026 anche "diagnosi", in ogni pagina del sito).
+// Dal 26/11/2026 (leve commerciali, sessione 4): sesto orario della timeline, frase in evidenza di Come funziona,
+// Visibilità Economica come fascia principale con quattro leve, testo e citazione di Cocola in Chi siamo.
 // Nessun contatto vero: /api/roi-lead e /api/lead sono sempre intercettate e non escono dal browser.
 import { chromium } from 'playwright';
 import { execFileSync } from 'node:child_process';
@@ -572,6 +574,175 @@ for (const ridotto of [false, true]) {
     });
     ok(`${tag} Ordine Operativo: lastra del nuovo contatto (segnalazione, Apri pratica, cliente, pratica, cartella)`, contatto.lastra && !contatto.cartella && ['Mittente non in anagrafica', 'Possibile nuovo cliente', 'Apri pratica', 'Cliente creato', 'Pratica aperta', 'Cartella pronta'].every((x) => contatto.testo.includes(x)), JSON.stringify({ lastra: contatto.lastra, cartella: contatto.cartella }));
 
+    // ---- Leve commerciali del 26/11 ----
+    const norm = (t) => (t ?? '').replace(/[’']/g, "'").replace(/\s+/g, ' ').trim();
+    const serif = (f) => /Source Serif|Garamond|Georgia|serif/i.test(f) && !/^Inter/.test(f);
+
+    // Timeline: sesto orario dopo le 13:00, stesso elemento e stessa accensione degli altri
+    const tl = await pagina.evaluate(() => {
+      const righe = [...document.querySelectorAll('.spreco-ora')];
+      const r = (e) => e.getBoundingClientRect();
+      return {
+        n: righe.length,
+        ore: righe.map((l) => l.querySelector('.so-ora').textContent.trim()),
+        ultimo: righe.at(-1).querySelector('.so-testo').textContent.trim(),
+        tag: righe.at(-1).querySelector('.so-ora').tagName,
+        animazione: getComputedStyle(righe.at(-1)).animationName === getComputedStyle(righe[0]).animationName,
+        colore: getComputedStyle(righe.at(-1).querySelector('.so-ora')).color === getComputedStyle(righe[0].querySelector('.so-ora')).color,
+        sinistreTesto: [...new Set(righe.map((l) => Math.round(r(l.querySelector('.so-testo')).left)))],
+        // righe vere del testo (Range), non il riquadro: nella griglia il <time> si allunga all'altezza della riga
+        oraUnaRiga: (() => {
+          const g = document.createRange();
+          g.selectNodeContents(righe.at(-1).querySelector('.so-ora'));
+          return new Set([...g.getClientRects()].map((x) => Math.round(x.top))).size === 1;
+        })(),
+        oraSopra: (() => {
+          const g = document.createRange();
+          g.selectNodeContents(righe.at(-1).querySelector('.so-ora'));
+          return g.getBoundingClientRect().bottom <= r(righe.at(-1).querySelector('.so-testo')).top + 1;
+        })(),
+      };
+    });
+    ok(
+      `${tag} timeline: sei orari, l'ultimo "Venerdì, 18:30" con il suo testo, stesso stile e stessa accensione`,
+      tl.n === 6 && tl.ore.join('|') === '8:42|9:30|10:04|11:00|13:00|Venerdì, 18:30' && tl.ultimo === 'Il timesheet della settimana, ricostruito a memoria.' && tl.tag === 'TIME' && tl.animazione && tl.colore && tl.oraUnaRiga,
+      JSON.stringify(tl),
+    );
+    if (w >= 640) ok(`${tag} timeline: i sei testi allineati sulla stessa colonna`, tl.sinistreTesto.length === 1, JSON.stringify(tl.sinistreTesto));
+    else ok(`${tag} timeline (telefono): l'orario sta sopra il testo`, tl.oraSopra && tl.sinistreTesto.length === 1, JSON.stringify(tl));
+
+    // Come funziona: frase in evidenza tra l'apertura e la scena, grande, in serif, isolata
+    const cf = await pagina.evaluate(() => {
+      const p = document.querySelector('#come-funziona .come-frase');
+      if (!p) return null;
+      const [a, b] = [p.querySelector('.cf-prima'), p.querySelector('.cf-resto')];
+      const prec = document.querySelector('#come-funziona .come-pannello').getBoundingClientRect();
+      const scena = document.querySelector('#come-funziona .scena-titolo').getBoundingClientRect();
+      const r = p.getBoundingClientRect();
+      return {
+        tag: p.tagName,
+        testo: p.textContent,
+        font: [getComputedStyle(a).fontFamily, getComputedStyle(b).fontFamily],
+        corpi: [parseFloat(getComputedStyle(a).fontSize), parseFloat(getComputedStyle(b).fontSize)],
+        titolo: parseFloat(getComputedStyle(document.querySelector('#t-come')).fontSize),
+        sopra: Math.round(r.top - prec.bottom),
+        sotto: Math.round(scena.top - r.bottom),
+        primaDellaScena: Boolean(p.compareDocumentPosition(document.querySelector('#come-funziona .scena-pista')) & Node.DOCUMENT_POSITION_FOLLOWING),
+      };
+    });
+    ok(
+      `${tag} come funziona: frase in evidenza, testo esatto, un solo paragrafo prima della scena`,
+      cf && cf.tag === 'P' && cf.primaDellaScena &&
+        norm(cf.testo) === norm('Gli altri software aspettano che tu inserisca i dati. INNOVALEX lavora in background mentre gestisci la posta. Un click dal pannello e parte tutto: archivio, cartella al collaboratore con il riepilogo, scadenza in calendario, ore nel report, fino alla proforma.'),
+      JSON.stringify(cf && { testo: cf.testo.slice(0, 50), tag: cf.tag }),
+    );
+    ok(
+      `${tag} come funziona: frase in serif su due livelli (prima frase più grande), con molto spazio intorno`,
+      cf && cf.font.every(serif) && cf.corpi[0] >= (w >= 1024 ? 40 : 28) && cf.corpi[0] >= cf.corpi[1] * 1.4 && cf.corpi[1] >= 18 && cf.sopra >= 64 && cf.sotto >= 64,
+      JSON.stringify(cf && { corpi: cf.corpi, titolo: cf.titolo, sopra: cf.sopra, sotto: cf.sotto }),
+    );
+
+    // Visibilità Economica: fascia principale a tutta larghezza, titolo, testo, scena del valore e quattro leve
+    const ve = await pagina.evaluate(() => {
+      const f = document.querySelector('.sistema-fascia');
+      const a = f?.querySelector('#visibilita-economica');
+      if (!a) return null;
+      const leve = [...a.querySelectorAll('.sp-leva')];
+      const r = (e) => e.getBoundingClientRect();
+      return {
+        largo: Math.round(r(f).width),
+        pagina: document.documentElement.clientWidth,
+        fondo: getComputedStyle(f).backgroundColor,
+        dopo: f.previousElementSibling?.querySelector('#ordine-operativo') !== null && f.nextElementSibling?.querySelector('#governance-operativa') !== null,
+        etichetta: a.querySelector('.etichetta').textContent.trim(),
+        titolo: a.querySelector('h3').innerText,
+        righeTitolo: [...a.querySelectorAll('h3 span')].map((x) => Math.round(r(x).top)),
+        testo: a.querySelector('.sp-intro').textContent.trim(),
+        scena: Boolean(a.querySelector('.sistema-scena .bn-valore')),
+        leve: leve.map((l) => ({
+          titolo: l.querySelector('h4').textContent.trim(),
+          testo: l.querySelector('p').textContent.trim(),
+          font: getComputedStyle(l.querySelector('h4')).fontFamily,
+          corpo: parseFloat(getComputedStyle(l.querySelector('h4')).fontSize),
+          x: Math.round(r(l).left),
+          y: Math.round(r(l).top),
+        })),
+        voceVecchia: a.querySelectorAll('.sistema-voci, .sv-nome').length,
+        tutto: f.textContent,
+      };
+    });
+    const leveAttese = [
+      ['Niente timesheet.', 'Le ore nascono dalle mail che qualifichi dal pannello. Quelle che non hai segnato le stima INNOVALEX, tu le confermi.'],
+      ['Quanto vale ogni cliente e ogni pratica.', 'Ore e valore sempre aggiornati. Anche a forfait sai quanto lavoro c’è davvero dietro il compenso concordato.'],
+      ['Quanto vale ogni persona dello studio.', 'Per ogni socio e collaboratore: pratiche originate, pratiche gestite, ore e valore generato. La base oggettiva per dividere gli utili e organizzare il team.'],
+      ['Numeri che puoi mostrare al cliente.', 'Ogni euro del report è collegato alle mail da cui nasce. Dal report nasce la proforma.'],
+    ];
+    ok(
+      `${tag} visibilità economica: fascia blu notte a tutta larghezza tra Ordine Operativo e Governance Operativa`,
+      ve && ve.largo === ve.pagina && ve.fondo === 'rgb(20, 26, 61)' && ve.dopo && ve.scena,
+      JSON.stringify(ve && { largo: ve.largo, pagina: ve.pagina, fondo: ve.fondo, dopo: ve.dopo, scena: ve.scena }),
+    );
+    ok(
+      `${tag} visibilità economica: etichetta, titolo su due righe e testo esatti`,
+      ve && ve.etichetta === 'Visibilità Economica' && norm(ve.titolo) === 'Il controllo economico dei grandi studi internazionali. Senza timesheet.' && ve.righeTitolo[1] > ve.righeTitolo[0] &&
+        ve.testo === 'I grandi studi sanno quanto vale ogni cliente, ogni pratica, ogni professionista. Lo sanno perché hanno un ufficio finance e chiedono il timesheet ogni venerdì. INNOVALEX ti dà gli stessi numeri partendo dalle mail che gestisci già.',
+      JSON.stringify(ve && { titolo: ve.titolo, righe: ve.righeTitolo }),
+    );
+    const posizioni = ve ? { x: new Set(ve.leve.map((l) => l.x)).size, y: new Set(ve.leve.map((l) => l.y)).size } : {};
+    ok(
+      `${tag} visibilità economica: quattro leve esatte, titolo in serif, ${w >= 768 ? 'griglia 2 x 2' : 'in colonna'}`,
+      ve && ve.leve.length === 4 && ve.leve.every((l, i) => l.titolo === leveAttese[i][0] && l.testo === leveAttese[i][1] && serif(l.font) && l.corpo >= 20) && ve.voceVecchia === 0 &&
+        (w >= 768 ? posizioni.x === 2 && posizioni.y === 2 : posizioni.x === 1 && posizioni.y === 4),
+      JSON.stringify({ ...posizioni, leve: ve?.leve.map((l) => [l.titolo, l.corpo, l.x, l.y]) }),
+    );
+    ok(
+      `${tag} visibilità economica: nessun costo, margine, preventivo o "ogni lunedì", nessun testo di prima`,
+      ve && !/\bcost[oi]\b|margin[ei]|preventiv|ogni lunedì|Il lavoro che fai diventa valore|Questo report normalmente non esiste/i.test(ve.tutto),
+      '',
+    );
+
+    // Riepilogo: il blocco Fatturato comincia con "Niente timesheet."
+    const fatt = await pagina.evaluate(() => [...document.querySelectorAll('.riepilogo-blocco')][1].querySelector('.rb-testo').textContent.trim());
+    ok(
+      `${tag} riepilogo: testo del blocco Fatturato del 26/11`,
+      fatt === 'Niente timesheet. Ogni email che conta diventa ore e valore, anche quelle che non avevi segnato: INNOVALEX le stima, tu le confermi. Nel report entra solo quello che includi tu, quindi sono numeri che puoi mostrare al cliente. La proforma è già pronta.',
+      fatt,
+    );
+
+    // Chi siamo: testo sotto il titolo; per Cocola la citazione, in serif, come una vera citazione, con l'avviso in anteprima
+    const chiNuovo = await pagina.evaluate(() => {
+      const c = document.querySelector('.persona-cofondatore');
+      const q = c.querySelector('blockquote p');
+      const t = document.querySelector('#t-chi');
+      const p = document.querySelector('.chi-testa .chi-testo');
+      return {
+        titolo: t.textContent.trim(),
+        testo: p?.textContent.trim(),
+        sottoTitolo: p ? p.getBoundingClientRect().top >= t.getBoundingClientRect().bottom && p.previousElementSibling === t : false,
+        citazione: q?.textContent.trim(),
+        font: q ? getComputedStyle(q).fontFamily : '',
+        dentroFigura: Boolean(q?.closest('figure.persona-citazione')),
+        rigaVecchia: c.textContent.includes('Segue ogni fase dello sviluppo'),
+        avviso: c.querySelector('.avviso-anteprima')?.textContent.trim(),
+        nome: c.querySelector('.persona-nome').textContent.trim(),
+        ruolo: c.querySelector('.persona-ruolo').textContent.trim(),
+        federico: document.querySelectorAll('.persona-fondatore .persona-testo p').length,
+      };
+    });
+    ok(
+      `${tag} chi siamo: titolo invariato e testo nuovo sotto il titolo`,
+      chiNuovo.titolo === 'INNOVALEX nasce dentro uno studio legale.' && chiNuovo.sottoTitolo &&
+        norm(chiNuovo.testo) === norm('Un avvocato con quasi trent’anni di professione e un esperto di automazione e intelligenza artificiale, fianco a fianco ogni giorno per un anno. Gli altri software lavorano a pezzi: uno per le pratiche, uno per i documenti, uno per le fatture, e i dati da reinserire a mano in ognuno. Noi siamo partiti da dove nasce il lavoro, la posta, e abbiamo costruito un solo sistema che il lavoro lo fa al posto tuo.'),
+      JSON.stringify({ sotto: chiNuovo.sottoTitolo, testo: chiNuovo.testo?.slice(0, 40) }),
+    );
+    ok(
+      `${tag} chi siamo: citazione di Cocola in serif, in blockquote, al posto della riga di prima, con l'avviso "da confermare"`,
+      norm(chiNuovo.citazione) === norm('“In quasi trent’anni di professione ho comprato, usato e lasciato quasi tutti i software per studi legali. Ognuno risolveva un pezzo e mi costringeva a reinserire i dati a mano. Nessuno partiva dalla posta. INNOVALEX l’abbiamo costruito su questo.”') &&
+        serif(chiNuovo.font) && chiNuovo.dentroFigura && !chiNuovo.rigaVecchia && chiNuovo.avviso === 'Citazione da confermare' &&
+        chiNuovo.nome === 'Avv. Francesco Cocola' && chiNuovo.ruolo === 'Co-fondatore' && chiNuovo.federico === 4,
+      JSON.stringify({ font: chiNuovo.font, avviso: chiNuovo.avviso, vecchia: chiNuovo.rigaVecchia, federico: chiNuovo.federico }),
+    );
+
     // Lastre: sotto i 768 px solo il dettaglio, testo dell'interfaccia mai sotto 11 px; da 768 px come prima
     const lastre = await pagina.evaluate(() => {
       const piccoli = [];
@@ -820,12 +991,21 @@ for (const ridotto of [false, true]) {
       ok(`testi [=] uguali a main (${uguali.frasi} frasi del piano, ${uguali.elementi} elementi)`, uguali.differenze.length === 0, uguali.differenze.join(' | '));
       // Non errori: testi che erano [=] e che Federico ha deciso di cambiare. Il confronto li elenca a parte.
       ok(
-        `testi modificati per decisione di Federico del 25/11, non errori (${uguali.modifiche.length} testi del piano, ${uguali.elementiModificati} elementi)`,
-        uguali.modifiche.length === 4 && uguali.elementiModificati === 4 && uguali.modifiche.every((m) => m.data === '25/11' && m.era) && uguali.differenze.length === 0,
+        `testi modificati per decisione di Federico del 25/11 e del 26/11, non errori (${uguali.modifiche.length} testi del piano, ${uguali.elementiModificati} elementi)`,
+        uguali.modifiche.filter((m) => m.data === '25/11').length === 4 &&
+          uguali.modifiche.filter((m) => m.data === '26/11').length === 2 &&
+          uguali.modifiche.length === 6 &&
+          uguali.elementiModificati === 6 &&
+          uguali.modifiche.every((m) => m.era) &&
+          uguali.differenze.length === 0,
         uguali.modifiche.map((m) => `"${m.era}" > "${m.ora}"`).join(' | '),
       );
       const avvisi = await pagina.locator('.avvisi-anteprima li').allTextContents();
-      ok('avvisi di anteprima: solo i tre numeri SCLN da confermare', avvisi.length === 3 && avvisi.every((a) => a.startsWith('Caso SCLN')), avvisi.join(' | '));
+      ok(
+        'avvisi di anteprima: i tre numeri SCLN e la citazione di Cocola, da confermare',
+        avvisi.length === 4 && avvisi.filter((a) => a.startsWith('Caso SCLN')).length === 3 && avvisi.some((a) => a.startsWith('Chi siamo: citazione di Avv. Francesco Cocola da confermare')),
+        avvisi.join(' | '),
+      );
     }
     await pagina.close();
   }

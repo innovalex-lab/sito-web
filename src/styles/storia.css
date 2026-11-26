@@ -63,7 +63,10 @@
 .persona-nome,
 .faq-titolo,
 .mo-fatto-titolo,
-.voce-citazione p {
+.voce-citazione p,
+.come-frase,
+.sp-leva-titolo,
+.persona-citazione p {
   font-weight: var(--peso-titoli);
   line-height: var(--interlinea-titoli);
   letter-spacing: var(--spaziatura-titoli);
@@ -453,8 +456,13 @@
   initial-value: 1;
 }
 
+/* Dal 26/11 sei orari, l'ultimo è "Venerdì, 18:30": la colonna degli orari è larga quanto il più lungo,
+   uguale in ogni riga (subgrid), così i testi restano allineati. Sotto i 640 px l'orario sta sopra il testo. */
 .spreco-ore {
   position: relative;
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  column-gap: 1.25rem;
   margin-top: 1.75rem;
   padding: 0 0 0 2rem;
   list-style: none;
@@ -474,9 +482,20 @@
   --luce: 1;
   position: relative;
   display: grid;
-  grid-template-columns: 3.5rem minmax(0, 1fr);
-  gap: 1rem;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
   padding-block: 0.7rem;
+}
+
+@media (max-width: 639px) {
+  .spreco-ore {
+    display: block;
+  }
+
+  .spreco-ora {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0.1rem;
+  }
 }
 
 .spreco-ora::before {
@@ -936,6 +955,31 @@
   max-width: var(--misura);
 }
 
+/* Frase in evidenza (dal 26/11): un paragrafo solo, isolato tra l'apertura e la scena, con molto spazio intorno.
+   La prima frase grande, il resto sotto più piccolo e in grigio inchiostro. Nessuna linea, nessun fondo. */
+.come-frase {
+  margin-top: clamp(4.5rem, 2rem + 8vw, 9rem);
+  margin-bottom: clamp(1rem, 4vw, 4rem);
+  font-family: var(--font-serif);
+  color: var(--inchiostro);
+}
+
+.cf-prima {
+  display: block;
+  font-size: clamp(1.75rem, 1.2rem + 2.1vw, 2.75rem);
+  line-height: 1.14;
+  text-wrap: balance;
+}
+
+.cf-resto {
+  display: block;
+  max-width: 32em;
+  margin-top: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-size: clamp(1.1875rem, 1.05rem + 0.55vw, 1.5rem);
+  line-height: 1.5;
+  color: var(--testo-2);
+}
+
 /* In sequenza (telefono, schermo basso, movimento ridotto) la scena segue il testo senza un secondo spazio di sezione */
 @media (max-width: 1023px), (max-height: 599px), (prefers-reduced-motion: reduce) {
   .come-intro + .scena-pista .scena-fissa {
@@ -967,6 +1011,10 @@
   .come-pannello {
     grid-column: 2;
     margin-top: 1.25rem;
+  }
+
+  .come-frase {
+    grid-column: 1 / -1;
   }
 }
 
@@ -1165,6 +1213,123 @@
 
   .bn-passaggio {
     transform: perspective(110em) rotateY(8deg) rotateX(4deg);
+  }
+}
+
+/* ---------- 5. Visibilità Economica: la sezione principale della pagina (dal 26/11) ----------
+   Una fascia blu notte a tutta larghezza tra Ordine Operativo e Governance Operativa. Dall'alto: etichetta,
+   titolo su due righe, testo con la scena del valore che sale accanto, quattro leve in una griglia 2 x 2.
+   Linee oro di 1 px sopra le leve, come il resto della pagina; nessuna luce, nessun gradiente. */
+
+.sistema-fascia {
+  margin-top: clamp(5rem, 11vw, 9.5rem);
+  padding-block: var(--spacing-sezione);
+  background: var(--profondo);
+  color: #fff;
+}
+
+.sistema-fascia :focus-visible {
+  outline-color: var(--oro-chiaro);
+}
+
+.sistema-fascia .sistema-principale {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.sp-titolo {
+  font-size: var(--text-titolo);
+  color: #fff;
+}
+
+.sp-titolo span {
+  display: block;
+}
+
+.sp-intro {
+  margin-top: var(--spazio-titolo);
+  color: rgb(255 255 255 / 0.86);
+}
+
+.sp-leve {
+  display: grid;
+  gap: 2.75rem;
+  margin: clamp(1rem, 4vw, 2.5rem) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sp-leva {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--oro);
+}
+
+.sp-leva-titolo {
+  font-family: var(--font-serif);
+  font-size: var(--text-sottotitolo);
+  color: #fff;
+}
+
+.sp-leva-testo {
+  max-width: var(--misura);
+  margin-top: 0.9rem;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: rgb(255 255 255 / 0.84);
+}
+
+/* Governance Operativa riparte dopo la fascia: lo stacco lo fa il cambio di fondo, non una linea */
+.sistema-dopo-fascia {
+  padding-top: 0;
+  border-top: 0;
+}
+
+@media (min-width: 768px) {
+  /* La lastra piccola delle ore confermate si posa in basso a destra, sotto la legenda, che resta leggibile
+     (nello schema di prima la copriva per metà) */
+  .sistema-principale .bn-conferma {
+    right: -0.5em;
+    bottom: -4.9em;
+    left: auto;
+  }
+
+  .sp-leve {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(3rem, 5vw, 4.5rem) clamp(2.5rem, 5vw, 5rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  /* Etichetta e titolo su tutta la riga; sotto il testo su 5 colonne e la scena su 6; poi le leve */
+  .sistema-principale .sistema-testo {
+    display: contents;
+  }
+
+  .sistema-principale > .sistema-testo > :is(.etichetta, .sp-titolo) {
+    grid-column: 1 / -1;
+  }
+
+  /* Il testo sta a metà altezza della scena: nessun vuoto sotto di lui */
+  .sistema-principale .sp-intro {
+    grid-column: 1 / span 5;
+    grid-row: 3 / span 2;
+    align-self: center;
+    font-size: clamp(1.125rem, 0.95rem + 0.4vw, 1.3125rem);
+  }
+
+  .sistema-principale .sistema-scena {
+    position: static;
+    grid-column: 7 / -1;
+    grid-row: 3 / span 2;
+    margin-top: var(--spazio-titolo);
+    padding-top: 0;
+  }
+
+  .sistema-principale .sp-leve {
+    grid-column: 1 / -1;
+    grid-row: 5;
+    margin-top: clamp(5rem, 8vw, 7.5rem);
   }
 }
 
@@ -1524,7 +1689,26 @@
 /* ---------- 11. Chi siamo (impaginazione in sezioni.css) ---------- */
 
 .chi-pulsante {
-  margin-top: 1.75rem;
+  margin-top: 2.25rem;
+}
+
+/* Citazione dell'Avv. Cocola (dal 26/11): in serif, accanto al ritratto, con la virgoletta d'apertura appesa al margine */
+.persona-citazione {
+  grid-area: testo;
+  max-width: 30em;
+  margin: 0;
+}
+
+.persona-citazione blockquote {
+  margin: 0;
+}
+
+.persona-citazione p {
+  font-family: var(--font-serif);
+  font-size: clamp(1.1875rem, 1.05rem + 0.5vw, 1.4375rem);
+  line-height: 1.5;
+  text-indent: -0.42em;
+  color: var(--inchiostro);
 }
 
 .chi-persone {

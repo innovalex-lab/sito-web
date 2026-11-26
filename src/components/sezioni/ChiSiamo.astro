@@ -1,10 +1,13 @@
 ---
 // 11. Chi siamo. Statica. Il caso SCLN è passato in Risultati reali (fase 4).
+// Dal 26/11: testo sotto il titolo; per l'Avv. Cocola la sua citazione al posto della riga di prima.
+// La citazione è "da confermare" (src/content/funzioni.ts): in anteprima ha l'avviso, in produzione ferma la build.
 // Ritratti 4:5 in public/team/, rifatti dagli originali con scripts/ritratti.py: stesso fondo, occhi alla
 // stessa altezza, testa della stessa grandezza. Stessa cornice e stessa misura per tutti e due a ogni larghezza:
 // 240 x 300 da 560 px in su, 104 x 130 sotto. AVIF e WebP a 1x e 2x, senza metadati.
 import { persone } from '../../content/funzioni';
 import { chiSiamo, prenota } from '../../content/storia';
+import { produzione } from '../../content/verifica';
 
 const larghezze = [104, 208, 240, 480];
 const srcset = (foto: string, formato: string) => larghezze.map((l) => `/team/${foto}-${l}.${formato} ${l}w`).join(', ');
@@ -15,6 +18,7 @@ const sizes = '(min-width: 560px) 240px, 104px';
   <div class="contenitore chi-interno">
     <div class="chi-testa">
       <h2 id="t-chi" class="sezione-titolo">{chiSiamo.titolo}</h2>
+      <p class="lead chi-testo">{chiSiamo.testo.testo}</p>
       <a class="btn btn-primario chi-pulsante" href="#contatti" data-cta="founder-demo" data-modificato="25/11">{prenota}</a>
     </div>
 
@@ -30,9 +34,16 @@ const sizes = '(min-width: 560px) 240px, 104px';
             <h3 class="persona-nome">{p.nome}</h3>
             <p class="persona-ruolo">{p.ruolo}</p>
           </div>
-          <div class="persona-testo">
-            {p.testo.map((t) => <p data-uguale={i === 0 ? '' : undefined}>{t}</p>)}
-          </div>
+          {p.citazione ? (
+            <figure class="persona-citazione">
+              <blockquote><p>“{p.citazione.testo}”</p></blockquote>
+              {!produzione && p.citazione.stato !== 'confermato' && <figcaption class="avviso-anteprima">Citazione da confermare</figcaption>}
+            </figure>
+          ) : (
+            <div class="persona-testo">
+              {p.testo.map((t) => <p data-uguale={i === 0 ? '' : undefined}>{t}</p>)}
+            </div>
+          )}
         </div>
       ))}
     </div>

@@ -8,6 +8,8 @@ export interface Voce {
   nome: string;
   testo: string;
   funzioni: IdFunzione[];
+  /** Data della decisione di Federico quando il testo sostituisce un testo [=] di main (docs/PIANO-STORYLINE.md) */
+  modificato?: string;
 }
 
 // ---------- Menu ----------
@@ -76,11 +78,13 @@ export const problema = {
     etichetta: 'Timeline dello spreco',
     titolo: 'La mattina scorre. Il lavoro vero aspetta.',
     ore: [
-      { ora: '8:42', testo: 'L’email è già piena.' },
-      { ora: '9:30', testo: 'Un cliente cerca un allegato di tre mesi fa.' },
-      { ora: '10:04', testo: 'Il collaboratore dice: “sì, ci guardo”.' },
-      { ora: '11:00', testo: 'Cinque messaggi WhatsApp per sapere a che punto siete.' },
-      { ora: '13:00', testo: 'Quattro ore lavorate. Una e mezza fatturabili.' },
+      { ora: '8:42', testo: 'L’email è già piena.', uguale: true },
+      { ora: '9:30', testo: 'Un cliente cerca un allegato di tre mesi fa.', uguale: true },
+      { ora: '10:04', testo: 'Il collaboratore dice: “sì, ci guardo”.', uguale: true },
+      { ora: '11:00', testo: 'Cinque messaggi WhatsApp per sapere a che punto siete.', uguale: true },
+      { ora: '13:00', testo: 'Quattro ore lavorate. Una e mezza fatturabili.', uguale: true },
+      // [+] 26/11 (call con l'esperta di marketing legale): il venerdì sera, il timesheet da ricostruire.
+      { ora: 'Venerdì, 18:30', testo: 'Il timesheet della settimana, ricostruito a memoria.', uguale: false },
     ],
   },
 };
@@ -164,6 +168,11 @@ export const calcolatore = {
 
 // ---------- 4. Come funziona ----------
 
+const fraseCome = [
+  'Gli altri software aspettano che tu inserisca i dati.',
+  'INNOVALEX lavora in background mentre gestisci la posta. Un click dal pannello e parte tutto: archivio, cartella al collaboratore con il riepilogo, scadenza in calendario, ore nel report, fino alla proforma.',
+] as const;
+
 export const comeFunziona = {
   etichetta: 'Come Funziona INNOVALEX',
   titolo: ['Non cambi il modo in cui lavori.', 'INNOVALEX si integra nel tuo Studio.'],
@@ -176,6 +185,13 @@ export const comeFunziona = {
     testo:
       'Un pannello integrato in Outlook: classifica, assegna e traccia senza uscire dalla tua casella. Tu confermi con un click, il sistema fa tutto il resto.',
     funzioni: ['pannello-outlook', 'analisi-mail', 'cartella-lavoro'] as IdFunzione[],
+  },
+  // [+] 26/11: frase in evidenza tra l'apertura e la scena. Due livelli a schermo, una sola frase per chi legge.
+  frase: {
+    prima: fraseCome[0],
+    resto: fraseCome[1],
+    testo: fraseCome.join(' '),
+    funzioni: ['analisi-mail', 'pannello-outlook', 'archiviazione', 'cartella-lavoro', 'scadenze-da-mail', 'calendario', 'report'] as IdFunzione[],
   },
   // La scena a 5 passi: testi invariati dalla fase 3.
   scena: {
@@ -243,32 +259,39 @@ export const sistemi = {
       ] satisfies Voce[],
     },
     {
+      // Dal 26/11 (call con l'esperta di marketing legale) è la sezione principale della pagina: esce dallo schema
+      // degli altri due sistemi (fascia a tutta larghezza in Sistemi.astro). Titolo [26/11]: era il testo [=]
+      // "Il lavoro che fai diventa valore che si vede." Testo e quattro leve sostituiscono testo e voci di prima.
+      // Non si scrivono costo, margine, preventivi o "ogni lunedì": non sono confermati.
       id: 'visibilita-economica',
       etichetta: 'Visibilità Economica',
-      titolo: 'Il lavoro che fai diventa valore che si vede.',
+      titolo: 'Il controllo economico dei grandi studi internazionali. Senza timesheet.',
+      titoloParti: ['Il controllo economico dei grandi studi internazionali.', 'Senza timesheet.'],
       testo:
-        'Questo report normalmente non esiste. INNOVALEX lo prepara per cliente e pratica. Per ricostruirlo a mano servirebbero decine di ore di lettura, ricerca, controllo allegati e ricostruzione delle attività.',
-      funzioni: ['report'] as IdFunzione[],
+        'I grandi studi sanno quanto vale ogni cliente, ogni pratica, ogni professionista. Lo sanno perché hanno un ufficio finance e chiedono il timesheet ogni venerdì. INNOVALEX ti dà gli stessi numeri partendo dalle mail che gestisci già.',
+      funzioni: ['pannello-outlook', 'report', 'attivita-valore', 'valore-socio'] as IdFunzione[],
       voci: [
         {
-          nome: 'Report economico',
-          testo: 'Ogni email inclusa nel report, marcata dal pannello con un click, alimenta il calcolo di ore e valore per cliente e pratica. Il report è modificabile in Word.',
-          funzioni: ['report', 'pannello-outlook'],
+          nome: 'Niente timesheet.',
+          testo: 'Le ore nascono dalle mail che qualifichi dal pannello. Quelle che non hai segnato le stima INNOVALEX, tu le confermi.',
+          funzioni: ['pannello-outlook', 'attivita-valore', 'report'],
         },
         {
-          nome: 'Ore stimate',
-          testo: 'Le ore che non hai segnato le stima INNOVALEX. Restano a parte finché non le confermi.',
-          funzioni: ['attivita-valore'],
+          nome: 'Quanto vale ogni cliente e ogni pratica.',
+          testo: 'Ore e valore sempre aggiornati. Anche a forfait sai quanto lavoro c’è davvero dietro il compenso concordato.',
+          funzioni: ['report', 'attivita-valore'],
         },
         {
-          nome: 'Dal report alla parcella',
-          testo: 'La parcella nasce dal report, non dalla memoria. Attività, ore, tariffa per tipo di pratica e valore per cliente sono già lì: INNOVALEX prepara la proforma. Zero doppio inserimento.',
-          funzioni: ['report'],
-        },
-        {
-          nome: 'Valore per socio',
-          testo: 'Per ogni socio e collaboratore INNOVALEX traccia pratiche originate, pratiche gestite, ore lavorate e valore economico generato. La base oggettiva per la distribuzione degli utili, senza discussioni e senza memoria.',
+          // [26/11]: sostituisce il testo [=] di "Valore per socio" (docs/PIANO-STORYLINE.md, sezione 5)
+          nome: 'Quanto vale ogni persona dello studio.',
+          testo: 'Per ogni socio e collaboratore: pratiche originate, pratiche gestite, ore e valore generato. La base oggettiva per dividere gli utili e organizzare il team.',
           funzioni: ['valore-socio'],
+          modificato: '26/11',
+        },
+        {
+          nome: 'Numeri che puoi mostrare al cliente.',
+          testo: 'Ogni euro del report è collegato alle mail da cui nasce. Dal report nasce la proforma.',
+          funzioni: ['report'],
         },
       ] satisfies Voce[],
     },
@@ -328,7 +351,7 @@ export const riepilogo = {
       id: 'fatturato',
       chiave: 'Fatturato',
       resto: 'il valore nascosto entra nel report.',
-      testo: 'Ogni email che conta diventa ore e valore, anche quelle che non avevi segnato: INNOVALEX le stima, tu le confermi. Nel report entra solo quello che includi tu, quindi sono numeri che puoi mostrare al cliente. La proforma è già pronta.',
+      testo: 'Niente timesheet. Ogni email che conta diventa ore e valore, anche quelle che non avevi segnato: INNOVALEX le stima, tu le confermi. Nel report entra solo quello che includi tu, quindi sono numeri che puoi mostrare al cliente. La proforma è già pronta.',
       funzioni: ['pannello-outlook', 'attivita-valore', 'report'] as IdFunzione[],
     },
     {
@@ -445,7 +468,15 @@ export const diagnosi = {
 
 // ---------- 11. Chi siamo e 12. piè di pagina ----------
 
-export const chiSiamo = { titolo: 'INNOVALEX nasce dentro uno studio legale.' };
+export const chiSiamo = {
+  titolo: 'INNOVALEX nasce dentro uno studio legale.',
+  // [+] 26/11, sotto il titolo
+  testo: {
+    testo:
+      'Un avvocato con quasi trent’anni di professione e un esperto di automazione e intelligenza artificiale, fianco a fianco ogni giorno per un anno. Gli altri software lavorano a pezzi: uno per le pratiche, uno per i documenti, uno per le fatture, e i dati da reinserire a mano in ognuno. Noi siamo partiti da dove nasce il lavoro, la posta, e abbiamo costruito un solo sistema che il lavoro lo fa al posto tuo.',
+    funzioni: ['analisi-mail', 'pannello-outlook', 'pratiche', 'archiviazione', 'report'] as IdFunzione[],
+  },
+};
 
 export const piede = {
   testo: ['L’Infrastruttura Operativa per Studi Legali italiani.', 'Costruita sull’email che già usi. Progettata per non cambiare il modo in cui lavori.'],

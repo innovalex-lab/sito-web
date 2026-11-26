@@ -1,0 +1,30 @@
+---
+// Un sistema nello schema comune (Ordine Operativo, Governance Operativa): etichetta, titolo, testo,
+// quattro voci brevi e la scena affiancata, passata come contenuto. Usato da Sistemi.astro.
+import type { Voce } from '../../content/storia';
+
+interface Props {
+  s: { id: string; etichetta: string; titolo: string; testo: string; voci: Voce[] };
+  lato: 'destra' | 'sinistra';
+  class?: string;
+}
+const { s, lato, class: classi } = Astro.props;
+---
+<article id={s.id} class:list={['sistema', `sistema-${lato}`, classi]} aria-labelledby={`t-${s.id}`}>
+  <div class="sistema-testo">
+    <p class="etichetta">{s.etichetta}</p>
+    <h3 id={`t-${s.id}`} class="sistema-titolo">{s.titolo}</h3>
+    <p class="sistema-intro">{s.testo}</p>
+    <ul class="sistema-voci">
+      {s.voci.map((v) => (
+        <li>
+          <h4 class="sv-nome">{v.nome}</h4>
+          <p class="sv-testo">{v.testo}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+  <div class="sistema-scena">
+    <slot />
+  </div>
+</article>

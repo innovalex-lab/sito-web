@@ -2,6 +2,7 @@
 // 2. Il problema. Apertura su crema con il primo numero, poi la sezione scura della fase 3 con il 37%
 // e la barra della giornata (statica), la giornata tipo e la timeline dello spreco.
 // Unica animazione della sezione: la timeline si accende un orario alla volta mentre scorri.
+// Dal 26/11 la timeline ha sei orari: dopo le 13:00, "Venerdì, 18:30" (stesso stile, stessa accensione).
 // Solo CSS (timeline di scorrimento, src/styles/storia.css); senza supporto o con movimento ridotto è tutta accesa.
 import { problema as c } from '../../content/storia';
 ---
@@ -59,7 +60,7 @@ import { problema as c } from '../../content/storia';
           {c.timeline.ore.map((o) => (
             <li class="spreco-ora">
               <time class="so-ora">{o.ora}</time>
-              <span class="so-testo" data-uguale>{o.testo}</span>
+              <span class="so-testo" data-uguale={o.uguale ? '' : undefined}>{o.testo}</span>
             </li>
           ))}
         </ol>
