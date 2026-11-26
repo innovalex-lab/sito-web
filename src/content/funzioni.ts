@@ -94,7 +94,7 @@ export const studio = [
 export const persone = [
   {
     nome: 'Federico Garau',
-    ruolo: 'Fondatore e amministratore',
+    ruolo: 'Fondatore',
     foto: 'federico-garau',
     testo: [
       'Ho costruito INNOVALEX perché il problema che risolve non ha una soluzione sul mercato italiano.',

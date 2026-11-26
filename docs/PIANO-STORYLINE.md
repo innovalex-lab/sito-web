@@ -153,7 +153,7 @@ Nome dell'offerta: dal 25/11/2026 la "Diagnosi Operativa" si chiama "analisi gra
 - [=] "SCLN Legal Network. Da ore disperse ogni settimana a un'Infrastruttura Operativa misurabile."
 - [≈] "Il progetto ha lavorato su archiviazione automatica di tutte le comunicazioni, report economici per pratica e cliente, dashboard collaboratori in tempo reale. Il valore è stato misurato su tempo recuperato, governance operativa e visibilità economica." (tolto "settimanali")
 - Numeri: 600+ email al mese, 8 caselle collegate, 80 pratiche aperte, 41 clienti attivi. Questi ultimi tre restano bloccati dal test finché Cocola non li conferma.
-- [=] Citazione: "Il valore non è stato aggiungere un altro software. È stato avere un'infrastruttura che segue il modo in cui lo studio lavora davvero." Francesco Cocola, SCLN Legal Network. Con la sua foto.
+- [=] Citazione: "Il valore non è stato aggiungere un altro software. È stato avere un'infrastruttura che segue il modo in cui lo studio lavora davvero." Francesco Cocola, SCLN Legal Network. Con il logo di SCLN Legal Network, come nel sito precedente (dal 26/11, prima era la sua foto).
 - Pulsante: "Prenota l'analisi gratuita".
 
 ## 9. Analisi gratuita e form
@@ -183,7 +183,7 @@ Come nella fase 3.1, con il tuo sottotitolo: segretaria, gestionale (riscritta c
 ## 11. Chi siamo
 
 - [+] "INNOVALEX nasce dentro uno studio legale."
-- Federico Garau, Fondatore e amministratore, con il tuo testo Founder [=].
+- Federico Garau, Fondatore (dal 26/11, era "Fondatore e amministratore"), con il tuo testo Founder [=].
 - Avv. Francesco Cocola, Co-fondatore.
 - Foto: stessa cornice, stesso taglio, stesso fondo (è il lavoro della fase 3.2, che entra qui).
 - [25/11] Pulsante finale: "Prenota l'analisi gratuita" (era "Prenota la Diagnosi Operativa").

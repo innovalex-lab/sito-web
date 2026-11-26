@@ -613,25 +613,25 @@ for (const ridotto of [false, true]) {
     }));
     ok(`${tag} sistemi: la cartella è arrivata da Paolo e la lastra di Ordine Operativo è attiva`, scene.cartella === 'none' && scene.lastra === 'attiva', JSON.stringify(scene));
 
-    // Ritratti: stessa cornice e stessa misura, 4:5, caricati
+    // Ritratti: stessa cornice e stessa misura, 4:5, caricati. Accanto alla citazione, dal 26/11, il logo di SCLN Legal Network.
     const ritratti = await pagina.evaluate(() =>
-      [...document.querySelectorAll('.ritratto img, .voce-ritratto img')].map((i) => {
+      [...document.querySelectorAll('.ritratto img, .voce img')].map((i) => {
         const r = i.getBoundingClientRect();
-        return { dove: i.closest('.voce') ? 'citazione' : 'chi', w: Math.round(r.width), h: Math.round(r.height), caricata: i.complete && i.naturalWidth > 0, attr: Boolean(i.getAttribute('width') && i.getAttribute('height')), alt: Boolean(i.alt) };
+        return { dove: i.closest('.voce') ? 'citazione' : 'chi', w: Math.round(r.width), h: Math.round(r.height), caricata: i.complete && i.naturalWidth > 0, attr: Boolean(i.getAttribute('width') && i.getAttribute('height')), alt: i.closest('.voce') ? i.alt : Boolean(i.alt) };
       }),
     );
     const chi = ritratti.filter((r) => r.dove === 'chi');
     const atteso = w >= 560 ? [240, 300] : [104, 130];
     ok(`${tag} chi siamo: due ritratti nella stessa cornice ${atteso.join(' x ')}`, chi.length === 2 && chi.every((r) => r.w === atteso[0] && r.h === atteso[1] && r.caricata && r.attr && r.alt), JSON.stringify(chi));
-    const cit = ritratti.find((r) => r.dove === 'citazione');
-    ok(`${tag} risultati: ritratto di Cocola accanto alla citazione, 120 x 150`, cit && cit.w === 120 && cit.h === 150 && cit.caricata, JSON.stringify(cit));
+    const cit = ritratti.filter((r) => r.dove === 'citazione');
+    ok(`${tag} risultati: accanto alla citazione solo il logo di SCLN Legal Network, 120 x 73`, cit.length === 1 && cit[0].w === 120 && cit[0].h === 73 && cit[0].caricata && cit[0].attr && cit[0].alt === 'Logo SCLN Legal Network', JSON.stringify(cit));
     const testiChi = await pagina.evaluate(() => ({
       ruolo: document.querySelector('.persona-fondatore .persona-ruolo').textContent,
       citazione: document.querySelector('.voce-citazione').textContent,
       email: document.querySelector('.caso-numeri').textContent.includes('600+'),
       piede: document.querySelector('footer').textContent.includes('Federico Garau, Fondatore e amministratore'),
     }));
-    ok(`${tag} ruolo, citazione, 600+ e piè di pagina`, testiChi.ruolo === 'Fondatore e amministratore' && testiChi.citazione.includes('Il valore non è stato aggiungere') && testiChi.email && testiChi.piede, JSON.stringify(testiChi));
+    ok(`${tag} ruolo, citazione, 600+ e piè di pagina`, testiChi.ruolo === 'Fondatore' && testiChi.citazione.includes('Il valore non è stato aggiungere') && testiChi.email && testiChi.piede, JSON.stringify(testiChi));
 
     // ---- Calcolatore ----
     const leggiCalc = () =>

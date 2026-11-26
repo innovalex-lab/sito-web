@@ -1,14 +1,12 @@
 ---
 // 8. Risultati reali. Testi del sito attuale; numeri e citazione da src/content/funzioni.ts (casoScln).
 // 8, 80 e 41 sono "da confermare": in anteprima hanno l'avviso, in produzione fermano la build.
-// Accanto alla citazione il ritratto di Cocola, lo stesso ritaglio di Chi siamo (scripts/ritratti.py).
+// Accanto alla citazione il logo di SCLN Legal Network, come nel sito precedente (public/clienti/, ritagliato dal file di Federico).
 import { casoScln } from '../../content/funzioni';
 import { risultati as c, prenota } from '../../content/storia';
 import { produzione } from '../../content/verifica';
 
 const q = casoScln.citazione;
-const foto = 'francesco-cocola';
-const srcset = (f: string) => [120, 240].map((l) => `/team/${foto}-${l}.${f} ${l}w`).join(', ');
 ---
 <section id="risultati" class="risultati" aria-labelledby="t-risultati">
   <div class="contenitore">
@@ -34,11 +32,7 @@ const srcset = (f: string) => [120, 240].map((l) => `/team/${foto}-${l}.${f} ${l
       </article>
 
       <figure class="voce">
-        <picture class="voce-ritratto">
-          <source type="image/avif" srcset={srcset('avif')} sizes="120px" />
-          <source type="image/webp" srcset={srcset('webp')} sizes="120px" />
-          <img src={`/team/${foto}-120.webp`} width="120" height="150" alt="Ritratto di Francesco Cocola" loading="lazy" decoding="async" />
-        </picture>
+        <img class="voce-logo" src="/clienti/scln-legal-network.webp" width="182" height="110" alt="Logo SCLN Legal Network" loading="lazy" decoding="async" />
         <blockquote class="voce-citazione"><p data-uguale>“{q.testo}”</p></blockquote>
         <figcaption class="voce-firma"><b data-uguale>{q.autore}</b><span data-uguale>{q.ente}</span></figcaption>
         {!produzione && q.stato !== 'confermato' && <p class="avviso-anteprima">Citazione da confermare</p>}

@@ -1441,7 +1441,7 @@
   margin-top: 2rem;
 }
 
-/* La citazione sullo stesso fondo del ritratto: la foto non sembra un riquadro incollato */
+/* La citazione su carta bianca, lo stesso fondo del logo di SCLN: il logo non sembra un riquadro incollato */
 .voce {
   display: grid;
   grid-template-columns: 7.5rem minmax(0, 1fr);
@@ -1454,20 +1454,15 @@
   margin: 0;
   padding: clamp(1.5rem, 3vw, 2.5rem);
   border-radius: var(--raggio-riquadro);
-  background: var(--fondo-ritratti);
+  background: #fff;
+  box-shadow: 0 0 0 1px var(--lastra-bordo);
 }
 
-.voce-ritratto {
+.voce-logo {
   grid-area: foto;
-  display: block;
-}
-
-.voce-ritratto img {
   display: block;
   width: 7.5rem;
   height: auto;
-  aspect-ratio: 4 / 5;
-  border-radius: var(--raggio);
 }
 
 .voce-citazione {
