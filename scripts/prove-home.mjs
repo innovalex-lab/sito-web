@@ -629,7 +629,7 @@ for (const ridotto of [false, true]) {
       ruolo: document.querySelector('.persona-fondatore .persona-ruolo').textContent,
       citazione: document.querySelector('.voce-citazione').textContent,
       email: document.querySelector('.caso-numeri').textContent.includes('600+'),
-      piede: document.querySelector('footer').textContent.includes('Federico Garau, Fondatore e amministratore'),
+      piede: document.querySelector('footer').textContent.includes('Federico Garau, Fondatore') && !document.querySelector('footer').textContent.includes('amministratore'),
     }));
     ok(`${tag} ruolo, citazione, 600+ e piè di pagina`, testiChi.ruolo === 'Fondatore' && testiChi.citazione.includes('Il valore non è stato aggiungere') && testiChi.email && testiChi.piede, JSON.stringify(testiChi));
 

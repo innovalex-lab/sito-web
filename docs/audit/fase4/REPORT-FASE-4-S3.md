@@ -259,8 +259,8 @@ Nota tecnica: build e prove girate con Node 22.23.4 (come `.nvmrc`). Sul Mac c'�
 - **Risultati reali:** accanto alla citazione il logo di SCLN Legal Network al posto della foto di Francesco Cocola, come nel sito precedente.
   - Il logo viene da `scln_legal_network_logo (1).jpeg` (200 x 200), ritagliato sul marchio: `public/clienti/scln-legal-network.webp`, 182 x 110, 4,3 KB, mostrato a 120 px.
   - Il riquadro della citazione passa dal fondo dei ritratti al bianco con bordo di 1 px, lo stesso fondo del logo.
-- **Chi siamo:** il ruolo di Federico Garau è "Fondatore" (era "Fondatore e amministratore"). Il piè di pagina non cambia.
+- **Chi siamo:** il ruolo di Federico Garau è "Fondatore" (era "Fondatore e amministratore"), sia in Chi siamo sia nel piè di pagina.
 - **Prove aggiornate in `scripts/prove-home.mjs`:**
   - il controllo del ritratto accanto alla citazione ora controlla il logo: 120 x 73, caricato, testo alternativo "Logo SCLN Legal Network";
-  - il controllo del ruolo ora vuole "Fondatore".
+  - il controllo del ruolo ora vuole "Fondatore", e nel piè di pagina "Federico Garau, Fondatore" senza "amministratore".
 - **Esito:** 476 su 476 prove superate; il confronto [=] dice "Nessuna differenza".

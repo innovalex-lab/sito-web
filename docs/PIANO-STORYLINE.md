@@ -193,7 +193,7 @@ Come nella fase 3.1, con il tuo sottotitolo: segretaria, gestionale (riscritta c
 - [=] "L'Infrastruttura Operativa per Studi Legali italiani. Costruita sull'email che già usi. Progettata per non cambiare il modo in cui lavori."
 - [=] Contatti, dati societari, LinkedIn, Privacy e Cookie Policy.
 - [=] "Server EU, GDPR by design, DPA disponibile in fase contrattuale."
-- Ruolo: "Federico Garau, Fondatore e amministratore".
+- Ruolo: "Federico Garau, Fondatore" (dal 26/11, era "Fondatore e amministratore").
 
 ## Cosa si riusa e cosa esce
 
