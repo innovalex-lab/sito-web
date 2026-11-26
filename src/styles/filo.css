@@ -991,6 +991,11 @@
   color: var(--inchiostro);
 }
 
+/* Il titolo della scena è un H3 dentro Come funziona: misura degli H3, sotto l'H2 della sezione */
+.scena-titolo {
+  font-size: var(--text-sottotitolo);
+}
+
 /* ---------- 2. Scena: segui una mail ---------- */
 
 .scena {
@@ -1133,7 +1138,7 @@
     position: relative;
     z-index: 13;
     max-width: 30rem;
-    font-size: var(--text-titolo);
+    font-size: var(--text-sottotitolo);
   }
 
   .passo-testa {

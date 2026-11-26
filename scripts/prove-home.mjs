@@ -611,6 +611,43 @@ for (const ridotto of [false, true]) {
     if (w >= 640) ok(`${tag} timeline: i sei testi allineati sulla stessa colonna`, tl.sinistreTesto.length === 1, JSON.stringify(tl.sinistreTesto));
     else ok(`${tag} timeline (telefono): l'orario sta sopra il testo`, tl.oraSopra && tl.sinistreTesto.length === 1, JSON.stringify(tl));
 
+    // Gerarchia visiva dei titoli (27/11; l'ordine dei livelli è nella prova "titoli in ordine"): H1 più grande di ogni H2, ogni H2 di ogni H3;
+    // in ogni sezione ogni titolo più piccolo di quelli di livello superiore. La misura di un titolo è il corpo
+    // più grande del suo testo (in Riepilogo la parola chiave è più grande del resto).
+    const ger = await pagina.evaluate(() => {
+      const corpo = (h) => {
+        let m = 0;
+        const giro = document.createTreeWalker(h, NodeFilter.SHOW_TEXT);
+        while (giro.nextNode()) if (giro.currentNode.nodeValue.trim()) m = Math.max(m, parseFloat(getComputedStyle(giro.currentNode.parentElement).fontSize));
+        return m;
+      };
+      const titoli = [...document.querySelectorAll('main h1, main h2, main h3, main h4')]
+        .filter((h) => h.getClientRects().length)
+        .map((h) => ({ l: Number(h.tagName[1]), c: corpo(h), s: h.closest('section')?.id ?? '', t: h.textContent.trim().slice(0, 30) }));
+      return titoli;
+    });
+    const perLivello = (l) => ger.filter((h) => h.l === l).map((h) => h.c);
+    const fuoriOrdine = [];
+    for (const a of ger) for (const b of ger) if (a.s === b.s && a.l < b.l && a.c <= b.c) fuoriOrdine.push(`${a.s}: H${a.l} "${a.t}" ${a.c} <= H${b.l} "${b.t}" ${b.c}`);
+    ok(
+      `${tag} gerarchia visiva dei titoli: H1 > H2 > H3, e in ogni sezione ogni livello più piccolo del precedente`,
+      Math.min(...perLivello(1)) > Math.max(...perLivello(2)) && Math.min(...perLivello(2)) > Math.max(...perLivello(3)) && !fuoriOrdine.length,
+      JSON.stringify({ fuoriOrdine: fuoriOrdine.slice(0, 4), h2: [Math.min(...perLivello(2)), Math.max(...perLivello(2))], h3: [Math.min(...perLivello(3)), Math.max(...perLivello(3))] }),
+    );
+
+    // Tutto lo studio: il sottotesto sta sotto il titolo, allineato a sinistra, mai a fianco
+    const st = await pagina.evaluate(() => {
+      const h = document.querySelector('#t-studio').getBoundingClientRect();
+      const p = document.querySelector('#studio .studio-intro');
+      const r = p.getBoundingClientRect();
+      return { testo: p.textContent.trim(), sotto: Math.round(r.top - h.bottom), sinistra: [Math.round(h.left), Math.round(r.left)] };
+    });
+    ok(
+      `${tag} tutto lo studio: sottotesto sotto il titolo, allineato al titolo`,
+      st.testo === 'Quello che qualifichi dalla posta alimenta il resto: pratiche, clienti, scadenze e team.' && st.sotto >= 16 && st.sotto <= 48 && st.sinistra[0] === st.sinistra[1],
+      JSON.stringify(st),
+    );
+
     // Come funziona: frase in evidenza tra l'apertura e la scena, grande, in serif, isolata
     const cf = await pagina.evaluate(() => {
       const p = document.querySelector('#come-funziona .come-frase');
@@ -625,6 +662,7 @@ for (const ridotto of [false, true]) {
         font: [getComputedStyle(a).fontFamily, getComputedStyle(b).fontFamily],
         corpi: [parseFloat(getComputedStyle(a).fontSize), parseFloat(getComputedStyle(b).fontSize)],
         titolo: parseFloat(getComputedStyle(document.querySelector('#t-come')).fontSize),
+        h3: parseFloat(getComputedStyle(document.querySelector('#come-funziona .scena-titolo')).fontSize),
         sopra: Math.round(r.top - prec.bottom),
         sotto: Math.round(scena.top - r.bottom),
         primaDellaScena: Boolean(p.compareDocumentPosition(document.querySelector('#come-funziona .scena-pista')) & Node.DOCUMENT_POSITION_FOLLOWING),
@@ -637,9 +675,9 @@ for (const ridotto of [false, true]) {
       JSON.stringify(cf && { testo: cf.testo.slice(0, 50), tag: cf.tag }),
     );
     ok(
-      `${tag} come funziona: frase in serif su due livelli (prima frase più grande), con molto spazio intorno`,
-      cf && cf.font.every(serif) && cf.corpi[0] >= (w >= 1024 ? 40 : 28) && cf.corpi[0] >= cf.corpi[1] * 1.4 && cf.corpi[1] >= 18 && cf.sopra >= 64 && cf.sotto >= 64,
-      JSON.stringify(cf && { corpi: cf.corpi, titolo: cf.titolo, sopra: cf.sopra, sotto: cf.sotto }),
+      `${tag} come funziona: frase in serif su due livelli, sotto l'H2 e sopra l'H3 della scena, con molto spazio intorno`,
+      cf && cf.font.every(serif) && cf.corpi[0] < cf.titolo && cf.corpi[0] > cf.h3 && cf.corpi[0] >= cf.corpi[1] * 1.3 && cf.corpi[1] >= 18 && cf.sopra >= 64 && cf.sotto >= 64,
+      JSON.stringify(cf && { corpi: cf.corpi, titolo: cf.titolo, h3: cf.h3, sopra: cf.sopra, sotto: cf.sotto }),
     );
 
     // Visibilità Economica: fascia principale a tutta larghezza, titolo, testo, scena del valore e quattro leve

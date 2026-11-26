@@ -71,9 +71,10 @@
   background: var(--carta);
 }
 
+/* Titolo e, sotto, il sottotesto: lo stesso ordine delle altre sezioni a ogni larghezza */
 .studio-testa {
   display: grid;
-  gap: 1rem;
+  gap: var(--spazio-titolo, 1.75rem);
 }
 
 .studio-intro {
@@ -647,14 +648,6 @@
   }
 }
 
-@media (min-width: 1024px) {
-  .studio-testa {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    column-gap: 4rem;
-    align-items: end;
-  }
-}
-
 /* Da 1200 px: griglia asimmetrica a zig zag. Pratiche grande a sinistra, Valore per socio grande a destra.
    Sotto i 1200 px i piccoli affiancati alla lastra sarebbero troppo stretti: vale la griglia a due colonne. */
 @media (min-width: 1200px) {
@@ -1116,7 +1109,7 @@
 
 .faq-titolo {
   font-family: var(--font-serif);
-  font-size: var(--text-sottotitolo);
+  font-size: var(--text-titolo);
   color: var(--inchiostro);
 }
 
