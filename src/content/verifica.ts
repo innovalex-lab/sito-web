@@ -46,8 +46,9 @@ export function avvisiContenuti(): Avviso[] {
   }
   const c = casoScln.citazione;
   if (c.stato !== 'confermato') avvisi.push({ dove: 'Caso SCLN', problema: `citazione da confermare (fonte: ${c.fonte})`, esistente: false });
-  // Citazioni in Chi siamo (dal 26/11/2026 quella dell'Avv. Cocola): funzioni attive e approvazione della persona
-  for (const p of persone) {
+  // Citazioni in Chi siamo (dal 26/11/2026 quella dell'Avv. Cocola): funzioni attive e approvazione della persona.
+  // Solo se Chi siamo è nella pagina: dal 27/11/2026 è tolta per il momento.
+  for (const p of storia.chiSiamoInPagina ? persone : []) {
     if (!p.citazione) continue;
     controlla(`Chi siamo, citazione di ${p.nome}`, p.citazione.funzioni, false);
     if (p.citazione.stato !== 'confermato') {

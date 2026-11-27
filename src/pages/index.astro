@@ -13,6 +13,7 @@ import Riepilogo from '../components/sezioni/Riepilogo.astro';
 import Risultati from '../components/sezioni/Risultati.astro';
 import Diagnosi from '../components/sezioni/Diagnosi.astro';
 import ChiSiamo from '../components/sezioni/ChiSiamo.astro';
+import { chiSiamoInPagina } from '../content/storia';
 import PiePagina from '../components/sezioni/PiePagina.astro';
 import { fotoEroe } from '../content/foto-eroe';
 import { verificaPerBuild, produzione } from '../content/verifica';
@@ -98,7 +99,7 @@ const avvisi = verificaPerBuild();
       <Riepilogo />
       <Risultati />
       <Diagnosi />
-      <ChiSiamo />
+      {chiSiamoInPagina && <ChiSiamo />}
     </main>
     <PiePagina />
 

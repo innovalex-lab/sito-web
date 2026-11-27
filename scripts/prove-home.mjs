@@ -9,6 +9,8 @@
 // per decisione di Federico e testi vietati (dal 25/11/2026 anche "diagnosi", in ogni pagina del sito).
 // Dal 26/11/2026 (leve commerciali, sessione 4): sesto orario della timeline, frase in evidenza di Come funziona,
 // Visibilità Economica come fascia principale con quattro leve, testo e citazione di Cocola in Chi siamo.
+// Dal 27/11/2026 Chi siamo è tolta dalla pagina per il momento: le prove controllano che non ci sia (sezione, voce
+// del menu, pulsante, avviso della citazione). Per rimetterla: true qui e chiSiamoInPagina in src/content/storia.ts.
 // Nessun contatto vero: /api/roi-lead e /api/lead sono sempre intercettate e non escono dal browser.
 import { chromium } from 'playwright';
 import { execFileSync } from 'node:child_process';
@@ -19,6 +21,7 @@ import { confrontaUguali, leggiPagina } from './verifica-uguali.mjs';
 const url = process.argv[2] ?? 'http://localhost:4329/';
 const esiti = [];
 const ok = (nome, vero, dettaglio = '') => esiti.push({ nome, vero: Boolean(vero), dettaglio });
+const CHI_SIAMO = false; // come chiSiamoInPagina in src/content/storia.ts
 
 // Il form di main (index.html sul ramo main, letto con git show): chiavi inviate a /api/lead e valori delle tendine.
 const htmlMain = execFileSync('git', ['show', 'origin/main:index.html'], { cwd: new URL('..', import.meta.url), encoding: 'utf8', maxBuffer: 2e7 });
@@ -319,19 +322,21 @@ for (const ridotto of [false, true]) {
 
     // Ordine delle sezioni come il piano
     const ordine = await pagina.evaluate(() => [...document.querySelectorAll('main > section, main > div > section')].map((s) => s.id).filter(Boolean).join(' '));
-    ok(`${tag} ordine delle sezioni come il piano`, ordine === 'home problema calcolatore come-funziona sistemi studio riepilogo compliance risultati contatti chi-siamo', ordine);
+    ok(`${tag} ordine delle sezioni come il piano`, ordine === `home problema calcolatore come-funziona sistemi studio riepilogo compliance risultati contatti${CHI_SIAMO ? ' chi-siamo' : ''}`, ordine);
 
     // Menu come il piano, ancore esistenti
     const menu = await pagina.evaluate(() => [...document.querySelectorAll('[data-menu] nav a')].map((a) => a.textContent.trim()).join(' · '));
-    ok(`${tag} voci del menu come il piano`, menu === 'Il Problema · Calcola il Tuo Costo · Come Funziona · Risultati Reali · FAQ · Chi Siamo', menu);
+    ok(`${tag} voci del menu come il piano`, menu === `Il Problema · Calcola il Tuo Costo · Come Funziona · Risultati Reali · FAQ${CHI_SIAMO ? ' · Chi Siamo' : ''}`, menu);
     const voci = await pagina.evaluate(() => [...document.querySelectorAll('header nav a')].map((a) => a.getAttribute('href')));
     const uniche = [...new Set(voci), '#contatti'];
     for (const href of uniche) {
       const esiste = await pagina.evaluate((h) => Boolean(document.querySelector(h)), href);
       ok(`${tag} ancora ${href} esiste`, esiste);
     }
-    const vecchie = await pagina.evaluate(() => ['#roi', '#metodo', '#founder'].every((h) => document.querySelector(h)));
-    ok(`${tag} le ancore del sito attuale (#roi, #metodo, #founder) esistono`, vecchie);
+    // #founder stava in Chi siamo: senza la sezione, un link vecchio a #founder apre la pagina dall'inizio
+    const ancore = ['#roi', '#metodo', ...(CHI_SIAMO ? ['#founder'] : [])];
+    const vecchie = await pagina.evaluate((a) => a.every((h) => document.querySelector(h)), ancore);
+    ok(`${tag} le ancore del sito attuale (${ancore.join(', ')}) esistono`, vecchie);
     if (!ridotto) {
       for (const href of uniche) {
         await pagina.evaluate(() => window.scrollTo(0, 0));
@@ -369,12 +374,12 @@ for (const ridotto of [false, true]) {
     }
 
     // Nome nuovo dell'offerta (decisione di Federico del 25/11): pulsante del menu, quattro pulsanti "Prenota l'analisi
-    // gratuita" (dopo i sistemi, in fondo al riepilogo, dopo Risultati reali, in Chi siamo), titolo, consenso e pulsante del form
-    const nome = await pagina.evaluate(() => {
+    // gratuita" (dopo i sistemi, in fondo al riepilogo, dopo Risultati reali, in Chi siamo se c'è), titolo, consenso e pulsante del form
+    const nome = await pagina.evaluate((chi) => {
       const t = (el) => (el?.innerText ?? '').replace(/\s+/g, ' ').trim();
       return {
         menu: t(document.querySelector('header a[data-cta="menu-diagnosi"]')),
-        prenota: ['.sistemi', '.riepilogo', '.risultati', '.chi'].map((s) => [...document.querySelectorAll(`${s} a[href="#contatti"]`)].map((a) => a.textContent.trim()).join('+')),
+        prenota: ['.sistemi', '.riepilogo', '.risultati', ...(chi ? ['.chi'] : [])].map((s) => [...document.querySelectorAll(`${s} a[href="#contatti"]`)].map((a) => a.textContent.trim()).join('+')),
         titolo: t(document.querySelector('#contatti h2')),
         consenso: t(document.querySelector('.mo-consenso label')),
         pulsante: t(document.querySelector('[data-diagnosi-form] button[type="submit"]')),
@@ -383,9 +388,9 @@ for (const ridotto of [false, true]) {
         // i valori interni restano quelli di prima
         cta: [...document.querySelectorAll('a[data-cta][href$="#contatti"]')].map((a) => a.dataset.cta).join(','),
       };
-    });
+    }, CHI_SIAMO);
     ok(`${tag} menu: pulsante "Analisi gratuita"`, nome.menu === 'Analisi gratuita', nome.menu);
-    ok(`${tag} pulsante "Prenota l’analisi gratuita" dopo i sistemi, in fondo al riepilogo, in Risultati e in Chi siamo`, nome.prenota.every((x) => x === 'Prenota l’analisi gratuita'), nome.prenota.join(' | '));
+    ok(`${tag} pulsante "Prenota l’analisi gratuita" dopo i sistemi, in fondo al riepilogo, in Risultati${CHI_SIAMO ? ' e in Chi siamo' : ''}`, nome.prenota.every((x) => x === 'Prenota l’analisi gratuita'), nome.prenota.join(' | '));
     ok(
       `${tag} form: titolo "Analisi gratuita del tuo studio, in 30 minuti", consenso e pulsante con il nome nuovo`,
       nome.titolo === 'Analisi gratuita del tuo studio, in 30 minuti' &&
@@ -395,7 +400,7 @@ for (const ridotto of [false, true]) {
         nome.sotto === 'Partiamo dai tuoi numeri reali.',
       JSON.stringify(nome),
     );
-    ok(`${tag} origine del clic dei pulsanti verso il form identica a prima`, nome.cta === 'menu-diagnosi,sistemi-diagnosi,riepilogo-diagnosi,risultati-diagnosi,founder-demo', nome.cta);
+    ok(`${tag} origine del clic dei pulsanti verso il form identica a prima`, nome.cta === `menu-diagnosi,sistemi-diagnosi,riepilogo-diagnosi,risultati-diagnosi${CHI_SIAMO ? ',founder-demo' : ''}`, nome.cta);
 
     // Proporzioni: nei blocchi affiancati la grafica sta entro metà larghezza
     const proporzioni = await pagina.evaluate(() =>
@@ -747,7 +752,18 @@ for (const ridotto of [false, true]) {
       fatt,
     );
 
+    // Dal 27/11 Chi siamo è tolta: nessuna sezione, nessun link che porta lì, nessun ritratto caricato per lei
+    if (!CHI_SIAMO) {
+      const via = await pagina.evaluate(() => ({
+        sezione: document.querySelectorAll('#chi-siamo, .chi, .persona-cofondatore').length,
+        link: document.querySelectorAll('a[href$="#chi-siamo"]').length,
+        testo: /INNOVALEX nasce dentro uno studio legale/.test(document.body.innerText),
+      }));
+      ok(`${tag} chi siamo tolta: nessuna sezione, nessun link, nessun testo`, !via.sezione && !via.link && !via.testo, JSON.stringify(via));
+    }
+
     // Chi siamo: testo sotto il titolo; per Cocola la citazione, in serif, come una vera citazione, con l'avviso in anteprima
+    if (CHI_SIAMO) {
     const chiNuovo = await pagina.evaluate(() => {
       const c = document.querySelector('.persona-cofondatore');
       const q = c.querySelector('blockquote p');
@@ -780,6 +796,7 @@ for (const ridotto of [false, true]) {
         chiNuovo.nome === 'Avv. Francesco Cocola' && chiNuovo.ruolo === 'Co-fondatore' && chiNuovo.federico === 4,
       JSON.stringify({ font: chiNuovo.font, avviso: chiNuovo.avviso, vecchia: chiNuovo.rigaVecchia, federico: chiNuovo.federico }),
     );
+    }
 
     // Lastre: sotto i 768 px solo il dettaglio, testo dell'interfaccia mai sotto 11 px; da 768 px come prima
     const lastre = await pagina.evaluate(() => {
@@ -831,16 +848,16 @@ for (const ridotto of [false, true]) {
     );
     const chi = ritratti.filter((r) => r.dove === 'chi');
     const atteso = w >= 560 ? [240, 300] : [104, 130];
-    ok(`${tag} chi siamo: due ritratti nella stessa cornice ${atteso.join(' x ')}`, chi.length === 2 && chi.every((r) => r.w === atteso[0] && r.h === atteso[1] && r.caricata && r.attr && r.alt), JSON.stringify(chi));
+    if (CHI_SIAMO) ok(`${tag} chi siamo: due ritratti nella stessa cornice ${atteso.join(' x ')}`, chi.length === 2 && chi.every((r) => r.w === atteso[0] && r.h === atteso[1] && r.caricata && r.attr && r.alt), JSON.stringify(chi));
     const cit = ritratti.filter((r) => r.dove === 'citazione');
     ok(`${tag} risultati: accanto alla citazione solo il logo di SCLN Legal Network, 120 x 73`, cit.length === 1 && cit[0].w === 120 && cit[0].h === 73 && cit[0].caricata && cit[0].attr && cit[0].alt === 'Logo SCLN Legal Network', JSON.stringify(cit));
     const testiChi = await pagina.evaluate(() => ({
-      ruolo: document.querySelector('.persona-fondatore .persona-ruolo').textContent,
+      ruolo: document.querySelector('.persona-fondatore .persona-ruolo')?.textContent ?? null,
       citazione: document.querySelector('.voce-citazione').textContent,
       email: document.querySelector('.caso-numeri').textContent.includes('600+'),
       piede: document.querySelector('footer').textContent.includes('Federico Garau, Fondatore') && !document.querySelector('footer').textContent.includes('amministratore'),
     }));
-    ok(`${tag} ruolo, citazione, 600+ e piè di pagina`, testiChi.ruolo === 'Fondatore' && testiChi.citazione.includes('Il valore non è stato aggiungere') && testiChi.email && testiChi.piede, JSON.stringify(testiChi));
+    ok(`${tag} ${CHI_SIAMO ? 'ruolo, ' : ''}citazione, 600+ e piè di pagina`, testiChi.ruolo === (CHI_SIAMO ? 'Fondatore' : null) && testiChi.citazione.includes('Il valore non è stato aggiungere') && testiChi.email && testiChi.piede, JSON.stringify(testiChi));
 
     // ---- Calcolatore ----
     const leggiCalc = () =>
@@ -1033,15 +1050,16 @@ for (const ridotto of [false, true]) {
         uguali.modifiche.filter((m) => m.data === '25/11').length === 4 &&
           uguali.modifiche.filter((m) => m.data === '26/11').length === 2 &&
           uguali.modifiche.length === 6 &&
-          uguali.elementiModificati === 6 &&
+          uguali.elementiModificati === (CHI_SIAMO ? 6 : 5) &&
           uguali.modifiche.every((m) => m.era) &&
           uguali.differenze.length === 0,
         uguali.modifiche.map((m) => `"${m.era}" > "${m.ora}"`).join(' | '),
       );
       const avvisi = await pagina.locator('.avvisi-anteprima li').allTextContents();
       ok(
-        'avvisi di anteprima: i tre numeri SCLN e la citazione di Cocola, da confermare',
-        avvisi.length === 4 && avvisi.filter((a) => a.startsWith('Caso SCLN')).length === 3 && avvisi.some((a) => a.startsWith('Chi siamo: citazione di Avv. Francesco Cocola da confermare')),
+        `avvisi di anteprima: i tre numeri SCLN${CHI_SIAMO ? ' e la citazione di Cocola' : ''}, da confermare`,
+        avvisi.length === (CHI_SIAMO ? 4 : 3) && avvisi.filter((a) => a.startsWith('Caso SCLN')).length === 3 &&
+          avvisi.some((a) => a.startsWith('Chi siamo: citazione di Avv. Francesco Cocola da confermare')) === CHI_SIAMO,
         avvisi.join(' | '),
       );
     }

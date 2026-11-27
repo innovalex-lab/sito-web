@@ -14,13 +14,17 @@ export interface Voce {
 
 // ---------- Menu ----------
 
+// Chi siamo è tolta dalla pagina per il momento (27/11/2026, decisione di Federico). Componente, testi e foto restano:
+// per rimetterla basta true. Con false spariscono anche la voce del menu e il controllo sulla citazione di Cocola.
+export const chiSiamoInPagina = false;
+
 export const menu = [
   { nome: 'Il Problema', href: '#problema' },
   { nome: 'Calcola il Tuo Costo', href: '#calcolatore' },
   { nome: 'Come Funziona', href: '#come-funziona' },
   { nome: 'Risultati Reali', href: '#risultati' },
   { nome: 'FAQ', href: '#faq' },
-  { nome: 'Chi Siamo', href: '#chi-siamo' },
+  ...(chiSiamoInPagina ? [{ nome: 'Chi Siamo', href: '#chi-siamo' }] : []),
 ];
 // Dal 25/11/2026 la "Diagnosi Operativa" si chiama "analisi gratuita" in tutto il testo visibile (decisione di Federico).
 // I valori inviati a /api/lead (data-cta, nomi dei campi) non cambiano.

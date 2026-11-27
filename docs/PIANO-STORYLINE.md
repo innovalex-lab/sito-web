@@ -192,6 +192,8 @@ Come nella fase 3.1, con il tuo sottotitolo: segretaria, gestionale (riscritta c
 
 ## 11. Chi siamo
 
+**Tolta dalla pagina per il momento (27/11, decisione di Federico).** Testi, foto e componente restano com'erano: per rimetterla basta `chiSiamoInPagina = true` in `src/content/storia.ts` (e `CHI_SIAMO = true` in `scripts/prove-home.mjs`). Senza la sezione spariscono anche la voce "Chi Siamo" del menu, il pulsante "Prenota l'analisi gratuita" della sezione e l'avviso sulla citazione di Cocola, che quindi non ferma più la build di produzione.
+
 - [+] "INNOVALEX nasce dentro uno studio legale."
 - [+] Sotto il titolo (dal 26/11): "Un avvocato con quasi trent'anni di professione e un esperto di automazione e intelligenza artificiale, fianco a fianco ogni giorno per un anno. Gli altri software lavorano a pezzi: uno per le pratiche, uno per i documenti, uno per le fatture, e i dati da reinserire a mano in ognuno. Noi siamo partiti da dove nasce il lavoro, la posta, e abbiamo costruito un solo sistema che il lavoro lo fa al posto tuo."
 - Federico Garau, Fondatore (dal 26/11, era "Fondatore e amministratore"), con il tuo testo Founder [=].
