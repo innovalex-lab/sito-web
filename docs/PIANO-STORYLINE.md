@@ -134,8 +134,12 @@ Nome dell'offerta: dal 25/11/2026 la "Diagnosi Operativa" si chiama "analisi gra
 
 ## 6. Tutto lo studio in un posto
 
-- Come adesso: blocchi asimmetrici e scorrimento su mobile, gli stessi sei blocchi. Funziona da riepilogo prima della prova reale.
-- La scena del beneficio 3 (la pipeline) entra qui come blocco grande di "Pratiche", al posto della mini pipeline.
+- Titolo e, sotto, il sottotesto (dal 27/11, prima il sottotesto stava a fianco).
+- Dal 27/11 (decisione di Federico: la griglia di sei riquadri era troppo confusa) le stesse sei funzioni, con gli stessi testi, sono un giro guidato: una funzione alla volta, un solo palco per il suo frammento d'interfaccia.
+  - Da 1024 px: a sinistra l'elenco delle sei funzioni, aperta solo quella attiva, con una linea oro che si riempie nel suo tempo; a destra il palco.
+  - Sotto i 1024 px: il palco, la funzione attiva, poi indietro, sei tacche, avanti e pausa. Sul palco si scorre anche col dito.
+  - Parte da solo quando il palco è sullo schermo, 3 secondi per funzione; si ferma con il puntatore sopra, con il fuoco dentro e fuori dallo schermo. Scegliere una funzione o usare le frecce porta lì e ferma il giro; la pausa lo fa ripartire. Con movimento ridotto non parte da solo.
+- La scena del beneficio 3 (la pipeline) è il frammento di "Pratiche". Sul telefono mostra solo la pratica che cambia fase.
 
 ## 7. Riepilogo e compliance
 

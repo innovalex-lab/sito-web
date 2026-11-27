@@ -1,14 +1,16 @@
 ---
-// Tutto lo studio in un posto. Sezione statica: sei blocchi, ognuno con un frammento
-// stilizzato e parziale dell'interfaccia (mai una schermata intera). Dati fittizi.
-// Lo stato di ogni blocco viene da src/content/funzioni.ts.
-// Titolo e, sotto, il sottotesto, a ogni larghezza.
-// Desktop: griglia asimmetrica, Pratiche e Valore per socio grandi, gli altri quattro piccoli.
-// Fase 4: il blocco Pratiche mostra la scena del beneficio 3 (la pipeline), al posto della mini pipeline.
-// È l'unica animazione della sezione.
-// I frammenti sono lastre con lo stesso materiale della scena e dei benefici: fondo pieno, bordo sottile.
-// Sotto i 768 px: scorrimento orizzontale solo CSS (scroll-snap), con indicatore di posizione
-// fatto di link alle schede; il punto attivo si accende con una timeline di scorrimento CSS.
+// Tutto lo studio in un posto. Titolo e, sotto, il sottotesto. Poi un giro guidato delle sei funzioni (dal 27/11/2026,
+// al posto della griglia di sei riquadri): una funzione alla volta, con un solo palco per il suo frammento d'interfaccia.
+//   Desktop (da 1024 px): a sinistra l'elenco delle sei funzioni, aperta solo quella attiva (titolo e testo), con una
+//   linea oro che si riempie nel tempo della funzione; a destra il palco con il frammento.
+//   Telefono e tablet: il palco in alto, sotto la funzione attiva, poi indietro, sei tacche, avanti e pausa.
+// Il giro parte da solo quando la sezione è sullo schermo, 3 secondi per funzione (--durata in sezioni.css), e si
+// ferma con il puntatore sopra, con il fuoco dentro e fuori dallo schermo. Indietro, avanti, una tacca o un titolo:
+// si va lì e il giro si ferma; il pulsante di pausa lo fa ripartire. Con movimento ridotto non parte mai da solo.
+// Senza JavaScript: le sei funzioni aperte una sotto l'altra, il palco con la prima.
+// I frammenti sono lastre con lo stesso materiale della scena e dei benefici, stilizzati e parziali. Dati fittizi.
+// Pratiche mostra la scena del beneficio 3 (la pipeline), che si anima entrando. Lo stato di ogni funzione viene
+// da src/content/funzioni.ts.
 import ScenaPipeline from '../filo/ScenaPipeline.astro';
 import { studio, stato } from '../../content/funzioni';
 import { produzione } from '../../content/verifica';
@@ -23,16 +25,16 @@ const soci = [
 ];
 ---
 <section id="studio" class="studio" aria-labelledby="t-studio">
-  <div class="contenitore studio-interno">
+  <div class="contenitore">
     <div class="studio-testa">
       <h2 id="t-studio" class="sezione-titolo">Tutto lo studio in un posto.</h2>
       <p class="studio-intro">Quello che qualifichi dalla posta alimenta il resto: pratiche, clienti, scadenze e team.</p>
     </div>
 
-    <ul class="studio-griglia" aria-label="Le parti dello studio">
-      {blocchi.map((b) => (
-        <li id={`studio-${b.id}`} class:list={['blocco', `blocco-${b.taglia}`, `blocco-${b.id}`]}>
-          <div class="blocco-palco">
+    <div class="giro" data-giro role="region" aria-roledescription="carosello" aria-label="Le sei funzioni dello studio">
+      <div class="giro-palco">
+        {blocchi.map((b, i) => (
+          <div id={`studio-${b.id}`} class:list={['giro-scena', 'blocco-palco', `scena-${b.id}`]} data-attivo={i === 0 ? '' : undefined}>
             {b.id === 'pratiche' ? (
               <ScenaPipeline class="blocco-pipeline" />
             ) : (
@@ -94,20 +96,49 @@ const soci = [
             </div>
             )}
           </div>
-          <h3 class="blocco-titolo">{b.titolo}</h3>
-          <p class="blocco-testo">{b.testo}</p>
-          {!produzione && b.stato !== 'attiva' && (
-            <p class="avviso-anteprima">Avviso di anteprima: funzione {b.stato}, non pubblicabile come disponibile.</p>
-          )}
-        </li>
-      ))}
-    </ul>
+        ))}
+      </div>
 
-    <!-- Indicatore di posizione, solo sotto i 768 px. Ogni punto è un link alla sua scheda. -->
-    <nav class="studio-punti" aria-label="Scegli la parte dello studio">
-      {blocchi.map((b, i) => (
-        <a href={`#studio-${b.id}`} class="studio-punto"><span class="sr-only">{b.titolo}, {i + 1} di {blocchi.length}</span></a>
-      ))}
-    </nav>
+      <ol class="giro-voci">
+        {blocchi.map((b, i) => (
+          <li class="giro-voce" data-attivo={i === 0 ? '' : undefined}>
+            <h3 class="giro-titolo blocco-titolo">
+              <button type="button" class="giro-scegli" aria-expanded={i === 0 ? 'true' : 'false'} aria-controls={`giro-testo-${b.id}`}>{b.titolo}</button>
+            </h3>
+            <div id={`giro-testo-${b.id}`} class="giro-testo">
+              <div>
+                <p class="blocco-testo">{b.testo}</p>
+                {!produzione && b.stato !== 'attiva' && (
+                  <p class="avviso-anteprima">Avviso di anteprima: funzione {b.stato}, non pubblicabile come disponibile.</p>
+                )}
+              </div>
+            </div>
+            <span class="giro-tempo" aria-hidden="true"></span>
+          </li>
+        ))}
+      </ol>
+
+      <div class="giro-comandi">
+        <button type="button" class="giro-tasto" data-giro-indietro aria-label="Funzione precedente">
+          <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
+        </button>
+        <span class="giro-tacche">
+          {blocchi.map((b, i) => (
+            <button type="button" class="giro-tacca" data-giro-tacca={i} aria-label={`${b.titolo}, ${i + 1} di ${blocchi.length}`} aria-current={i === 0 ? 'true' : undefined}></button>
+          ))}
+        </span>
+        <button type="button" class="giro-tasto" data-giro-avanti aria-label="Funzione successiva">
+          <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
+        </button>
+        <button type="button" class="giro-tasto giro-pausa" data-giro-pausa aria-label="Ferma il giro delle funzioni" hidden>
+          <svg class="gp-ferma" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path d="M7.5 5v10M12.5 5v10" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
+          <svg class="gp-avvia" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path d="M7 5.2v9.6L14.6 10Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" /></svg>
+        </button>
+      </div>
+    </div>
   </div>
 </section>
+
+<script>
+  import '../../scripts/studio';
+</script>

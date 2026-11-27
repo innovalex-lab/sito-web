@@ -818,19 +818,67 @@ for (const ridotto of [false, true]) {
     if (w < 768) ok(`${tag} lastre (telefono): solo il dettaglio, testo dell'interfaccia almeno 11 px`, !lastre.piccoli.length && lastre.lista === 'none', `minimo ${lastre.minimo} px ${lastre.piccoli.join(' | ')}`);
     else ok(`${tag} lastre: intere come nella sessione 1`, lastre.posizione === 'absolute' && lastre.lista !== 'none', JSON.stringify({ minimo: lastre.minimo, posizione: lastre.posizione, lista: lastre.lista }));
 
-    // Tutto lo studio: la pipeline nel blocco Pratiche, scorrimento orizzontale sotto i 768 px
-    const studio = await pagina.evaluate(() => {
-      const l = document.querySelector('.studio-griglia');
-      return {
-        pipeline: Boolean(document.querySelector('#studio-pratiche .bn-pipeline')),
-        mini: !document.querySelector('#studio-pratiche .mini-pipeline'),
-        scorre: ['auto', 'scroll'].includes(getComputedStyle(l).overflowX) && l.scrollWidth > l.clientWidth + 1,
-        punti: [...document.querySelectorAll('.studio-punto')].filter((a) => a.offsetParent).length,
-      };
-    });
-    ok(`${tag} studio: la pipeline sostituisce la mini pipeline`, studio.pipeline && studio.mini, JSON.stringify(studio));
-    if (w < 768) ok(`${tag} studio: scorrimento orizzontale con sei punti`, studio.scorre && studio.punti === 6, JSON.stringify(studio));
-    else ok(`${tag} studio: griglia senza scorrimento e senza punti`, !studio.scorre && studio.punti === 0, JSON.stringify(studio));
+    // Tutto lo studio (dal 27/11): il giro guidato al posto della griglia di sei riquadri. Una funzione alla volta,
+    // un solo palco; da 1024 px elenco a sinistra e palco a destra, sotto palco, funzione attiva e comandi.
+    // Parte da solo, 3 secondi per funzione; indietro e avanti portano lì e lo fermano; pausa lo fa ripartire.
+    // Con movimento ridotto non parte mai da solo.
+    await pagina.evaluate(() => document.querySelector('.giro-palco').scrollIntoView({ block: 'center' }));
+    await pagina.waitForTimeout(400);
+    const leggiGiro = () =>
+      pagina.evaluate(() => {
+        const g = document.querySelector('[data-giro]');
+        const voci = [...g.querySelectorAll('.giro-voce')];
+        const r = (e) => e.getBoundingClientRect();
+        return {
+          attivo: voci.findIndex((v) => v.hasAttribute('data-attivo')),
+          attivi: voci.filter((v) => v.hasAttribute('data-attivo')).length + g.querySelectorAll('.giro-scena[data-attivo]').length,
+          scenaVisibile: [...g.querySelectorAll('.giro-scena')].filter((x) => getComputedStyle(x).visibility === 'visible').map((x) => x.id),
+          auto: g.hasAttribute('data-auto'),
+          titoli: voci.map((v) => v.querySelector('h3 button').textContent.trim()),
+          testi: voci.map((v) => v.querySelector('.blocco-testo').textContent.trim()),
+          vociVisibili: voci.filter((v) => v.getClientRects().length).length,
+          espanso: voci.map((v) => v.querySelector('h3 button').getAttribute('aria-expanded')).join(''),
+          palco: r(g.querySelector('.giro-palco')),
+          elenco: r(g.querySelector('.giro-voci')),
+          pipeline: Boolean(document.querySelector('#studio-pratiche .bn-pipeline')),
+          griglia: document.querySelectorAll('.studio-griglia, .studio-punto, .blocco').length,
+          pausa: g.querySelector('[data-giro-pausa]').hidden,
+          tacche: [...g.querySelectorAll('.giro-tacca')].filter((t) => t.getClientRects().length).length,
+        };
+      });
+    const g0 = await leggiGiro();
+    ok(
+      `${tag} studio: sei funzioni nel giro, una sola aperta, la pipeline in Pratiche, niente più griglia`,
+      g0.titoli.join(' | ') === 'Pratiche | Avviso al cliente | Scadenze | Valore per socio | Team | Contatti' && g0.testi.every((t) => t.length > 20) &&
+        g0.attivi === 2 && g0.scenaVisibile.length === 1 && g0.espanso.split('true').length === 2 && g0.pipeline && g0.griglia === 0,
+      JSON.stringify({ attivo: g0.attivo, attivi: g0.attivi, scene: g0.scenaVisibile, espanso: g0.espanso, griglia: g0.griglia }),
+    );
+    if (w >= 1024) ok(`${tag} studio: elenco delle funzioni a sinistra, palco a destra, senza tacche`, g0.elenco.right <= g0.palco.left && g0.vociVisibili === 6 && g0.tacche === 0, JSON.stringify({ elenco: g0.elenco.right, palco: g0.palco.left, voci: g0.vociVisibili }));
+    else ok(`${tag} studio: palco sopra, sotto solo la funzione attiva e sei tacche`, g0.palco.bottom <= g0.elenco.top && g0.vociVisibili === 1 && g0.tacche === 6, JSON.stringify({ palco: g0.palco.bottom, elenco: g0.elenco.top, voci: g0.vociVisibili, tacche: g0.tacche }));
+    await pagina.waitForTimeout(3400);
+    const g1 = await leggiGiro();
+    if (ridotto) {
+      ok(`${tag} studio: con movimento ridotto il giro non parte da solo e non c'è la pausa`, !g1.auto && g1.attivo === g0.attivo && g1.pausa, JSON.stringify({ prima: g0.attivo, dopo: g1.attivo, auto: g1.auto }));
+    } else {
+      ok(`${tag} studio: il giro parte da solo e passa alla funzione successiva entro 3 secondi e mezzo`, g0.auto && g1.auto && g1.attivo !== g0.attivo && !g1.pausa, JSON.stringify({ prima: g0.attivo, dopo: g1.attivo, auto: g1.auto }));
+    }
+    await pagina.locator('[data-giro-indietro]').click();
+    const g2 = await leggiGiro();
+    await pagina.waitForTimeout(3400);
+    const g3 = await leggiGiro();
+    ok(
+      `${tag} studio: "indietro" torna alla funzione precedente e ferma il giro`,
+      g2.attivo === (g1.attivo + 5) % 6 && !g2.auto && g3.attivo === g2.attivo && g2.attivi === 2,
+      JSON.stringify({ da: g1.attivo, a: g2.attivo, dopo: g3.attivo, auto: g2.auto }),
+    );
+    await pagina.locator('[data-giro-avanti]').click();
+    const g4 = await leggiGiro();
+    ok(`${tag} studio: "avanti" passa alla successiva`, g4.attivo === (g2.attivo + 1) % 6, `${g2.attivo} > ${g4.attivo}`);
+    if (!ridotto) {
+      await pagina.locator('[data-giro-pausa]').click();
+      const g5 = await leggiGiro();
+      ok(`${tag} studio: il pulsante di pausa fa ripartire il giro`, g5.auto, JSON.stringify({ auto: g5.auto }));
+    }
 
     // Scene dei sistemi: a fine ingresso sono compiute (con movimento ridotto subito)
     const scene = await pagina.evaluate(() => ({

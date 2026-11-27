@@ -1337,27 +1337,16 @@
   }
 }
 
-/* ---------- 6. Tutto lo studio: la pipeline nel blocco Pratiche ---------- */
+/* ---------- 6. Tutto lo studio: la pipeline nel palco del giro, funzione Pratiche ---------- */
 
 .blocco-pipeline .bn-pipeline {
   font-size: min(calc((100cqw - 2em) / 22), 1.15rem);
 }
 
+/* Sul telefono due fasi: il corpo segue la larghezza del palco, così le schede restano su due o tre righe */
 @media (max-width: 639px) {
   .blocco-pipeline .bn-pipeline {
-    font-size: calc((100cqw - 2em) / 14);
-  }
-}
-
-@media (min-width: 1200px) {
-  .blocco-pratiche .blocco-palco {
-    display: flex;
-    flex: 1;
-    align-items: center;
-  }
-
-  .blocco-pipeline {
-    width: 100%;
+    font-size: calc(100cqw / 24);
   }
 }
 
