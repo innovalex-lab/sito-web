@@ -67,8 +67,8 @@ export const studio = [
   {
     id: 'soci',
     taglia: 'grande',
-    titolo: 'Valore per socio',
-    testo: 'Per ogni socio: pratiche originate, pratiche gestite, ore e valore generato. La base oggettiva per dividere gli utili, senza discussioni.',
+    titolo: 'Valore per socio e collaboratore',
+    testo: 'Per ogni socio e collaboratore: pratiche originate, pratiche gestite, ore e valore generato. La base oggettiva per dividere gli utili, senza discussioni.',
     funzioni: ['valore-socio'],
   },
   {

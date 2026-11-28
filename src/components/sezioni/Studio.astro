@@ -17,12 +17,19 @@ import { produzione } from '../../content/verifica';
 
 const blocchi = studio.map((b) => ({ ...b, stato: stato(b.funzioni) }));
 
-// Tre soci finti. Il valore è una barra relativa, senza cifre in euro.
-const soci = [
-  { sigla: 'LF', nome: 'Avv. Laura Ferri', originate: 14, gestite: 22, valore: 0.88 },
-  { sigla: 'MC', nome: 'Avv. Marco Conti', originate: 9, gestite: 17, valore: 0.64 },
-  { sigla: 'ES', nome: 'Avv. Elena Sarti', originate: 5, gestite: 12, valore: 0.42 },
+// Valore generato a novembre da ogni persona dello studio: tre soci e tre collaboratori. Dati fittizi, coerenti con
+// il resto della pagina: Sara Lombrici ha 3.750 € confermati come nella scena del valore (Visibilità Economica);
+// Paolo Neri, Giulia Moro e Sara Lombrici sono il team della pipeline. Ordinati per valore; il totale torna.
+const persone = [
+  { sigla: 'LF', nome: 'Laura Ferri', ruolo: 'Socia', originate: 14, gestite: 22, ore: 112, valore: 22380 },
+  { sigla: 'MC', nome: 'Marco Conti', ruolo: 'Socio', originate: 9, gestite: 17, ore: 98, valore: 18950 },
+  { sigla: 'ES', nome: 'Elena Sarti', ruolo: 'Socia', originate: 5, gestite: 12, ore: 84, valore: 14720 },
+  { sigla: 'PN', nome: 'Paolo Neri', ruolo: 'Collaboratore', originate: 0, gestite: 6, ore: 31, valore: 4650 },
+  { sigla: 'GM', nome: 'Giulia Moro', ruolo: 'Collaboratrice', originate: 1, gestite: 5, ore: 28, valore: 4200 },
+  { sigla: 'SL', nome: 'Sara Lombrici', ruolo: 'Collaboratrice', originate: 0, gestite: 4, ore: 25, valore: 3750 },
 ];
+const euro = (n: number) => `${n.toLocaleString('it-IT', { useGrouping: 'always' })} €`;
+const totale = persone.reduce((t, p) => t + p.valore, 0);
 ---
 <section id="studio" class="studio" aria-labelledby="t-studio">
   <div class="contenitore">
@@ -57,16 +64,18 @@ const soci = [
                 )}
                 {b.id === 'soci' && (
                   <div class="mini-soci">
-                    <span class="vs-testa"><span>Socio</span><span>Originate</span><span>Gestite</span></span>
-                    {soci.map((s, i) => (
+                    <p class="vs-titolo"><b>Valore generato</b><span>Novembre, tutto lo studio</span></p>
+                    <span class="vs-testa"><span>Persona</span><span class="vs-pratiche">Originate</span><span class="vs-pratiche">Gestite</span><span class="vs-ore">Ore</span><span>Valore</span></span>
+                    {persone.map((p, i) => (
                       <span class:list={['vs-riga', i === 0 && 'vs-primo']}>
-                        <span class="vs-chi"><span class="vs-sigla">{s.sigla}</span><b>{s.nome}</b></span>
-                        <span class="vs-num">{s.originate}</span>
-                        <span class="vs-num">{s.gestite}</span>
-                        <span class="vs-barra"><span style={`width:${s.valore * 100}%`}></span></span>
+                        <span class="vs-chi"><span class="vs-sigla">{p.sigla}</span><span class="vs-nome"><b>{p.nome}</b><small>{p.ruolo}</small></span></span>
+                        <span class="vs-num vs-pratiche">{p.originate}</span>
+                        <span class="vs-num vs-pratiche">{p.gestite}</span>
+                        <span class="vs-num vs-ore">{p.ore} h</span>
+                        <span class="vs-num vs-valore">{euro(p.valore)}</span>
                       </span>
                     ))}
-                    <span class="vs-piede">Valore generato</span>
+                    <span class="vs-totale"><span>Totale dello studio</span><b>{euro(totale)}</b></span>
                   </div>
                 )}
                 {b.id === 'team' && (

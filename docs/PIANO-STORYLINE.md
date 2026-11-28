@@ -140,6 +140,7 @@ Nome dell'offerta: dal 25/11/2026 la "Diagnosi Operativa" si chiama "analisi gra
   - Sotto i 1024 px: il palco, la funzione attiva, poi indietro, sei tacche, avanti e pausa. Sul palco si scorre anche col dito.
   - Parte da solo quando il palco è sullo schermo, 3 secondi per funzione; si ferma con il puntatore sopra, con il fuoco dentro e fuori dallo schermo. Scegliere una funzione o usare le frecce porta lì e ferma il giro; la pausa lo fa ripartire. Con movimento ridotto non parte da solo.
 - La scena del beneficio 3 (la pipeline) è il frammento di "Pratiche". Sul telefono mostra solo la pratica che cambia fase.
+- Dal 28/11 (Federico): "Valore per socio" diventa "Valore per socio e collaboratore", testo "Per ogni socio e collaboratore: pratiche originate, pratiche gestite, ore e valore generato. La base oggettiva per dividere gli utili, senza discussioni." Il frammento mostra il valore generato a novembre in euro da tre soci e tre collaboratori, con pratiche originate e gestite, ore e totale dello studio (dati fittizi, coerenti con la scena del valore: Sara Lombrici 3.750 €). Sul palco stretto restano persona, gestite e valore.
 
 ## 7. Riepilogo e compliance
 

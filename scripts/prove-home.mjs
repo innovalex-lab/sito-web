@@ -849,7 +849,7 @@ for (const ridotto of [false, true]) {
     const g0 = await leggiGiro();
     ok(
       `${tag} studio: sei funzioni nel giro, una sola aperta, la pipeline in Pratiche, niente più griglia`,
-      g0.titoli.join(' | ') === 'Pratiche | Avviso al cliente | Scadenze | Valore per socio | Team | Contatti' && g0.testi.every((t) => t.length > 20) &&
+      g0.titoli.join(' | ') === 'Pratiche | Avviso al cliente | Scadenze | Valore per socio e collaboratore | Team | Contatti' && g0.testi.every((t) => t.length > 20) &&
         g0.attivi === 2 && g0.scenaVisibile.length === 1 && g0.espanso.split('true').length === 2 && g0.pipeline && g0.griglia === 0,
       JSON.stringify({ attivo: g0.attivo, attivi: g0.attivi, scene: g0.scenaVisibile, espanso: g0.espanso, griglia: g0.griglia }),
     );
@@ -870,6 +870,25 @@ for (const ridotto of [false, true]) {
       `${tag} studio: "indietro" torna alla funzione precedente e ferma il giro`,
       g2.attivo === (g1.attivo + 5) % 6 && !g2.auto && g3.attivo === g2.attivo && g2.attivi === 2,
       JSON.stringify({ da: g1.attivo, a: g2.attivo, dopo: g3.attivo, auto: g2.auto }),
+    );
+    // Valore per socio e collaboratore (dal 28/11): sei persone, soci e collaboratori, ognuna con il suo valore in
+    // euro; il totale è la somma. Sul palco stretto restano persona, pratiche gestite e valore.
+    const soci = await pagina.evaluate(() => {
+      const m = document.querySelector('#studio-soci .mini-soci');
+      const euro = (t) => Number(t.replace(/[^0-9]/g, ''));
+      const righe = [...m.querySelectorAll('.vs-riga')].map((r) => ({ ruolo: r.querySelector('small').textContent, valore: euro(r.querySelector('.vs-valore').textContent) }));
+      return {
+        righe,
+        totale: euro(m.querySelector('.vs-totale b').textContent),
+        colonne: [...m.querySelectorAll('.vs-testa > span')].filter((s) => getComputedStyle(s).display !== 'none').map((s) => s.textContent).join(' '),
+      };
+    });
+    ok(
+      `${tag} studio: valore generato in euro per ogni socio e collaboratore, il totale torna`,
+      soci.righe.length === 6 && soci.righe.filter((r) => /^Soci[oa]$/.test(r.ruolo)).length === 3 && soci.righe.filter((r) => /^Collaborat/.test(r.ruolo)).length === 3 &&
+        soci.righe.every((r) => r.valore > 0) && soci.totale === soci.righe.reduce((t, r) => t + r.valore, 0) &&
+        soci.colonne === (w >= 1440 ? 'Persona Originate Gestite Ore Valore' : 'Persona Gestite Valore'),
+      JSON.stringify({ totale: soci.totale, colonne: soci.colonne, valori: soci.righe.map((r) => r.valore) }),
     );
     await pagina.locator('[data-giro-avanti]').click();
     const g4 = await leggiGiro();

@@ -324,10 +324,6 @@
     padding: clamp(0.75rem, 3vw, 1.5rem);
   }
 
-  /* Sul telefono il frammento del socio senza la riga di piede, come nelle schede di prima */
-  .vs-piede {
-    display: none;
-  }
 }
 
 /* Sul telefono la pipeline (due fasi) mostra solo la pratica che cambia fase: le altre schede allungherebbero il
@@ -683,12 +679,31 @@
   color: #6f5422;
 }
 
-/* Valore per socio: tre soci, pratiche originate e gestite, barra del valore senza cifre */
+/* Valore per socio e collaboratore: sei persone dello studio a novembre, pratiche originate e gestite, ore e valore
+   generato in euro, il totale sotto. Il valore è la colonna che conta: più scura e più larga. */
 .mini-soci {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 4.6em 4.6em;
-  column-gap: 0.6em;
+  grid-template-columns: minmax(0, 1fr) 4.4em 3.6em 3.4em 5.4em;
+  column-gap: 0.75em;
   align-content: start;
+}
+
+.vs-titolo {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1em;
+  margin-bottom: 0.85em;
+}
+
+.vs-titolo b {
+  font-size: 1.15em;
+  font-weight: 650;
+}
+
+.vs-titolo span {
+  color: var(--ui-2);
 }
 
 .vs-testa,
@@ -700,7 +715,8 @@
 }
 
 .vs-testa {
-  padding-bottom: 0.45em;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid var(--ui-linea);
   color: var(--ui-2);
   font-weight: 550;
 }
@@ -711,8 +727,8 @@
 }
 
 .vs-riga {
-  row-gap: 0.4em;
-  padding: 0.55em 0;
+  padding: 0.5em 0;
+  border-bottom: 1px solid #eef0f4;
 }
 
 .vs-chi {
@@ -722,11 +738,25 @@
   gap: 0.6em;
 }
 
-.vs-chi b {
+.vs-nome {
+  display: grid;
+  min-width: 0;
+}
+
+.vs-nome b,
+.vs-nome small {
   overflow: hidden;
-  font-weight: 600;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.vs-nome b {
+  font-weight: 600;
+}
+
+.vs-nome small {
+  color: var(--ui-2);
+  font-size: 0.9em;
 }
 
 .vs-sigla {
@@ -747,32 +777,44 @@
 }
 
 .vs-num {
+  color: var(--ui-2);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.vs-valore {
+  color: var(--inchiostro);
   font-weight: 650;
+}
+
+.vs-totale {
+  display: flex;
+  grid-column: 1 / -1;
+  justify-content: space-between;
+  padding-top: 0.65em;
+  font-weight: 550;
+}
+
+.vs-totale b {
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 
-.vs-barra {
-  grid-column: 1 / -1;
-  height: 0.5em;
-  border-radius: 1em;
-  background: #eceef2;
-}
+/* Palco stretto (telefono): persona, pratiche gestite e valore. Originate e ore restano nel palco largo. */
+@container (max-width: 27rem) {
+  .mini-soci {
+    grid-template-columns: minmax(0, 1fr) 3.6em 5.4em;
+  }
 
-.vs-barra span {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: var(--inchiostro);
-}
+  .mini-soci .vs-pratiche:nth-child(2),
+  .mini-soci .vs-ore {
+    display: none;
+  }
 
-.vs-primo .vs-barra span {
-  background: var(--oro);
-}
-
-.vs-piede {
-  grid-column: 1 / -1;
-  margin-top: 0.2em;
-  color: var(--ui-2);
+  .vs-titolo {
+    flex-direction: column;
+    gap: 0.1em;
+  }
 }
 
 /* ---------- Chi siamo, e il riquadro del caso SCLN usato in Risultati reali ---------- */
